@@ -1,30 +1,26 @@
 ---
 name: reuse-before-build
-description: Upholds conceptual integrity and coherent design plus implementation—one product story, shared patterns for the same intent, avoid parallel one-off solutions. Use when adding or changing features, UI, or domain logic; when the user asks for consistency, a design system mindset, DRY, or single source of truth; or when work risks inventing a second way to do what the app already does.
+description: Guides toward conceptual integrity and coherent design plus implementation—prefer extending one product story over silent parallel solutions. Use when adding or changing features, UI, or domain logic; when the user wants consistency or a design-system mindset; or as a voluntary lens when work might duplicate existing behavior. Scott can always override for speed or experimentation.
 ---
 
-# Coherence — design and implementation
+# Coherence — design and implementation (guide)
 
-This skill is a **lens**, not a catalog of components. Hold the whole product in view: **would a user or the next maintainer see one coherent system, or unrelated pieces glued together?**
+**This file guides judgment; it does not handcuff.** If Scott wants to ship a spike, try two approaches, or defer unification, that is valid—just **name the tradeoff** so the next session is not fooled into thinking the divergence was an oversight.
 
-## Mindset
+## Lens
 
-- **Same meaning → same machinery** (unless the spec intentionally splits them—then say so in code or docs).
-- **Extend the language of the codebase** before introducing a new dialect for the same idea.
-- **Drift is debt** — a second path for the same job will diverge, break under partial fixes, and confuse everyone later.
+Would a thoughtful user or maintainer see **one product**, or unrelated pieces? **Prefer** extending the vocabulary the codebase already uses for this *class* of problem—unless you have a **reason** not to, in which case a line of context is enough.
 
-## How that turns into action (this repo, this task)
+## Light prompts (use as fits)
 
-Ask briefly:
-
-1. **What class of thing is this?** (calculation, action, form, list, error path, …)
-2. **Does the app already “speak” that class somewhere?** Search, read siblings, follow existing patterns.
-3. **Are we extending a home, extracting a shared spine, or documenting a deliberate exception?** Avoid silent third options.
+- What *kind* of thing is this (calculation, primary action, list, error, …)?
+- Does the repo already express that kind somewhere worth building on?
+- Are we **extending**, **extracting a small shared spine**, **shipping a deliberate one-off**, or **documenting a fork**?
 
 ## When answering Scott
 
-State in plain terms: how this fits **one product story**, what you reused or generalized, and any **intentional** exception worth recording.
+Offer a **short coherence note**: what pattern you built on, what you left separate on purpose, and anything worth revisiting later—**without** blocking the slice if he wants to move.
 
-## Minimal check
+## Optional reflection
 
-- [ ] Coherence: one story extended, not a parallel invention sketched only for this screen
+- [ ] (Optional) I considered how this slice fits the wider product story—not a requirement to check every time.

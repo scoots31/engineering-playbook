@@ -8,21 +8,21 @@ Single source of truth for **how** work runs. Product facts (PRDs, ADRs, runbook
 2. **Small vertical slices** — Ship thin end-to-end increments with tests and rollback in mind.
 3. **Written handoffs** — When switching tools or sessions, update `HANDOFF.md` (see `HANDOFF.template.md`).
 4. **Pin the playbook** — If the product uses a `playbook/` submodule, it pins a specific commit; upgrade when you choose. (Global playbook mode skips this.)
-5. **Coherence — one product, one story** — The app should feel like **one intentional system**, not a pile of one-off decisions. The same ideas (rules, flows, visual language, “how we do X”) should resolve to **shared meaning** in design and **shared implementation** in code unless the product deliberately draws a line—and then that line is explicit.
+5. **Coherence — one product, one story (guide, not gate)** — *Prefer* that the app feel like **one intentional system**: similar problems tend toward **similar patterns** in design and **shared homes** in code. When the product **deliberately** does something differently, that is fine—**say it out loud** (brief comment, note, or ADR) so later work does not “fix” it back to sameness by accident. Speed and learning still matter; this principle **nudges**, it does not veto Scott’s calls.
 
 ## Coherence (design + implementation mindset)
 
-This is a **stance**, not a checklist of widgets. It is **conceptual integrity**: what the product *means* and *does* stays aligned across screens, modules, and sessions. New work should **extend the story** the codebase already tells, not start a parallel story because a session forgot to look.
+This is a **stance to steer by**, not a compliance checklist. It is **conceptual integrity** in the small: what the product *means* and *does* **tends to align** across screens and modules because you **look for the existing story** before writing a new one. When a one-off is the right call, **make that choice consciously**—no need to force abstraction on day one.
 
-**What it implies (practice follows from the mindset):**
+**Gentle implications (use judgment):**
 
-- **Design:** recurring user problems get recurring patterns (language, layout, affordances). Exceptions are **designed**, not accidental.
-- **Implementation:** domain behavior and cross-cutting UX live in **clear homes**; new features **plug in** or **generalize** what exists before inventing a second engine for the same job.
-- **Review:** ask “does this match how we already do this class of thing?” before merge. Drift is a bug.
+- **Design:** recurring problems *often* deserve recurring patterns; **designed** exceptions beat accidental drift.
+- **Implementation:** *usually* worth asking whether this feature **extends** something that already exists before starting a parallel path—then choose what fits the slice.
+- **Review:** a useful question is “does this match how we already treat this *class* of thing?”—not a merge blocker by itself, a **quality bar** you dial up over time.
 
-**When:** continuously in **Design** and **Develop**; visible in **Test** and **Review** when things feel inconsistent or duplicated.
+**When:** mostly **Design** and **Develop**; notice it in **Test** / **Review** when something feels off.
 
-**How tools support it:** Principle (5) above; **Principal** and **Staff** lenses surface coherence risk; the **`reuse-before-build`** skill is a **compact reminder** of how that mindset turns into concrete questions in a given repo (search, extend, document real exceptions). Stack-specific conventions belong in **project** `.cursor/rules` or product docs—not in a generic playbook.
+**How tools support it:** Principle (5); **Principal** and **Staff** lenses can **raise** coherence tradeoffs; the **`reuse-before-build`** skill is a **short reminder** of questions to ask—**optional to load**, never a substitute for Scott’s priorities. Stack-specific detail stays in **project** rules or product docs.
 
 ## Stages (gates)
 
@@ -48,7 +48,7 @@ Roles are not separate people—they are **lenses**. In Cursor, use matching **s
 | **UX** | Flows, states, empty/error/loading, accessibility acceptance criteria |
 | **QA** | Test strategy, cases, exploratory charters, release gate |
 | **Product** | Problem statement, metrics, rollout, analytics |
-| **Coherence** (mindset; skill is a shorthand) | `reuse-before-build` — turn “one product, one story” into repo-specific questions before building |
+| **Coherence** (mindset; optional lens) | `reuse-before-build` — gentle questions before building; Scott overrides when speed or exploration wins |
 
 ## Files to keep fresh in the product repo
 

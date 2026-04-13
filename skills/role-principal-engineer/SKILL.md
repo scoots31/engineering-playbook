@@ -25,4 +25,4 @@ description: Applies a principal engineer lens to architecture, tradeoffs, risk,
 - [ ] Rollback or safe deploy path for user-facing changes
 - [ ] Observability hooks appropriate to risk level
 - [ ] No unnecessary new moving parts
-- [ ] **Coherence / conceptual integrity:** flagged if the change splits the product into a second way to satisfy the same domain or user intent without a documented reason (see `reuse-before-build` lens)
+- [ ] **Coherence (guide):** called out if the change might split the same domain or user intent across parallel paths—suggestion, not a veto unless risk is high (see `reuse-before-build` lens)

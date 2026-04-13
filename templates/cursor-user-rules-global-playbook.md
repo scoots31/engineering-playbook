@@ -23,7 +23,7 @@ For **any** workspace, treat this playbook as the default delivery process unles
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-staff-engineer/SKILL.md`
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-qa/SKILL.md`
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-pm/SKILL.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/reuse-before-build/SKILL.md` — **coherence / conceptual integrity**: one product story in design and code; same intent should not sprout unrelated second implementations unless the spec deliberately forks (document that)
+- `/Users/scottheinemeier/Developer/engineering-playbook/skills/reuse-before-build/SKILL.md` — **coherence (guide):** prefer one product story; suggest when parallel paths might drift—user can override for speed or experiments; never treat as a hard gate
 
 **When the user’s intent matches architecture/tradeoffs/system logic**, prefer the Principal Engineer skill; **when they want breakdown, build order, or implementation detail**, prefer the Staff Engineer skill—same role table as in `~/.claude/CLAUDE.md` (keep them in sync if you edit one).
 
