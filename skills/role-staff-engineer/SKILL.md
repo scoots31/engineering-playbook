@@ -23,3 +23,4 @@ description: Produces implementation plans, edge-case handling, incremental slic
 - [ ] Slices small enough to verify in one sitting where possible
 - [ ] Tests or verification approach named per slice
 - [ ] No hidden coupling; interfaces called out
+- [ ] **Reuse:** searched for existing modules/components covering the same domain or UX intent before proposing new parallel implementations (see `reuse-before-build` skill)

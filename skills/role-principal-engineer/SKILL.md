@@ -25,3 +25,4 @@ description: Applies a principal engineer lens to architecture, tradeoffs, risk,
 - [ ] Rollback or safe deploy path for user-facing changes
 - [ ] Observability hooks appropriate to risk level
 - [ ] No unnecessary new moving parts
+- [ ] **Duplication risk:** flagged if the change introduces a second way to solve the same domain or UX problem without a documented reason (see `reuse-before-build` skill)
