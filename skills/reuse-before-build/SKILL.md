@@ -1,29 +1,30 @@
 ---
 name: reuse-before-build
-description: Requires searching for existing implementations and shared UI or domain modules before adding parallel solutions. Use when adding features, new screens, calculations, API clients, or buttons that might duplicate behavior elsewhere; when the user asks for consistency, DRY, shared components, or a single source of truth; or before implementing domain logic that may already exist.
+description: Upholds conceptual integrity and coherent design plus implementation—one product story, shared patterns for the same intent, avoid parallel one-off solutions. Use when adding or changing features, UI, or domain logic; when the user asks for consistency, a design system mindset, DRY, or single source of truth; or when work risks inventing a second way to do what the app already does.
 ---
 
-# Reuse before build
+# Coherence — design and implementation
 
-## Before writing new code
+This skill is a **lens**, not a catalog of components. Hold the whole product in view: **would a user or the next maintainer see one coherent system, or unrelated pieces glued together?**
 
-1. **Search the codebase** (symbols, filenames, prior features) for the same domain concept or very similar UX (e.g. “distance”, “mileage”, “route”, “submit”, “primary action button”).
-2. **If something exists** — extend it, parameterize it, or extract a shared module/component used by both call sites. **Do not** add a second independent implementation unless the user explicitly approves a fork.
-3. **If nothing exists** — implement once in a clear home (folder/module naming matches domain); note in PR/summary where future similar work should plug in.
+## Mindset
 
-## UX consistency
+- **Same meaning → same machinery** (unless the spec intentionally splits them—then say so in code or docs).
+- **Extend the language of the codebase** before introducing a new dialect for the same idea.
+- **Drift is debt** — a second path for the same job will diverge, break under partial fixes, and confuse everyone later.
 
-- Same **user intent** (e.g. “process my request”, “confirm destructive action”) → same **interaction pattern** and **visual role** (primary vs secondary), unless the spec documents an intentional exception.
-- New screens reuse existing button, form, layout, and loading/error primitives when the stack has them.
+## How that turns into action (this repo, this task)
 
-## Output when advising Scott
+Ask briefly:
 
-- **Found:** list existing symbols/paths to reuse.
-- **Gap:** what is missing and the smallest addition to make reuse possible.
-- **Risk:** where duplication would hurt (bugs, drift, partial fixes).
+1. **What class of thing is this?** (calculation, action, form, list, error path, …)
+2. **Does the app already “speak” that class somewhere?** Search, read siblings, follow existing patterns.
+3. **Are we extending a home, extracting a shared spine, or documenting a deliberate exception?** Avoid silent third options.
 
-## Checklist
+## When answering Scott
 
-- [ ] Searched for prior implementation of this domain rule or pattern
-- [ ] Chosen extend/extract over copy-paste
-- [ ] Intentional differences (if any) are explicit in code comment or doc
+State in plain terms: how this fits **one product story**, what you reused or generalized, and any **intentional** exception worth recording.
+
+## Minimal check
+
+- [ ] Coherence: one story extended, not a parallel invention sketched only for this screen

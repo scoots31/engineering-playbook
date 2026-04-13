@@ -8,20 +8,21 @@ Single source of truth for **how** work runs. Product facts (PRDs, ADRs, runbook
 2. **Small vertical slices** — Ship thin end-to-end increments with tests and rollback in mind.
 3. **Written handoffs** — When switching tools or sessions, update `HANDOFF.md` (see `HANDOFF.template.md`).
 4. **Pin the playbook** — If the product uses a `playbook/` submodule, it pins a specific commit; upgrade when you choose. (Global playbook mode skips this.)
-5. **One source of truth per concept** — Do not accumulate parallel implementations for the same domain rule or the same user intent (e.g. one mileage/route calculator, one pattern for “process this request” buttons—shared look **and** shared code path unless the product spec deliberately splits them).
+5. **Coherence — one product, one story** — The app should feel like **one intentional system**, not a pile of one-off decisions. The same ideas (rules, flows, visual language, “how we do X”) should resolve to **shared meaning** in design and **shared implementation** in code unless the product deliberately draws a line—and then that line is explicit.
 
-## Reuse, consistency, and shared primitives
+## Coherence (design + implementation mindset)
 
-This is **build and design discipline**, not a separate product phase. Apply it during **Design** and **Develop** (and catch violations in **Test** / **Review**).
+This is a **stance**, not a checklist of widgets. It is **conceptual integrity**: what the product *means* and *does* stays aligned across screens, modules, and sessions. New work should **extend the story** the codebase already tells, not start a parallel story because a session forgot to look.
 
-| Rule | What it means |
-|------|----------------|
-| **Search before add** | Before writing new logic or UI for an existing capability, search the repo for prior art (same domain words, similar screens, existing utilities). |
-| **Extend or extract** | Prefer extending a module or extracting a shared helper/component over copy-paste “second way.” |
-| **Same intent → same contract** | If two flows mean the same thing to the user (submit, confirm, calculate, export…), they should share behavior and presentation unless UX explicitly requires a difference—and then document why. |
-| **Document intentional forks** | If two paths must differ, add a short comment or ADR so the next session does not “unify” them by accident. |
+**What it implies (practice follows from the mindset):**
 
-**Where it lives in tooling:** playbook principle above + **`reuse-before-build` skill** (checklist). **Principal Engineer** and **Staff Engineer** skills should call out duplication risk during review and implementation planning. Optional **project** `.cursor/rules` can add stack-specific patterns (e.g. “all distance math lives in `geo/`”).
+- **Design:** recurring user problems get recurring patterns (language, layout, affordances). Exceptions are **designed**, not accidental.
+- **Implementation:** domain behavior and cross-cutting UX live in **clear homes**; new features **plug in** or **generalize** what exists before inventing a second engine for the same job.
+- **Review:** ask “does this match how we already do this class of thing?” before merge. Drift is a bug.
+
+**When:** continuously in **Design** and **Develop**; visible in **Test** and **Review** when things feel inconsistent or duplicated.
+
+**How tools support it:** Principle (5) above; **Principal** and **Staff** lenses surface coherence risk; the **`reuse-before-build`** skill is a **compact reminder** of how that mindset turns into concrete questions in a given repo (search, extend, document real exceptions). Stack-specific conventions belong in **project** `.cursor/rules` or product docs—not in a generic playbook.
 
 ## Stages (gates)
 
@@ -47,7 +48,7 @@ Roles are not separate people—they are **lenses**. In Cursor, use matching **s
 | **UX** | Flows, states, empty/error/loading, accessibility acceptance criteria |
 | **QA** | Test strategy, cases, exploratory charters, release gate |
 | **Product** | Problem statement, metrics, rollout, analytics |
-| **Reuse / consistency** (skill, not a persona) | `reuse-before-build` — search before add; one implementation per domain concept; shared UI patterns for the same intent |
+| **Coherence** (mindset; skill is a shorthand) | `reuse-before-build` — turn “one product, one story” into repo-specific questions before building |
 
 ## Files to keep fresh in the product repo
 
