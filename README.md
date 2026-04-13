@@ -47,6 +47,10 @@ git commit -m "Bump engineering-playbook to <tag-or-branch>"
 
 Tag releases on this repo (e.g. `v1.0.0`). Product repos pin the submodule to a commit; bump deliberately when you want new playbook behavior.
 
+## Git note (local checkout)
+
+If this folder uses a **separate git directory** (a `.git` file with `gitdir: ...engineering-playbook.git`), that is still a normal Git work tree; `git status`, remotes, and submodules behave the same. After you add a GitHub remote and push, cloning the repo elsewhere will typically give you a standard `.git` directory. If you prefer one folder only, clone fresh from GitHub into `engineering-playbook` and retire the local pair.
+
 ## License
 
 Use and adapt internally as needed; add a `LICENSE` file when you publish the repo.
