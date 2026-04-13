@@ -35,6 +35,10 @@ Environment variable (optional, for shell scripts only):
    `~/.cursor/skills/`  
    so role lenses apply in every workspace without opening the playbook tree.
 
+## MemPalace (both tools)
+
+Scott’s **`~/.claude/CLAUDE.md`** and the **Cursor User rules** snippet in `templates/cursor-user-rules-global-playbook.md` both instruct the agent to **offer or run MemPalace** when asked, and to **remind at end of substantial sessions**. Keep those two in sync if you change paths or commands.
+
 ## New projects
 
 Create the repo as usual. **No** `git submodule add` required. Optionally add **only** project-specific `.cursor/rules` (globs, stack) in that repo.

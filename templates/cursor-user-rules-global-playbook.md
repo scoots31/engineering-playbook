@@ -33,3 +33,15 @@ only when the user is doing a handoff; keep `HANDOFF.md` in the project repo if 
 **Project-specific** context (stack, architecture, product decisions) lives **in the open project**—blueprints, `docs/`, README—not in the global playbook.
 
 **Do not** paste the entire playbook into chat every turn; load it when the phase calls for it (plan, design, review, release).
+
+---
+
+## MemPalace (long-term memory)
+
+Scott uses **MemPalace**; data lives under `~/.mempalace/`. CLI (use this path if `mempalace` is not on PATH):
+
+`/Users/scottheinemeier/Apps/.venv/bin/mempalace`
+
+**When the user asks** to update memory / MemPalace / “remember this in the palace”: run the right ingest—typically `mempalace mine "<workspace or project root>"` for code/docs, or `mempalace mine "<path_to_chat_exports>" --mode convos` for exported conversations. Use `mempalace status` to confirm. Do not mine huge unrelated trees (e.g. entire `$HOME`) without explicit approval.
+
+**At the end of a substantial session** (meaningful feature or design work finished, or the user signals wrap-up): **remind** Scott about MemPalace and **offer** to run `mempalace mine` on the **current workspace root** (or convo exports path if that is what changed). If they confirm, run it via the **Shell** tool using the absolute binary path above.
