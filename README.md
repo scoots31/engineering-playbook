@@ -2,9 +2,17 @@
 
 Reusable delivery system for solo and small-team product work. Use it with **Cursor**, **Claude Code**, or both: the playbook is plain markdown and templates in git—each tool only needs a short pointer in the product repo.
 
-## Use in a product repository
+## Global mode (recommended for you)
 
-Mount this repo as a **submodule** at `playbook/`:
+If you want **one playbook for every project** with **no submodule per repo**, follow  
+[`docs/engineering/global-for-all-projects.md`](docs/engineering/global-for-all-projects.md)  
+and paste the Cursor snippet from  
+[`templates/cursor-user-rules-global-playbook.md`](templates/cursor-user-rules-global-playbook.md)  
+into **Cursor Settings → Rules → User rules**. Wire **Claude Code** in `~/.claude/CLAUDE.md` the same way.
+
+## Use in a product repository (optional submodule)
+
+Mount this repo as a **submodule** at `playbook/` when you want the playbook **version-pinned inside that product repo** (e.g. team or release reproducibility):
 
 ```bash
 git submodule add <your-playbook-repo-url> playbook

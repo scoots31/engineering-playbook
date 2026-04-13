@@ -1,6 +1,8 @@
 # Integrating this playbook with Claude Code
 
-Assume the product repo has this playbook at **`playbook/`** (git submodule).
+**Global mode (no submodule):** see [`global-for-all-projects.md`](global-for-all-projects.md) — point `~/.claude/CLAUDE.md` at a fixed playbook path on disk.
+
+**Submodule mode:** assume the product repo has this playbook at **`playbook/`** (git submodule).
 
 ## 1. Where Claude Code reads instructions
 
