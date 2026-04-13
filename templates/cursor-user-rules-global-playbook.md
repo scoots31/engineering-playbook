@@ -11,6 +11,8 @@ Replace the path if your playbook is not at `~/Developer/engineering-playbook`._
 
 For **any** workspace, treat this playbook as the default delivery process unless the user explicitly overrides it for a one-off task.
 
+**Stack default:** most new work is **not** native iOS. Infer language, framework, and deploy from the **open project** (README, `docs/`, configs). Assume Swift/Xcode only when the repo is clearly an Apple-platform app.
+
 **When starting substantial product or engineering work** (new feature, refactor, release prep), read or skim:
 
 - `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/AI_PLAYBOOK.md`
