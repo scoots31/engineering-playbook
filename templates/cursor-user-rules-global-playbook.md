@@ -20,8 +20,11 @@ For **any** workspace, treat this playbook as the default delivery process unles
 **Role lenses** (Principal Engineer, QA, PM, etc.): use the matching **Cursor skill** under `~/.cursor/skills/` if installed; otherwise read:
 
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-principal-engineer/SKILL.md`
+- `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-staff-engineer/SKILL.md`
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-qa/SKILL.md`
 - `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-pm/SKILL.md`
+
+**When the user’s intent matches architecture/tradeoffs/system logic**, prefer the Principal Engineer skill; **when they want breakdown, build order, or implementation detail**, prefer the Staff Engineer skill—same role table as in `~/.claude/CLAUDE.md` (keep them in sync if you edit one).
 
 **Handoffs** (switching tools or long sessions): use the template at  
 `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/HANDOFF.template.md`  
