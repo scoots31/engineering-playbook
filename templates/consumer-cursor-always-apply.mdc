@@ -1,0 +1,22 @@
+---
+description: Core delivery playbook — stages, handoffs, and pointers to submodule docs
+alwaysApply: true
+---
+
+# Engineering playbook (submodule)
+
+This project mounts the shared playbook at `playbook/`.
+
+## Before substantial work
+
+1. Read or skim `playbook/docs/engineering/AI_PLAYBOOK.md` for stage gates and role lenses.
+2. If switching tools or long sessions, maintain `HANDOFF.md` using `playbook/docs/engineering/HANDOFF.template.md`.
+
+## Expectations
+
+- Prefer small vertical slices with tests and rollback for user-facing changes.
+- Do not duplicate long playbook text in chat; cite paths under `playbook/docs/` when giving process guidance.
+
+## Product-specific rules
+
+Add separate `.mdc` rules in `.cursor/rules/` for stack conventions, globs, and security (keep each rule focused).
