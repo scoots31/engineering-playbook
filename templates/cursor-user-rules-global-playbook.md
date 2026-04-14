@@ -1,7 +1,8 @@
 # Cursor User Rules — paste into Cursor Settings → Rules → User rules
 
-_Copy everything below the line into Cursor **Settings → Rules → User rules** (global).  
-Replace the path if your playbook is not at `~/Developer/engineering-playbook`._
+_Copy everything below the line into Cursor **Settings → Rules → User rules** (global)._
+
+**Path portability:** Cursor does not expand shell environment variables in User rules. For Claude Code, set `ENGINEERING_PLAYBOOK` (see `engineering-playbook/docs/engineering/PLAYBOOK_PATH.md`). **Keep the “Playbook root” absolute path below identical** to that directory whenever you move the playbook—update `~/.claude/CLAUDE.md` in the same edit.
 
 ---
 

@@ -8,9 +8,13 @@ Default path (adjust if you move the repo):
 
 `~/Developer/engineering-playbook`
 
-Environment variable (optional, for shell scripts only):
+**Portable override:** set `ENGINEERING_PLAYBOOK` to the absolute playbook path so **Claude Code** slash commands, subagents, and shell scripts resolve the same root without editing each product. Full rules and migration checklist: [`PLAYBOOK_PATH.md`](PLAYBOOK_PATH.md).
 
-`export ENGINEERING_PLAYBOOK="$HOME/Developer/engineering-playbook"`
+```bash
+export ENGINEERING_PLAYBOOK="$HOME/Developer/engineering-playbook"
+```
+
+Cursor **User rules** cannot read shell environment variables—keep the playbook paths in your pasted snippet aligned with whatever directory `ENGINEERING_PLAYBOOK` points to (update both when you move the repo).
 
 ## What lives globally vs in each project
 
@@ -23,7 +27,7 @@ Environment variable (optional, for shell scripts only):
 
 ## Claude Code
 
-1. In **`~/.claude/CLAUDE.md`**, keep a short block that points at the absolute paths under `~/Developer/engineering-playbook/…` (see your file—you should have a “Global engineering playbook” section).
+1. In **`~/.claude/CLAUDE.md`**, keep a short block that points at the playbook root (same path as `ENGINEERING_PLAYBOOK` or the default under `~/Developer/engineering-playbook/…`). See [`integrate-claude-code.md`](integrate-claude-code.md).
 2. **Project facts** stay in that repo (e.g. `BLUEPRINT.md`, Xcode layout)—do not duplicate the full playbook into global files.
 
 ## Cursor
@@ -31,7 +35,7 @@ Environment variable (optional, for shell scripts only):
 1. **User Rules** (Cursor **Settings → Rules → User rules**): paste the snippet from  
    `engineering-playbook/templates/cursor-user-rules-global-playbook.md`  
    once. Update the path if your playbook lives elsewhere.
-2. **Personal skills** (optional but recommended): copy `playbook/skills/role-*` into  
+2. **Personal skills** (optional but recommended): copy `skills/role-*` from this playbook checkout into  
    `~/.cursor/skills/`  
    so role lenses apply in every workspace without opening the playbook tree.
 

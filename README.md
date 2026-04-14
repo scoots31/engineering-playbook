@@ -43,17 +43,27 @@ git commit -m "Bump engineering-playbook to <tag-or-branch>"
 | Path | Purpose |
 |------|---------|
 | `docs/engineering/AI_PLAYBOOK.md` | Canonical process: stages, roles, definitions of done |
+| `docs/engineering/PLAYBOOK_PATH.md` | Portable playbook root: `ENGINEERING_PLAYBOOK` vs default path |
 | `docs/engineering/HANDOFF.template.md` | Copy to product root as `HANDOFF.md` when switching tools or agents |
-| `docs/engineering/integrate-cursor.md` | Wire Cursor (rules, skills, hooks) to this submodule |
-| `docs/engineering/integrate-claude-code.md` | Wire Claude Code to the same content |
+| `docs/engineering/workflow-vocabulary.md` | Map community workflow phrasing to this playbook’s stages |
+| `docs/engineering/claude-code-harness.md` | Claude Code: commands, subagents, skills, one-driver alignment |
+| `docs/engineering/skill-authoring.md` | How to write and evolve `SKILL.md` / folder skills |
+| `docs/engineering/claude-code-hooks.md` | Claude Code hooks vs Cursor hooks |
+| `docs/engineering/mcp-checklist.md` | When and how to add MCP safely per product |
+| `docs/engineering/external-curated-resources.md` | Curated community index (non-authoritative) |
+| `docs/engineering/integrate-cursor.md` | Wire Cursor (rules, skills, hooks); global + submodule |
+| `docs/engineering/integrate-claude-code.md` | Wire Claude Code (CLAUDE.md, commands, agents, MCP) |
 | `docs/product`, `docs/design`, `docs/tech`, `docs/qa`, `docs/ops` | Empty buckets for **product-specific** docs (optional; often live in the product repo root instead) |
-| `templates/` | Snippets to copy into each product repo (thin pointers) |
+| `templates/` | Snippets for product repos and Cursor user rules |
+| `templates/claude-commands/` | Slash command templates for `.claude/commands/` |
+| `templates/claude-agents/` | Read-only subagent templates for `.claude/agents/` |
+| `templates/mcp.json.example` | Structural MCP example (replace placeholders) |
 | `skills/` | Role skills: install under `~/.cursor/skills/` or `.cursor/skills/` in a product |
 | `hooks/examples/` | Example Cursor hooks (copy/adapt per product or use user-level hooks) |
 
 ## Versioning
 
-Tag releases on this repo (e.g. `v1.0.0`). Product repos pin the submodule to a commit; bump deliberately when you want new playbook behavior.
+Tag releases on this repo (e.g. `v1.0.0`). **Submodule mode:** product repos pin the submodule to a commit; bump deliberately when you want new playbook behavior. **Global mode:** update the single checkout on disk (and keep Cursor User rules + `~/.claude/CLAUDE.md` paths in sync per [`docs/engineering/PLAYBOOK_PATH.md`](docs/engineering/PLAYBOOK_PATH.md)).
 
 ## Git note (local checkout)
 

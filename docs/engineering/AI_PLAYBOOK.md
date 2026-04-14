@@ -58,3 +58,5 @@ Roles are not separate people—they are **lenses**. In Cursor, use matching **s
 ## Updating this playbook
 
 Change this repository, tag a release, then bump the `playbook/` submodule in each product when ready.
+
+**Claude Code:** optional slash commands and subagents that **read** this playbook without duplicating it—see [`integrate-claude-code.md`](integrate-claude-code.md) and [`claude-code-harness.md`](claude-code-harness.md). **Portable path:** [`PLAYBOOK_PATH.md`](PLAYBOOK_PATH.md).
