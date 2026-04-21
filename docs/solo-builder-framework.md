@@ -169,9 +169,11 @@ ENTRY POINT
 2.6 DESIGN REVIEW  ← BUILT (iterative loop — runs as many rounds as needed)
    └── Round 1: full first pass, all screens, define initial slices, trigger spikes
    └── Round N: refine slices, promote to Ready, update backlog
+   └── process-mapper cross-reference every round — coverage map against to-be, uncovered steps surfaced as decisions
+   └── Process anchor required on every slice before it reaches Ready
    └── Build signal: enough slices Ready to form a coherent Phase 1 starting point
    └── Continues in parallel with build for remaining slices
-   └── Output: docs/backlog.md — ID, Name, Description, Dependency, Status per slice
+   └── Output: docs/backlog.md — ID, Name, Process Anchor, Description, Dependency, Status per slice
              + review log appended each round
 
 3. PLAN
@@ -226,10 +228,6 @@ ENTRY POINT
 ```
 
 ---
-
-## What's Not Solved Yet
-
-**Design review process-mapper integration** — design review needs to explicitly cross-reference slice definitions against the to-be process map, flagging uncovered steps and decision points without an assigned slice.
 
 ---
 

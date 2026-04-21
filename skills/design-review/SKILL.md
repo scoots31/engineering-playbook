@@ -49,7 +49,12 @@ Before the round begins, read:
 - All design screens in `docs/design/`
 - Current backlog at `docs/backlog.md` (if it exists — first round creates it)
 - Deferred decisions log at `docs/design/deferred-decisions.md`
+- **To-be process map at `docs/process/to-be-[name].md`** — the agreed process. Every slice should implement a step in it.
 - Any spike results in `docs/spikes/`
+
+If the to-be process map doesn't exist, stop before reviewing slices. The process map is what tells you whether the design covers the right things — without it, slice review is just reacting to screens.
+
+> "No to-be process map found. Go to Discover and agree the to-be process before reviewing slices — the map is what we're building against."
 
 Orient out loud: *"We have [N] screens, [N] slices defined so far — [N] Ready, [N] In Review, [N] Blocked. This round we're reviewing [specific focus]."*
 
@@ -68,6 +73,36 @@ For each finding, classify it immediately:
 | Ready signal — slice has everything it needs | Promote to Ready |
 
 Don't bundle findings. Each one gets named and classified before moving to the next.
+
+### Step 2.5: Check Process Coverage
+
+After reviewing screens, cross-reference the defined slices against the to-be process map.
+
+For every step in the to-be map, ask: **is there a slice that implements this step?**
+
+Build a coverage map — one line per process step:
+
+```
+Step 1: [step name] → SL-001 (main path) ✅
+Step 2: [step name] → SL-003 (main path), SL-007 (branch) ✅
+Step 3: [step name] → NO SLICE ASSIGNED ⚠️
+Step 4: [step name] → Deferred ⏸
+```
+
+**For every uncovered step, surface it as an explicit decision — not a silent gap:**
+
+> "Step 3 in the to-be map — '[step name]' — has no slice assigned. Is this:
+> - Background logic handled inside an existing slice?
+> - Missing and needs a new slice?
+> - Intentionally deferred (should appear in deferred-decisions.md)?"
+
+Get an answer before the round closes. Unresolved coverage gaps block a clean Phase 1 — they surface later as missing behavior during phase test, when they're expensive to fix.
+
+**Positive coverage check too** — slices that can't be mapped to any process step are also a signal. They may be infrastructure (valid), or they may be scope creep (needs a decision).
+
+> "SL-008 (Admin Panel) doesn't map to any step in the to-be process. Is this infrastructure, a deferred feature, or something that should be removed from scope?"
+
+This coverage check runs every round — not just Round 1. As new slices are added and process understanding deepens, gaps that weren't visible before may appear.
 
 ### Step 3: Define or Refine Slices
 
@@ -103,6 +138,7 @@ Every slice in the backlog has one of these states at all times:
 - Done looks like is defined — 2–3 criteria, not vague
 - Dependencies are identified and either resolved or not blocking
 - No open spike on it
+- **Process anchor is set** — which step in the to-be map this slice implements, or explicitly documented as infrastructure/background logic that doesn't map to a user-facing step
 - The solo confirms it's clear enough to hand to a builder
 
 This is the answer to "when do we build it." Not when the overall design is done. When this specific slice has these things. The backlog shows you — no ceremony required.
@@ -177,6 +213,7 @@ This document serves two audiences equally: the solo (knowing where they are and
 **Phase:** 1  
 **Design reference:** [screen file — specific element]  
 **Description:** [One sentence — what this slice builds]  
+**Process anchor:** [to-be process step name] → [main path / branch / exception / infrastructure]  
 **Done looks like:**
 - [Acceptance criterion 1]
 - [Acceptance criterion 2]
@@ -217,7 +254,7 @@ This document serves two audiences equally: the solo (knowing where they are and
 
 Each round has a focus — don't try to review everything equally every time. Let the findings from the previous round drive the focus of the next.
 
-**Round 1 (first design review):** Full first pass on all screens. Everything starts as In Review. Define slices where possible. Identify spikes. Establish the backlog.
+**Round 1 (first design review):** Full first pass on all screens. Everything starts as In Review. Define slices where possible. Identify spikes. Establish the backlog. Run the process coverage check — produce the full coverage map and surface every uncovered to-be step as a decision. No slice reaches Ready on Round 1 without a process anchor.
 
 **Round 2+:** Focus on what moved since last round — spike results returned, design updates, new screens. What can be promoted to Ready? What's still open?
 
@@ -242,3 +279,5 @@ End each round by stating explicitly:
 | Updating backlog only at the end of a round | Loses the thread | Update as the round proceeds |
 | Reviewing without the design artifact open | Working from memory | Always review against the actual HTML screens |
 | Letting blocked slices sit without naming the spike | Invisible blockers | Every blocked slice has a named, specific spike question |
+| Skipping the process coverage check | Slices pile up around screens, whole process steps go unbuilt | Run coverage map every round — every to-be step must have a slice or an explicit decision |
+| Slices reaching Ready without a process anchor | prd-to-plan can't sequence by process order; phase test has no grounding | Process anchor is a Ready requirement, not an optional field |
