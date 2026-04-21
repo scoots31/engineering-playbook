@@ -952,27 +952,32 @@
           <div class="skill-name">to-issues</div>
           <div class="skill-badge">User-triggered</div>
         </div>
-        <div class="skill-description">Converts the approved implementation plan into GitHub issues in dependency order. Each issue includes design reference, process anchor, done criteria, and dependency links — everything a builder needs to start without asking questions.</div>
+        <div class="skill-description">Converts the approved implementation plan into GitHub issues in dependency order. Each issue is self-contained — design reference, process anchor, data anchor, done criteria, and dependency links included. A builder can start any slice from its issue alone without reading another document.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
-              <li>Creates issues in dependency order — blockers first</li>
-              <li>Each issue: design screen reference, process anchor, done criteria, dependencies</li>
-              <li>Uses gh CLI to create issues directly</li>
-              <li>Labels by phase and status</li>
+              <li>Confirms prerequisites first: plan approved, gh CLI authenticated, process anchors on every Ready slice</li>
+              <li>Creates issues in dependency order — blockers first so issue numbers can be referenced in dependents</li>
+              <li><strong>Required fields per issue:</strong> title, what it builds, design reference, process anchor, data anchor, done criteria, depends on, notes</li>
+              <li>Uses gh CLI with structured body — title format: <code>[SL-XXX] [Slice Name]</code></li>
+              <li>Labels by phase and status: Phase 1/2, Ready, Infrastructure, Blocked</li>
+              <li>Deferred slices excluded — only Ready slices become issues</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">Invoked By</div>
             <ul>
-              <li>User, after prd-to-plan is approved</li>
+              <li>User, immediately after <strong>prd-to-plan</strong> is approved</li>
+              <li>Plan is the source of truth — to-issues converts it, does not redesign it</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
               <li>GitHub issues created in dependency order</li>
+              <li>Phase and status labels applied (<div class="output-tag">Phase 1</div> <div class="output-tag">Ready</div> <div class="output-tag">Infrastructure</div>)</li>
+              <li>Confirmation report: slice ID → issue number → status per slice</li>
               <li>Each issue self-contained — builder can start without additional context</li>
             </ul>
           </div>
