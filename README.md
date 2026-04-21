@@ -1,85 +1,145 @@
-# Engineering playbook
+# Solo Builder Framework
 
-Reusable delivery system for solo and small-team product work. Use it with **Cursor**, **Claude Code**, or both: the playbook is plain markdown and templates in git—each tool only needs a short pointer in the product repo.
+A complete lifecycle system for building software with AI — from first idea through deployed and tested. Covers 27 interconnected skills spanning discovery, design, planning, build, QA, testing, and deploy. Works with **Cursor** and **Claude Code**.
 
-## Global mode (recommended for you)
+---
 
-If you want **one playbook for every project** with **no submodule per repo**, follow  
-[`docs/engineering/global-for-all-projects.md`](docs/engineering/global-for-all-projects.md)  
-and paste the Cursor snippet from  
-[`templates/cursor-user-rules-global-playbook.md`](templates/cursor-user-rules-global-playbook.md)  
-into **Cursor Settings → Rules → User rules**. Wire **Claude Code** in `~/.claude/CLAUDE.md` the same way.
+## What this is
 
-## Use in a product repository (optional submodule)
+Most AI coding tools help you write code faster. This framework replaces the discipline a real team provides — the PM challenge, the tech review, the design artifact, the QA gate, the process map — so a solo builder has all of it without needing a team.
 
-Mount this repo as a **submodule** at `playbook/` when you want the playbook **version-pinned inside that product repo** (e.g. team or release reproducibility):
+**27 skills** cover the full lifecycle. **4 always-on skills** run throughout without being invoked. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
 
+→ See [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) for full detail on every skill.
+
+---
+
+## Setup — pick your tool
+
+### Cursor
+
+**Step 1 — Clone the repo**
 ```bash
-git submodule add <your-playbook-repo-url> playbook
-git commit -m "Add engineering playbook submodule at playbook/"
+git clone git@github.com:scoots31/engineering-playbook.git ~/Developer/engineering-playbook
 ```
 
-Clone a repo that already includes the submodule:
-
+**Step 2 — Find your absolute path**
 ```bash
-git clone --recurse-submodules <product-repo-url>
-# or after a normal clone:
-git submodule update --init --recursive
+cd ~/Developer/engineering-playbook && pwd
+```
+Copy the output — you'll need it in the next step.
+
+**Step 3 — Set up User Rules**
+
+Open `templates/cursor-user-rules-global-playbook.md`. Replace every instance of `[PLAYBOOK_ROOT]` with the path from Step 2.
+
+Then paste the entire contents (below the dashed line) into:
+**Cursor → Settings → Rules → User rules**
+
+That's it. Cursor now knows the full framework and will use it automatically.
+
+---
+
+### Claude Code
+
+**Step 1 — Clone the repo** (same as above)
+```bash
+git clone git@github.com:scoots31/engineering-playbook.git ~/Developer/engineering-playbook
 ```
 
-### Upgrade the playbook version in a product
+**Step 2 — Add to your global CLAUDE.md**
 
-```bash
-cd playbook
-git fetch origin
-git checkout <tag-or-branch>   # e.g. v1.0.0 or main
-cd ..
-git add playbook
-git commit -m "Bump engineering-playbook to <tag-or-branch>"
+Open (or create) `~/.claude/CLAUDE.md` and add:
+
+```markdown
+## Global engineering playbook
+
+**Playbook root:** ~/Developer/engineering-playbook
+
+This playbook contains the Solo Builder Framework — read
+~/Developer/engineering-playbook/skills/start/SKILL.md
+when opening any new project to route correctly.
+
+For phase skills, role lenses, and always-on skills see:
+~/Developer/engineering-playbook/README.md
 ```
 
-## What lives here
+Adjust the path if you cloned somewhere else.
 
-| Path | Purpose |
-|------|---------|
-| `docs/engineering/AI_PLAYBOOK.md` | Canonical process: stages, roles, definitions of done |
-| `docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` | **Global SOP:** Plan → Build handoff bundle, prompts, Build-phase habits (every project) |
-| `docs/engineering/PLAYBOOK_PATH.md` | Portable playbook root: `ENGINEERING_PLAYBOOK` vs default path |
-| `docs/engineering/HANDOFF.template.md` | Copy to product root as `HANDOFF.md` when switching tools or agents |
-| `docs/engineering/workflow-vocabulary.md` | Map community workflow phrasing to this playbook’s stages |
-| `docs/engineering/claude-code-harness.md` | Claude Code: commands, subagents, skills, one-driver alignment |
-| `docs/engineering/skill-authoring.md` | How to write and evolve `SKILL.md` / folder skills |
-| `docs/engineering/claude-code-hooks.md` | Claude Code hooks vs Cursor hooks |
-| `docs/engineering/mcp-checklist.md` | When and how to add MCP safely per product |
-| `docs/engineering/external-curated-resources.md` | Curated community index (non-authoritative) |
-| `docs/engineering/integrate-cursor.md` | Wire Cursor (rules, skills, hooks); global + submodule |
-| `docs/engineering/integrate-claude-code.md` | Wire Claude Code (CLAUDE.md, commands, agents, MCP) |
-| `docs/product`, `docs/design`, `docs/tech`, `docs/qa`, `docs/ops` | Empty buckets for **product-specific** docs (optional; often live in the product repo root instead) |
-| `templates/` | Snippets for product repos and Cursor user rules |
-| `templates/claude-commands/` | Slash command templates for `.claude/commands/` |
-| `templates/claude-agents/` | Read-only subagent templates for `.claude/agents/` |
-| `templates/mcp.json.example` | Structural MCP example (replace placeholders) |
-| `skills/` | Role skills: install under `~/.cursor/skills/` or `.cursor/skills/` in a product |
-| `hooks/examples/` | Example Cursor hooks (copy/adapt per product or use user-level hooks) |
+---
 
-## Versioning
+## How it works
 
-Tag releases on this repo (e.g. `v1.0.0`). **Submodule mode:** product repos pin the submodule to a commit; bump deliberately when you want new playbook behavior. **Global mode:** update the single checkout on disk (and keep Cursor User rules + `~/.claude/CLAUDE.md` paths in sync per [`docs/engineering/PLAYBOOK_PATH.md`](docs/engineering/PLAYBOOK_PATH.md)).
+Open a new project in your editor. Describe what you want to build. The `start` skill reads your opening message and routes you — to **Brainstorm** if the idea needs working through, or **Discover** if you know what you want to build. From there the framework runs phase by phase.
 
-## Git note (local checkout)
+**You bring:** the idea, domain knowledge, and final decisions.  
+**The framework brings:** specialist thinking, design execution, quality gates, and process accountability.
 
-If this folder uses a **separate git directory** (a `.git` file with `gitdir: ...engineering-playbook.git`), that is still a normal Git work tree; `git status`, remotes, and submodules behave the same. After you add a GitHub remote and push, cloning the repo elsewhere will typically give you a standard `.git` directory. If you prefer one folder only, clone fresh from GitHub into `engineering-playbook` and retire the local pair.
+---
 
-## Cursor-only work bundle (no GitHub on target machine)
+## The phases
 
-To install the playbook on a **work laptop** with **Cursor only** (locked-down GitHub, email-sized transfer), build a zip on your personal machine:
+| Phase | Skill | What happens |
+|-------|-------|--------------|
+| Entry | `start` | Routes to Brainstorm or Discover |
+| 0 — optional | `brainstorming` | Idea exploration with process sketch + visual sketch |
+| 1 | `discover` | Full product story + as-is/to-be process maps agreed |
+| 1.5 | `tech-context` | Stack, constraints, deploy config — referenced by everything downstream |
+| 2 | `design-sprint` | HTML visual artifact — all screens, good enough to make real decisions from |
+| 2.5 | `data-scaffold` | Realistic mock data layer + proto-API contract |
+| 2.6 | `design-review` | Iterative slice definition, process coverage check, backlog built |
+| 3 | `prd-to-plan` + `to-issues` | Phased plan sequenced by risk + process order, GitHub issues created |
+| 4 | `solo-build` | Slice-by-slice build — four anchors required, feature branch per slice |
+| Auto | `code-review-and-quality` → `solo-qa` | 7-check gate + active testing — auto-triggered on code-complete |
+| 5 — explicit | `phase-test` | 7-specialist-stage test — invoke with `/phase-test` when phase is built |
+| 6 | `deploy` | Stack-driven deploy — reads tech-context, confirms gate open, verifies live |
 
-```bash
-./packaging/scripts/build-cursor-work-zip.sh
+---
+
+## Always-on skills
+
+These four run throughout the entire framework — never invoked by the user:
+
+| Skill | Role |
+|-------|------|
+| `process-mapper` | Produces as-is + to-be process maps; holds to-be as the process contract across all phases |
+| `product-continuity` | Institutional memory — decisions, questions, assumptions, risks, handoffs across sessions |
+| `framework-health` | Background signal monitor — file existence + handoff + backlog; silent when healthy |
+| `retrospective` | Captures observations in the moment; processes at phase end; improves the framework from real usage |
+
+---
+
+## Communications materials
+
+Pre-built documents for explaining and presenting the framework:
+
+| Document | Purpose |
+|----------|---------|
+| [`docs/communications/process-map.html`](docs/communications/process-map.html) | Full swimlane — all phases, all lanes, every output and gate |
+| [`docs/communications/deck-business.html`](docs/communications/deck-business.html) | 11-slide executive deck — "From How We Work Today to How We Build Tomorrow" |
+| [`docs/communications/deck-solo.html`](docs/communications/deck-solo.html) | 12-slide practitioner deck — mechanics, anchors, QA chain, phase test detail |
+| [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) | All 27 skills — description, key elements, invoked by, output |
+
+Open any HTML file in a browser. Slide decks use arrow keys to navigate.
+
+---
+
+## What's in this repo
+
+```
+skills/                  All 27 framework skills — one folder per skill, SKILL.md inside
+docs/
+  communications/        Process map, slide decks, skills reference
+  process/               as-is and to-be maps (created per project)
+  continuity/            Session memory, decisions, handoffs (created per project)
+  design/                Design sprint HTML artifacts (created per project)
+  engineering/           Supporting docs — playbook, handoff template, integration guides
+templates/
+  cursor-user-rules-global-playbook.md   Paste into Cursor User Rules (replace [PLAYBOOK_ROOT])
 ```
 
-See [`packaging/README.md`](packaging/README.md). Output: `packaging/dist/cursor-work-playbook.zip` — unzip on the work machine, open that folder in Cursor, then follow `00-START-HERE.md` or paste the prompt in `PASTE-IN-CURSOR-CHAT.md`.
+---
 
 ## License
 
-Use and adapt internally as needed; add a `LICENSE` file when you publish the repo.
+Use and adapt internally as needed. Add a `LICENSE` file if publishing publicly.

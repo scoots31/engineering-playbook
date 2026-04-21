@@ -1,50 +1,117 @@
 # Cursor User Rules — paste into Cursor Settings → Rules → User rules
 
-_Copy everything below the line into Cursor **Settings → Rules → User rules** (global)._
+_Copy everything **below the dashed line** into Cursor **Settings → Rules → User rules** (global)._
 
-**Path portability:** Cursor does not expand shell environment variables in User rules. For Claude Code, set `ENGINEERING_PLAYBOOK` (see `engineering-playbook/docs/engineering/PLAYBOOK_PATH.md`). **Keep the “Playbook root” absolute path below identical** to that directory whenever you move the playbook—update `~/.claude/CLAUDE.md` in the same edit.
+## Before you paste — one substitution required
+
+Cursor does not expand shell variables or `~` in User rules. You must replace `[PLAYBOOK_ROOT]` with the absolute path to where you cloned this repo.
+
+**To find your absolute path:** open a terminal, `cd` to where you cloned the repo, and run `pwd`. Copy that output and replace every instance of `[PLAYBOOK_ROOT]` below before pasting.
+
+Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, replace `[PLAYBOOK_ROOT]` with `/Users/yourname/Developer/engineering-playbook`.
 
 ---
 
-## Global engineering playbook
+## Solo Builder Framework — Global Playbook
 
-**Playbook root (absolute):** `/Users/scottheinemeier/Developer/engineering-playbook`
+**Playbook root (absolute):** `[PLAYBOOK_ROOT]`
 
-For **any** workspace, treat this playbook as the default delivery process unless the user explicitly overrides it for a one-off task.
+This playbook contains the **Solo Builder Framework** — a complete lifecycle system for building software with AI, from first idea through deployed and tested. It covers 27 interconnected skills spanning discovery, design, data, review, planning, build, QA, testing, and deploy.
 
-**Stack default:** most new work is **not** native iOS. Infer language, framework, and deploy from the **open project** (README, `docs/`, configs). Assume Swift/Xcode only when the repo is clearly an Apple-platform app.
+---
 
-**When starting substantial product or engineering work** (new feature, refactor, release prep), read or skim:
+## Entry — how new projects start
 
-- `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/AI_PLAYBOOK.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` — when work will move from **Plan** (here) to **Build** (e.g. Claude): handoff bundle, slice-first prompts, Build-phase habits
+When a conversation opens with a project or feature idea and no existing context is found, apply this routing before anything else:
 
-**Role lenses** (Principal Engineer, QA, PM, etc.): use the matching **Cursor skill** under `~/.cursor/skills/` if installed; otherwise read:
+1. **Check for existing context first.** If a discovery brief, blueprint, or active sprint exists — orient to where the project is and continue.
+2. **Read what was brought in:**
+   - Clear idea (who, what, value present) → route to Discover. One warm sentence, then begin.
+   - Exploratory, uncertain tone → route to Brainstorm. Engage with the idea directly.
+   - Ambiguous → ask one question: *"Do you have a clear picture of what you want to build, or are you still working through the idea?"*
+3. **Never announce phases or explain the framework.** One sentence of orientation, then just start.
 
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-principal-engineer/SKILL.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-staff-engineer/SKILL.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-qa/SKILL.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/role-pm/SKILL.md`
-- `/Users/scottheinemeier/Developer/engineering-playbook/skills/reuse-before-build/SKILL.md` — **coherence (guide):** prefer one product story; suggest when parallel paths might drift—user can override for speed or experiments; never treat as a hard gate
+Full routing logic: `[PLAYBOOK_ROOT]/skills/start/SKILL.md`
 
-**When the user’s intent matches architecture/tradeoffs/system logic**, prefer the Principal Engineer skill; **when they want breakdown, build order, or implementation detail**, prefer the Staff Engineer skill—same role table as in `~/.claude/CLAUDE.md` (keep them in sync if you edit one).
+---
 
-**Handoffs** (switching tools or long sessions): use the template at  
-`/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/HANDOFF.template.md`  
-only when the user is doing a handoff; keep `HANDOFF.md` in the project repo if they want it versioned, or local-only if they prefer.
+## The Framework — phase skills
 
-**Project-specific** context (stack, architecture, product decisions) lives **in the open project**—blueprints, `docs/`, README—not in the global playbook.
+Each phase has a skill. Read it before executing that phase. Skills are in `[PLAYBOOK_ROOT]/skills/`.
 
-**Do not** paste the entire playbook into chat every turn; load it when the phase calls for it (plan, design, review, release).
+| Phase | Skill | Read when |
+|-------|-------|-----------|
+| Entry routing | `start/SKILL.md` | Opening a new project |
+| Idea exploration | `brainstorming/SKILL.md` | Idea isn't fully formed yet |
+| Discovery | `discover/SKILL.md` | Building the full product story |
+| Tech stack | `tech-context/SKILL.md` | Establishing stack and constraints |
+| Design | `design-sprint/SKILL.md` | Producing the HTML visual artifact |
+| Data | `data-scaffold/SKILL.md` | Generating mock data layer |
+| Slice definition | `design-review/SKILL.md` | Defining and managing the backlog |
+| Planning | `prd-to-plan/SKILL.md` | Sequencing slices into phases |
+| Issues | `to-issues/SKILL.md` | Converting plan to GitHub issues |
+| Build | `solo-build/SKILL.md` | Slice-by-slice execution |
+| QA (auto) | `code-review-and-quality/SKILL.md` | Auto-invoked on code-complete |
+| QA (auto) | `solo-qa/SKILL.md` | Auto-invoked after code review passes |
+| QA routing | `qa-triage/SKILL.md` | When testing surfaces something unexpected |
+| Phase testing | `phase-test/SKILL.md` | Full-phase test before deploy (/phase-test) |
+| Deploy | `deploy/SKILL.md` | Stack-driven deploy after gate opens |
+
+Supporting skills: `research-spike`, `grill-me`, `to-prd`, `principal-engineer`, `agent-room`, `tdd`, `frontend-design`, `awesome-design-md`
+
+---
+
+## Always-on skills — never invoked by user
+
+Four skills run throughout the entire framework automatically. Read these so you understand when to activate them:
+
+- `[PLAYBOOK_ROOT]/skills/process-mapper/SKILL.md` — produces and maintains as-is + to-be process maps; holds the to-be map as the process contract across all phases
+- `[PLAYBOOK_ROOT]/skills/product-continuity/SKILL.md` — institutional memory across sessions; reads handoff.md at session start, captures decisions/questions/assumptions/risks continuously
+- `[PLAYBOOK_ROOT]/skills/framework-health/SKILL.md` — background signal monitor; checks file existence + handoff + backlog At a Glance; silent when healthy; never blocks
+- `[PLAYBOOK_ROOT]/skills/retrospective/SKILL.md` — flag observations in the moment, process at phase end; evolves the framework from real usage
+
+---
+
+## Role lenses
+
+When the user's intent matches a role, read that skill first:
+
+| Intent | Skill |
+|--------|-------|
+| Architecture, tradeoffs, system risk, "is this the right approach?" | `[PLAYBOOK_ROOT]/skills/role-principal-engineer/SKILL.md` |
+| Implementation breakdown, build order, edge cases | `[PLAYBOOK_ROOT]/skills/role-staff-engineer/SKILL.md` |
+| Scope, sequencing, milestones, "what should we cut?" | `[PLAYBOOK_ROOT]/skills/role-pm/SKILL.md` |
+| Test plan, verification, quality review | `[PLAYBOOK_ROOT]/skills/role-qa/SKILL.md` |
+
+---
+
+## General principles
+
+**Stack default:** most work is not native iOS. Infer stack from the open project (README, `docs/`, config files). Assume Swift/Xcode only when the repo is clearly an Apple-platform project.
+
+**Project-specific context** (stack, architecture, product decisions) lives in the open project — not in the global playbook.
+
+**Load skills when the phase calls for them** — do not paste entire skill files into chat every turn. Read when the phase is active.
+
+**Four anchors required before any slice starts:** design anchor (screen + element) · data anchor (mock fields) · done anchor (2–3 criteria) · process anchor (to-be map step). If a slice is missing any anchor, stop and ask.
+
+**Process contract:** the to-be process map agreed in Discover is the contract for every downstream phase. Every feature slice must map to a step in it. Nothing gets built that can't be traced to the agreed process.
 
 ---
 
 ## MemPalace (long-term memory)
 
-Scott uses **MemPalace**; data lives under `~/.mempalace/`. CLI (use this path if `mempalace` is not on PATH):
+MemPalace data lives under `~/.mempalace/`. Find the CLI path with: `which mempalace` or check the venv at `~/[your-venv-path]/bin/mempalace`.
 
-`/Users/scottheinemeier/Apps/.venv/bin/mempalace`
+**When the user asks** to update memory / MemPalace: run `mempalace mine "<project root>"` for code/docs, or `mempalace mine "<path>" --mode convos` for exported conversations. Use `mempalace status` to confirm.
 
-**When the user asks** to update memory / MemPalace / “remember this in the palace”: run the right ingest—typically `mempalace mine "<workspace or project root>"` for code/docs, or `mempalace mine "<path_to_chat_exports>" --mode convos` for exported conversations. Use `mempalace status` to confirm. Do not mine huge unrelated trees (e.g. entire `$HOME`) without explicit approval.
+**At the end of a substantial session** (feature shipped, major decisions locked, user signals wrap-up): offer to run `mempalace mine` on the current project root. If confirmed, run it via the Shell tool.
 
-**At the end of a substantial session** (meaningful feature or design work finished, or the user signals wrap-up): **remind** Scott about MemPalace and **offer** to run `mempalace mine` on the **current workspace root** (or convo exports path if that is what changed). If they confirm, run it via the **Shell** tool using the absolute binary path above.
+---
+
+## Handoffs
+
+When switching tools or ending a long session, use the handoff template at:
+`[PLAYBOOK_ROOT]/docs/engineering/HANDOFF.template.md`
+
+Copy to the project root as `HANDOFF.md` — versioned or local-only, user's choice.
