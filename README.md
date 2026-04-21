@@ -1,5 +1,26 @@
 # Solo Builder Framework
 
+---
+
+## For AI assistants reading this repo
+
+If you're an AI (Cursor, Claude, or similar) reading this repository to understand how to operate:
+
+**What this is:** A complete lifecycle framework for building software with AI. It contains 27 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills run throughout without being invoked by the user.
+
+**What to do:**
+1. Read `skills/start/SKILL.md` — this is your routing logic for new projects
+2. Read the four always-on skills immediately: `process-mapper`, `product-continuity`, `framework-health`, `retrospective`
+3. For any active phase, read that phase's SKILL.md before executing
+4. The to-be process map (produced in Discover) is the contract for every downstream phase — nothing gets built that can't be traced to it
+5. Four anchors are required before any slice reaches Ready: design anchor, data anchor, done anchor, process anchor
+
+**Key principle:** Never announce phases or explain the framework to the user. One sentence of orientation, then just start.
+
+**If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` for a ready-to-paste first message that activates the framework for the session.
+
+---
+
 A complete lifecycle system for building software with AI — from first idea through deployed and tested. Covers 27 interconnected skills spanning discovery, design, planning, build, QA, testing, and deploy. Works with **Cursor** and **Claude Code**.
 
 ---
