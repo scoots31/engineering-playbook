@@ -1,6 +1,6 @@
 # Integrating this playbook with Claude Code
 
-Canonical process: [`AI_PLAYBOOK.md`](AI_PLAYBOOK.md). Playbook path resolution: [`PLAYBOOK_PATH.md`](PLAYBOOK_PATH.md).
+Canonical process: [`AI_PLAYBOOK.md`](AI_PLAYBOOK.md). **Plan → Build handoff:** [`PLAN_TO_BUILD_HANDOFF_SOP.md`](PLAN_TO_BUILD_HANDOFF_SOP.md). Playbook path resolution: [`PLAYBOOK_PATH.md`](PLAYBOOK_PATH.md).
 
 ## Choose a consumption mode
 
@@ -17,7 +17,7 @@ Keep a **short** block that:
 
 - Points at the resolved playbook root (after `PLAYBOOK_PATH` rules).
 - Lists role skill paths under `skills/role-*/SKILL.md`.
-- Links `docs/engineering/HANDOFF.template.md`.
+- Links `docs/engineering/HANDOFF.template.md` and `docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` (one line each).
 - Does **not** paste the full playbook.
 
 Set `ENGINEERING_PLAYBOOK` in your shell so slash commands and agents can resolve the same root without hardcoding.

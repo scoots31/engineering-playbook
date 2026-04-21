@@ -1,0 +1,231 @@
+---
+name: solo-qa
+description: Verifies that a completed slice is actually done — not just code-complete. Invoked automatically by code-review-and-quality after it passes. Part 1 is AI verification against the full slice spec with active testing. Part 2 is the solo's sign-off in the browser — required, never skipped, cannot be performed by the AI.
+---
+
+# Solo QA
+
+*Code-complete is not done. Done requires two signatures — the AI and the solo.*
+
+**Core question:** "Did we build the right thing — and does the solo confirm it in practice?"
+
+This skill runs after `code-review-and-quality` has passed and logged its confirmation. Code quality is not solo-qa's job — that's already been confirmed. Solo-qa covers the two things code review cannot verify:
+
+1. **The AI confirms:** the slice was built against its full spec — requirements, done criteria, and design — verified actively, not by reading code and assuming
+2. **The solo confirms:** it looks right, feels right, and the criteria hold in practice when they actually use it
+
+Neither alone is sufficient. The AI can verify criteria technically and still miss something only the solo's eye would catch. The solo's sign-off is not a rubber stamp — it's a genuine check the AI cannot perform.
+
+---
+
+## When This Runs
+
+Invoked automatically by `code-review-and-quality` after it passes. Not before. Not manually. The chain is:
+
+```
+solo-build declares code-complete
+  → code-review-and-quality runs
+    → PASS: logs confirmation, invokes solo-qa
+    → FAIL: returns to In Build
+```
+
+If solo-qa is invoked without a code review confirmation in the backlog, stop immediately:
+> "No code review confirmation found for SL-[ID]. Run `/code-review-and-quality` first."
+
+---
+
+## Part 1 — AI Verification
+
+The AI runs this part. The solo is not involved yet.
+
+### Step 0 — Gate Check
+
+Read `docs/backlog.md`. Find the slice record. Confirm the code review pass is logged in the slice detail:
+*"Code review passed [date]..."*
+
+If it's not there, stop. Do not proceed. Return the message above.
+
+---
+
+### Step 1 — Read the Full Slice Spec
+
+This is not the same as reading the done criteria. Read all three anchors from the backlog slice record:
+
+**Design anchor** — which screen, which element, where on screen. Open the design file. Look at the element being verified. Know exactly what it's supposed to look like and contain.
+
+**Data anchor** — which mock file, which fields, what the eventual real source is. Open `data/mock/[entity].json`. Note the actual values in the fields this slice consumes. These are what you'll verify against in the running slice.
+
+**Done anchor** — the 2–3 criteria that close this slice. Read them exactly as written. These are what get verified next.
+
+Don't skip this step. Verifying criteria without first reading the full spec is how things get marked Done that weren't built against the design.
+
+---
+
+### Step 2 — Active Verification of Done Criteria
+
+Open the slice running in preview. Walk through each done criterion actively. Named evidence only — not assumptions from reading code.
+
+The difference:
+- ❌ "The code reads `slot_target` from the mock layer." (code inspection, not verification)
+- ✅ "The rendered value is `14.2` — matches `slot_target: 14.2` in `data/mock/players.json`. Not hardcoded." (active verification)
+
+For each criterion:
+
+**Render checks** — is the element present and visible? Look at it in the preview. Not in the source. In the running output.
+
+**Data checks** — do the values match the mock data exactly? Cross-reference what's rendered against the mock file values. If `players.json` has `slot_target: 14.2` and the screen shows `14.2` — pass. If it shows `14.0` or any other value — fail and name why.
+
+**Edge case checks** — the mock data was seeded with edge cases for this moment. Check them. If the mock has an empty state, a long name, a null value — verify those render without breaking.
+
+**Interactive element checks** — elements specified as present but non-functional in Phase 1 should be present and visible. They don't need to work. They need to exist.
+
+Format each criterion:
+```
+✅ [Criterion] — [evidence: what was observed and where]
+❌ [Criterion] — [what was observed vs. what was expected, specifically]
+```
+
+If any criterion fails: stop. Return to In Build with a specific note. Do not proceed to design fidelity check. The slice is not ready for sign-off.
+
+---
+
+### Step 3 — Design Fidelity
+
+With the design screen open alongside the running slice, compare:
+
+- **Layout and structure** — does the component hierarchy match? Are sections in the right order?
+- **Data rendering** — are values rendering from the mock layer, not hardcoded? (Cross-check with mock file if anything looks off)
+- **Interactive elements** — present as specified, even if non-functional in Phase 1
+- **Edge and empty states** — the mock data has these seeded; verify they surface correctly
+- **Mock indicator badge** — if mock data is active, the badge should be visible
+
+This is not pixel-perfect comparison. The standard is: would a person looking at both the design and the implementation say these are clearly the same thing?
+
+If design fidelity fails: stop. Return to In Build with specific notes. Not "the layout is off" — "the slot context card is positioned below the player tabs in the design but renders above them in the implementation."
+
+---
+
+### AI Verification Conclusion
+
+If all checks pass:
+> "AI verification complete for SL-[ID]. Done criteria met with evidence, design fidelity confirmed. Ready for solo sign-off."
+
+If anything fails:
+> "Returning SL-[ID] to In Build. [Specific issue and what needs to be fixed before resubmission.]"
+
+Update backlog status accordingly.
+
+---
+
+## Part 2 — Solo Sign-Off
+
+The AI cannot do this part. This requires the solo to actually look at the thing running in a browser — not a screenshot, not a preview summary.
+
+When AI verification passes, present the solo with a clear, structured sign-off request:
+
+---
+
+> **SL-[ID] [Name] — ready for your sign-off**
+>
+> AI verification passed. Please open these two things side by side:
+> - Running slice: [URL or preview path]  
+> - Design reference: [design file path] → [element name]
+>
+> Confirm each of these:
+> 1. [Done criterion 1 — exactly as written in the backlog]
+> 2. [Done criterion 2]
+> 3. [Done criterion 3]
+>
+> Does this look right and match the design? Any issues before we mark it Done?
+
+---
+
+Wait for the solo's response. Do not mark Done until they confirm.
+
+**Solo responses:**
+
+| Response | Action |
+|----------|--------|
+| "Yes / Looks good / Done" | Mark Done, update backlog, check if dependent slices unblock |
+| "Almost — [small thing]" | Fix it, re-present. No need to re-run full AI verification for minor adjustments |
+| "No — [specific issue]" | Return to In Build if it's a build issue. Flag for design review if it's a design issue |
+| "Something feels off but I can't place it" | Ask one focused question: "Is it the layout, the data, or the behavior?" Narrow it, then decide path forward |
+
+---
+
+## Marking Done
+
+When solo confirms:
+
+1. Update backlog: status → `✓ Done`
+2. Add to slice detail: *"Done [date]. Verified: [done criteria summary]. Code review: passed. AI verification: passed. Solo sign-off: confirmed."*
+3. Check if any slices were blocked on this one — if so, they can now move to Ready or In Build
+4. Update At a Glance counts in the backlog header
+
+**Then handle version control** — read `docs/tech-context.md` for the project's branching model and follow it:
+
+| Branching model | Action on Done |
+|-----------------|----------------|
+| **Feature branch + PR** (e.g., Bayer Aurora) | Push the feature branch, open a PR to `development`. PR title: `SL-[ID] — [slice name]`. Body: done criteria met, code review passed, solo sign-off confirmed. |
+| **Feature branch, solo merge** (general solo, no PR review) | Push the feature branch, merge to `development` or `main`. Delete the feature branch after merge. |
+| **Trunk-based** (single branch, no feature branches) | Push the commit directly. |
+
+When in doubt, read the branching model from `docs/tech-context.md` — it was established before build started and is the authority.
+
+**Commit message on merge (if squashing):**
+```
+SL-[ID] Done — [slice name]
+
+Done criteria verified. Code review passed. Solo sign-off confirmed.
+```
+
+Done is permanent unless a later slice reveals a regression — in which case, reopen with a specific note about what regressed and why.
+
+---
+
+## When Testing Surfaces Something Unexpected
+
+Not everything that surfaces during QA is a clean pass or a simple build fix. Three types of unexpected discovery need their own paths:
+
+- **Bug** — behavior is defined, implementation doesn't match it
+- **Missing requirement** — behavior was never defined; nobody specified what should happen here
+- **Regression** — something previously Done and working is now broken
+
+When any of these surface — during AI verification or solo sign-off — invoke `qa-triage` immediately. Do not improvise a fix without classifying what was found first. Treating a missing requirement as a bug produces code that solves the wrong problem. Patching a regression without finding the root cause brings it back in the next slice.
+
+`qa-triage` classifies the discovery, determines its scope, routes it to the correct path, and logs the decision. It is designed to be fast — small-scope discoveries get resolved and QA continues. Flow-level issues get routed to design review without stalling everything else.
+
+**The one rule before invoking triage:** do not let the solo sign off on a slice that has an open missing requirement. Undefined behavior that ships with a sign-off becomes assumed behavior. Define it or explicitly defer it to a new slice before the sign-off prompt goes out.
+
+---
+
+## The Done Definition — In Full
+
+A slice is Done when ALL of the following are confirmed:
+
+| Check | Who | What |
+|-------|-----|------|
+| Code quality | `code-review-and-quality` | Built to standard — patterns, data sourcing, cleanliness, docs, stack |
+| Gate confirmation | `solo-qa` | Code review pass logged in backlog before Part 1 starts |
+| Done criteria | AI (solo-qa Part 1) | Each criterion verified actively with named evidence |
+| Design fidelity | AI (solo-qa Part 1) | Built implementation matches design screen clearly |
+| Visual confirmation | Solo (Part 2) | Looked at it running in browser, matches the design |
+| Behavior confirmation | Solo (Part 2) | Feels right in the context of the product |
+| Criteria confirmation | Solo (Part 2) | Done criteria hold in practice, not just on paper |
+
+All required. In order. Solo sign-off is the final gate and cannot be skipped or substituted.
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Problem | Instead |
+|---|---|---|
+| Starting Part 1 without gate confirmation | Code review may not have run | Check backlog for logged confirmation first |
+| Verifying criteria by reading code | Code inspection ≠ active verification | Open the preview, look at running output |
+| "The code reads from mock data" as evidence | That's code review, not QA | Cross-reference rendered values against the mock file |
+| Marking Done without solo sign-off | The solo's eye is the final gate | Always wait — never skip |
+| Solo confirming from memory ("I looked at it earlier") | Solo needs to see it running at this moment | Open the browser, look at it live, then confirm |
+| Vague solo confirmation ("seems fine") | Not a real sign-off | Walk through each done criterion explicitly |
+| Returning to In Build without specific notes | Builder doesn't know what to fix | Always include exact issue and what the fix needs to achieve |
+| Fixing design issues inside QA | Wrong phase for that work | Surface it, flag for design review |

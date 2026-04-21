@@ -43,6 +43,7 @@ git commit -m "Bump engineering-playbook to <tag-or-branch>"
 | Path | Purpose |
 |------|---------|
 | `docs/engineering/AI_PLAYBOOK.md` | Canonical process: stages, roles, definitions of done |
+| `docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` | **Global SOP:** Plan → Build handoff bundle, prompts, Build-phase habits (every project) |
 | `docs/engineering/PLAYBOOK_PATH.md` | Portable playbook root: `ENGINEERING_PLAYBOOK` vs default path |
 | `docs/engineering/HANDOFF.template.md` | Copy to product root as `HANDOFF.md` when switching tools or agents |
 | `docs/engineering/workflow-vocabulary.md` | Map community workflow phrasing to this playbook’s stages |

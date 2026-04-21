@@ -50,9 +50,13 @@ Roles are not separate people—they are **lenses**. In Cursor, use matching **s
 | **Product** | Problem statement, metrics, rollout, analytics |
 | **Coherence** (mindset; optional lens) | `reuse-before-build` — gentle questions before building; Scott overrides when speed or exploration wins |
 
+## Cross-tool workflow: Plan → Build (Cursor, Claude, others)
+
+When **planning / research** and **implementation** use **different tools or sessions**, follow **[`PLAN_TO_BUILD_HANDOFF_SOP.md`](PLAN_TO_BUILD_HANDOFF_SOP.md)** so every project has the same **handoff bundle**, **slice-first prompts**, and **Build-phase habits** (efficiency + accuracy). That doc is the **global SOP**; product repos still hold the actual slice specs and decisions.
+
 ## Files to keep fresh in the product repo
 
-- `HANDOFF.md` — only when mid-flight handoff is needed; otherwise optional.
+- `HANDOFF.md` — only when mid-flight handoff is needed; otherwise optional (see `HANDOFF.template.md`; optional **Plan → Build bundle** checklists can be copied from the template).
 - Product-specific `docs/` or your team’s usual locations for PRDs and ADRs.
 
 ## Updating this playbook

@@ -17,6 +17,7 @@ For **any** workspace, treat this playbook as the default delivery process unles
 **When starting substantial product or engineering work** (new feature, refactor, release prep), read or skim:
 
 - `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/AI_PLAYBOOK.md`
+- `/Users/scottheinemeier/Developer/engineering-playbook/docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` — when work will move from **Plan** (here) to **Build** (e.g. Claude): handoff bundle, slice-first prompts, Build-phase habits
 
 **Role lenses** (Principal Engineer, QA, PM, etc.): use the matching **Cursor skill** under `~/.cursor/skills/` if installed; otherwise read:
 

@@ -13,10 +13,13 @@ Read the canonical delivery doc at:
 
 Use `<playbook-root>/docs/engineering/HANDOFF.template.md` when creating or updating **`HANDOFF.md`** in this repo (or paste for local-only handoffs).
 
+Follow `<playbook-root>/docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md` when implementing from **Plan** artifacts (handoff bundle, slice-first prompts).
+
 **Submodule mode (optional):** if this repository includes `playbook/` as a git submodule, use relative paths instead:
 
 - `playbook/docs/engineering/AI_PLAYBOOK.md`
 - `playbook/docs/engineering/HANDOFF.template.md`
+- `playbook/docs/engineering/PLAN_TO_BUILD_HANDOFF_SOP.md`
 
 Do not duplicate the full playbook in this file.
 
