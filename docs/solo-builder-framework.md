@@ -212,16 +212,26 @@ ENTRY POINT
    └── Gate OPEN → phase completion record appended to backlog.md:
        "Phase [N] Complete — tested and ready to deploy" + what was delivered + what comes next
 
-6. DEPLOY
-   └── Railway MCP
-   └── Gate: phase test report showing OPEN status required before deploy
+6. DEPLOY  ← BUILT
+   └── Reads docs/tech-context.md — deploy method entirely determined by stack
+   └── Confirms phase test gate OPEN before anything runs
+   └── Confirms all phase branches merged
+   └── Routes to correct deploy method:
+       Method A: CI/CD triggered by merge (GitHub Actions, etc.)
+       Method B: MCP tool triggered (Railway, Vercel, etc.)
+       Method C: Manual CLI (command from tech-context)
+       Method D: Not yet defined → asks questions, updates tech-context, then deploys
+   └── Verifies environment is actually live — not just pipeline green
+   └── Updates phase completion record: Complete → Tested → Deployed
 ```
 
 ---
 
 ## What's Not Solved Yet
 
-**Deploy wiring** — the deploy phase references Railway MCP but isn't connected to the phase test gate output yet. Needs a proper `deploy` skill that reads the phase completion record, confirms gate is OPEN, and executes the deploy.
+**Design review process-mapper integration** — design review needs to explicitly cross-reference slice definitions against the to-be process map, flagging uncovered steps and decision points without an assigned slice.
+
+**Plan phase process anchor** — when prd-to-plan sequences slices, each slice should be annotated with its process step from the to-be map so the sequencing reflects process order, not just risk order.
 
 **Brainstorming skill revision** — the `brainstorming` skill needs a design sprint moment baked in. Mid-session rough sketch, not as a deliverable but as a thinking tool. The sketch is what makes the brainstorm sharper and gives it something concrete to feed into Discover.
 
@@ -271,6 +281,7 @@ ENTRY POINT
 | `product-continuity` | Institutional memory — sessions, decisions, questions, assumptions, risks, changes, glossary, target state, handoff | ✅ Built |
 | `framework-health` | Background monitor — signal checks only, one issue at a time, silent when healthy, never blocks | ✅ Built |
 | `retrospective` | Continuous learning — flags in the moment, processes at phase end, evolves the playbook | ✅ Built |
+| `deploy` | Stack-driven deploy — reads tech-context, routes to correct method, confirms gate open, verifies environment live | ✅ Built |
 | `frontend-design` | Aesthetic guidance for HTML artifact | ✅ Built |
 | `awesome-design-md` | On-ramp 3 — reference-based design | ✅ Built |
 
