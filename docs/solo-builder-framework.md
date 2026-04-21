@@ -231,14 +231,6 @@ ENTRY POINT
 
 **Design review process-mapper integration** — design review needs to explicitly cross-reference slice definitions against the to-be process map, flagging uncovered steps and decision points without an assigned slice.
 
-**Plan phase process anchor** — when prd-to-plan sequences slices, each slice should be annotated with its process step from the to-be map so the sequencing reflects process order, not just risk order.
-
-**Brainstorming skill revision** — the `brainstorming` skill needs a design sprint moment baked in. Mid-session rough sketch, not as a deliverable but as a thinking tool. The sketch is what makes the brainstorm sharper and gives it something concrete to feed into Discover.
-
-**Design review process-mapper integration** — design review needs to explicitly cross-reference slice definitions against the to-be process map, flagging uncovered steps and decision points without an assigned slice.
-
-**Plan phase process anchor** — when prd-to-plan sequences slices, each slice should be annotated with its process step from the to-be map so the sequencing reflects process order, not just risk order.
-
 ---
 
 ## Key Constraints

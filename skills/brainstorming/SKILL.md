@@ -60,13 +60,29 @@ As the conversation develops, start pulling out the capabilities — the things 
 
 ---
 
-## The Rough Sketch Moment
+## The Process Sketch Moment
 
-When the conversation has enough shape — you understand who this is for, roughly what they do, and where the value moment lives — produce a rough sketch. Not a design sprint artifact. A thinking tool.
+Before the visual sketch — when the conversation starts describing how something works — the process mapper activates. This is often the first moment a process surfaces: "currently someone has to manually do X and then email Y." That's an as-is. "What if instead the system did Z automatically?" That's the beginning of a to-be.
 
-**What triggers it:** The idea is clear enough to picture but still abstract enough that a visual would sharpen the conversation. Usually happens after you understand the value moment.
+The process mapper captures these early thoughts as a **preliminary process sketch** — not the formal map that comes out of Discover, but a rough version that makes the conversation sharper:
 
-**What it is:** A single rough HTML screen — intentionally low fidelity — showing approximately what the moment of value looks like. Structure and content only. No polish.
+- What does the process look like today? (even if it's manual, informal, or fragmented)
+- What would the to-be process look like if this idea worked?
+- Where are the handoffs, the decisions, the gaps?
+
+This preliminary sketch is saved as a note in `docs/brainstorm-[date]-[topic].md` and carried into Discover where the process mapper formalizes it into the actual as-is and to-be maps.
+
+**Why this matters in brainstorm:** The process sketch surfaces things the idea conversation misses — a step that requires a data source nobody mentioned, a decision point that implies backend logic, a manual handoff the product could eliminate. It makes the brainstorm sharper without turning it into a design session.
+
+---
+
+## The Visual Sketch Moment
+
+When the conversation has enough shape — you understand who this is for, roughly what they do, and where the value moment lives — produce a rough visual sketch. Not a design sprint artifact. A thinking tool.
+
+**What triggers it:** The idea is clear enough to picture but still abstract enough that a visual would sharpen the conversation. Usually happens after you understand the value moment and the preliminary process sketch is done.
+
+**What it is:** A single rough HTML screen — intentionally low fidelity — showing approximately what the moment of value looks like. Structure and content only. No polish. Reference the process sketch when deciding what to show — the screen should reflect a step in the to-be process.
 
 **What it does:** Gives the conversation something to react to. Almost always surfaces things that weren't said — a field that implies a data source, a flow that has a gap, a capability that looked simple but isn't. The sketch doesn't have to be right. It has to be react-able.
 
@@ -114,7 +130,15 @@ Don't just say "we should research that." Name what the research question is. "B
 
 ## Output
 
-Brainstorming doesn't produce a spec. It produces a brief summary — a paragraph or two — of what was understood, what's going to Discover, and what's going to Research. Save to `docs/brainstorm-[date]-[topic].md`.
+Brainstorming doesn't produce a spec. It produces a brief summary of what was understood, what's going to Discover, and what's going to Research. Save to `docs/brainstorm-[date]-[topic].md`.
+
+Product-continuity captures from this session:
+- Key decisions made (anything that shaped the direction of the idea)
+- Assumptions surfaced (things being treated as true without verification)
+- Research items (feasibility questions that need answers before design)
+- The preliminary process sketch (as a note — the formal maps come from Discover)
+
+These seed the continuity documents before the project formally begins in Discover.
 
 ```markdown
 # Brainstorm — [Topic]
@@ -132,6 +156,11 @@ Good enough that a designer could start sketching from it.]
 ## Going to Research
 [Each item that needs validation before it can be designed. 
 One sentence on what the research question actually is.]
+
+## Preliminary Process Sketch
+**As-is:** [How the process works today — manual steps, tools, handoffs. Even if informal.]
+**To-be:** [How it would work if this idea succeeded — the rough flow.]
+[Carried into Discover where process-mapper formalizes it into the actual maps.]
 
 ## Held for Later
 [Capabilities or directions that came up but aren't part of the core idea right now.]

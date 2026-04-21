@@ -9,72 +9,115 @@ Turn a PRD into a sequenced, multi-phase implementation plan. The goal is not ju
 
 ## Process
 
-### 1. Load the PRD
+### 1. Read Context Documents
 
-Work from whatever is in the conversation. If the user passes a GitHub issue number or URL, fetch it with `gh issue view <number>`.
+Before doing anything else, read:
+- `docs/backlog.md` — existing slices from design review, their Ready status, dependencies
+- `docs/process/to-be-[name].md` — the agreed to-be process map
+- `docs/tech-context.md` — stack, infrastructure slices, engineering principles
+- `docs/design/deferred-decisions.md` — what's in scope vs deferred
 
-### 2. Explore the codebase
+If the to-be process map doesn't exist, stop. The process map is the sequencing foundation — without it, slices get ordered by comfort rather than by the process they implement.
 
-If you haven't already, explore the repo to understand:
-- Which existing systems the PRD will touch
+If the PRD is a GitHub issue, fetch it: `gh issue view <number>`.
+
+### 2. Explore the Codebase (if mid-project)
+
+If this is not a greenfield project, explore the repo to understand:
+- Which existing systems the slices will touch
 - What data models are already in place
 - Where the integration seams are (API boundaries, DB schema, auth, external services)
 
-### 3. Identify the integration seams
+### 3. Map Slices to Process Steps
 
-Before sequencing anything, list every layer the feature cuts through:
-- Data layer (schema, migrations, data model changes)
+Read the to-be process map. For every Ready slice in the backlog, identify which step in the to-be map it implements.
+
+**Process anchor format per slice:**
+`[to-be map step name] → [position in flow: main path / branch / exception]`
+
+Example:
+- SL-001 Player Lookup → `Step 1: user searches for player` → main path, entry point
+- SL-003 Slot Context Card → `Step 3: system displays slot context` → main path, after lookup
+- SL-007 Context Switch → `Step 4: user switches context` → main path, optional action
+
+**Flag uncovered process steps** — steps in the to-be map that have no Ready slice assigned. These are either:
+- Missing slices that should be added
+- Intentionally deferred (should appear in deferred-decisions.md)
+- Background logic that doesn't need a UI slice
+
+Surface uncovered steps explicitly before sequencing:
+> "Step 5 in the to-be map — 'system validates eligibility' — has no slice assigned. Is this handled in background logic (covered by an existing slice), or does it need a new slice?"
+
+### 4. Identify Integration Seams
+
+List every layer the slices cut through:
+- Data layer (schema, mock→real swap points, data model changes)
 - Business logic / service layer
 - API / backend endpoints
 - Frontend / UI
-- External integrations (third-party APIs, webhooks, auth)
-- Tests and observability
+- External integrations (third-party APIs, auth, external services)
+- Infrastructure (from tech-context infrastructure slices)
 
-Call out any seams that are HIGH RISK — places where assumptions made early will be painful to undo later.
+Flag HIGH RISK seams — places where assumptions made early will be painful to undo later.
 
-### 4. Design tracer-bullet vertical slices
+### 5. Design Tracer-Bullet Vertical Slices
 
-Break the PRD into vertical slices. Each slice cuts through ALL integration layers end-to-end, delivering a narrow but complete path.
+Each slice cuts through ALL integration layers end-to-end, delivering a narrow but complete path.
 
-<vertical-slice-rules>
+**Slice rules:**
 - Each slice must be independently demoable or verifiable
 - Prefer many thin slices over few thick ones
 - The first slice should prove the riskiest assumption in the system
 - Later slices build on confirmed foundations, not on hope
 - Horizontal slices (e.g. "build all the DB models first") are not allowed — they defer integration risk
-</vertical-slice-rules>
 
-### 5. Sequence by risk, not by comfort
+**Every slice gets four anchors in the plan:**
+- **Design anchor** — screen + element from the design sprint
+- **Data anchor** — mock data fields from data/mock/
+- **Done anchor** — 2–3 verifiable criteria
+- **Process anchor** — which step in the to-be map this slice implements
 
-Order the slices so that:
-1. **Phase 1** proves the hardest, most uncertain, or most load-bearing part of the system first
-2. Each subsequent phase can be built with confidence because the prior phase resolved its dependencies
-3. The last phases are additive (polish, edge cases, non-critical paths)
+The process anchor is what connects the backlog to the agreed process. Solo-build reads it before starting a slice to confirm the implementation serves the right step.
+
+### 6. Sequence by Risk and Process Order
+
+Two sequencing forces in tension — resolve them explicitly:
+
+**Risk order:** Address the hardest, most uncertain, most load-bearing parts first. The first slice should prove the riskiest assumption.
+
+**Process order:** Slices that implement earlier steps in the to-be map should generally come before slices that implement later steps. A user can't reach Step 3 if Step 1 isn't built.
+
+**When they conflict:** Risk order wins for infrastructure and foundation slices. Process order wins for feature slices once infrastructure is in place. Name the conflict explicitly when it occurs:
+> "Step 3 (slot context display) implements an earlier process step than Step 5 (context switch), but Step 5 de-risks the state management approach we haven't proven yet. Building Step 5 first as a tracer."
+
+**Infrastructure slices first, always.** Read `docs/tech-context.md` infrastructure slices — these are prerequisites for everything else and sequence before any feature slice regardless of process order.
 
 For each phase, show:
 - **Phase name** and short description
-- **Slices in this phase** (numbered list, one-line each)
+- **Slices in this phase** — each with its process anchor noted
+- **What process steps this phase completes** — which to-be steps are implemented
 - **What this phase proves or de-risks**
-- **Blocked by** (prior phases or external dependencies)
+- **Blocked by** — prior phases or external dependencies
 - **Definition of done** — how you know this phase is complete
 
-### 6. Flag open questions
+### 7. Flag Open Questions
 
 List any decisions that must be made before implementation can start:
 - Architectural choices with meaningful tradeoffs
-- Missing information in the PRD
+- Uncovered process steps that need resolution
+- Missing information
 - Dependencies on other teams, systems, or data
 
-### 7. Present and confirm
+### 8. Present and Confirm
 
-Show the full plan to the user. Ask:
-- Does the phase sequencing feel right?
-- Are the right risks being addressed first?
+Show the full plan. Ask:
+- Does the phase sequencing feel right — does it respect both risk and process order?
 - Are there slices that should be merged, split, or reordered?
+- Are uncovered process steps accounted for correctly?
 - Are any open questions blockers, or can we proceed with a stated assumption?
 
-Iterate until approved.
+Iterate until approved. When approved, update `docs/backlog.md` with the process anchor for each slice — it should be in the slice record before build starts.
 
-### 8. Optional next step
+### 9. Optional Next Step
 
 Offer to run `/to-issues` to convert the approved plan into GitHub issues in dependency order.
