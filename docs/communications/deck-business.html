@@ -98,6 +98,14 @@
   }
   .progress-dots span.active { background: #fff; width: 18px; border-radius: 3px; }
 
+  /* Nav on light-background slides */
+  .nav.on-light { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.12); }
+  .nav.on-light button { color: rgba(0,0,0,0.5); }
+  .nav.on-light button:hover { color: #000; background: rgba(0,0,0,0.07); }
+  .nav.on-light .slide-counter { color: rgba(0,0,0,0.45); }
+  .nav.on-light .progress-dots span { background: rgba(0,0,0,0.18); }
+  .nav.on-light .progress-dots span.active { background: rgba(0,0,0,0.65); }
+
   /* ── SLIDE LAYOUTS ── */
 
   /* Title slide */
@@ -565,6 +573,11 @@
     <div class="split-right bg-teal">
       <div class="accent-line accent-teal"></div>
       <table class="mapping-table">
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.12)">
+          <td class="col-today" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);padding-bottom:10px">Team discipline</td>
+          <td class="col-arrow"></td>
+          <td class="col-framework" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal-light);padding-bottom:10px">Framework skill</td>
+        </tr>
         <tr>
           <td class="col-today">PM challenge</td>
           <td class="col-arrow">→</td>
@@ -721,8 +734,8 @@
         <div class="diff-desc">The retrospective skill captures what works and what doesn't from real usage. Framework improvements feed back into the playbook. It gets better from being used.</div>
       </li>
       <li>
-        <div class="diff-label">Tool-agnostic</div>
-        <div class="diff-desc">Built to work with Claude Code and Cursor. Not tied to a single platform. The framework travels with the team, not the tool.</div>
+        <div class="diff-label">Tool-agnostic & collaborative</div>
+        <div class="diff-desc">Built to work with Claude Code and Cursor — and both platforms can work on the same project. The framework and documentation live in one shared location that either tool accesses. Not tied to a single platform.</div>
       </li>
     </ul>
   </div>
@@ -800,6 +813,8 @@
     document.getElementById('counter').textContent = `${current + 1} / ${total}`;
     document.getElementById('prev').disabled = current === 0;
     document.getElementById('next').disabled = current === total - 1;
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('on-light', slides[current].classList.contains('slide-light'));
   }
 
   function go(dir) { goTo(current + dir); }
