@@ -285,3 +285,86 @@ End each round by stating explicitly:
 | Skipping the process coverage check | Slices pile up around screens, whole process steps go unbuilt | Run coverage map every round — every to-be step must have a slice or an explicit decision |
 | Slices reaching Ready without a process anchor | prd-to-plan can't sequence by process order; phase test has no grounding | Process anchor is a Ready requirement, not an optional field |
 | Defining a new slice without a coherence check | Creates silent duplicates — two things do the same job, neither done well | Ask if the codebase already expresses this pattern before defining. Extend or explicitly diverge. |
+
+---
+
+## Enhanced Mode — Multi-Agent Orchestrator
+
+**Tier 2 only. Requires Claude Code with enhanced mode active.**
+Tier 1 (standard) behavior is unchanged — this section is skipped if enhanced mode is not active.
+
+**Activation:** Solo says "enhanced mode on" in Claude Code. Flag persists for the session. All design-review rounds in the session use the orchestrator path.
+
+**Graceful degradation:** If enhanced mode is not active, or if running in Cursor, skip this section entirely and run the standard review process above.
+
+---
+
+### What changes in enhanced mode
+
+Instead of one model running all four lenses sequentially, four specialist agents run in parallel — each with its own context, its own instructions, and only the artifacts it needs. They don't see each other's work until synthesis.
+
+The quality improvement comes from genuine independence: agents can't smooth over disagreements they don't know exist. When two agents flag the same element from different angles, that's a strong signal the orchestrator surfaces explicitly.
+
+---
+
+### Orchestrator Process
+
+**Step 1 — Gather artifacts**
+
+Collect the inputs each agent needs:
+- Design artifact: `docs/design/sprint-[id].html`
+- To-be process map: `docs/process/to-be-[name].md`
+- Data mapping: `docs/data-mapping.md` (if exists)
+- Backlog: `docs/backlog.md` (if exists)
+
+**Step 2 — Spawn four agents in parallel**
+
+Using Claude Code's Agent tool, spawn all four simultaneously. Pass each agent only its required artifacts plus its specialist instructions from `skills/design-review/agents/`:
+
+| Agent | Instructions | Artifacts |
+|---|---|---|
+| UX Specialist | `agents/ux-specialist.md` | Design artifact only |
+| Data Specialist | `agents/data-specialist.md` | Design artifact + data-mapping.md |
+| Process Specialist | `agents/process-specialist.md` | Design artifact + to-be map |
+| Scope Specialist | `agents/scope-specialist.md` | Design artifact + backlog.md |
+
+**Step 3 — Collect results**
+
+Wait for all four agents to return. Do not synthesize until all four are complete.
+
+**Step 4 — Cross-signal analysis**
+
+Before presenting findings, scan all four outputs for elements flagged by more than one agent. These are priority signals — independent agents reached the same element from different angles.
+
+> Example: UX agent flags "dynasty value score — no explanation for user." Data agent flags "dynasty value score — source and calculation undefined." Cross-signal: this element is load-bearing and under-defined. Surface it first.
+
+**Step 5 — Synthesize and present**
+
+Structure the output in three tiers:
+
+```
+CROSS-SIGNAL FINDINGS (flagged by 2+ agents — address first)
+[element]: [what each agent found, what decision is needed]
+
+SPECIALIST FINDINGS
+UX: [findings from ux-specialist output]
+Data: [findings from data-specialist output]
+Process: [findings from process-specialist output]
+Scope: [findings from scope-specialist output]
+
+DECISIONS NEEDED BEFORE NEXT ROUND
+[numbered list — each a specific decision the solo must make]
+```
+
+**Step 6 — Continue as standard**
+
+After presenting the synthesis, continue with the standard design-review process: update backlog, promote Ready slices, state what the next round needs to resolve. The orchestrator output feeds directly into slice definition — cross-signal findings become the highest-priority items to resolve.
+
+---
+
+### Token guidance for enhanced mode
+
+Each agent receives a lean context (only its required artifacts). Shared artifacts benefit from prompt caching — the design sprint HTML is read once and cached; subsequent agents reading it pay a fraction of the first agent's cost. Net token cost is higher than standard mode but significantly lower than four full-context loads.
+
+Use enhanced mode for Round 1 (full first pass) and any round where significant design changes were made. For incremental rounds reviewing small updates, standard mode is sufficient.
+
