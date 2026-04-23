@@ -42,6 +42,10 @@ Before reading what the person brought in, scan for project context:
 
 If any of these exist, do not run the routing logic. Orient to the current state and continue.
 
+**Resume pattern:** If the opening message contains "Resuming [project]" or similar resume-pattern language AND `docs/continuity/handoff.md` exists — skip routing entirely. Read the handoff, orient from it in one sentence, and continue. Do not re-run routing logic. Do not ask what phase they're in.
+
+> "Picking up from [where handoff says] — [one sentence on current state]. Let's go."
+
 ---
 
 ## Step 2: Read What They Brought

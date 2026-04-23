@@ -331,6 +331,41 @@ Every phase transition has a gate — the output that enables the next phase. Th
 
 ---
 
+## Session Hygiene
+
+Context fills over time. Long sessions with auto-pilot or assisted mode active accumulate context from always-on skills, phase work, and conversation history. Three levers manage this — match each one to the work at hand.
+
+### Three levers
+
+**Mode — match to guidance needed**
+- `auto-pilot` — full framework chain + always-on. Highest context cost. Right for new projects and unfamiliar territory.
+- `assisted` — always-on loads once, phase skills on demand. Moderate cost. Right for builders who know the framework and want continuity without the full chain.
+- `bare` — nothing loads until invoked. Zero overhead. Right for focused execution, single-skill sessions, or when you know exactly what you need.
+
+Mode can be switched mid-project. If a session starts on a familiar phase, drop to assisted. If you need one specific skill, go bare.
+
+**Session length — end at gates, not mid-phase**
+Phase gates are natural session reset points. The gate output is what the next phase reads — not conversation history. A fresh session that reads the gate output starts with full context and zero overhead.
+
+Rule of thumb: one phase = one session. For long build phases: one sprint's slices = one session. When a gate passes, framework-health surfaces it as a clean close point. product-continuity captures state and generates a resume prompt. The next session reads the handoff and continues — nothing lost.
+
+**Model — match to the type of thinking**
+Heavy thinking work (design, architecture, discovery, planning) — use your strongest model. The reasoning load is real and the model earns its cost.
+
+Execution work (build, bug-fix, dependency upgrades, QA) — a faster, lighter model often outperforms a heavier one: lower cost, quicker responses, less overthinking.
+
+This applies equally in Cursor (model settings before starting) and Claude Code (`--model` flag at launch). Don't default to your strongest model for every session.
+
+### Closing a session
+
+When you're ready to wrap up — or when framework-health notes a clean close point after a gate or a natural pause — say **"let's close out."** product-continuity captures state, writes the session log, updates the handoff, and generates a resume prompt. Copy it. Use it next session.
+
+### Resuming a session
+
+Open a new session and paste the resume prompt. `start` reads it, orients from the handoff in one sentence, and continues. No re-explaining, no cold start, no routing.
+
+---
+
 ## Companion framework: Workshop
 
 SBF covers product-shaped work. Most solo-builder work isn't that shape. Workshop is the companion for spike-shaped and tool-shaped work — invokable via `/scope-check`.

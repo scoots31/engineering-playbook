@@ -68,6 +68,20 @@ If something is missing:
 
 The solo can say yes or "skip it for now." If skipped, log it as an open item in the session handoff. Don't repeat it unless it becomes blocking.
 
+**Phase gates are also natural session boundaries.** The gate output — discovery brief, design files, backlog — is what the next phase reads, not conversation history. A fresh session that reads that output starts with full context and zero overhead. When a gate passes, surface it as a clean close point alongside the gate confirmation:
+
+> "Gate passed — [output] is ready. This is also a clean place to close the session if you're done for now. Say 'let's close out' and I'll wrap up properly and give you a prompt for next session."
+
+---
+
+### During the Session — Session Hygiene Reminder
+
+Once per session, at a natural pause — after a gate passes, after a slice ships, after a significant decision lands — surface:
+
+> "Good pause point. Whenever you're ready to close out, just let me know — I'll wrap up properly and give you a prompt to pick up next session without losing anything."
+
+Fire once only. If the solo isn't ready, they say so and the reminder doesn't repeat. This is ambient awareness, not urgency. Do not fire mid-task or while a slice is actively in progress.
+
 ---
 
 ### Session End

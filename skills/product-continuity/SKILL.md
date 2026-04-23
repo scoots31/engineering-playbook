@@ -339,6 +339,19 @@ The product-continuity skill listens throughout every phase and captures silentl
 - Handoff document updated
 - Target state updated if a phase completed
 
+**On session close signal ("let's close out" or equivalent):**
+After writing the session log and updating the handoff, generate a resume prompt and append it to `docs/continuity/handoff.md`:
+
+```markdown
+## Resume Prompt
+Copy this into your next session to pick up without losing context:
+
+> "Resuming [Project Name]. Last session closed at [Phase / Gate / Slice].
+> [One sentence on where things stand]. Continue from there."
+```
+
+The solo copies it, pastes it next session. No re-explaining, no cold start.
+
 ---
 
 ## Anti-Patterns
