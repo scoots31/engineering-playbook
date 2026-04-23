@@ -35,6 +35,18 @@ Most AI coding tools help you write code faster. This framework replaces the dis
 
 ---
 
+## Workshop — the companion framework
+
+Not every piece of solo-builder work is a product. Most of it is spikes, tools, personal scripts, explorations. For that work, SBF's ceremony costs more than the work itself.
+
+**Workshop** is the companion framework for small / exploratory / non-UI work. Three skills — `scope-check`, `spike`, `land` — held to the principle of explicit disposability.
+
+→ See [`workshop/README.md`](workshop/README.md) for the full companion framework.
+
+The entry question that routes between the two frameworks: **"Who is this for, and how long does it live?"**
+
+---
+
 ## Setup — pick your tool
 
 ### Cursor

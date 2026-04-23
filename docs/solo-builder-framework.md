@@ -282,3 +282,13 @@ ENTRY POINT
 **The gates** — what makes each phase transition unavoidable without feeling like bureaucracy? The deferred decisions log gates Design Sprint → Plan. Others still need definition.
 
 **How phases reshape** — now that the full entry flow is solved (Start → Brainstorm or Discover → Design Sprint → Plan → Build), revisit whether the original phase names still make sense or need renaming for clarity.
+
+---
+
+## Companion framework: Workshop
+
+SBF covers product-shaped work. Most solo-builder work isn't that shape. **Workshop** (see `workshop/README.md`) is the companion for spike-shaped and tool-shaped work.
+
+Scope boundary: SBF handles anything with external users or indefinite lifespan. Workshop handles everything else. The `scope-check` skill at Workshop's entry holds the line; `land` at Workshop's exit provides the bridge back to SBF when a spike graduates into a product.
+
+Workshop's load-bearing principles are deliberately the inverse of SBF's: timebox over gates, outcome over process, disposable by default, single artifact, explicit graduation.

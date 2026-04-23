@@ -16,15 +16,17 @@ On a fresh machine with the repo cloned, open the project in Cursor and paste th
 I've cloned the Solo Builder Framework repo. I don't have the User Rules pasted yet — we'll fix that shortly, but for now, please read the following files so you understand the framework for this session:
 
 1. README.md — what this is and how it's organized
-2. skills/start/SKILL.md — how to route new projects
-3. skills/process-mapper/SKILL.md — the always-on process contract
-4. skills/product-continuity/SKILL.md — always-on session memory
-5. skills/framework-health/SKILL.md — always-on signal monitor
-6. skills/retrospective/SKILL.md — always-on improvement capture
+2. skills/start/SKILL.md — how to route new projects (includes Workshop pre-check)
+3. workshop/README.md — the companion framework for spikes and tools
+4. skills/process-mapper/SKILL.md — the always-on process contract
+5. skills/product-continuity/SKILL.md — always-on session memory
+6. skills/framework-health/SKILL.md — always-on signal monitor
+7. skills/retrospective/SKILL.md — always-on improvement capture
 
 After reading, confirm you understand:
-- The 4 always-on skills and when they activate
+- The 4 always-on skills and when they activate (SBF only — Workshop has none)
 - The phase routing (start → discover → design-sprint → etc.)
+- The Workshop companion — spike-shaped openings route to `workshop/scope-check/SKILL.md`, not Discover
 - The four required anchors before any slice can be Ready
 - The process contract (to-be map held across all phases)
 

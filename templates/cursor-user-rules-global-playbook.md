@@ -25,13 +25,28 @@ This playbook contains the **Solo Builder Framework** — a complete lifecycle s
 When a conversation opens with a project or feature idea and no existing context is found, apply this routing before anything else:
 
 1. **Check for existing context first.** If a discovery brief, blueprint, or active sprint exists — orient to where the project is and continue.
-2. **Read what was brought in:**
+2. **Check for spike-shape.** If the opening sounds like "let me try...", "quick script to...", "see if I can...", "one-shot to...", or any personal-tool language, hand to the Workshop companion framework: `[PLAYBOOK_ROOT]/workshop/scope-check/SKILL.md`. Do not continue SBF routing.
+3. **Read what was brought in** (product-shaped work only):
    - Clear idea (who, what, value present) → route to Discover. One warm sentence, then begin.
    - Exploratory, uncertain tone → route to Brainstorm. Engage with the idea directly.
    - Ambiguous → ask one question: *"Do you have a clear picture of what you want to build, or are you still working through the idea?"*
-3. **Never announce phases or explain the framework.** One sentence of orientation, then just start.
+4. **Never announce phases or explain the framework.** One sentence of orientation, then just start.
 
 Full routing logic: `[PLAYBOOK_ROOT]/skills/start/SKILL.md`
+
+---
+
+## Workshop — the companion framework
+
+Workshop covers spike-shaped and tool-shaped work — the stuff that isn't a product. Three skills, all under `[PLAYBOOK_ROOT]/workshop/`:
+
+| Skill | Role |
+|-------|------|
+| `workshop/scope-check/SKILL.md` | Entry gate — Spike vs Tool vs Product. Routes to Workshop or hands to SBF `start`. |
+| `workshop/spike/SKILL.md` | The work — timeboxed, single artifact, running journal. |
+| `workshop/land/SKILL.md` | The exit — Toss (capture learning), Keep (personal tool), or Promote (hand to SBF). |
+
+Workshop is a deliberate anti-pattern to SBF — timebox over gates, outcome over process, disposable by default. No always-on skills. No anchors. No phases. See `[PLAYBOOK_ROOT]/workshop/README.md`.
 
 ---
 

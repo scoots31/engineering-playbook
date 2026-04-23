@@ -46,6 +46,23 @@ If any of these exist, do not run the routing logic. Orient to the current state
 
 ## Step 2: Read What They Brought
 
+Before classifying into Shape A/B/C, check for **spike-shape** — work that belongs in the Workshop companion framework, not SBF.
+
+**Spike-shape signals:**
+- "Let me try...", "quick script to...", "see if I can...", "one-shot to...", "I'm curious about..."
+- Short time horizon implied (hours to days, not weeks)
+- No mention of users other than the solo
+- "Just want to explore" / "just a test"
+- Personal tool / utility language ("a little tool for me that...")
+
+If the opening is spike-shaped, hand off to Workshop's `scope-check` skill (`workshop/scope-check/SKILL.md`) instead of continuing. Do not announce the handoff — just run `scope-check`'s one question.
+
+If the opening is unambiguously product-shaped (users, indefinite lifespan, meaningful scope), continue with Shape A/B/C classification below.
+
+If ambiguous between spike and product, ask one question: *"Is this something you're trying out for yourself, or something you want other people to use?"* Route based on the answer.
+
+---
+
 The opening message almost always falls into one of three shapes:
 
 **Shape A — Clear idea**
@@ -106,9 +123,11 @@ New conversation opens
 ├── Existing context found → orient and continue, don't restart
 │
 └── No existing context
-    ├── Clear idea (Shape A) → Discover
-    ├── Exploratory (Shape B) → Brainstorm  
-    └── Ambiguous (Shape C) → one question → route
+    ├── Spike-shape → Workshop `scope-check`
+    └── Product-shape (or ambiguous resolved to product)
+        ├── Clear idea (Shape A) → Discover
+        ├── Exploratory (Shape B) → Brainstorm
+        └── Ambiguous (Shape C) → one question → route
 ```
 
 ---
