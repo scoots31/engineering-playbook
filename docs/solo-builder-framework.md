@@ -65,9 +65,9 @@ The output is two things: the HTML screens + a **deferred decisions log** that c
 
 ---
 
-## Two Entry Points — Not One
+## Entry Points
 
-The framework has two distinct starting points depending on what the solo brings:
+The framework has three distinct starting points depending on what the solo brings:
 
 **Entry 1 — You know the solution.**
 The idea is clear. Brainstorming isn't needed. Go straight to Discover → Design Sprint → Plan → Build. The solo brings the idea; the AI runs the discovery conversation and produces the design artifact.
@@ -78,6 +78,9 @@ The problem is real but the solution isn't clear yet. Brainstorming is the right
 This is how it works in a real room. Nobody brainstorms in pure text for an hour and then draws later. The sketch happens during ideation — someone puts something on the whiteboard and the conversation gets sharper immediately.
 
 **The brainstorming skill needs to incorporate this.** A rough sketch mid-session is not the design sprint output — it's a thinking tool. The design sprint comes after Discover and produces the real artifact. But the brainstorm sketch is what gets the idea clear enough for Discover to be productive.
+
+**Entry 3 — You have prior work outside the framework.**
+Discovery, planning, notes, and decisions exist — but not in SBF format. Don't restart. Run `onboard` — it reads the project directory, semantically matches content to gate artifacts, synthesizes with confirmation, surfaces what's missing as targeted discussion prompts, and places the project at the correct starting phase. From there, normal SBF flow takes over.
 
 ---
 
@@ -256,7 +259,8 @@ ENTRY POINT
 
 | Skill | Role in System | Status |
 |-------|---------------|--------|
-| `start` | Front door — reads the opening, routes to Brainstorm or Discover automatically | ✅ Built |
+| `start` | Front door — reads the opening, routes to Brainstorm, Discover, or Onboard automatically | ✅ Built |
+| `onboard` | Brings existing projects into SBF — reads project directory, semantically maps content to gate artifacts, synthesizes with confirmation, places at correct starting phase | ✅ Built |
 | `tech-context` | Establishes stack + constraints before design — routes to profile or builds from questions | ✅ Built |
 | `research-spike` | Timeboxed investigation of a specific unknown — callable from any phase | ✅ Built |
 | `design-review` | Iterative review loop — defines slices, manages backlog, signals when to build | ✅ Built |

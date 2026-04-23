@@ -426,6 +426,7 @@
   <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(96,165,250,0.6)">Entry</span>
     <a href="#start" class="nav-skill" style="color:rgba(96,165,250,0.7)"><span class="nav-dot" style="background:#3B82F6"></span>start</a>
+    <a href="#onboard" class="nav-skill" style="color:rgba(96,165,250,0.7)"><span class="nav-dot" style="background:#3B82F6"></span>onboard</a>
   </div>
 
   <div class="nav-group">
@@ -649,7 +650,7 @@
           <div class="category-title">Entry & Routing</div>
           <div class="category-desc">The front door. Reads context, routes to the right starting point.</div>
         </div>
-        <div class="skill-count">1 skill</div>
+        <div class="skill-count">2 skills</div>
       </div>
 
       <div class="skill-card" id="start">
@@ -685,6 +686,43 @@
           </div>
         </div>
       </div>
+      <div class="skill-card" id="onboard">
+        <div class="skill-card-header">
+          <div class="skill-name">onboard</div>
+          <div class="skill-badge">Framework entry</div>
+        </div>
+        <div class="skill-description">Brings an existing project into the SBF without redoing the work. Reads the project directory, semantically maps content to gate artifacts, synthesizes with solo confirmation, and places the project at the correct starting phase.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Invoke</div>
+            <ul>
+              <li><strong>Cursor:</strong> "I want to bring [project] into the framework"</li>
+              <li><strong>Claude Code:</strong> <code>/onboard</code></li>
+              <li>Also: <code>start</code> routes here when it detects existing-project language</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li>Reads docs, notes, and planning files — skips code files</li>
+              <li>Semantic matching — content-based, not filename-based</li>
+              <li>Shows mapping preview before writing any SBF file</li>
+              <li>Gaps surface as targeted discussion questions, not just file names</li>
+              <li>Classifies remaining gaps: undocumented work (ask) vs. work not done yet (starting phase)</li>
+              <li>Initializes continuity docs and exits with clear orientation</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output</div>
+            <ul>
+              <li>SBF gate files synthesized from existing project content</li>
+              <li><code>docs/continuity/current-phase.md</code> + <code>handoff.md</code> initialized</li>
+              <li>Clear statement of starting phase and first move</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ══════════════ DISCOVERY ══════════════ -->

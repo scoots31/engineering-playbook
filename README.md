@@ -114,7 +114,8 @@ Open a new project in your editor. Describe what you want to build. The `start` 
 
 | Phase | Skill | What happens |
 |-------|-------|--------------|
-| Entry | `start` | Routes to Brainstorm or Discover |
+| Entry | `start` | Routes to Brainstorm, Discover, or Onboard |
+| Entry | `onboard` | Brings existing projects into SBF — reads project dir, maps content to gate artifacts, surfaces gaps, places at correct starting phase |
 | 0 — optional | `brainstorming` | Idea exploration with process sketch + visual sketch |
 | 1 | `discover` | Full product story + as-is/to-be process maps agreed |
 | 1.5 | `tech-context` | Stack, constraints, deploy config — referenced by everything downstream |
