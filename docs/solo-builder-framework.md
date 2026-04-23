@@ -117,7 +117,7 @@ This works because most people can't describe what they want visually until they
 
 ## Always-On Skills
 
-Two skills run throughout the entire framework without being invoked by the user:
+These four skills activate when the user chooses **auto-pilot** or **assisted** mode. In bare mode (the default), they do not load. Once activated, they persist for the session — they do not reload on each skill invocation.
 
 | Skill | Active across | Function |
 |-------|--------------|----------|

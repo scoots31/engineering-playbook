@@ -18,13 +18,10 @@ I've cloned the Solo Builder Framework repo. I don't have the User Rules pasted 
 1. README.md — what this is and how it's organized
 2. skills/start/SKILL.md — how to route new projects (includes Workshop pre-check)
 3. workshop/README.md — the companion framework for spikes and tools
-4. skills/process-mapper/SKILL.md — the always-on process contract
-5. skills/product-continuity/SKILL.md — always-on session memory
-6. skills/framework-health/SKILL.md — always-on signal monitor
-7. skills/retrospective/SKILL.md — always-on improvement capture
+4. The session mode model: default is bare (no routing, no always-on). Say "auto-pilot mode" to engage the full phase chain and always-on skills. Say "assisted mode" to load always-on skills and invoke phases manually.
 
 After reading, confirm you understand:
-- The 4 always-on skills and when they activate (SBF only — Workshop has none)
+- The 3 session modes: bare (default), assisted, auto-pilot — and what each activates
 - The phase routing (start → discover → design-sprint → etc.)
 - The Workshop companion — spike-shaped openings route to `workshop/scope-check/SKILL.md`, not Discover
 - The four required anchors before any slice can be Ready

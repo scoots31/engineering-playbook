@@ -491,7 +491,7 @@
   <div class="page-header">
     <div class="ph-eyebrow">Solo Builder Framework</div>
     <h1>Skills Reference</h1>
-    <p>Every skill in the framework — what it does, how it works, what triggers it, and what it produces. Skills are organized by phase. Always-on skills run throughout the entire lifecycle without user invocation.</p>
+    <p>Every skill in the framework — what it does, how it works, what triggers it, and what it produces. Skills are organized by phase. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent in bare mode (the default).</p>
     <div class="header-stats">
       <div class="header-stat"><div class="hs-num">27</div><div class="hs-label">Total skills</div></div>
       <div class="header-stat"><div class="hs-num">4</div><div class="hs-label">Always-on</div></div>
@@ -1432,7 +1432,7 @@
         <div class="category-icon">⚡</div>
         <div>
           <div class="category-title">Always-On Skills</div>
-          <div class="category-desc">Run throughout the entire framework. Never invoked by the user — the framework activates them automatically at the right moments.</div>
+          <div class="category-desc">Activate on auto-pilot or assisted mode. One load per session — do not reload on each skill invocation. Silent in bare mode (the default).</div>
         </div>
         <div class="skill-count">4 skills</div>
       </div>
@@ -1542,7 +1542,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Active Across</div>
             <ul>
-              <li><strong>Session start</strong> — checks for existing context, handoff, framework documents</li>
+              <li><strong>Mode activation</strong> — checks for existing context, handoff, framework documents when auto-pilot or assisted mode activates</li>
               <li><strong>Between phases</strong> — checks that phase prerequisites exist</li>
               <li><strong>Session end</strong> — ensures handoff is current</li>
             </ul>

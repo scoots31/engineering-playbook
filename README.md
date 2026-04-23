@@ -6,11 +6,11 @@
 
 If you're an AI (Cursor, Claude, or similar) reading this repository to understand how to operate:
 
-**What this is:** A complete lifecycle framework for building software with AI. It contains 27 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills run throughout without being invoked by the user.
+**What this is:** A complete lifecycle framework for building software with AI. It contains 27 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent by default.
 
 **What to do:**
-1. Read `skills/start/SKILL.md` — this is your routing logic for new projects
-2. Read the four always-on skills immediately: `process-mapper`, `product-continuity`, `framework-health`, `retrospective`
+1. Default session mode is bare — no routing, no always-on. Skills load only when invoked.
+2. Mode activation: "auto-pilot mode" → read start/SKILL.md + always-on skills. "assisted mode" → read always-on skills, user invokes phases. "bare mode" → silent.
 3. For any active phase, read that phase's SKILL.md before executing
 4. The to-be process map (produced in Discover) is the contract for every downstream phase — nothing gets built that can't be traced to it
 5. Four anchors are required before any slice reaches Ready: design anchor, data anchor, done anchor, process anchor
@@ -29,7 +29,7 @@ A complete lifecycle system for building software with AI — from first idea th
 
 Most AI coding tools help you write code faster. This framework replaces the discipline a real team provides — the PM challenge, the tech review, the design artifact, the QA gate, the process map — so a solo builder has all of it without needing a team.
 
-**27 skills** cover the full lifecycle. **4 always-on skills** run throughout without being invoked. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
+**27 skills** cover the full lifecycle. **4 always-on skills** activate on auto-pilot or assisted mode — silent in bare mode. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
 
 → See [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) for full detail on every skill.
 
