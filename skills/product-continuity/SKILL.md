@@ -322,7 +322,7 @@ Written once at project start. Updated by product-continuity at every phase tran
 
 ## How It Activates Without Being Invoked
 
-The product-continuity skill listens throughout every phase and captures at the right moments. It does not interrupt the flow of a session — it appends in the background and surfaces only when something needs the solo's input to resolve.
+The product-continuity skill listens throughout every phase and captures silently in the background — most captures require no solo input. It speaks only when a decision genuinely requires the solo that no inference can substitute.
 
 **Automatic captures (no solo input needed):**
 - Decisions made and documented during any phase → decision log
