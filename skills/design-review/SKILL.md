@@ -120,6 +120,9 @@ As each element reaches enough clarity, define it as a slice. A slice is the uni
 
 For slices not yet ready — keep them as named items in the backlog with status In Review or Blocked. They get refined in the next round.
 
+**Coherence check — before defining a new slice:**
+Does the codebase already express this pattern somewhere? Ask: are we extending something that exists, or creating something new? If extending — build on the existing vocabulary. If new — that's valid, but name it explicitly in the slice notes so the next session isn't surprised by the divergence.
+
 ### Step 4: Determine Slice Status
 
 Every slice in the backlog has one of these states at all times:
@@ -281,3 +284,4 @@ End each round by stating explicitly:
 | Letting blocked slices sit without naming the spike | Invisible blockers | Every blocked slice has a named, specific spike question |
 | Skipping the process coverage check | Slices pile up around screens, whole process steps go unbuilt | Run coverage map every round — every to-be step must have a slice or an explicit decision |
 | Slices reaching Ready without a process anchor | prd-to-plan can't sequence by process order; phase test has no grounding | Process anchor is a Ready requirement, not an optional field |
+| Defining a new slice without a coherence check | Creates silent duplicates — two things do the same job, neither done well | Ask if the codebase already expresses this pattern before defining. Extend or explicitly diverge. |

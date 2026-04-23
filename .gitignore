@@ -1,11 +1,10 @@
 packaging/dist/
 
+# Local venv for docs/communications PPTX generation (see generate_communications_decks.py)
+docs/communications/.pptx-build-venv/
+
 .DS_Store
 *.swp
 *.swo
 .env
 .env.*
-
-# Machine-local tool caches
-.claude/
-docs/communications/.wrangler/

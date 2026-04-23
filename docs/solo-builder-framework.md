@@ -283,6 +283,7 @@ ENTRY POINT
 | `deploy` | Stack-driven deploy — reads tech-context, routes to correct method, confirms gate open, verifies environment live | ✅ Built |
 | `frontend-design` | Aesthetic guidance for HTML artifact | ✅ Built |
 | `awesome-design-md` | On-ramp 3 — reference-based design | ✅ Built |
+| `framework-curator` | Tends the framework itself — proposes, previews, and executes changes to skills and documentation | ✅ Built |
 
 ---
 

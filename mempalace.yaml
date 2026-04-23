@@ -1,0 +1,65 @@
+wing: engineering_playbook
+rooms:
+- name: packaging
+  description: Files from packaging/
+  keywords:
+  - packaging
+  - packaging
+- name: workshop
+  description: Files from workshop/
+  keywords:
+  - workshop
+  - workshop
+- name: research
+  description: Files from references/
+  keywords:
+  - research
+  - references
+- name: documentation
+  description: Files from docs/
+  keywords:
+  - documentation
+  - docs
+- name: hooks
+  description: Files from hooks/
+  keywords:
+  - hooks
+  - hooks
+- name: templates
+  description: Files from templates/
+  keywords:
+  - templates
+  - templates
+- name: skills
+  description: Files from skills/
+  keywords:
+  - skills
+  - skills
+- name: profiles
+  description: Files from profiles/
+  keywords:
+  - profiles
+  - profiles
+- name: scripts
+  description: Files from scripts/
+  keywords:
+  - scripts
+  - scripts
+- name: design
+  description: Files from design/
+  keywords:
+  - design
+  - design
+- name: testing
+  description: Files from qa/
+  keywords:
+  - testing
+  - qa
+- name: configuration
+  description: Files from deploy/
+  keywords:
+  - configuration
+  - deploy
+- name: general
+  description: Files that don't fit other rooms
+  keywords: []

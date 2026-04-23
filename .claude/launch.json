@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "communications",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "9200", "--directory", "/Users/scottheinemeier/Developer/engineering-playbook/docs/communications"],
+      "port": 9200
+    }
+  ]
+}
