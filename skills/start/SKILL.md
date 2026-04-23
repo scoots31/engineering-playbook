@@ -55,7 +55,7 @@ Before classifying into Shape A/B/C, check for **spike-shape** — work that bel
 - "Just want to explore" / "just a test"
 - Personal tool / utility language ("a little tool for me that...")
 
-If the opening is spike-shaped, hand off to Workshop's `scope-check` skill (`workshop/scope-check/SKILL.md`) instead of continuing. Do not announce the handoff — just run `scope-check`'s one question.
+If the opening is spike-shaped, hand off to `scope-check` instead of continuing. Do not announce the handoff — just run `scope-check`'s one question.
 
 If the opening is unambiguously product-shaped (users, indefinite lifespan, meaningful scope), continue with Shape A/B/C classification below.
 

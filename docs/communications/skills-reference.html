@@ -490,6 +490,19 @@
     <span class="nav-group-label" style="color:rgba(100,116,139,0.7)">Meta</span>
     <a href="#framework-curator" class="nav-skill" style="color:rgba(100,116,139,0.8)"><span class="nav-dot" style="background:#64748B"></span>framework-curator</a>
   </div>
+  <div class="nav-group">
+    <span class="nav-group-label" style="color:rgba(20,184,166,0.7)">Workshop</span>
+    <a href="#scope-check" class="nav-skill" style="color:rgba(20,184,166,0.8)"><span class="nav-dot" style="background:#14B8A6"></span>scope-check</a>
+    <a href="#spike" class="nav-skill" style="color:rgba(20,184,166,0.8)"><span class="nav-dot" style="background:#14B8A6"></span>spike</a>
+    <a href="#land" class="nav-skill" style="color:rgba(20,184,166,0.8)"><span class="nav-dot" style="background:#14B8A6"></span>land</a>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label" style="color:rgba(239,68,68,0.7)">Support</span>
+    <a href="#bug-fix" class="nav-skill" style="color:rgba(239,68,68,0.8)"><span class="nav-dot" style="background:#EF4444"></span>bug-fix</a>
+    <a href="#enhancement" class="nav-skill" style="color:rgba(239,68,68,0.8)"><span class="nav-dot" style="background:#EF4444"></span>enhancement</a>
+    <a href="#dependency-upgrade" class="nav-skill" style="color:rgba(239,68,68,0.8)"><span class="nav-dot" style="background:#EF4444"></span>dependency-upgrade</a>
+    <a href="#security-patch" class="nav-skill" style="color:rgba(239,68,68,0.8)"><span class="nav-dot" style="background:#EF4444"></span>security-patch</a>
+  </div>
 </aside>
 
 <!-- ── MAIN ── -->
@@ -1706,6 +1719,223 @@
               <li><div class="output-tag">docs/continuity/retrospective.md</div></li>
               <li><div class="output-tag">docs/continuity/framework-improvements.md</div></li>
               <li>Processed entries archived with separator after each retro run</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ WORKSHOP ══════════════ -->
+    <div class="category-section" id="cat-workshop" style="border-left:3px solid #14B8A6">
+      <div class="category-header">
+        <div class="category-icon">🔬</div>
+        <div>
+          <div class="category-title" style="color:#0F766E">Workshop</div>
+          <div class="category-desc">For work that isn't a product — spikes, personal tools, exploratory builds. Invoked via slash command, never auto-loaded. Bare mode by default. The anti-SBF: timebox over gates, outcome over process, disposable by default.</div>
+        </div>
+        <div class="skill-count">3 skills</div>
+      </div>
+
+      <div class="skill-card" id="scope-check" style="border-color:#99F6E4">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#0F766E">scope-check</div>
+          <div class="skill-badge" style="background:#CCFBF1;color:#0F766E">Workshop entry</div>
+        </div>
+        <div class="skill-description">Entry gate for Workshop. Asks one question — who is this for, and how long does it live? — then routes to Workshop (spike/tool) or hands to SBF (product). Holds the line between exploratory work and product work.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">Key Elements</div>
+            <ul>
+              <li><strong>One question:</strong> "Who is this for, and how long does it live?" — routes spike/tool to Workshop, product to SBF start</li>
+              <li><strong>Challenge:</strong> if the solo says spike but describes users or external sharing, pushes back</li>
+              <li><strong>Graduation triggers:</strong> captures signals that would force promotion to SBF later</li>
+              <li><strong>Timebox:</strong> every spike gets one — default 2 hours, stretch 1 day</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">When It Runs</div>
+            <ul>
+              <li>Any new work that isn't obviously a product</li>
+              <li>"Let me try...", "quick script to...", "see if I can...", "one-shot to..."</li>
+              <li>start routes here automatically for spike-shaped openings</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">Output</div>
+            <ul>
+              <li>One-paragraph frame: shape · outcome · timebox or scope · graduation triggers</li>
+              <li>Hands off to spike</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="spike" style="border-color:#99F6E4">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#0F766E">spike</div>
+          <div class="skill-badge" style="background:#CCFBF1;color:#0F766E">Workshop execution</div>
+        </div>
+        <div class="skill-description">The Workshop execution skill. Timeboxed exploratory work with a single artifact and a running journal of what was tried and what happened. Outcome-first, not process-first. No gates, no anchors, no phases.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">Key Elements</div>
+            <ul>
+              <li><strong>Running journal:</strong> spike-journal.md — what was tried, what happened, what surprised, current best guess</li>
+              <li><strong>Single file bias:</strong> keep work in as few files as possible — sprawl is a signal</li>
+              <li><strong>No tests, no abstractions, no README:</strong> the journal is the README</li>
+              <li><strong>Timebox enforcement:</strong> outcome reached → land · almost reached → one extension · unreachable → land with Toss</li>
+              <li><strong>Graduation triggers:</strong> "Can I share this?", "Should I add auth?", someone else wants to use it</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">Output</div>
+            <ul>
+              <li>The work (code / notebook / script) + spike-journal.md</li>
+              <li>Handed to land</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="land" style="border-color:#99F6E4">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#0F766E">land</div>
+          <div class="skill-badge" style="background:#CCFBF1;color:#0F766E">Workshop exit</div>
+        </div>
+        <div class="skill-description">The Workshop exit skill. Three outcomes — Toss (capture learning, archive), Keep (personal tool with minimal hygiene), Promote (hand to SBF with a prepared brief). Every spike ends here. No exceptions.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">Three Outcomes</div>
+            <ul>
+              <li><strong>Toss:</strong> summarize learning → write to MemPalace → archive or delete</li>
+              <li><strong>Keep:</strong> one-pass hygiene (rename, add header, remove secrets, sanity run) → freeze → log to MemPalace</li>
+              <li><strong>Promote:</strong> stop treating as spike code → prepare handoff brief → hand to SBF start</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#0F766E">When It Runs</div>
+            <ul>
+              <li>Every spike ends here — no exceptions, no "I'll land it later"</li>
+              <li>Timebox up, graduation trigger fired, or solo decides to close</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SUPPORT ══════════════ -->
+    <div class="category-section" id="cat-support" style="border-left:3px solid #EF4444">
+      <div class="category-header">
+        <div class="category-icon">🔧</div>
+        <div>
+          <div class="category-title" style="color:#B91C1C">Support</div>
+          <div class="category-desc">Post-deploy work on live systems — too focused for a full SBF phase. Invoked via slash command, never auto-loaded. Minimal footprint, deploy alone, verify in production.</div>
+        </div>
+        <div class="skill-count">4 skills</div>
+      </div>
+
+      <div class="skill-card" id="bug-fix" style="border-color:#FECACA">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#B91C1C">bug-fix</div>
+          <div class="skill-badge" style="background:#FEE2E2;color:#B91C1C">Support skill</div>
+        </div>
+        <div class="skill-description">Fix a production bug correctly — reproduce first, find the root cause, make the smallest fix, verify nothing adjacent broke, deploy. For issues in live systems, not for development-time errors caught before deploy.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Key Elements</div>
+            <ul>
+              <li><strong>Reproduce before touching anything:</strong> if you can't reproduce it, you don't have a bug</li>
+              <li><strong>Root cause, not symptom:</strong> fixing the symptom brings the bug back</li>
+              <li><strong>Smallest fix:</strong> every line changed is a line that can introduce a new problem</li>
+              <li><strong>Regression check:</strong> verify the fix AND that nothing adjacent broke</li>
+              <li><strong>Deploy alone:</strong> never bundled with other changes</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Output</div>
+            <ul>
+              <li>Commit: <code>fix: [what was broken] — root cause: [one line]</code></li>
+              <li>Verified in production — not just locally</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="enhancement" style="border-color:#FECACA">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#B91C1C">enhancement</div>
+          <div class="skill-badge" style="background:#FEE2E2;color:#B91C1C">Support skill</div>
+        </div>
+        <div class="skill-description">Add a small feature or improvement to an existing production application. Uses existing design, context, and patterns — not a new phase of work. If the change needs new design screens or a new process flow, route to SBF design-review instead.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Key Elements</div>
+            <ul>
+              <li><strong>Read existing context first:</strong> backlog, design screens, process map, code patterns</li>
+              <li><strong>Coherence check:</strong> extend existing patterns — don't create parallel solutions</li>
+              <li><strong>Scope in one sentence:</strong> if it takes more, it may be a new SBF phase</li>
+              <li><strong>Lite QA:</strong> targeted verification — not the full solo-qa chain</li>
+              <li><strong>Solo confirms in browser</strong> before marking done</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Output</div>
+            <ul>
+              <li>Commit: <code>enhancement: [what was added]</code></li>
+              <li>Verified in production</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="dependency-upgrade" style="border-color:#FECACA">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#B91C1C">dependency-upgrade</div>
+          <div class="skill-badge" style="background:#FEE2E2;color:#B91C1C">Support skill</div>
+        </div>
+        <div class="skill-description">Safely update project dependencies — audit what's outdated, check for breaking changes, update one at a time, test, deploy. Security-flagged packages always go first.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Key Elements</div>
+            <ul>
+              <li><strong>Prioritized audit:</strong> 🔴 security flagged · 🟡 major (breaking) · 🟢 minor/patch</li>
+              <li><strong>Read changelogs on major versions:</strong> never upgrade without checking</li>
+              <li><strong>One at a time:</strong> isolation means you know exactly what broke</li>
+              <li><strong>Know the rollback path</strong> before deploying</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Output</div>
+            <ul>
+              <li>Commit per package: <code>deps: upgrade [package] [old] → [new]</code></li>
+              <li>Verified in production after deploy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="security-patch" style="border-color:#FECACA">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#B91C1C">security-patch</div>
+          <div class="skill-badge" style="background:#FEE2E2;color:#B91C1C">Support skill</div>
+        </div>
+        <div class="skill-description">Address a security vulnerability in a production system — confirm the codebase is actually exposed, apply the minimal fix, verify it's closed, deploy urgently. Speed and correctness are equally required. A patch that doesn't close the vulnerability is worse than the original exposure.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Key Elements</div>
+            <ul>
+              <li><strong>Confirm exposure first:</strong> many CVEs affect packages in ways a specific project doesn't use</li>
+              <li><strong>Minimal fix:</strong> don't refactor or bundle — patch alone</li>
+              <li><strong>Verify it's closed:</strong> reproduce the attack vector, confirm it no longer works</li>
+              <li><strong>Audit for the pattern:</strong> don't fix one instance and miss three others</li>
+              <li><strong>Deploy urgently:</strong> skips the normal deploy queue</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#B91C1C">Output</div>
+            <ul>
+              <li>Commit: <code>deps: security patch [package] → [version] — [CVE ID]</code> or <code>fix: close [type] — [CVE ID]</code></li>
+              <li>Verified closed in production</li>
             </ul>
           </div>
         </div>

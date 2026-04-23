@@ -170,7 +170,7 @@ When anything in the framework changes, these are the locations that may need to
 | `skills/<name>/SKILL.md` | Behavior, process, anchors, output |
 | `README.md` | Phases table, always-on table, repo structure, AI-facing section |
 | `docs/solo-builder-framework.md` | Phase chain, integration points, principles |
-| `docs/communications/skills-reference.html` | Skill card, sidebar nav, category section |
+| `docs/communications/skills-reference.html` | Skill card, sidebar nav, category section — includes Workshop and Support sections |
 | `docs/communications/process-map.html` | Swimlane lane entries, gates |
 | `docs/communications/deck-business.html` | Slide 5 mapping, slide 7 phase flow, slide 9 diff-list |
 | `docs/communications/deck-solo.html` | Slide 4 phase flow, relevant phase slides |

@@ -333,8 +333,8 @@ Every phase transition has a gate — the output that enables the next phase. Th
 
 ## Companion framework: Workshop
 
-SBF covers product-shaped work. Most solo-builder work isn't that shape. **Workshop** (see `workshop/README.md`) is the companion for spike-shaped and tool-shaped work.
+SBF covers product-shaped work. Most solo-builder work isn't that shape. Workshop is the companion for spike-shaped and tool-shaped work — invokable via `/scope-check`.
 
-Scope boundary: SBF handles anything with external users or indefinite lifespan. Workshop handles everything else. The `scope-check` skill at Workshop's entry holds the line; `land` at Workshop's exit provides the bridge back to SBF when a spike graduates into a product.
+Scope boundary: SBF handles anything with external users or indefinite lifespan. Workshop handles everything else. `/scope-check` holds the line at entry; `/land` provides the bridge back to SBF when a spike graduates into a product.
 
 Workshop's load-bearing principles are deliberately the inverse of SBF's: timebox over gates, outcome over process, disposable by default, single artifact, explicit graduation.
