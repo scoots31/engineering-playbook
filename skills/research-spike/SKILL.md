@@ -130,6 +130,9 @@ After returning the answer, explicitly hand control back to the calling phase:
 
 Don't let the spike become a detour. The phase that called it is waiting. Return with the answer and keep moving.
 
+**Design Review backlog lifecycle:**
+When design-review triggers a spike, the blocked slice stays at `Blocked (spike)` in the backlog until the spike returns. Saving the result to `docs/spikes/` is not enough — design-review must run a round to process it. In that round: if confidence is High or Medium, the slice can be promoted toward Ready. If confidence is Low, surface it as a decision: run a second spike, proceed with a named assumption, or defer the slice. The slice does not move from Blocked automatically — it takes a design-review round to close the loop.
+
 ---
 
 ## When a Spike Produces More Spikes
