@@ -29,7 +29,7 @@ When anything surfaces during a session that's worth examining — a skill that 
 **Examples:**
 ```
 2026-04-20  Design Review  Process map cross-reference wasn't prompted — had to be done manually
-2026-04-20  Solo Build     Three anchors check caught a missing data anchor before build started — worked exactly as designed
+2026-04-20  Solo Build     Four anchors check caught a missing data anchor before build started — worked exactly as designed
 2026-04-21  Solo QA        Solo sign-off prompt didn't include the design file path — solo had to find it manually
 2026-04-21  Code Review    Stack compliance check referenced wrong tech-context section for RTK Query patterns
 ```

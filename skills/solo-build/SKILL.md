@@ -1,6 +1,6 @@
 ---
 name: solo-build
-description: Slice-by-slice build execution for the solo builder framework. Selects the right slice to build next based on dependency order and user journey sequence, surfaces the three anchors (design, data, done criteria) before writing a line of code, and hands off to solo-qa when the slice is code-complete. Never builds ahead of the journey. Never starts a slice without its three anchors.
+description: Slice-by-slice build execution for the solo builder framework. Selects the right slice to build next based on dependency order and user journey sequence, surfaces all four anchors (design, data, done, process) before writing a line of code, and hands off to solo-qa when the slice is code-complete. Never builds ahead of the journey. Never starts a slice without all four anchors.
 ---
 
 # Solo Build
@@ -30,13 +30,13 @@ A slice cannot enter In Build if its dependencies are not Done. The backlog depe
 Screens with no shared infrastructure and no journey dependencies (settings, auth, help) can run alongside the main journey if they're Ready and the solo wants to move them forward. Name them explicitly as parallel rather than letting them bleed into the main build sequence.
 
 **Slice selection statement** — always say it out loud before starting:
-> "Building SL-[ID] — [Name]. It's next in journey order, dependencies are clear, and it has all three anchors."
+> "Building SL-[ID] — [Name]. It's next in journey order, dependencies are clear, and it has all four anchors."
 
 ---
 
-## The Three Anchors — Required Before Starting
+## The Four Anchors — Required Before Starting
 
-Every slice must have all three before a line of code gets written. If any anchor is missing, stop. Resolve it first.
+Every slice must have all four before a line of code gets written. If any anchor is missing, stop. Resolve it first.
 
 **Anchor 1 — Design anchor**
 The exact screen and element this slice builds. Not just the file — the specific component within it.
@@ -57,14 +57,6 @@ The mock data layer is the data source during build. The slice reads from the mo
 **Anchor 3 — Done anchor**
 The 2–3 criteria from the backlog that close this slice. These are what get handed to `solo-qa`.
 
-**Anchor 4 — Process anchor**
-The step in the to-be process map this slice implements. Read `docs/process/to-be-[name].md` and identify the step.
-
-Format: `[to-be map file] → [step name] → [position in flow]`
-Example: `docs/process/to-be-player-evaluation.md → Step 3: system displays slot context → main path, after player lookup`
-
-If the slice doesn't map to a step in the to-be map, stop and ask: is this slice implementing something that wasn't in the agreed process? That's a decision that needs to be made explicitly — not silently built.
-
 Format: criteria listed exactly as they appear in the backlog
 Example:
 - WR2 slot tag renders correctly from mock data
@@ -72,6 +64,14 @@ Example:
 - Switch context toggle is present and visible (non-functional in Phase 1)
 
 If the done criteria are vague — "it works" is not a criterion — sharpen them before starting. Concrete and verifiable only.
+
+**Anchor 4 — Process anchor**
+The step in the to-be process map this slice implements. Read `docs/process/to-be-[name].md` and identify the step.
+
+Format: `[to-be map file] → [step name] → [position in flow]`
+Example: `docs/process/to-be-player-evaluation.md → Step 3: system displays slot context → main path, after player lookup`
+
+If the slice doesn't map to a step in the to-be map, stop and ask: is this slice implementing something that wasn't in the agreed process? That's a decision that needs to be made explicitly — not silently built.
 
 ---
 
@@ -83,7 +83,7 @@ If the done criteria are vague — "it works" is not a criterion — sharpen the
    - Standard format: `feature/SL-[ID]-[short-slug]`
    - Example: `feature/SL-003-player-overview-card`
    - Branch from the base branch specified in tech-context (e.g., `development` for Bayer Aurora, `main` for a general solo project)
-2. State the three anchors explicitly
+2. State all four anchors explicitly
 3. Read the design screen — not from memory, actually open it
 4. Read the relevant mock data — know the exact field names
 5. State a brief build plan: *"1. Create component structure → verify: renders. 2. Wire mock data → verify: correct values display. 3. Apply styles from design → verify: matches screen."*
@@ -171,5 +171,5 @@ Never let the backlog get out of sync with the actual build state. It's the solo
 - Does not verify done — that's solo-qa
 - Does not redesign — surfaces conflicts, gets decisions, implements what's decided
 - Does not build out of journey order without explicit reason
-- Does not start a slice without its three anchors
+- Does not start a slice without all four anchors
 - Does not hardcode data that should come from the mock layer

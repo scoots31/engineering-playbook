@@ -103,7 +103,7 @@ Slice statuses should reflect actual state. If the At a Glance counts look incon
 - Assumptions unvalidated that were marked as blocking → surface
 
 **Scope drift signal**
-If a slice is being built that has no backlog entry, the three anchors check in solo-build will catch it. The health monitor's signal here is simpler: if the solo describes work being done and there's no corresponding slice status in the backlog, flag it.
+If a slice is being built that has no backlog entry, the four anchors check in solo-build will catch it. The health monitor's signal here is simpler: if the solo describes work being done and there's no corresponding slice status in the backlog, flag it.
 
 ---
 

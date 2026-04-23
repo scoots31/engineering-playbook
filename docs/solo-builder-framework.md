@@ -183,8 +183,8 @@ ENTRY POINT
 4. BUILD  ← BUILT (solo-build skill)
    └── Tracer bullet first — thinnest path through full journey before expanding
    └── Journey order — first screen before second, dependencies block
-   └── Three anchors required before starting any slice:
-       design anchor (screen + element) · data anchor (mock fields) · done anchor (criteria)
+   └── Four anchors required before starting any slice:
+       design anchor (screen + element) · data anchor (mock fields) · done anchor (criteria) · process anchor (to-be step)
    └── Mid-build discoveries surfaced immediately — never silently resolved
    └── Code-complete → status: In QA → hand to solo-qa
 
@@ -260,7 +260,7 @@ ENTRY POINT
 | `prd-to-plan` | Phases implementation by risk, from deferred decisions log | ✅ Built |
 | `to-issues` | Breaks plan into GitHub issues | ✅ Built |
 | `agent-room` | Multi-perspective decisions | ✅ Built |
-| `solo-build` | Slice-by-slice execution — three anchors, journey order, dependency blocking | ✅ Built |
+| `solo-build` | Slice-by-slice execution — four anchors, journey order, dependency blocking | ✅ Built |
 | `solo-qa` | Two-part verification — active AI testing with evidence + solo browser sign-off required for Done | ✅ Built |
 | `qa-triage` | Routes unexpected QA discoveries — bugs, missing requirements, regressions — to the correct path | ✅ Built |
 | `phase-test` | Full-phase testing orchestrator — 7 specialist lenses, gate decision, required before deploy | ✅ Built |

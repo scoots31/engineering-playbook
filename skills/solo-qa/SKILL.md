@@ -49,13 +49,15 @@ If it's not there, stop. Do not proceed. Return the message above.
 
 ### Step 1 — Read the Full Slice Spec
 
-This is not the same as reading the done criteria. Read all three anchors from the backlog slice record:
+This is not the same as reading the done criteria. Read all four anchors from the backlog slice record:
 
 **Design anchor** — which screen, which element, where on screen. Open the design file. Look at the element being verified. Know exactly what it's supposed to look like and contain.
 
 **Data anchor** — which mock file, which fields, what the eventual real source is. Open `data/mock/[entity].json`. Note the actual values in the fields this slice consumes. These are what you'll verify against in the running slice.
 
 **Done anchor** — the 2–3 criteria that close this slice. Read them exactly as written. These are what get verified next.
+
+**Process anchor** — which step in the to-be process map this slice implements. Confirms the slice built the right thing, not just something that matches the design.
 
 Don't skip this step. Verifying criteria without first reading the full spec is how things get marked Done that weren't built against the design.
 
