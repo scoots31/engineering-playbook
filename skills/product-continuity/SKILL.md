@@ -1,6 +1,6 @@
 ---
 name: product-continuity
-description: The project's institutional memory. Always-on — never invoked by the user. Captures decisions with reasoning, outstanding questions needing external input, assumptions being treated as true, known risks, changes, session documentation, glossary terms, and target state documentation for training and wiki use. Activates at key moments throughout every phase. Produces and maintains docs/continuity/ for the life of the project.
+description: The project's institutional memory. Always-on in auto-pilot and assisted mode — silent in bare mode (the default). Loads once at mode activation. Captures decisions with reasoning, outstanding questions needing external input, assumptions being treated as true, known risks, changes, session documentation, glossary terms, and target state documentation for training and wiki use. Activates at key moments throughout every phase. Produces and maintains docs/continuity/ for the life of the project.
 ---
 
 # Product Continuity
@@ -11,7 +11,7 @@ description: The project's institutional memory. Always-on — never invoked by 
 
 This skill is the project's institutional memory. In a team, this is the person who writes the meeting notes, keeps the decision log, tracks the open questions, maintains the wiki, and makes sure critical context doesn't live only in someone's head. Solo, that context evaporates between sessions. This skill captures it continuously so it doesn't have to be reconstructed.
 
-This skill is not invoked by the user. It activates automatically at key moments throughout every phase.
+This skill activates when auto-pilot or assisted mode is chosen — not in bare mode (the default). Once loaded, it captures at the right moments throughout every phase without being re-invoked.
 
 ---
 
