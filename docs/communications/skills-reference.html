@@ -417,6 +417,13 @@
   </div>
 
   <div class="nav-group">
+    <span class="nav-group-label" style="color:rgba(148,163,184,0.6)">Session Modes</span>
+    <a href="#mode-bare" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>bare</a>
+    <a href="#mode-assisted" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>assisted</a>
+    <a href="#mode-auto-pilot" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>auto-pilot</a>
+  </div>
+
+  <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(96,165,250,0.6)">Entry</span>
     <a href="#start" class="nav-skill" style="color:rgba(96,165,250,0.7)"><span class="nav-dot" style="background:#3B82F6"></span>start</a>
   </div>
@@ -495,12 +502,119 @@
     <div class="header-stats">
       <div class="header-stat"><div class="hs-num">27</div><div class="hs-label">Total skills</div></div>
       <div class="header-stat"><div class="hs-num">4</div><div class="hs-label">Always-on</div></div>
-      <div class="header-stat"><div class="hs-num">3</div><div class="hs-label">Auto-chained (no user invoke)</div></div>
+      <div class="header-stat"><div class="hs-num">3</div><div class="hs-label">Session modes</div></div>
       <div class="header-stat"><div class="hs-num">9</div><div class="hs-label">Phase categories</div></div>
     </div>
   </div>
 
   <div class="content">
+
+    <!-- ══════════════ SESSION MODES ══════════════ -->
+    <div class="category-section" id="cat-modes" style="border-left:3px solid #475569">
+      <div class="category-header">
+        <div class="category-icon">⚙️</div>
+        <div>
+          <div class="category-title">Session Modes</div>
+          <div class="category-desc">Controls how much the framework activates at the start of a session. Bare is the default — the framework is silent until you invoke a skill. Token cost scales with activation: auto-pilot (highest) · assisted (moderate) · bare (lowest). Switch modes verbally in Cursor or with slash commands in Claude Code.</div>
+        </div>
+        <div class="skill-count">3 modes</div>
+      </div>
+
+      <div class="skill-card" id="mode-bare">
+        <div class="skill-card-header">
+          <div class="skill-name">bare</div>
+          <div class="skill-badge">Default</div>
+        </div>
+        <div class="skill-description">The framework is silent. No routing, no always-on skills. Every skill loads only when explicitly invoked. Maximum token efficiency — nothing fires until you ask for it.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Invoke</div>
+            <ul>
+              <li><strong>Cursor:</strong> "bare mode"</li>
+              <li><strong>Claude Code:</strong> <code>/bare</code></li>
+              <li>Also the default — active when no mode has been chosen</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">What activates</div>
+            <ul>
+              <li>Nothing — framework waits for explicit skill invocation</li>
+              <li>Always-on skills do not load</li>
+              <li>No phase routing or chain</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Best for</div>
+            <ul>
+              <li>Quick one-off tasks, individual skill use, or experienced builders who know exactly what they need. Lowest token cost — nothing loads until invoked.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="mode-assisted">
+        <div class="skill-card-header">
+          <div class="skill-name">assisted</div>
+          <div class="skill-badge">Flexible</div>
+        </div>
+        <div class="skill-description">Always-on skills activate once and persist for the session. Phase skills are invoked manually — you choose what to run and when. The framework is present but you're driving.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Invoke</div>
+            <ul>
+              <li><strong>Cursor:</strong> "assisted mode"</li>
+              <li><strong>Claude Code:</strong> <code>/assisted</code></li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">What activates</div>
+            <ul>
+              <li>All four always-on skills load once: <code>process-mapper</code>, <code>product-continuity</code>, <code>framework-health</code>, <code>retrospective</code></li>
+              <li>Phase skills wait for explicit invocation</li>
+              <li>No automatic phase routing</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Best for</div>
+            <ul>
+              <li>Builders who know the framework and want continuity capture without the full phase chain. Moderate token cost — always-on loads once, then skills on demand.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="mode-auto-pilot">
+        <div class="skill-card-header">
+          <div class="skill-name">auto-pilot</div>
+          <div class="skill-badge">Full chain</div>
+        </div>
+        <div class="skill-description">Full framework engagement. The start skill reads your opening message and routes automatically. Always-on skills load and persist. The phase chain drives the session — gates, anchors, QA chain, all of it.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Invoke</div>
+            <ul>
+              <li><strong>Cursor:</strong> "auto-pilot mode"</li>
+              <li><strong>Claude Code:</strong> <code>/auto-pilot</code></li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">What activates</div>
+            <ul>
+              <li>All four always-on skills load once</li>
+              <li><code>start</code> skill reads opening message and routes to Brainstorm or Discover</li>
+              <li>Full phase chain — gates, four anchors, QA chain, all active</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Best for</div>
+            <ul>
+              <li>New projects, unfamiliar territory, or when you want the full discipline of the framework driving the session. Highest token cost — full framework loads.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <!-- ══════════════ ENTRY ══════════════ -->
     <div class="category-section cat-entry" id="cat-entry">
