@@ -287,6 +287,31 @@ ENTRY POINT
 
 ---
 
+## Workshop Skills
+
+Invokable via slash command. Never auto-loaded. For work that isn't a product — spikes, personal tools, exploratory builds. Bare mode by default.
+
+| Skill | Role | Status |
+|-------|------|--------|
+| `scope-check` | Entry gate — who is this for, how long does it live? Routes to Workshop or SBF | ✅ Built |
+| `spike` | Workshop execution — timeboxed work, single artifact, running journal | ✅ Built |
+| `land` | Workshop exit — Toss (capture learning), Keep (personal tool), or Promote (hand to SBF) | ✅ Built |
+
+---
+
+## Support Skills
+
+Invokable via slash command. Never auto-loaded. For post-deploy work on live systems — too focused for a full SBF phase.
+
+| Skill | Role | Status |
+|-------|------|--------|
+| `bug-fix` | Reproduce, root cause, smallest fix, regression check, deploy | ✅ Built |
+| `enhancement` | Small addition to existing feature — uses existing design context, lite QA, deploy | ✅ Built |
+| `dependency-upgrade` | Audit, check breaking changes, update one at a time, verify, deploy | ✅ Built |
+| `security-patch` | Confirm exposure, minimal fix, verify closed, deploy urgently | ✅ Built |
+
+---
+
 ## Phase Gates
 
 Every phase transition has a gate — the output that enables the next phase. The gate is structural, not ceremonial: the next phase reads what this phase produced. If the output doesn't exist, framework-health surfaces it.
