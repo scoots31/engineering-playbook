@@ -47,7 +47,9 @@ Phase skills: `start` · `brainstorming` · `discover` · `tech-context` · `des
 
 Supporting skills: `research-spike` · `grill-me` · `to-prd` · `principal-engineer` · `agent-room` · `tdd` · `frontend-design` · `qa-triage`
 
-Workshop (spike/tool work): `[PLAYBOOK_ROOT]/workshop/` → `scope-check` · `spike` · `land`
+Workshop (spike/tool work): `scope-check` · `spike` · `land`
+
+Support (post-deploy on-demand): `bug-fix` · `enhancement` · `dependency-upgrade` · `security-patch`
 
 ---
 
