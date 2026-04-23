@@ -33,6 +33,9 @@ This skill is not invoked by the user. It activates automatically at key moments
 - Target state documentation updated
 - Onboarding document refreshed
 
+**At phase transition:**
+- Current phase marker updated
+
 ---
 
 ## The Documents
@@ -293,6 +296,27 @@ a constraint, an assumption, a risk, a decision that looks odd without context.]
 ## What not to change without discussion
 [Settled decisions that should not be re-litigated — and a link to the decision log entry for each.]
 ```
+
+---
+
+### 11. Current Phase Marker — `docs/continuity/current-phase.md`
+
+A single-file, single-source-of-truth record of the project's current framework phase. The cheapest possible read at session start — one file, a handful of lines — so any skill or session can orient itself in one step without parsing longer documents.
+
+Updated at every phase transition. Never duplicated elsewhere.
+
+**Format:**
+```markdown
+# Current Phase
+
+**Phase:** [Brainstorm / Discover / Design Sprint / Design Review / Plan / Build / QA / Phase Test / Deploy]
+**Since:** [YYYY-MM-DD]
+**Previous:** [Phase name] (completed [YYYY-MM-DD])
+**Next expected:** [Phase name]
+**Notes:** [Optional — one line on anything unusual about the current phase, e.g., "re-entered Design Review after QA surfaced a gap"]
+```
+
+Written once at project start. Updated by product-continuity at every phase transition. Read at the beginning of every session before any other continuity document.
 
 ---
 
