@@ -137,7 +137,7 @@ ENTRY POINT
 │   └── 0. BRAINSTORM (enhanced)
 │          └── brainstorming skill — idea exploration + rough sketch mid-session
 │          └── Output: directional clarity + rough visual → feeds Discover
-│          └── ← NEEDS REVISION to incorporate design sprint sketch moment
+│          └── Gate: judgment — clear enough for a productive discovery conversation
 │
 └── Know what you want to build?
     └── Skip to Discover
@@ -146,12 +146,14 @@ ENTRY POINT
    └── discover skill — narrative conversation, beginning to end use case
    └── process-mapper activates — as-is process documented (manual or digital), to-be map agreed and validated
    └── Output: discovery-brief.md + docs/process/as-is-[name].md + docs/process/to-be-[name].md + design on-ramp decision
+   └── Gate: discovery-brief.md exists + to-be map agreed
 
 1.5 TECH CONTEXT  ← BUILT
    └── Routes: Solo → questions to build stack · Bayer → which profile?
    └── Bayer profiles: bayer-aurora (C7/Spectrum) · more added as needed
    └── Output: docs/tech-context.md — referenced by every downstream skill
    └── Infrastructure slices identified here — prerequisites before any feature slice
+   └── Gate: docs/tech-context.md exists
 
 2. DESIGN SPRINT  ← BUILT
    └── On-ramp A: from scratch → hero screen → warmer/colder → all screens → walk-through
@@ -159,12 +161,14 @@ ENTRY POINT
    └── On-ramp C: reference → aesthetic constraint → produce in that direction
    └── process-mapper cross-references screens against to-be map — gaps flagged and decided
    └── Output: docs/design/sprint-[id].html (all screens) + deferred-decisions.md + to-be map annotated with screen refs
+   └── Gate: sprint-[id].html + deferred-decisions.md exist
 
 2.5 DATA SCAFFOLD  ← BUILT (runs before or alongside design review)
    └── Generates realistic fake data for all screen data entities
    └── Creates mock data layer in data/mock/ — one seam, easy to swap
    └── Output: data/mock/[entity].json + docs/data-mapping.md (proto-API contract)
    └── Mock indicator badge on screens during development
+   └── Gate: data/mock/ populated + docs/data-mapping.md exists
 
 2.6 DESIGN REVIEW  ← BUILT (iterative loop — runs as many rounds as needed)
    └── Round 1: full first pass, all screens, define initial slices, trigger spikes
@@ -175,10 +179,12 @@ ENTRY POINT
    └── Continues in parallel with build for remaining slices
    └── Output: docs/backlog.md — ID, Name, Process Anchor, Description, Dependency, Status per slice
              + review log appended each round
+   └── Gate: backlog.md with a coherent set of Ready slices for Phase 1
 
 3. PLAN
    └── prd-to-plan → phases sequenced from backlog (Ready slices), by risk not comfort
    └── to-issues → GitHub issues from Ready slices, each referencing design screen
+   └── Gate: GitHub issues created for Phase 1 Ready slices
 
 4. BUILD  ← BUILT (solo-build skill)
    └── Tracer bullet first — thinnest path through full journey before expanding
@@ -187,6 +193,7 @@ ENTRY POINT
        design anchor (screen + element) · data anchor (mock fields) · done anchor (criteria) · process anchor (to-be step)
    └── Mid-build discoveries surfaced immediately — never silently resolved
    └── Code-complete → status: In QA → hand to solo-qa
+   └── Gate (per slice): four anchors confirmed + solo sign-off in browser
 
 5. QA / ACCEPTANCE  ← BUILT
    └── Triggered automatically — solo-build invokes code-review-and-quality on code-complete
@@ -197,6 +204,7 @@ ENTRY POINT
    └── Unexpected discovery → qa-triage: classifies (bug / missing req / regression), scopes, routes, logs
    └── Done = code review logged + AI verified with evidence + solo confirmed in browser
    └── No solo sign-off while an open missing requirement exists — define or defer it first
+   └── Gate: all phase slices at ✓ Done status
 
 5.5 PHASE TEST  ← BUILT (/phase-test)
    └── Solo invokes explicitly when all phase slices are Done — deliberate decision, not automatic
@@ -213,6 +221,7 @@ ENTRY POINT
    └── Output: docs/phase-test-[phase]-[date].md
    └── Gate OPEN → phase completion record appended to backlog.md:
        "Phase [N] Complete — tested and ready to deploy" + what was delivered + what comes next
+   └── Gate: phase-test OPEN required before deploy
 
 6. DEPLOY  ← BUILT
    └── Reads docs/tech-context.md — deploy method entirely determined by stack
@@ -277,11 +286,22 @@ ENTRY POINT
 
 ---
 
-## Next Session Picks Up At
+## Phase Gates
 
-**The gates** — what makes each phase transition unavoidable without feeling like bureaucracy? The deferred decisions log gates Design Sprint → Plan. Others still need definition.
+Every phase transition has a gate — the output that enables the next phase. The gate is structural, not ceremonial: the next phase reads what this phase produced. If the output doesn't exist, framework-health surfaces it.
 
-**How phases reshape** — now that the full entry flow is solved (Start → Brainstorm or Discover → Design Sprint → Plan → Build), revisit whether the original phase names still make sense or need renaming for clarity.
+| From | To | Gate |
+|---|---|---|
+| Brainstorm | Discover | Judgment — clear enough for a productive discovery conversation |
+| Discover | Design Sprint | discovery-brief.md + to-be map agreed |
+| Tech Context | Design Sprint | docs/tech-context.md exists |
+| Design Sprint | Design Review | sprint-[id].html + deferred-decisions.md exist |
+| Design Review | Plan | backlog.md with a coherent set of Ready slices for Phase 1 |
+| Plan | Build | GitHub issues created for Phase 1 Ready slices |
+| Build (per slice) | QA | Four anchors confirmed + code-complete declared |
+| QA | Done | Solo sign-off confirmed in browser |
+| All slices Done | Phase Test | Solo invokes explicitly |
+| Phase Test | Deploy | Gate OPEN decision |
 
 ---
 
