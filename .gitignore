@@ -5,3 +5,7 @@ packaging/dist/
 *.swo
 .env
 .env.*
+
+# Machine-local tool caches
+.claude/
+docs/communications/.wrangler/
