@@ -44,7 +44,25 @@ A missing file is a signal. Read it only if the signal needs clarification.
 
 ### Mode Activation (replaces session start)
 
-When auto-pilot or assisted mode activates, read `docs/continuity/handoff.md`. Read the backlog At a Glance section. Run existence checks for the current phase.
+When auto-pilot or assisted mode activates, run these checks in order:
+
+**1. Framework version check — runs first, before reading any project documents.**
+
+Resolve the playbook root from User Rules / CLAUDE.md (the path configured during setup — never hardcode it). Then run:
+
+```
+git -C <PLAYBOOK_ROOT> fetch origin --quiet
+git -C <PLAYBOOK_ROOT> rev-list HEAD..origin/main --count
+```
+
+If count > 0:
+> "Framework update available — [N] new commit(s) on origin/main. Pull latest before we start? (`git -C <PLAYBOOK_ROOT> pull`)"
+
+Wait for yes or no. If yes: pull, confirm success, continue. If no: log "framework update deferred" to the session handoff and continue. Do not raise it again this session.
+
+If count = 0: silent. Continue.
+
+**2. Read project state.** Read `docs/continuity/handoff.md`. Read the backlog At a Glance section. Run existence checks for the current phase.
 
 If everything is in order: orient the session from the handoff and continue. No output needed — health is silent when healthy.
 
@@ -99,6 +117,9 @@ Check three things only:
 ---
 
 ## What It Watches
+
+**Framework version currency**
+At mode activation, checks whether the local engineering-playbook is behind `origin/main`. Surfaces once if an update is available — with the pull command ready to run. Never repeats after the solo acknowledges it.
 
 **Phase gate integrity**
 Expected outputs present before the next phase runs. Checks by file existence — not by reading the files.
@@ -160,3 +181,4 @@ No output when everything is running correctly. The absence of health monitor ou
 | Blocking progress while checking | Defeats the purpose | Check after the fact, surface gaps, never halt |
 | Repeating a deferred issue mid-session | Interrupts flow | Log it to handoff, check again at session end |
 | Output when everything is healthy | Creates noise, trains the solo to ignore it | Silent when healthy — output is always meaningful |
+| Checking for framework updates mid-session | Interrupts flow for something that should be resolved at session start | Version check runs once at mode activation only — never mid-session |
