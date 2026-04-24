@@ -33,7 +33,7 @@ These principles are what make the Solo Builder Framework what it is. Any propos
 
 1. **Process-first** — the to-be map is the contract. Every slice traces to a process step.
 2. **Four anchors required** — design, data, done, process. No slice reaches Ready without all four.
-3. **Gates between phases** — nothing advances without passing the gate.
+3. **Gates between phases** — nothing advances without passing the gate. Every gate produces an explicit named confirmation listing actual output files, followed by a direct transition prompt: start the next phase now, or close out here? No passive "good stopping point" language — a direct question with two options.
 4. **Always-on ≠ user-invoked** — the four always-on skills activate automatically, never by request.
 5. **Activation taxonomy is fixed** — every skill is one of: Framework entry · Framework-routed · Phase skill · On-demand · Auto · Supporting · Always-On. No drift into "user-triggered" language.
 6. **Continuous capture** — product-continuity runs throughout, not in batches.

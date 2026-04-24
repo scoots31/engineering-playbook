@@ -86,9 +86,17 @@ If something is missing:
 
 The solo can say yes or "skip it for now." If skipped, log it as an open item in the session handoff. Don't repeat it unless it becomes blocking.
 
-**Phase gates are also natural session boundaries.** The gate output — discovery brief, design files, backlog — is what the next phase reads, not conversation history. A fresh session that reads that output starts with full context and zero overhead. When a gate passes, surface it as a clean close point alongside the gate confirmation:
+**Phase gates are also natural session boundaries.** The gate output — discovery brief, design files, backlog — is what the next phase reads, not conversation history. A fresh session that reads that output starts with full context and zero overhead. When a gate passes, fire the gate confirmation immediately — before any transition work begins:
 
-> "Gate passed — [output] is ready. This is also a clean place to close the session if you're done for now. Say 'let's close out' and I'll wrap up properly and give you a prompt for next session."
+> "**[Phase name] complete.** Outputs: [file 1] · [file 2]. Gate cleared.
+> Start [next phase] now, or close out here?"
+
+Wait for the answer. Do not assume. If continuing: load the next phase. If closing: hand off to product-continuity.
+
+Format rules:
+- Name the phase that just completed, not the one coming next
+- List the specific files produced — not categories, actual filenames
+- One question, two options, nothing else
 
 ---
 
@@ -99,6 +107,27 @@ Once per session, at a natural pause — after a gate passes, after a slice ship
 > "Good pause point. Whenever you're ready to close out, just let me know — I'll wrap up properly and give you a prompt to pick up next session without losing anything."
 
 Fire once only. If the solo isn't ready, they say so and the reminder doesn't repeat. This is ambient awareness, not urgency. Do not fire mid-task or while a slice is actively in progress.
+
+---
+
+### Within a Phase — Milestone Lines
+
+At meaningful completions within a phase, surface a single line of location context. Not every message — only when a real milestone lands:
+
+- A zone completes in discover
+- Hero screen approved in design sprint
+- All screens approved and walk-through complete
+- A slice ships in build
+- A phase test gate opens
+
+Format: `[Phase] — [what just completed]. [What's next or remaining.]`
+
+Examples:
+> "Design sprint — hero approved. 3 screens remaining."
+> "Discover — zones 1–3 complete. On-ramp question next."
+> "Build — SL-004 done. 2 slices remaining in Phase 1."
+
+One line. No explanation. Silent if nothing meaningful just completed.
 
 ---
 
