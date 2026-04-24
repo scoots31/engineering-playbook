@@ -71,7 +71,23 @@ If no to-be process map exists, stop. The process map should have been produced 
 
 These gaps are documented in the deferred decisions log, not silently assumed.
 
-### Step 2: Ask the Aesthetic Question (On-ramp 1 and 3 only)
+### Step 1.5: State the On-Ramp Back — Gate Before Producing Anything
+
+Before asking any aesthetic question or producing any HTML, extract the design on-ramp from the discovery brief and state it back to the solo in one sentence:
+
+> "Brief says on-ramp is [1/2/3] — [from scratch / Figma at <link> / reference: <name>]. I'll start there. Correct?"
+
+Wait for confirmation. This is a required gate — do not proceed to Step 2 without it.
+
+**If on-ramp 2 (Figma exists):** the Figma is the visual source of truth. Do NOT produce wireframes from scratch. Skip the aesthetic question in Step 2. Go to Step 3 and follow the on-ramp 2 branch — import the Figma via MCP and use those screens as the hero and secondary screens. The warmer/colder loop confirms story alignment, not layout invention.
+
+**If on-ramp 3 (reference exists):** run `awesome-design-md` to extract aesthetic tokens before building. Skip the aesthetic question in Step 2.
+
+**If on-ramp 1 (from scratch):** proceed to Step 2 as written.
+
+If the brief has no on-ramp recorded, stop. Return to `discover` and answer the on-ramp question before continuing.
+
+### Step 2: Ask the Aesthetic Question (On-ramp 1 only — skip for 2 and 3)
 
 Before writing any HTML, ask one question:
 
@@ -85,6 +101,10 @@ Do not skip this question. Skin direction saved two full rounds in testing.
 
 ### Step 3: Identify the Hero Screen
 
+**On-ramp 2 (Figma):** the hero screen is whichever Figma frame shows the moment of value. Import it via Figma MCP. State: *"Hero screen from Figma is [frame name] — it's the moment of value because [one sentence]."* Skip Step 4 structure pass; go to Step 5 (warmer/colder on story alignment, not layout).
+
+**On-ramp 1 or 3:** proceed as written below.
+
 From the key moments in the discovery brief, identify the one screen where the system's core value is most visible. This is almost always the moment of value from Zone 3 of the discovery conversation.
 
 **Build this screen first.** All other screens extend from it. Getting the hero screen right — structure and skin — before moving to secondary screens keeps the sprint focused and prevents aesthetic drift across screens.
@@ -92,6 +112,8 @@ From the key moments in the discovery brief, identify the one screen where the s
 State your choice: *"The hero screen is [X] because [one sentence on why it shows the moment of value]."*
 
 ### Step 4: Build the First Pass — Structure Only
+
+**Skip this step entirely if on-ramp 2.** Figma screens are the first pass. Go to Step 5.
 
 Produce an HTML mockup of the hero screen. First pass discipline:
 
@@ -285,6 +307,7 @@ The deferred decisions log feeds `prd-to-plan`. Phases are sequenced around what
 | Treating the deferred log as optional | prd-to-plan phases get bloated with deferred scope | Every visible element gets a decision: Phase 1 or deferred |
 | Perfect fidelity on every screen | Slows the sprint, wrong level of investment | Good enough to point at and make decisions from — not pixel perfect |
 | Translating Figma to code | Double work, Figma and HTML go out of sync | HTML artifact IS the first frontend output |
+| Wireframing from scratch when a Figma exists | Ignores the on-ramp decision, wastes the solo's existing design investment, produces a parallel artifact that conflicts with Figma | State the on-ramp back at Step 1.5. If on-ramp 2, import Figma via MCP — do not wireframe |
 
 ---
 
