@@ -925,8 +925,10 @@
             <ul>
               <li><div class="output-tag">docs/design/sprint-[id].html</div></li>
               <li><div class="output-tag">docs/design/deferred-decisions.md</div></li>
+              <li><div class="output-tag">docs/design/handoff/&lt;date&gt;/ (optional)</div></li>
               <li>All screens — the shared visual artifact</li>
               <li>to-be map annotated with screen references</li>
+              <li>Optional stakeholder handoff — HTML + PDF + feedback template for async review</li>
               <li><strong>Gate:</strong> deferred decisions log required before planning</li>
             </ul>
           </div>
@@ -1056,6 +1058,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
+              <li>Reads <code>docs/stakeholder-feedback/*.md</code> as first-class input — per-screen comments become findings</li>
               <li>Three lenses every round: <strong>PM</strong> (right problem?), <strong>Tech Lead</strong> (buildable?), <strong>Data</strong> (where does every field come from?)</li>
               <li>Process coverage check every round — coverage map vs. to-be, every uncovered step surfaced as decision</li>
               <li><strong>Process anchor required</strong> on every slice before it reaches Ready</li>

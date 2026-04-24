@@ -51,6 +51,7 @@ Before the round begins, read:
 - Deferred decisions log at `docs/design/deferred-decisions.md`
 - **To-be process map at `docs/process/to-be-[name].md`** — the agreed process. Every slice should implement a step in it.
 - Any spike results in `docs/spikes/`
+- Stakeholder feedback at `docs/stakeholder-feedback/*.md` (if any new files since last round)
 
 If the to-be process map doesn't exist, stop before reviewing slices. The process map is what tells you whether the design covers the right things — without it, slice review is just reacting to screens.
 
@@ -103,6 +104,16 @@ Get an answer before the round closes. Unresolved coverage gaps block a clean Ph
 > "SL-008 (Admin Panel) doesn't map to any step in the to-be process. Is this infrastructure, a deferred feature, or something that should be removed from scope?"
 
 This coverage check runs every round — not just Round 1. As new slices are added and process understanding deepens, gaps that weren't visible before may appear.
+
+### Step 2.6: Incorporate Stakeholder Feedback (if present)
+
+If new files exist in `docs/stakeholder-feedback/` since the last round, read each one and surface it explicitly before continuing:
+
+> "Stakeholder feedback from [reviewer, date] is in. Overall reaction: [summary]. Approval status: [status]. Let's work through each per-screen comment."
+
+Each per-screen comment becomes a finding classified like any other — design gap, knowledge gap, slice definition, deferral, or ready signal. Blockers listed by the stakeholder must be resolved before any affected slice reaches Ready.
+
+If the approval status is "Approved to build" with no per-screen changes, log the approval in the Review Log and continue. If "Needs another round," that's a signal to schedule another handoff after the current round's changes land.
 
 ### Step 3: Define or Refine Slices
 

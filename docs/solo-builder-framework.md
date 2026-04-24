@@ -164,6 +164,7 @@ ENTRY POINT
    └── On-ramp C: reference → aesthetic constraint → produce in that direction
    └── process-mapper cross-references screens against to-be map — gaps flagged and decided
    └── Output: docs/design/sprint-[id].html (all screens) + deferred-decisions.md + to-be map annotated with screen refs
+   └── Optional output: docs/design/handoff/<date>/ — shareable package (HTML + PDF + feedback template) for stakeholder review
    └── Gate: sprint-[id].html + deferred-decisions.md exist
 
 2.5 DATA SCAFFOLD  ← BUILT (runs before or alongside design review)
@@ -176,6 +177,7 @@ ENTRY POINT
 2.6 DESIGN REVIEW  ← BUILT (iterative loop — runs as many rounds as needed)
    └── Round 1: full first pass, all screens, define initial slices, trigger spikes
    └── Round N: refine slices, promote to Ready, update backlog
+   └── Reads docs/stakeholder-feedback/*.md as first-class input — per-screen comments become findings, blockers gate Ready
    └── process-mapper cross-reference every round — coverage map against to-be, uncovered steps surfaced as decisions
    └── Process anchor required on every slice before it reaches Ready
    └── Build signal: enough slices Ready to form a coherent Phase 1 starting point

@@ -206,6 +206,54 @@ After the walk-through, write `docs/design/deferred-decisions.md`. This feeds di
 
 ---
 
+### Step 9: Stakeholder Handoff Package (Optional)
+
+Before closing the sprint, ask one question:
+
+> "Does this need to go to anyone outside the build — a stakeholder, client, approver — before design review begins?"
+
+If no: skip. Continue to Output Summary.
+
+If yes: produce a handoff package at `docs/design/handoff/<YYYY-MM-DD>/`:
+
+| File | Purpose |
+|---|---|
+| `artifact.html` | Standalone — all screens inlined into one file, opens without a server |
+| `artifact.pdf` | PDF render of the HTML — for stakeholders who prefer PDF over a link |
+| `feedback-template.md` | Structured markdown for the stakeholder (or solo) to fill in |
+
+Generate the PDF via headless Chrome or the solo's preferred tool — whatever produces a readable PDF of the standalone HTML.
+
+The solo shares whichever format the stakeholder prefers. Completed feedback returns as `docs/stakeholder-feedback/<YYYY-MM-DD>-<topic>.md` — the solo pastes or types what they heard into the template.
+
+`design-review` reads any file in `docs/stakeholder-feedback/` as first-class input on the next round.
+
+**Feedback template (`feedback-template.md`):**
+
+```markdown
+# Stakeholder Feedback — <topic>
+**Reviewer:** 
+**Date:** 
+**Artifact reviewed:** docs/design/handoff/<date>/
+
+## Overall reaction
+[High-level impression — what felt right, what felt off]
+
+## Per-screen comments
+- <screen name>: 
+- <screen name>: 
+
+## Concerns / blockers
+[Anything that would stop approval]
+
+## Approval status
+- [ ] Approved to build
+- [ ] Approved with changes (listed above)
+- [ ] Needs another round
+```
+
+---
+
 ## Output Summary
 
 | Artifact | Location | Contents |
@@ -213,6 +261,7 @@ After the walk-through, write `docs/design/deferred-decisions.md`. This feeds di
 | Hero screen | `docs/design/sprint-[id].html` | First approved screen, design system established here |
 | All screens | `docs/design/sprint-[id].html` | One file per screen, named by wireframe ID |
 | Deferred decisions log | `docs/design/deferred-decisions.md` | Approved for Phase 1, deferred, open questions |
+| Stakeholder handoff package (optional) | `docs/design/handoff/<date>/` | HTML + PDF + feedback template for async review |
 
 ---
 
