@@ -488,6 +488,10 @@
   </div>
 
   <div class="nav-group">
+    <span class="nav-group-label" style="color:rgba(217,70,239,0.7)">Companion</span>
+    <a href="#nivya" class="nav-skill" style="color:rgba(217,70,239,0.8)"><span class="nav-dot" style="background:#D946EF"></span>nivya</a>
+  </div>
+  <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(100,116,139,0.7)">Meta</span>
     <a href="#framework-curator" class="nav-skill" style="color:rgba(100,116,139,0.8)"><span class="nav-dot" style="background:#64748B"></span>framework-curator</a>
   </div>
@@ -514,10 +518,11 @@
     <h1>Skills Reference</h1>
     <p>Every skill in the framework — what it does, how it works, what triggers it, and what it produces. Skills are organized by phase. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent in bare mode (the default).</p>
     <div class="header-stats">
-      <div class="header-stat"><div class="hs-num">35</div><div class="hs-label">Skills</div></div>
+      <div class="header-stat"><div class="hs-num">36</div><div class="hs-label">Skills</div></div>
       <div class="header-stat"><div class="hs-num">4</div><div class="hs-label">Always-on</div></div>
+      <div class="header-stat"><div class="hs-num">1</div><div class="hs-label">Companion</div></div>
       <div class="header-stat"><div class="hs-num">3</div><div class="hs-label">Session modes</div></div>
-      <div class="header-stat"><div class="hs-num">9</div><div class="hs-label">Phase categories</div></div>
+      <div class="header-stat"><div class="hs-num">10</div><div class="hs-label">Phase categories</div></div>
     </div>
   </div>
 
@@ -1772,6 +1777,56 @@
               <li><div class="output-tag">docs/continuity/retrospective.md</div></li>
               <li><div class="output-tag">docs/continuity/framework-improvements.md</div></li>
               <li>Processed entries archived with separator after each retro run</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ COMPANION ══════════════ -->
+    <div class="category-section" id="cat-companion" style="border-left:3px solid #D946EF">
+      <div class="category-header">
+        <div class="category-icon">🤝</div>
+        <div>
+          <div class="category-title" style="color:#A21CAF">Companion</div>
+          <div class="category-desc">On-demand conversational companion. Invoked by name — never automatic, never a phase. Recall and explain only: answers questions about the framework and the project without capturing, deciding, or building. Routes to the right skill with explicit consent when something said in conversation should be logged.</div>
+        </div>
+        <div class="skill-count">1 skill</div>
+      </div>
+
+      <div class="skill-card" id="nivya" style="border-color:#F5D0FE">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#A21CAF">nivya</div>
+          <div class="skill-badge" style="background:#FAE8FF;color:#A21CAF">On-demand companion</div>
+        </div>
+        <div class="skill-description">Conversational companion who has read the full framework and the project's continuity, process, and memory artifacts. Answers questions — doesn't do work. Addressable by name once loaded. Can run a huddle as a dedicated subagent for focused sessions.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#A21CAF">Key Elements</div>
+            <ul>
+              <li><strong>Recall + explain only</strong> — never captures, decides, or builds</li>
+              <li><strong>Inline mode:</strong> <code>/nivya</code> loads her into the current conversation; address her by name</li>
+              <li><strong>Huddle mode:</strong> when conversation goes deep, Nivya offers to spin up a dedicated subagent session</li>
+              <li><strong>Explicit routing:</strong> if a conversation produces something that should be logged, she names the skill and asks consent before engaging</li>
+              <li><strong>Cites sources</strong> — points at the artifact rather than paraphrasing</li>
+              <li>Framework won't jump the gun on anything said to Nivya — nothing captured without a yes</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#A21CAF">When It Runs</div>
+            <ul>
+              <li>On-demand only — never auto-loaded</li>
+              <li>Useful mid-phase when overwhelm or memory gap hits</li>
+              <li>Useful between sessions when returning to a project cold</li>
+              <li>Useful any time the solo wants to understand <em>why</em> before acting</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#A21CAF">Output</div>
+            <ul>
+              <li>Spoken answer — no artifact</li>
+              <li>Pointers to the source documents</li>
+              <li>On consent: handoff to the relevant framework skill (product-continuity, process-mapper, design-review, research-spike, etc.)</li>
             </ul>
           </div>
         </div>

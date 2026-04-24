@@ -51,6 +51,8 @@ Workshop (spike/tool work): `scope-check` · `spike` · `land`
 
 Support (post-deploy on-demand): `bug-fix` · `enhancement` · `dependency-upgrade` · `security-patch`
 
+Companion (on-demand recall + explain): `nivya` — invoke with `/nivya`; addressable by name once loaded. Recall only — never captures, decides, or builds. Routes to the right skill with consent when something said should be logged.
+
 ---
 
 ## MemPalace

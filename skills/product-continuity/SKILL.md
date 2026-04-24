@@ -38,6 +38,14 @@ This skill activates when auto-pilot or assisted mode is chosen — not in bare 
 
 ---
 
+## Nivya Conversations
+
+When `nivya` is active in the conversation, product-continuity does not capture passively. Nivya handles the routing — if something said in her conversation should be logged, she will ask the solo first, and only on an explicit yes does capture happen. This prevents exploratory thinking from being recorded as settled decisions.
+
+The solo's guarantee: nothing said to Nivya gets written into `docs/continuity/` without the solo saying yes.
+
+---
+
 ## The Documents
 
 All continuity documents live in `docs/continuity/`. Created at the start of the project, maintained for its life. Never recreated — only appended and updated.

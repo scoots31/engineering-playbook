@@ -290,6 +290,7 @@ ENTRY POINT
 | `frontend-design` | Aesthetic guidance for HTML artifact | ✅ Built |
 | `awesome-design-md` | On-ramp 3 — reference-based design | ✅ Built |
 | `framework-curator` | Tends the framework itself — proposes, previews, and executes changes to skills and documentation | ✅ Built |
+| `nivya` | On-demand companion — recall and explain only. Reads framework + project continuity + process maps + MemPalace. Answers questions without capturing, deciding, or building. Routes to the right skill with explicit consent when a conversation produces something that belongs in the record. | ✅ Built |
 
 ---
 

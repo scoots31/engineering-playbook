@@ -6,7 +6,7 @@
 
 If you're an AI (Cursor, Claude, or similar) reading this repository to understand how to operate:
 
-**What this is:** A complete lifecycle framework for building software with AI. It contains 27 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent by default.
+**What this is:** A complete lifecycle framework for building software with AI. It contains 28 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent by default. One companion skill (`nivya`) is on-demand — the solo invokes her by name to recall and explain, never to do work.
 
 **What to do:**
 1. Default session mode is bare — no routing, no always-on. Skills load only when invoked.
@@ -29,7 +29,7 @@ A complete lifecycle system for building software with AI — from first idea th
 
 Most AI coding tools help you write code faster. This framework replaces the discipline a real team provides — the PM challenge, the tech review, the design artifact, the QA gate, the process map — so a solo builder has all of it without needing a team.
 
-**27 skills** cover the full lifecycle. **4 always-on skills** activate on auto-pilot or assisted mode — silent in bare mode. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
+**28 skills** cover the full lifecycle. **4 always-on skills** activate on auto-pilot or assisted mode — silent in bare mode. **1 companion skill** (`nivya`) is on-demand — the solo invokes her by name for recall and explanation. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
 
 → See [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) for full detail on every skill.
 
@@ -140,6 +140,16 @@ These four run throughout the entire framework — never invoked by the user:
 | `product-continuity` | Institutional memory — decisions, questions, assumptions, risks, handoffs across sessions |
 | `framework-health` | Background signal monitor — file existence + handoff + backlog; silent when healthy |
 | `retrospective` | Captures observations in the moment; processes at phase end; improves the framework from real usage |
+
+---
+
+## Companion
+
+One on-demand companion skill — invoked by name, never automatic:
+
+| Skill | Role |
+|-------|------|
+| `nivya` | Conversational recall + explain. Knows the framework and the project's continuity, process, and memory artifacts. Answers questions about decisions, phases, principles, and process — never captures, decides, or builds. Routes explicitly to the right skill with the solo's consent when a conversation produces something that should be logged. Invoked via `/nivya`; addressable by name once loaded. Can run a huddle as a dedicated subagent for focused sessions. |
 
 ---
 
