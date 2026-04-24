@@ -17,6 +17,8 @@ If you're an AI (Cursor, Claude, or similar) reading this repository to understa
 
 **Key principle:** Never announce phases or explain the framework to the user. One sentence of orientation, then just start.
 
+**UX principle:** The framework never asks the solo to open a file and fill it in. All document input is captured conversationally — ask the questions, display what needs review in chat, capture the answers, write the file. The only exception is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
+
 **If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` (Cursor) or `CLAUDE-CODE-SETUP-PROMPT.md` (Claude Code) for a ready-to-paste first message that activates the framework for the session.
 
 ---

@@ -39,6 +39,7 @@ These principles are what make the Solo Builder Framework what it is. Any propos
 6. **Continuous capture** — product-continuity runs throughout, not in batches.
 7. **Stop on missing prerequisites** — skills stop rather than work around missing inputs (missing to-be map, missing anchors, missing tech-context).
 8. **One sentence of orientation, then start** — the framework never announces itself or explains phases to the solo.
+9. **Framework writes, solo responds** — the framework never asks the solo to open a file and fill it in. All document input is captured conversationally and written by the AI. External stakeholders (people outside the conversation) are the only exception — they can receive a fillable template.
 
 If a proposed change violates one of these, the curator flags it explicitly and asks whether the principle is being changed intentionally.
 

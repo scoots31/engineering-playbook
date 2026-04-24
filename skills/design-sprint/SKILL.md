@@ -254,11 +254,11 @@ If yes: produce a handoff package at `docs/design/handoff/<YYYY-MM-DD>/`:
 |---|---|
 | `artifact.html` | Standalone — all screens inlined into one file, opens without a server |
 | `artifact.pdf` | PDF render of the HTML — for stakeholders who prefer PDF over a link |
-| `feedback-template.md` | Structured markdown for the stakeholder (or solo) to fill in |
+| `feedback-template.md` | Structured markdown for the **external stakeholder** to fill in — not the solo. Solo feedback is always captured conversationally. |
 
 Generate the PDF via headless Chrome or the solo's preferred tool — whatever produces a readable PDF of the standalone HTML.
 
-The solo shares whichever format the stakeholder prefers. Completed feedback returns as `docs/stakeholder-feedback/<YYYY-MM-DD>-<topic>.md` — the solo pastes or types what they heard into the template.
+The solo shares whichever format the stakeholder prefers. When the stakeholder returns feedback, the solo shares it verbally or pastes what they heard into the chat. The framework captures it and writes `docs/stakeholder-feedback/<YYYY-MM-DD>-<topic>.md` — the solo never edits that file directly.
 
 `design-review` reads any file in `docs/stakeholder-feedback/` as first-class input on the next round.
 

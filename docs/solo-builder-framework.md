@@ -254,6 +254,7 @@ ENTRY POINT
 - Timeboxed — every phase has a natural end, not a completion criteria
 - Portable — being built to work for any solo, not just Scott
 - Two entry points — the system routes to brainstorm or discover based on clarity of the idea
+- Framework writes, solo responds — the framework never asks the solo to open a file and fill it in. All human input is captured conversationally — the AI asks, the solo answers, the AI writes the file. The only exception is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
 
 ---
 
