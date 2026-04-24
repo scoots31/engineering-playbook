@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solo Builder Framework — Build Phase Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F1729;
+    --navy-mid: #1E3A5F;
+    --green: #15803D;
+    --green-light: #DCFCE7;
+    --green-mid: #16A34A;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-500: #64748B;
+    --gray-700: #334155;
+    --gray-900: #0F172A;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --amber: #B45309;
+    --amber-light: #FEF3C7;
+    --blue: #2563EB;
+    --blue-light: #DBEAFE;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--navy);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 28px 0 40px;
+    z-index: 10;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 16px;
+  }
+  .sidebar-header .sh-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+  }
+  .sidebar-header .sh-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .nav-group { margin-bottom: 6px; }
+  .nav-group-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 8px 20px 4px;
+    display: block;
+    color: rgba(74,222,128,0.6);
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .nav-item:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+  }
+  .nav-item.active {
+    color: #fff;
+    border-left-color: var(--green-mid);
+    background: rgba(255,255,255,0.06);
+  }
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--green-mid);
+  }
+
+  .nav-phase-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 8px 20px 4px;
+    display: block;
+    color: rgba(255,255,255,0.25);
+    margin-top: 8px;
+  }
+  .nav-phase-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 20px;
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+  }
+  .nav-phase-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.2);
+  }
+  .nav-phase-item.current {
+    color: rgba(74,222,128,0.9);
+  }
+  .nav-phase-item.current .nav-phase-dot {
+    background: var(--green-mid);
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 48px 60px 40px;
+  }
+  .ph-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+  .page-header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+  .page-header h1 span {
+    color: #4ADE80;
+  }
+  .page-header .ph-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    max-width: 620px;
+    line-height: 1.65;
+  }
+  .header-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .header-stat .hs-num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .header-stat .hs-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  /* ── PHASE BADGE ── */
+  .phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .phase-badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    padding: 52px 60px 80px;
+    max-width: 960px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-header {
+    margin-bottom: 24px;
+  }
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gray-900);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-top: 6px;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  /* ── INTRO CARD ── */
+  .intro-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .intro-card p {
+    font-size: 15px;
+    color: var(--gray-700);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .intro-card strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── SKILL CARDS ── */
+  .skill-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .skill-card-header {
+    padding: 18px 24px 14px;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .skill-name {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--green);
+    flex: 1;
+  }
+  .skill-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .badge-phase { background: var(--green-light); color: var(--green); }
+  .badge-technique { background: var(--blue-light); color: var(--blue); }
+  .badge-ondemand { background: var(--gray-100); color: var(--gray-700); }
+
+  .skill-desc {
+    padding: 14px 24px;
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.65;
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--gray-50);
+  }
+  .skill-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .skill-section {
+    padding: 16px 22px;
+    border-right: 1px solid var(--gray-100);
+  }
+  .skill-section:last-child { border-right: none; }
+  .skill-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .skill-section-label::before {
+    content: '';
+    width: 3px; height: 12px;
+    border-radius: 2px;
+    background: var(--green-light);
+    flex-shrink: 0;
+  }
+  .skill-section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .skill-section ul li {
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.5;
+    padding-left: 12px;
+    position: relative;
+  }
+  .skill-section ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--gray-300);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .skill-section ul li strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── ANCHOR SECTION ── */
+  .anchor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .anchor-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .anchor-card-header {
+    background: var(--green-light);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .anchor-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .anchor-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .anchor-card-body {
+    padding: 18px 20px;
+  }
+  .anchor-card-body p {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .anchor-card-body p:last-child { margin-bottom: 0; }
+  .anchor-format {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+  }
+  .anchor-format .af-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+  }
+  .anchor-format code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11.5px;
+    color: var(--green);
+    display: block;
+    line-height: 1.5;
+  }
+  .anchor-format .example {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 5px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .anchor-gate {
+    background: #fff;
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .gate-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .gate-text h4 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .gate-text p {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+
+  /* ── JOURNEY ORDER ── */
+  .journey-diagram {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .journey-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0 20px;
+    overflow-x: auto;
+  }
+  .journey-step {
+    background: var(--green-light);
+    border: 1.5px solid var(--green);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--green);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .journey-arrow {
+    padding: 0 8px;
+    color: var(--gray-300);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .journey-step.blocked {
+    background: var(--gray-100);
+    border-color: var(--gray-300);
+    color: var(--gray-500);
+    opacity: 0.6;
+  }
+  .journey-blocked-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--amber);
+    background: var(--amber-light);
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .rule-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+  }
+  .rule-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rule-content h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .rule-content p {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+
+  /* ── TRACER BULLET ── */
+  .tracer-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .tracer-header {
+    background: var(--navy);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .tracer-icon {
+    font-size: 22px;
+  }
+  .tracer-header-text h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .tracer-header-text p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.5);
+  }
+  .tracer-body {
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .tracer-half h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .tracer-half p {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.65;
+  }
+  .tracer-half ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 8px;
+  }
+  .tracer-half ul li {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+  }
+  .tracer-half ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .tracer-vs {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    padding: 16px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .tracer-vs-col {
+    padding: 0 20px;
+  }
+  .tracer-vs-col:first-child {
+    border-right: 1px solid var(--gray-200);
+    padding-left: 0;
+  }
+  .tracer-vs-col:last-child {
+    padding-right: 0;
+  }
+  .vs-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .vs-label.good { color: var(--green); }
+  .vs-label.bad { color: var(--red); }
+  .vs-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .vs-list li {
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+  }
+  .vs-list li::before {
+    position: absolute;
+    left: 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .vs-list.good li::before { content: '✓'; color: var(--green); }
+  .vs-list.bad li::before { content: '✗'; color: var(--red); }
+
+  /* ── MID-BUILD DISCOVERIES ── */
+  .discovery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .discovery-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .discovery-card-header {
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .disc-severity {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .disc-minor { background: var(--green-light); color: var(--green); }
+  .disc-gap { background: var(--amber-light); color: var(--amber); }
+  .disc-affects { background: var(--blue-light); color: var(--blue); }
+  .disc-blocks { background: var(--red-light); color: var(--red); }
+  .disc-type {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--gray-900);
+  }
+  .discovery-card-body {
+    padding: 14px 18px;
+  }
+  .discovery-card-body p {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .discovery-card-body p:last-child { margin-bottom: 0; }
+  .discovery-action {
+    background: var(--gray-50);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--gray-700);
+    line-height: 1.5;
+    border: 1px solid var(--gray-200);
+  }
+  .discovery-action strong { color: var(--gray-900); font-weight: 600; }
+
+  .never-absorb {
+    background: var(--red-light);
+    border: 1.5px solid #FCA5A5;
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .never-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .never-text {
+    font-size: 13.5px;
+    color: var(--red);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  /* ── QA CHAIN ── */
+  .chain-diagram {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .chain-steps {
+    display: flex;
+    align-items: stretch;
+  }
+  .chain-step {
+    flex: 1;
+    padding: 20px 22px;
+    border-right: 1px solid var(--gray-200);
+    position: relative;
+  }
+  .chain-step:last-child { border-right: none; }
+  .chain-step::after {
+    content: '→';
+    position: absolute;
+    right: -11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-300);
+    font-size: 16px;
+    z-index: 1;
+  }
+  .chain-step:last-child::after { display: none; }
+  .chain-step-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+  }
+  .chain-step-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-900);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    margin-bottom: 6px;
+  }
+  .chain-step.active .chain-step-name { color: var(--green); }
+  .chain-step-desc {
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+  .chain-note {
+    padding: 14px 22px;
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+  .chain-note strong { color: var(--gray-900); font-weight: 600; }
+
+  /* ── STATEMENT BOX ── */
+  .statement-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .statement-box code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    color: #4ADE80;
+    line-height: 1.7;
+  }
+  .statement-box .sb-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 8px;
+  }
+
+  /* ── WATCH FOR ── */
+  .watchfor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .watchfor-item {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .watchfor-indicator {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .watchfor-text h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 5px;
+  }
+  .watchfor-text p {
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.55;
+  }
+
+  /* ── SELECTION CHECKLIST ── */
+  .selection-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .selection-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--gray-50);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .selection-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-900);
+  }
+  .selection-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .check-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+  .check-box {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 10px;
+    color: var(--green);
+  }
+  .selection-statement {
+    padding: 14px 24px;
+    border-top: 1px solid var(--gray-100);
+    background: var(--green-light);
+  }
+  .selection-statement p {
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.6;
+  }
+  .selection-statement code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* ── EXECUTION FLOW ── */
+  .exec-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .exec-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+  }
+  .exec-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .exec-content h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .exec-content p {
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+  .exec-content code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--green);
+    background: var(--green-light);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* ── DEPENDENCY TYPES ── */
+  .dep-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .dep-table thead {
+    background: var(--gray-50);
+  }
+  .dep-table th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .dep-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+  .dep-table tr:last-child td { border-bottom: none; }
+  .dep-type-badge {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .dep-slice { background: var(--green-light); color: var(--green); }
+  .dep-infra { background: var(--amber-light); color: var(--amber); }
+  .dep-data { background: var(--blue-light); color: var(--blue); }
+  .dep-design { background: #EDE9FE; color: #7C3AED; }
+
+  @media print {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .page-header { padding: 32px 40px; }
+    .content { padding: 32px 40px 60px; }
+    .card, .skill-card, .anchor-card, .tracer-card, .chain-diagram { break-inside: avoid; }
+    @page { size: A4; margin: 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sh-label">Solo Builder Framework</div>
+    <div class="sh-title">Build Phase Guide</div>
+  </div>
+
+  <div class="nav-group">
+    <span class="nav-group-label">On this page</span>
+    <a href="#what-this-phase-is" class="nav-item"><span class="nav-dot"></span>What this phase is</a>
+    <a href="#skills" class="nav-item"><span class="nav-dot"></span>Skills in this phase</a>
+    <a href="#four-anchors" class="nav-item"><span class="nav-dot"></span>The four anchors</a>
+    <a href="#journey-order" class="nav-item"><span class="nav-dot"></span>Journey order</a>
+    <a href="#tracer-bullet" class="nav-item"><span class="nav-dot"></span>The tracer bullet</a>
+    <a href="#mid-build" class="nav-item"><span class="nav-dot"></span>Mid-build discoveries</a>
+    <a href="#qa-chain" class="nav-item"><span class="nav-dot"></span>Auto-chain to QA</a>
+    <a href="#watch-for" class="nav-item"><span class="nav-dot"></span>What to watch for</a>
+  </div>
+
+  <div class="nav-group" style="margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 16px;">
+    <span class="nav-phase-label">Framework phases</span>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Discover</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Design Sprint</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Design Review</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Plan</a>
+    <a href="#" class="nav-phase-item current"><span class="nav-phase-dot"></span>Build ← you are here</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>QA</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Phase Test</a>
+    <a href="#" class="nav-phase-item"><span class="nav-phase-dot"></span>Deploy</a>
+  </div>
+</aside>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="main">
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="ph-eyebrow">Solo Builder Framework — Phase Guide</div>
+    <h1>Phase 4: <span>Build</span></h1>
+    <p class="ph-desc">Slice-by-slice execution in journey order. Every slice is anchored before it starts. Discoveries surface immediately. Code-complete is not Done — it hands off to QA automatically.</p>
+    <div class="header-stats">
+      <div class="header-stat">
+        <div class="hs-num">4</div>
+        <div class="hs-label">Anchors required per slice</div>
+      </div>
+      <div class="header-stat">
+        <div class="hs-num">1st</div>
+        <div class="hs-label">Tracer bullet goes first</div>
+      </div>
+      <div class="header-stat">
+        <div class="hs-num">3</div>
+        <div class="hs-label">Skills in this phase</div>
+      </div>
+      <div class="header-stat">
+        <div class="hs-num">Auto</div>
+        <div class="hs-label">Hands off to QA on complete</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- WHAT THIS PHASE IS -->
+    <section class="section" id="what-this-phase-is">
+      <div class="section-header">
+        <div class="section-eyebrow">Overview</div>
+        <h2 class="section-title">What this phase is</h2>
+        <p class="section-desc">Build executes the backlog, slice by slice, in the order a user actually travels through the product.</p>
+      </div>
+
+      <div class="intro-card">
+        <p>Build does not decide scope — that was settled in Design Review. It does not design — that was settled in the Design Sprint. Build executes what was decided, correctly, in the right order, with the right anchors confirmed before a single line is written.</p>
+        <p>The <strong>tracer bullet goes first</strong>: the thinnest path through the full user journey, end to end, before any individual screen is expanded. Once the core loop is proven to work, each step gets built out in full.</p>
+        <p>Every slice requires <strong>four anchors confirmed</strong> before code starts: a design anchor, a data anchor, a done anchor, and a process anchor. Any missing anchor means the slice doesn't start. This is the gate, not a checklist.</p>
+        <p>When something surfaces mid-build — a design conflict, a missing data field, a dependency that wasn't fully resolved — it comes up immediately. It is never silently absorbed into the implementation and never resolved by quietly simplifying the design without a decision being made.</p>
+        <p>When a slice reaches code-complete, solo-build declares it and hands off to <strong>code-review-and-quality</strong> automatically. That skill chains to <strong>solo-qa</strong> on pass. Build does not declare Done. QA does.</p>
+      </div>
+
+      <div class="selection-card">
+        <div class="selection-header">
+          <h3>Before starting any slice — the selection statement</h3>
+        </div>
+        <div class="selection-body">
+          <div class="check-item">
+            <div class="check-box">✓</div>
+            <span>Slice is Ready in the backlog</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box">✓</div>
+            <span>All dependencies are Done</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box">✓</div>
+            <span>Next in journey order (or explicitly parallel)</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box">✓</div>
+            <span>All four anchors confirmed</span>
+          </div>
+        </div>
+        <div class="selection-statement">
+          <p>State it out loud before starting: <code>"Building SL-[ID] — [Name]. It's next in journey order, dependencies are clear, and it has all four anchors."</code></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS IN THIS PHASE -->
+    <section class="section" id="skills">
+      <div class="section-header">
+        <div class="section-eyebrow">Skills</div>
+        <h2 class="section-title">Skills in this phase</h2>
+        <p class="section-desc">Build has one primary phase skill and two on-demand skills invoked at specific moments. A fourth is available for hard calls.</p>
+      </div>
+
+      <!-- solo-build -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-name">solo-build</div>
+          <div class="skill-badge badge-phase">Phase skill</div>
+        </div>
+        <div class="skill-desc">
+          The execution layer of the Build phase. Selects the right slice based on journey order and dependency state, confirms all four anchors before writing code, tracks discoveries, and hands off to code-review-and-quality when code-complete is declared. This skill runs the entire build phase — not a support tool, the primary driver.
+        </div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Slice selection</div>
+            <ul>
+              <li>Tracer bullet rule — thinnest path first</li>
+              <li>Journey order — first screen before second</li>
+              <li>Dependencies block — hard gate, not suggestion</li>
+              <li>Parallel exceptions named explicitly</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">During build</div>
+            <ul>
+              <li>Build against the design screen directly</li>
+              <li>Pull data from mock layer — never hardcode</li>
+              <li>Surface conflicts immediately, don't absorb</li>
+              <li>Flag cross-slice impacts in the backlog</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">On code-complete</div>
+            <ul>
+              <li>Commit: <strong>SL-[ID] code-complete — [name]</strong></li>
+              <li>Update backlog: status → In QA</li>
+              <li>Auto-invoke code-review-and-quality</li>
+              <li>Do not wait for solo to trigger the handoff</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- tdd -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-name">tdd</div>
+          <div class="skill-badge badge-technique">Technique skill</div>
+        </div>
+        <div class="skill-desc">
+          Test-driven development with a red-green-refactor loop. Invoked from solo-build when test-first development is the right approach for a slice. Tests verify behavior through public interfaces, not implementation details — so they survive refactors. One test, one implementation, one cycle at a time.
+        </div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">The loop</div>
+            <ul>
+              <li><strong>Red</strong> — write one failing test for one behavior</li>
+              <li><strong>Green</strong> — minimal code to pass it</li>
+              <li><strong>Refactor</strong> — clean up, tests must still pass</li>
+              <li>Never refactor while red</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Good tests</div>
+            <ul>
+              <li>Test behavior, not implementation</li>
+              <li>Use public interfaces only</li>
+              <li>Survive internal refactors</li>
+              <li>Read like a specification</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Anti-patterns</div>
+            <ul>
+              <li>Writing all tests first — horizontal slicing</li>
+              <li>Mocking internal collaborators</li>
+              <li>Testing private methods</li>
+              <li>Speculative tests for future behavior</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- principal-engineer -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-name">principal-engineer</div>
+          <div class="skill-badge badge-ondemand">On demand</div>
+        </div>
+        <div class="skill-desc">
+          Architecture review lens for consequential decisions. Not always-on. Not a code reviewer. Not a design reviewer. Called when a mid-build discovery is structural — when the approach itself needs to change, not just the implementation. The PE makes one recommendation, explains the reasoning, names the tradeoff, and holds the position under preference pushback.
+        </div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">When to invoke</div>
+            <ul>
+              <li>Mid-build discovery is architectural</li>
+              <li>Decision is hard to reverse</li>
+              <li>Blast radius if wrong is large</li>
+              <li>Solo feels uncertain about an approach</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">The four questions</div>
+            <ul>
+              <li>Does this fit the platform?</li>
+              <li>What's the blast radius if wrong?</li>
+              <li>What debt does this create?</li>
+              <li>Is this built to expand to Phase 2?</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output format</div>
+            <ul>
+              <li>One recommendation — not a menu</li>
+              <li>Reasoning grounded in tech-context</li>
+              <li>Named risks and named debt</li>
+              <li>Watch-for signals logged in backlog</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- agent-room -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-name">agent-room</div>
+          <div class="skill-badge badge-ondemand">On demand</div>
+        </div>
+        <div class="skill-desc">
+          Multi-perspective discussion room for hard calls that don't have a clear right answer. Invoked when a build decision has meaningful tradeoffs and the solo wants more than one angle before committing. Participants debate the question from different perspectives — engineering, product, UX, pragmatism — and surface a synthesized view.
+        </div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">When to invoke</div>
+            <ul>
+              <li>Hard call with meaningful tradeoffs</li>
+              <li>Principal engineer gave a recommendation but solo wants pressure-testing</li>
+              <li>Multiple valid approaches with different risk profiles</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">What it does</div>
+            <ul>
+              <li>Debate or poll mode</li>
+              <li>Named perspectives with distinct positions</li>
+              <li>Surfaces what each approach costs</li>
+              <li>Synthesizes to a recommended view</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">What it doesn't do</div>
+            <ul>
+              <li>Not a replacement for PE on structural decisions</li>
+              <li>Not invoked for routine build decisions</li>
+              <li>Not a way to avoid making a call</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE FOUR ANCHORS -->
+    <section class="section" id="four-anchors">
+      <div class="section-header">
+        <div class="section-eyebrow">Pre-build gate</div>
+        <h2 class="section-title">The four anchors</h2>
+        <p class="section-desc">Before any slice starts, all four anchors must be confirmed. If any anchor is missing, the slice doesn't start. This is the gate, not a checklist to be completed during build.</p>
+      </div>
+
+      <div class="anchor-grid">
+
+        <div class="anchor-card">
+          <div class="anchor-card-header">
+            <div class="anchor-num">1</div>
+            <div class="anchor-name">Design Anchor</div>
+          </div>
+          <div class="anchor-card-body">
+            <p>The exact screen and specific element this slice builds. Not just the file — the exact component within it, and where it lives on the screen. Open the file. Look at the element. The implementation target must be unambiguous before a line is written.</p>
+            <div class="anchor-format">
+              <div class="af-label">Format</div>
+              <code>[screen-file] → [element name] → [location on screen]</code>
+              <div class="example">Example: sprint-p1.html → Slot context card → top of overview body, below player tabs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="anchor-card">
+          <div class="anchor-card-header">
+            <div class="anchor-num">2</div>
+            <div class="anchor-name">Data Anchor</div>
+          </div>
+          <div class="anchor-card-body">
+            <p>The specific mock data fields this slice consumes and where they live in the mock layer. The mock data layer is the data source during build — never hardcode values that should come from data. The data mapping doc shows where each field eventually comes from in production.</p>
+            <div class="anchor-format">
+              <div class="af-label">Format</div>
+              <code>[mock-file] → [field names] → eventual source per data-mapping.md</code>
+              <div class="example">Example: data/mock/players.json → slot_tag, slot_target → MFL Rosters API</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="anchor-card">
+          <div class="anchor-card-header">
+            <div class="anchor-num">3</div>
+            <div class="anchor-name">Done Anchor</div>
+          </div>
+          <div class="anchor-card-body">
+            <p>The 2–3 criteria from the backlog that close this slice. These are what get handed to solo-qa. Vague criteria — "it works," "it looks right" — are not criteria. Sharpen them before starting. Every criterion must be specific and verifiable in a browser.</p>
+            <div class="anchor-format">
+              <div class="af-label">Format</div>
+              <code>Criteria listed exactly as they appear in the backlog</code>
+              <div class="example">Example: WR2 slot tag renders from mock data / Slot target displays with correct formatting (14.2 pts) / Toggle is visible but non-functional in Phase 1</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="anchor-card">
+          <div class="anchor-card-header">
+            <div class="anchor-num">4</div>
+            <div class="anchor-name">Process Anchor</div>
+          </div>
+          <div class="anchor-card-body">
+            <p>The step in the to-be process map this slice implements. Read the to-be map and identify the step. If the slice doesn't map to any step in the agreed process, stop — this slice may be implementing something outside the agreed scope. That requires a decision, not silent build.</p>
+            <div class="anchor-format">
+              <div class="af-label">Format</div>
+              <code>[to-be map file] → [step name] → [position in flow]</code>
+              <div class="example">Example: to-be-player-evaluation.md → Step 3: system displays slot context → main path, after player lookup</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="anchor-gate">
+        <div class="gate-icon">⛔</div>
+        <div class="gate-text">
+          <h4>No anchor = slice doesn't start</h4>
+          <p>This is not a formality. Each anchor exists because building without it produces a specific failure: building the wrong thing (design), building against hardcoded data (data), not knowing when done (done), or building outside the agreed process (process). Any missing anchor is a signal that the slice isn't ready — resolve it before building, not during.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOURNEY ORDER -->
+    <section class="section" id="journey-order">
+      <div class="section-header">
+        <div class="section-eyebrow">Sequencing</div>
+        <h2 class="section-title">Journey order</h2>
+        <p class="section-desc">Build in the order a user travels through the product. First screen before second. Never build a screen that depends on state from an unbuilt screen.</p>
+      </div>
+
+      <div class="journey-diagram">
+        <p style="font-size: 14px; color: var(--gray-700); line-height: 1.6; margin-bottom: 16px;">Journey order means the sequence of screens as a real user experiences them — not as they appear in the backlog, not by technical complexity, not by personal preference. The first screen a user lands on gets built before the second. The second before the third.</p>
+
+        <div class="journey-flow">
+          <div class="journey-step">Screen 1<br><small style="font-weight:400;font-size:10px;">First user action</small></div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">Screen 2<br><small style="font-weight:400;font-size:10px;">Core interaction</small></div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step">Screen 3<br><small style="font-weight:400;font-size:10px;">Value moment</small></div>
+          <div class="journey-arrow">→</div>
+          <div class="journey-step blocked">Screen 4<br><small style="font-weight:400;font-size:10px;">Depends on Screen 3</small></div>
+        </div>
+        <div class="journey-blocked-note">
+          ⚠ Screen 4 is blocked until Screen 3 is Done. State this explicitly: "SL-007 depends on SL-005 which is still In Build. Building SL-005 first."
+        </div>
+      </div>
+
+      <div class="rules-list">
+        <div class="rule-item">
+          <div class="rule-num">1</div>
+          <div class="rule-content">
+            <h4>Journey order, not parallel</h4>
+            <p>This is not about sequencing features for efficiency — it's about discovering integration problems while the codebase is still small enough to fix them cheaply. A problem found at Screen 2 costs far less to fix than one discovered after all five screens are built.</p>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">2</div>
+          <div class="rule-content">
+            <h4>Dependencies block — hard gate, not suggestion</h4>
+            <p>The backlog dependency field is enforced here. If SL-003 depends on SL-001, SL-001 must be Done before SL-003 can enter In Build. Surface it clearly rather than finding a workaround that creates hidden coupling.</p>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">3</div>
+          <div class="rule-content">
+            <h4>Parallel exceptions — named explicitly</h4>
+            <p>Screens with no shared infrastructure and no journey dependencies — settings, auth, help screens — can run alongside the main journey if they're Ready. Name them explicitly as parallel rather than letting them blur into the main sequence. "This is a parallel track, not next in journey order."</p>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">4</div>
+          <div class="rule-content">
+            <h4>Dependency types matter</h4>
+            <p>Not all dependencies are the same. Name the type when flagging a block: <strong>Slice</strong> (another slice must be Done), <strong>Infrastructure</strong> (service or DB must exist), <strong>Data</strong> (mock entity must be available), or <strong>Design</strong> (decision still open). The type determines what resolves the block.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <table class="dep-table">
+          <thead>
+            <tr>
+              <th>Dependency type</th>
+              <th>What it means</th>
+              <th>What resolves it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="dep-type-badge dep-slice">Slice</span></td>
+              <td>Another slice must be Done — shared component or shared state</td>
+              <td>The blocking slice passes QA and reaches Done status</td>
+            </tr>
+            <tr>
+              <td><span class="dep-type-badge dep-infra">Infrastructure</span></td>
+              <td>A backend service, API endpoint, or DB table must exist</td>
+              <td>Infrastructure slice is built and verified</td>
+            </tr>
+            <tr>
+              <td><span class="dep-type-badge dep-data">Data</span></td>
+              <td>A specific mock entity or real data source must be available</td>
+              <td>Mock data added to the data layer; data-scaffold updated</td>
+            </tr>
+            <tr>
+              <td><span class="dep-type-badge dep-design">Design</span></td>
+              <td>A design decision is still open — spike or review needed first</td>
+              <td>Design review round closes the open decision; backlog updated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TRACER BULLET -->
+    <section class="section" id="tracer-bullet">
+      <div class="section-header">
+        <div class="section-eyebrow">First slice</div>
+        <h2 class="section-title">The tracer bullet</h2>
+        <p class="section-desc">Before building any individual screen in full, build the thinnest path all the way through the user journey. Prove the core loop works end to end — even if every step is minimal.</p>
+      </div>
+
+      <div class="tracer-card">
+        <div class="tracer-header">
+          <div class="tracer-icon">⚡</div>
+          <div class="tracer-header-text">
+            <h3>Thinnest path. Full journey. Before expanding anything.</h3>
+            <p>The tracer bullet is not a prototype. It's the first real code in the project.</p>
+          </div>
+        </div>
+        <div class="tracer-body">
+          <div class="tracer-half">
+            <h4>What it is</h4>
+            <p>The minimum that proves the core loop works end to end. Not the minimum that proves one screen works — the minimum that proves the user can travel from the first action to the moment of value, even if every step is minimal. Thin everywhere before deep anywhere.</p>
+            <ul>
+              <li>Can the user reach the core interaction?</li>
+              <li>Does navigation between screens work?</li>
+              <li>Does data flow from source through the UI?</li>
+              <li>Does the journey reach the value moment?</li>
+            </ul>
+          </div>
+          <div class="tracer-half">
+            <h4>Why it goes first</h4>
+            <p>Building one screen to completion before touching the next hides integration problems until late. The tracer bullet forces every screen to exist in minimal form before any screen is expanded — so integration problems surface when the codebase is still small, not after five complete screens need to be rewired.</p>
+            <ul>
+              <li>Integration failures surface early, cheaply</li>
+              <li>Core loop validated before building depth</li>
+              <li>Navigation and state flow proven before expansion</li>
+              <li>Something real to hand off to QA from day one</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tracer-vs">
+          <div class="tracer-vs-col">
+            <div class="vs-label good">Tracer bullet approach</div>
+            <ul class="vs-list good">
+              <li>Screen 1 (thin) → Screen 2 (thin) → Screen 3 (thin)</li>
+              <li>Then Screen 1 full → Screen 2 full → Screen 3 full</li>
+              <li>Integration problems surface at Screen 2, not Screen 5</li>
+              <li>End-to-end verified before feature depth is added</li>
+            </ul>
+          </div>
+          <div class="tracer-vs-col">
+            <div class="vs-label bad">Screen-by-screen approach</div>
+            <ul class="vs-list bad">
+              <li>Screen 1 (full) → Screen 2 (full) → Screen 3 (full)</li>
+              <li>Integration tested for the first time at Screen 3</li>
+              <li>Rewrite risk is highest when the codebase is largest</li>
+              <li>Three complete screens may need rewiring when they meet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 20px 24px; background: #fff;">
+        <h4 style="font-size: 13px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">What "end-to-end" means in this context</h4>
+        <p style="font-size: 13.5px; color: var(--gray-700); line-height: 1.65;">End-to-end means from the first action a user takes — opening the app, landing on the first screen, triggering the first interaction — to the moment of value: the screen, result, or state the user came for. For a player evaluation tool, that might mean: user opens app → searches for a player → sees the player's core evaluation. Thin at every step, but all the way through.</p>
+      </div>
+    </section>
+
+    <!-- MID-BUILD DISCOVERIES -->
+    <section class="section" id="mid-build">
+      <div class="section-header">
+        <div class="section-eyebrow">During build</div>
+        <h2 class="section-title">Mid-build discoveries</h2>
+        <p class="section-desc">Build reveals things the design review didn't. How a discovery gets handled depends on its nature and scope — but it is always surfaced, never silently absorbed.</p>
+      </div>
+
+      <div class="discovery-grid">
+
+        <div class="discovery-card">
+          <div class="discovery-card-header">
+            <span class="disc-severity disc-minor">Minor</span>
+            <span class="disc-type">Implementation detail</span>
+          </div>
+          <div class="discovery-card-body">
+            <p>An implementation detail that doesn't affect the design, the agreed process, or any other slice. The kind of thing that comes up during build and has an obvious solution.</p>
+            <div class="discovery-action">
+              <strong>Action:</strong> Resolve it, note it in the slice detail in the backlog, continue building. No need to surface it or pause.
+            </div>
+          </div>
+        </div>
+
+        <div class="discovery-card">
+          <div class="discovery-card-header">
+            <span class="disc-severity disc-gap">Design Gap</span>
+            <span class="disc-type">Screen isn't buildable as shown</span>
+          </div>
+          <div class="discovery-card-body">
+            <p>Something on the design screen can't be built as shown — missing state, an interaction that requires data that doesn't exist in the model, or a visual that implies logic not captured in the design.</p>
+            <div class="discovery-action">
+              <strong>Action:</strong> Stop. Surface it specifically with options. Return to design-review for a decision. Do not silently simplify the implementation.
+            </div>
+          </div>
+        </div>
+
+        <div class="discovery-card">
+          <div class="discovery-card-header">
+            <span class="disc-severity disc-affects">Affects other slices</span>
+            <span class="disc-type">Upstream or downstream impact</span>
+          </div>
+          <div class="discovery-card-body">
+            <p>Building the current slice reveals something that will change how an upstream or downstream slice needs to be built — a shared component, a state assumption, a data model implication.</p>
+            <div class="discovery-action">
+              <strong>Action:</strong> Flag in the backlog immediately. Note which slices are affected and why. Continue current slice if possible — but make the impact visible before the next slice starts.
+            </div>
+          </div>
+        </div>
+
+        <div class="discovery-card">
+          <div class="discovery-card-header">
+            <span class="disc-severity disc-blocks">Blocks current slice</span>
+            <span class="disc-type">Dependency not resolved</span>
+          </div>
+          <div class="discovery-card-body">
+            <p>A dependency that was marked as resolved turns out to not be resolved — the service doesn't work as expected, the data isn't available, or a design decision that was supposed to be settled still isn't.</p>
+            <div class="discovery-action">
+              <strong>Action:</strong> Stop the current slice. Move it back to In Review with a note explaining the block. Pick the next appropriate slice while the blocker is resolved.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="never-absorb">
+        <div class="never-icon">🚫</div>
+        <div class="never-text">Never silently absorb a discovery into the code. If the implementation diverges from the design — for any reason — that divergence is a decision that needs to be made explicitly. Surfacing it takes one message. Silent absorption creates technical debt that won't be visible until QA, the phase test, or a solo two months later who wonders why the code doesn't match the design.</div>
+      </div>
+    </section>
+
+    <!-- QA CHAIN -->
+    <section class="section" id="qa-chain">
+      <div class="section-header">
+        <div class="section-eyebrow">Handoff</div>
+        <h2 class="section-title">The auto-chain to QA</h2>
+        <p class="section-desc">Code-complete is not Done. It is the start of QA. The handoff from Build to QA is automatic — solo-build triggers it, the solo doesn't manage it.</p>
+      </div>
+
+      <div class="chain-diagram">
+        <div class="chain-steps">
+          <div class="chain-step active">
+            <div class="chain-step-label">Build declares</div>
+            <div class="chain-step-name">Code-complete</div>
+            <div class="chain-step-desc">Slice renders correctly against mock data and matches design. Committed. Backlog updated to In QA.</div>
+          </div>
+          <div class="chain-step">
+            <div class="chain-step-label">Auto-invoked by solo-build</div>
+            <div class="chain-step-name">code-review-and-quality</div>
+            <div class="chain-step-desc">7 checks: pattern, data sourcing, expandability, cleanliness, scope, docs, stack compliance.</div>
+          </div>
+          <div class="chain-step">
+            <div class="chain-step-label">Auto-invoked on pass</div>
+            <div class="chain-step-name">solo-qa</div>
+            <div class="chain-step-desc">Part 1: AI active testing with evidence. Part 2: solo browser sign-off. Done = both passed.</div>
+          </div>
+        </div>
+        <div class="chain-note">
+          <strong>On pass:</strong> solo-qa logs confirmation in backlog, status updates to Done. <strong>On fail:</strong> code-review returns the slice to In Build with specific notes — fix the issues and resubmit. The solo does not manage this handoff — it runs automatically when code-complete is declared.
+        </div>
+      </div>
+
+      <div class="statement-box">
+        <div class="sb-label">Exact wording when code-complete is reached</div>
+        <code>"SL-[ID] is code-complete. Committing and running code-review-and-quality."</code>
+      </div>
+
+      <div class="card" style="padding: 0; margin-top: 16px;">
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--gray-100); background: var(--gray-50);">
+          <h4 style="font-size: 13.5px; font-weight: 700; color: var(--gray-900);">What "code-complete" means precisely</h4>
+        </div>
+        <div style="padding: 18px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 8px;">Code-complete means</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Slice renders correctly against mock data</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Visual matches the design screen</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> No hardcoded values where data should be</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Committed with a traceable commit message</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); margin-bottom: 8px;">Code-complete does NOT mean</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--red)">✗</span> Done — QA hasn't run yet</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--red)">✗</span> Verified — AI testing hasn't happened yet</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--red)">✗</span> Accepted — solo browser sign-off hasn't happened yet</li>
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--red)">✗</span> Deployable — phase test gate not yet open</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div class="exec-steps">
+          <div class="exec-step">
+            <div class="exec-num">1</div>
+            <div class="exec-content">
+              <h4>Commit the work</h4>
+              <p>Use the slice ID format: <code>git commit -m "SL-[ID] code-complete — [slice name]"</code>. The slice ID makes every commit traceable in git history. Never use vague messages ("wip", "updates", "fix").</p>
+            </div>
+          </div>
+          <div class="exec-step">
+            <div class="exec-num">2</div>
+            <div class="exec-content">
+              <h4>Update the backlog</h4>
+              <p>Move the slice status from <code>In Build</code> to <code>In QA</code>. The backlog is a live document — if it's stale, the next session starts from the wrong place.</p>
+            </div>
+          </div>
+          <div class="exec-step">
+            <div class="exec-num">3</div>
+            <div class="exec-content">
+              <h4>Invoke code-review-and-quality immediately</h4>
+              <p>Do not wait for the solo to trigger it. The handoff is automatic. State code-complete, declare the invocation, and run the review. The solo manages the product — not the QA handoff chain.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT TO WATCH FOR -->
+    <section class="section" id="watch-for">
+      <div class="section-header">
+        <div class="section-eyebrow">Failure modes</div>
+        <h2 class="section-title">What to watch for</h2>
+        <p class="section-desc">The most common ways Build goes wrong. Each one is preventable — they fail because a constraint was relaxed once, not because the constraint is unworkable.</p>
+      </div>
+
+      <div class="watchfor-grid">
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Building without all four anchors confirmed</h4>
+            <p>The most common build failure. Starting with three anchors and resolving the fourth "as you go" means the fourth anchor gets resolved under time pressure, often incorrectly. Any missing anchor is a stop signal, not a caution.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Building out of journey order</h4>
+            <p>Jumping ahead to a screen that looks easier, or building in parallel without naming it as parallel, hides integration problems. They surface later — after multiple screens are complete and rewiring is expensive.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Silently absorbing mid-build discoveries</h4>
+            <p>When the implementation diverges from the design and nobody says anything, the design and the code are now different documents. QA checks against the design. The phase test checks against the discovery brief. Silent absorption always surfaces later — as a bug, a failed QA check, or a confused solo reading code that doesn't match the screens.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Skipping the tracer bullet</h4>
+            <p>Going straight to full feature implementation on Screen 1 before touching Screen 2. The tracer bullet's job is to surface integration problems early. Skipping it trades a cheap early fix for an expensive late one.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Hardcoding values that should come from data</h4>
+            <p>Any value that should eventually come from a real data source must come from the mock data layer during build — not from a hardcoded string in the UI. Hardcoded values break the data anchor and make the mock-to-real swap unreliable.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Treating code-complete as Done</h4>
+            <p>Marking a slice Done before code review and solo QA sign-off bypasses the two checks that actually confirm the slice is complete. Code-complete is a state transition, not a destination. Done requires passing both stages of QA.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Vague done criteria accepted at anchor time</h4>
+            <p>"It should look right" and "it should work" are not done criteria. If the done anchor is accepted with vague criteria, QA has nothing concrete to verify against. Sharpen every criterion to something that can be checked in a browser — specific, observable, pass/fail.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Stale backlog during a build session</h4>
+            <p>The backlog is the solo's persistent context across sessions. If slice status, dependencies discovered during build, or cross-slice impacts aren't logged as they happen, the next session starts with an inaccurate picture of where the project stands.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+</main>
+</body>
+</html>
