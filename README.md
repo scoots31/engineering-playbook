@@ -17,7 +17,7 @@ If you're an AI (Cursor, Claude, or similar) reading this repository to understa
 
 **Key principle:** Never announce phases or explain the framework to the user. One sentence of orientation, then just start.
 
-**If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` for a ready-to-paste first message that activates the framework for the session.
+**If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` (Cursor) or `CLAUDE-CODE-SETUP-PROMPT.md` (Claude Code) for a ready-to-paste first message that activates the framework for the session.
 
 ---
 
@@ -162,7 +162,7 @@ Pre-built documents for explaining and presenting the framework:
 | [`docs/communications/process-map.html`](docs/communications/process-map.html) | Full swimlane — all phases, all lanes, every output and gate |
 | [`docs/communications/deck-business.html`](docs/communications/deck-business.html) | 11-slide executive deck — "From How We Work Today to How We Build Tomorrow" |
 | [`docs/communications/deck-solo.html`](docs/communications/deck-solo.html) | 12-slide practitioner deck — mechanics, anchors, QA chain, phase test detail |
-| [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) | All 27 skills — description, key elements, invoked by, output |
+| [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) | All 28 framework skills + Nivya (companion) — description, key elements, invoked by, output |
 
 Open any HTML file in a browser. Slide decks use arrow keys to navigate.
 
@@ -171,7 +171,7 @@ Open any HTML file in a browser. Slide decks use arrow keys to navigate.
 ## What's in this repo
 
 ```
-skills/                  All 27 framework skills — one folder per skill, SKILL.md inside
+skills/                  All 28 framework skills + nivya (companion) — one folder per skill, SKILL.md inside
 docs/
   communications/        Process map, slide decks, skills reference
   process/               as-is and to-be maps (created per project)

@@ -3,6 +3,14 @@ packaging/dist/
 # Local venv for docs/communications PPTX generation (see generate_communications_decks.py)
 docs/communications/.pptx-build-venv/
 
+# Cloudflare Wrangler build cache
+docs/communications/.wrangler/
+
+# Office temp/lock files
+~$*.pptx
+~$*.docx
+~$*.xlsx
+
 .DS_Store
 *.swp
 *.swo

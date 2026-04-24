@@ -4,7 +4,7 @@
     {
       "name": "communications",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "9200", "--directory", "/Users/scottheinemeier/Developer/engineering-playbook/docs/communications"],
+      "runtimeArgs": ["-m", "http.server", "9200", "--directory", "${workspaceFolder}/docs/communications"],
       "port": 9200
     }
   ]

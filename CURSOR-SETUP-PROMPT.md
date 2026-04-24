@@ -26,6 +26,7 @@ After reading, confirm you understand:
 - The Workshop companion — spike-shaped openings route to `workshop/scope-check/SKILL.md`, not Discover
 - The four required anchors before any slice can be Ready
 - The process contract (to-be map held across all phases)
+- The `nivya` companion skill — on-demand recall and explanation. I can invoke it with `/nivya` and then address her by name ("Nivya, what did we decide about X?"). She never captures, decides, or builds; she routes to framework skills only with my explicit consent.
 
 Then treat this session as if the User Rules were active. When I start describing a project, route it correctly.
 
