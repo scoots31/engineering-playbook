@@ -101,7 +101,19 @@ Do not skip this question. Skin direction saved two full rounds in testing.
 
 ### Step 3: Identify the Hero Screen
 
-**On-ramp 2 (Figma):** the hero screen is whichever Figma frame shows the moment of value. Import it via Figma MCP. State: *"Hero screen from Figma is [frame name] — it's the moment of value because [one sentence]."* Skip Step 4 structure pass; go to Step 5 (warmer/colder on story alignment, not layout).
+**On-ramp 2 (Figma):**
+
+1. **Enumerate all frames first.** Before identifying the hero, read every named frame from the Figma via MCP. Present the complete list to the solo:
+
+   > "Here are all the frames in the Figma: [list]. Does this look like the full screen set, or are there frames I should include that aren't showing here?"
+
+   Wait for confirmation. Do not proceed until the frame list is agreed.
+
+2. **Identify the hero.** From the confirmed frame list, identify which frame shows the moment of value. State: *"Hero screen is [frame name] — it's the moment of value because [one sentence]."*
+
+3. **Capture all layers per frame.** When converting any Figma frame to HTML, inspect every layer in that frame — including overlays, modals, drawers, tooltips, empty states, and error states. Each layer gets rendered as a distinct visible state in the HTML output. Do not produce only the base layer. If a layer's trigger is unclear, ask: *"[Layer name] — is this a modal, a hover state, or something else?"*
+
+4. Skip Step 4 structure pass. Go to Step 5 (warmer/colder on story alignment, not layout).
 
 **On-ramp 1 or 3:** proceed as written below.
 
@@ -308,6 +320,8 @@ The deferred decisions log feeds `prd-to-plan`. Phases are sequenced around what
 | Perfect fidelity on every screen | Slows the sprint, wrong level of investment | Good enough to point at and make decisions from — not pixel perfect |
 | Translating Figma to code | Double work, Figma and HTML go out of sync | HTML artifact IS the first frontend output |
 | Wireframing from scratch when a Figma exists | Ignores the on-ramp decision, wastes the solo's existing design investment, produces a parallel artifact that conflicts with Figma | State the on-ramp back at Step 1.5. If on-ramp 2, import Figma via MCP — do not wireframe |
+| Enumerating only the hero frame on on-ramp 2 | Secondary screens get missed; solo has to ask for each one manually | Enumerate all Figma frames upfront in Step 3 and confirm the list before proceeding |
+| Converting only the base layer of a Figma frame | Overlays, modals, and states are invisible in the HTML; solo has to call them out one by one | Inspect all layers per frame and render each as a distinct state in the output |
 
 ---
 
