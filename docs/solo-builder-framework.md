@@ -35,7 +35,7 @@ What's missing is the **connective tissue** — a flow, a sequence, gates that t
 
 ---
 
-## The Central Insight: UX as Rosetta Stone
+## The Central Insight: UX as Visual Contract
 
 At Scott's day job, the Figma design is not a deliverable — it's a **shared language**. It's the thing everyone points at. Engineers, stakeholders, PMs, data people all react to it. Requirements get clarified because someone looks at a mockup and asks "where does this number come from?" Stakeholders give better feedback because they're reacting to something tangible.
 
@@ -53,7 +53,7 @@ The design artifact surfaces two categories of work that couldn't be seen before
 
 Between Discovery and Planning sits a **Design Sprint** — a short, timeboxed collaborative session where you and the AI produce a working visual good enough to make real decisions from. Not pixel-perfect. Good enough to point at.
 
-That HTML artifact becomes the Rosetta Stone for four conversations:
+That HTML artifact becomes the visual contract and decision surface for four conversations:
 - **Data** — "Where does this field come from? Do we have this in the API?"
 - **Process** — "How does someone actually get from this screen to that one?"
 - **Scope** — "Is this element in Phase 1 or not?" — organized by screen

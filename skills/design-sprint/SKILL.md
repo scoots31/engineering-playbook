@@ -5,7 +5,7 @@ description: Produces a visual HTML artifact for every screen before any code is
 
 # Design Sprint
 
-*The Rosetta Stone. Runs after discovery, before planning. Nothing gets built until this is done.*
+*The visual contract. A decision surface. Runs after discovery, before planning. Nothing gets built until this is done.*
 
 **Core question:** "Do we have something tangible enough to make real build/defer decisions from?"
 
