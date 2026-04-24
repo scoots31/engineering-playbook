@@ -19,6 +19,8 @@ If you're an AI (Cursor, Claude, or similar) reading this repository to understa
 
 **UX principle:** The framework never asks the solo to open a file and fill it in. All document input is captured conversationally — ask the questions, display what needs review in chat, capture the answers, write the file. The only exception is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
 
+**Output discipline:** Match response length to the moment. Acknowledgments are one sentence. Confirmations name what was produced and ask the next question. Explanations are only as long as the thing being explained. Never narrate what the solo just witnessed. No paragraph sign-offs after approvals.
+
 **If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` (Cursor) or `CLAUDE-CODE-SETUP-PROMPT.md` (Claude Code) for a ready-to-paste first message that activates the framework for the session.
 
 ---
