@@ -32,6 +32,24 @@ Screens with no shared infrastructure and no journey dependencies (settings, aut
 **Slice selection statement** — always say it out loud before starting:
 > "Building SL-[ID] — [Name]. It's next in journey order, dependencies are clear, and it has all four anchors."
 
+**Deliverable orientation** — if this is the first slice in a deliverable, surface the deliverable context before starting. The solo needs to know what's being delivered before the first line of code is written:
+
+---
+> **Starting Deliverable [D-ID] — [Name]** *(Type: Screen | Logic)*
+>
+> What you'll have when this is done: [solo description]
+>
+> Acceptance criteria we're building toward:
+> 1. [criterion 1]
+> 2. [criterion 2]
+> 3. [criterion 3]
+>
+> [N] slices make this up: SL-001 · SL-002 · SL-003
+---
+
+If a deliverable record cannot be found for this slice in the backlog, stop:
+> "No deliverable record found for SL-[ID]. Run prd-to-plan to define deliverables before build starts."
+
 ---
 
 ## The Four Anchors — Required Before Starting
@@ -133,6 +151,44 @@ If code review passes, it invokes solo-qa automatically.
 If code review fails, it returns the slice to In Build with specific notes — fix and resubmit.
 
 **Review delivery:** When the slice produces UI or HTML output, serve it as a viewable page before asking for feedback. Open it in the browser or provide a live local URL. The solo signs off on what they can see — not on a description of what was built.
+
+**Deliverable completion check** — after a slice is marked Done, check if all slices in its deliverable are now Done. If they are:
+> "All slices in Deliverable [D-ID] — [Name] are Done. Running deliverable acceptance."
+Then trigger solo-qa deliverable acceptance automatically. Do not wait for the solo to ask for it.
+
+---
+
+## On-Demand Views
+
+When the solo says **"show progress"**, return the active deliverable table inline:
+
+```
+Deliverable [D-ID] — [Name] (Screen | Logic)
+[solo description]
+
+| Slice ID | Description | Deliverable | Type | Status |
+|---|---|---|---|---|
+| SL-001 | [desc] | [D-ID] | Screen | ✓ Done |
+| SL-002 | [desc] | [D-ID] | Screen | In Build |
+| SL-003 | [desc] | [D-ID] | Screen | Ready |
+
+Acceptance criteria:
+1. [criterion 1] — [verified ✅ | pending]
+2. [criterion 2] — [verified ✅ | pending]
+3. [criterion 3] — [verified ✅ | pending]
+```
+
+When the solo says **"show plan"**, return all deliverables across the full build:
+
+```
+| Deliverable | Type | Status | Slices |
+|---|---|---|---|
+| D-001 — [Name] | Screen | ✓ Accepted | SL-001 · SL-002 |
+| D-002 — [Name] | Logic | In Progress | SL-003 (✓) · SL-004 (In Build) · SL-005 (Ready) |
+| D-003 — [Name] | Screen | Backlog | SL-006 · SL-007 |
+```
+
+Both views surface inline — never "go look at a file." Both also surface automatically at key moments: deliverable start, slice review, deliverable completion.
 
 ---
 

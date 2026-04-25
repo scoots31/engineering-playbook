@@ -79,6 +79,41 @@ Each slice cuts through ALL integration layers end-to-end, delivering a narrow b
 
 The process anchor is what connects the backlog to the agreed process. Solo-build reads it before starting a slice to confirm the implementation serves the right step.
 
+### 5b. Define Deliverables
+
+Once slices are designed, group them into deliverables. A deliverable is the agreed body of work a set of slices collectively produce. The solo agrees to deliverables before build starts — they are the review contract between the AI and the solo.
+
+**Grouping rule:** Group slices by what they collectively deliver to the solo. A natural deliverable is a screen, a user-facing flow, a piece of background logic that enables other screens, or an infrastructure layer. Do not group slices that don't share a visible outcome — they belong in separate deliverables.
+
+**Deliverable type:**
+- **Screen** — output is visible. Reviewed visually in the browser.
+- **Logic** — output is invisible. Reviewed against evidence: test results, data state, or a simulated flow through affected screens.
+
+**Every deliverable carries three fields:**
+
+- **Technical spec** — what the skill reads during build. Implementation-level, precise, written for the AI. Covers the architecture decisions, integration points, and technical constraints for this deliverable.
+- **Solo description** — what the solo sees at review time. Plain language, outcome-focused. "When this deliverable is done, you'll have [X] — here's what it does and how to tell it's working."
+- **Acceptance criteria** — the shared contract. Both the skill and the solo read the same criteria. The AI builds and self-verifies against them. The solo reviews against them. One set, agreed before build starts.
+
+**Format per deliverable:**
+```
+Deliverable [D-ID] — [Name]
+Type: Screen | Logic
+Technical spec: [implementation-level description — for the AI]
+Solo description: [plain-language outcome — for the solo]
+Acceptance criteria:
+  1. [verifiable criterion]
+  2. [verifiable criterion]
+  3. [verifiable criterion]
+Slices: SL-001, SL-002, SL-003
+```
+
+If the deliverable record cannot be defined — missing design reference, unclear outcome, no verifiable criteria — stop. The deliverable must be defined and agreed before the plan is approved. A plan with undefined deliverables is not approvable.
+
+Present deliverables alongside the phased plan. Both are reviewed and approved together. On approval, write the deliverable records to `docs/backlog.md` alongside the slice records.
+
+---
+
 ### 6. Sequence by Risk and Process Order
 
 Two sequencing forces in tension — resolve them explicitly:

@@ -185,6 +185,78 @@ Done is permanent unless a later slice reveals a regression — in which case, r
 
 ---
 
+## Deliverable Acceptance
+
+When all slices in a deliverable are Done, solo-qa runs a deliverable-level acceptance check. This is triggered automatically by solo-build — not by the solo. It is separate from and in addition to individual slice sign-offs. A deliverable is not accepted by the sum of its slice approvals — it requires its own verification pass.
+
+### Step 1 — Read the Deliverable Record
+
+From `docs/backlog.md`, read the deliverable's three fields:
+- **Technical spec** — confirms what was supposed to be built at the implementation level
+- **Solo description** — what gets presented to the solo at acceptance time
+- **Acceptance criteria** — what gets verified. These are the same criteria that were agreed before build started.
+
+Also read the **type** — it determines the verification method.
+
+### Step 2 — Verify Against Acceptance Criteria
+
+**Screen deliverable:**
+Open the full deliverable experience in the browser — not individual slices in isolation, but the complete flow or screen as the solo will experience it. Verify each acceptance criterion against what's running:
+```
+✅ [Criterion] — [evidence: what was observed and where]
+❌ [Criterion] — [what was observed vs. what was expected, specifically]
+```
+If any criterion fails, identify which slice introduced the gap. Return that slice to In Build with a specific note. The deliverable is not accepted until all criteria pass.
+
+**Logic deliverable:**
+Evidence-based verification:
+- Run the affected test suite and confirm all tests pass
+- Verify data state matches expected output
+- Walk through affected screens to confirm the logic surfaces correctly
+- Document each criterion with named evidence in the same format above
+
+### Step 3 — Deliverable Acceptance Prompt
+
+When all criteria are verified, present the solo with a clear acceptance prompt — distinct from a slice sign-off:
+
+---
+> **Deliverable [D-ID] — [Name] — ready for acceptance** *(Screen | Logic)*
+>
+> All [N] slices are Done. Here's what was delivered:
+> [solo description]
+>
+> Acceptance criteria — all verified:
+> 1. [criterion 1] ✅
+> 2. [criterion 2] ✅
+> 3. [criterion 3] ✅
+>
+> *[Screen deliverable: Running at [URL] — open it and confirm the full experience.]*
+> *[Logic deliverable: Evidence: [brief summary of evidence — test results, data state, affected screens verified].]*
+>
+> Does this deliverable meet the contract? Accept to proceed.
+
+---
+
+Wait for the solo's response. Do not advance to the next deliverable until they accept.
+
+**Solo responses:**
+
+| Response | Action |
+|----------|--------|
+| "Yes / Accepted / Looks right" | Record acceptance, check for phase gate |
+| "Almost — [specific gap]" | Identify which criterion failed, which slice owns it, return to In Build |
+| "No — [issue]" | Triage: is this a build issue (return to In Build) or a design issue (flag for design review) |
+
+### Step 4 — Record Acceptance
+
+When the solo accepts:
+1. Update backlog: deliverable status → `✓ Accepted`
+2. Add acceptance record: `"Accepted [date]. Criteria verified. Solo sign-off confirmed."`
+3. Check if all deliverables in the phase are now Accepted — if so, surface the phase gate:
+> "All deliverables in this phase are accepted. Phase gate: all slices Done, all deliverables accepted. Ready for Phase Test when you are."
+
+---
+
 ## When Testing Surfaces Something Unexpected
 
 Not everything that surfaces during QA is a clean pass or a simple build fix. Three types of unexpected discovery need their own paths:
