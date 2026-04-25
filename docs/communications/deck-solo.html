@@ -373,8 +373,48 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 7: BUILD DISCIPLINE ── -->
+  <!-- ── SLIDE 7: THE DELIVERABLE ── -->
   <div class="slide slide-dark" data-slide="7">
+    <div class="section-label sl-teal">Phase 3 → Build</div>
+    <h2 class="slide-h2">Not a user story. Not a feature. <em style="color:var(--teal-light)">A contract.</em></h2>
+    <p style="color:var(--gray);font-size:14px;line-height:1.6;max-width:740px;margin-bottom:24px">A user story describes what a user wants. A feature describes what the product does. Both are written for stakeholders — they live outside the build. A <strong style="color:var(--white)">deliverable</strong> is the agreed body of work between the solo and the framework. Defined before build starts. Accepted when it's complete. The framework reads and understands every field — it holds the full picture and surfaces the right thing at the right moment.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;max-width:820px">
+      <div style="background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);border-radius:12px;padding:16px 18px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal-light);margin-bottom:6px">Screen deliverable</div>
+        <div style="font-size:13px;color:var(--gray);line-height:1.5">Output is visible. Reviewed in the browser against the design and acceptance criteria.</div>
+      </div>
+      <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:16px 18px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple-light);margin-bottom:6px">Logic deliverable</div>
+        <div style="font-size:13px;color:var(--gray);line-height:1.5">Output is invisible. Reviewed against evidence — test results, data state, simulated flows through affected screens.</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;max-width:820px;margin-bottom:18px">
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <div style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.25)">Field</div>
+        <div style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.25);border-left:1px solid rgba(255,255,255,0.06)">Who reads it</div>
+        <div style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.25);border-left:1px solid rgba(255,255,255,0.06)">Purpose</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <div style="padding:12px 16px;font-size:13px;font-weight:700;color:var(--blue-light)">Technical spec</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">Framework</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">How to build it correctly — implementation-level, precise</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <div style="padding:12px 16px;font-size:13px;font-weight:700;color:var(--teal-light)">Solo description</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">Framework + Solo</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">What the solo is getting — plain language, outcome-focused. Framework surfaces this at review time.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr">
+        <div style="padding:12px 16px;font-size:13px;font-weight:700;color:var(--gold-light)">Acceptance criteria</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">Framework + Solo</div>
+        <div style="padding:12px 16px;font-size:13px;color:var(--gray);border-left:1px solid rgba(255,255,255,0.06)">Shared contract — agreed before build, self-verified by the framework, confirmed by the solo</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5">Two views available at any time — <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">show progress</code> for the active deliverable &nbsp;·&nbsp; <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">show plan</code> for the full build</p>
+  </div>
+
+  <!-- ── SLIDE 8: BUILD DISCIPLINE ── -->
+  <div class="slide slide-dark" data-slide="8">
     <div class="section-label sl-teal">Phase 4 — Build</div>
     <h2 class="slide-h2">No slice starts without <em style="color:var(--teal-light)">four anchors</em></h2>
     <div class="anchor-grid">
@@ -402,10 +442,10 @@
     <p style="color:var(--gray);font-size:13px;margin-top:22px;line-height:1.5">If a slice has no process anchor → the framework stops and asks: <em style="color:var(--gray-light)">"Is this building something not in the agreed process?"</em> That question matters.</p>
   </div>
 
-  <!-- ── SLIDE 8: QA CHAIN ── -->
-  <div class="slide slide-dark" data-slide="8">
+  <!-- ── SLIDE 9: QA CHAIN ── -->
+  <div class="slide slide-dark" data-slide="9">
     <div class="section-label sl-teal">Automatic QA</div>
-    <h2 class="slide-h2">Code-complete triggers a <em style="color:var(--teal-light)">three-skill QA chain</em> — no invocation needed</h2>
+    <h2 class="slide-h2">Code-complete triggers an <em style="color:var(--teal-light)">automatic QA chain</em> — ending in deliverable acceptance</h2>
     <div class="chain-flow" style="margin-bottom:24px">
       <div class="chain-node">
         <div class="cn-trigger" style="color:var(--blue-light)">Auto — on code-complete</div>
@@ -425,14 +465,21 @@
         <div class="cn-trigger" style="color:var(--gold-light)">Solo — browser sign-off</div>
         <div class="cn-name">solo-qa Part 2</div>
         <div class="cn-desc">You open the browser. Verify visual, behavior, and done criteria in practice. No sign-off while an open missing requirement exists.</div>
-        <div class="cn-pass" style="color:var(--gray-light)">Done → slice marked Done in backlog</div>
+        <div class="cn-pass" style="color:var(--purple-light)">Done → slice marked Done → deliverable check</div>
+      </div>
+      <div class="chain-arrow">›</div>
+      <div class="chain-node">
+        <div class="cn-trigger" style="color:var(--purple-light)">Auto — when all slices Done</div>
+        <div class="cn-name">Deliverable Acceptance</div>
+        <div class="cn-desc">Framework verifies all acceptance criteria against the running deliverable — not slice by slice, but the full experience. Solo signs off on the contract.</div>
+        <div class="cn-pass" style="color:var(--gray-light)">Accepted → next deliverable or phase gate</div>
       </div>
     </div>
     <p style="color:var(--gray);font-size:13px;line-height:1.5;max-width:780px">When testing surfaces something unexpected → <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">qa-triage</code> classifies it: bug / missing requirement / regression — then routes it correctly. Fix the right thing, not the nearest thing.</p>
   </div>
 
-  <!-- ── SLIDE 9: PROCESS THREAD ── -->
-  <div class="slide slide-split" data-slide="9">
+  <!-- ── SLIDE 10: PROCESS THREAD ── -->
+  <div class="slide slide-split" data-slide="10">
     <div class="split-left">
       <div class="section-label sl-gold">The Backbone</div>
       <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-0.6px;margin-bottom:22px">The process thread runs from <em style="color:var(--gold-light)">first conversation to final test</em></h2>
@@ -480,8 +527,8 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 10: PHASE TEST ── -->
-  <div class="slide slide-dark" data-slide="10">
+  <!-- ── SLIDE 11: PHASE TEST ── -->
+  <div class="slide slide-dark" data-slide="11">
     <div class="section-label sl-purple">Phase 5 — Explicit</div>
     <h2 class="slide-h2">Phase Test: <em style="color:var(--purple-light)">seven specialist lenses</em> before anything ships</h2>
     <div class="chip-group">
@@ -513,8 +560,8 @@
     <p style="color:var(--gray);font-size:13px;margin-top:24px;line-height:1.5">You invoke <code style="color:var(--purple-light);background:rgba(124,58,237,0.12);padding:2px 7px;border-radius:4px;font-size:11px">/phase-test</code> explicitly when you decide the phase is built. Deliberate — not automatic.</p>
   </div>
 
-  <!-- ── SLIDE 11: WHAT SETS IT APART ── -->
-  <div class="slide slide-dark" data-slide="11">
+  <!-- ── SLIDE 12: WHAT SETS IT APART ── -->
+  <div class="slide slide-dark" data-slide="12">
     <div class="section-label sl-blue">Factual Differentiation</div>
     <h2 class="slide-h2">What makes this different</h2>
     <ul class="diff-list">
@@ -541,8 +588,8 @@
     </ul>
   </div>
 
-  <!-- ── SLIDE 12: HOW TO START ── -->
-  <div class="slide slide-end" data-slide="12">
+  <!-- ── SLIDE 13: HOW TO START ── -->
+  <div class="slide slide-end" data-slide="13">
     <h2>Start with one idea.<br>Run it <em>end to end.</em></h2>
     <p>Open a new project. Let the framework route you — Brainstorm or Discover. Stay with it through Design Sprint, Build, and Phase Test. Everything else follows from there.</p>
     <div class="pill-row" style="justify-content:center">
@@ -559,7 +606,7 @@
 <nav class="nav" id="nav">
   <button id="prev" onclick="go(-1)" disabled>‹</button>
   <div class="progress-dots" id="dots"></div>
-  <div class="slide-counter" id="counter">1 / 12</div>
+  <div class="slide-counter" id="counter">1 / 13</div>
   <button id="next" onclick="go(1)">›</button>
 </nav>
 

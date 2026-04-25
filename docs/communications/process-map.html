@@ -382,22 +382,26 @@
         <li>Reviews phase sequencing</li>
         <li>Approves risk vs. process order tradeoffs</li>
         <li>Confirms open questions or states assumptions to proceed</li>
+        <li>Approves deliverables alongside the phase plan — both reviewed together</li>
       </ul>
     </div>
     <!-- Build -->
     <div class="cell lane-solo">
       <ul>
         <li>Confirms four anchors before each slice starts</li>
+        <li>Reviews deliverable orientation at the start of each new deliverable</li>
         <li>Reviews mid-build discoveries as they surface</li>
+        <li>Says "show progress" or "show plan" for on-demand views</li>
         <li>Marks slice code-complete when done</li>
       </ul>
     </div>
     <!-- QA Chain -->
     <div class="cell lane-solo">
       <ul>
-        <li>Opens browser for Part 2 sign-off</li>
+        <li>Opens browser for Part 2 sign-off on each slice</li>
         <li>Verifies visual, behavior, and done criteria in practice</li>
         <li>No sign-off allowed while open missing requirement exists</li>
+        <li>Signs off on deliverable acceptance after all slices in a deliverable are Done</li>
       </ul>
     </div>
     <!-- Phase Test -->
@@ -493,6 +497,8 @@
         <li>Maps every Ready slice to its to-be process step</li>
         <li>Sequences by risk order AND process order — conflicts named explicitly</li>
         <li>Infrastructure slices always first</li>
+        <li>Defines deliverables: groups slices by shared outcome, assigns type (Screen/Logic), writes three-field record (technical spec · solo description · acceptance criteria)</li>
+        <li>Deliverables presented alongside plan — both approved together before build starts</li>
         <li>to-issues: creates GitHub issues in dependency order</li>
       </ul>
     </div>
@@ -502,9 +508,12 @@
       <ul>
         <li>Creates feature branch on slice start</li>
         <li>Requires four anchors: design · data · done · process</li>
+        <li>Surfaces deliverable orientation before first slice in each deliverable</li>
         <li>Journey order — first screen before second</li>
         <li>Mid-build discoveries surfaced immediately</li>
+        <li>"show progress" / "show plan" available on-demand and surfaced at key moments</li>
         <li>Commits on code-complete → auto-invokes code-review-and-quality</li>
+        <li>When all slices in a deliverable are Done → auto-triggers deliverable acceptance</li>
       </ul>
     </div>
     <!-- QA Chain -->
@@ -518,6 +527,7 @@
         <li>solo-qa Part 1: active testing — renders screen, cross-checks values against mock data</li>
         <li>solo-qa Part 2: structured solo browser sign-off</li>
         <li>Unexpected findings → qa-triage: bug / missing req / regression</li>
+        <li>When all slices in a deliverable are Done → auto-runs deliverable acceptance: verifies all acceptance criteria against the full running experience, prompts solo sign-off on the contract</li>
       </ul>
     </div>
     <!-- Phase Test -->
