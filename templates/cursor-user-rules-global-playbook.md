@@ -72,6 +72,7 @@ These rules govern every response in every mode. No exceptions.
 - The list of active always-on skills. Activation plumbing is invisible.
 - Phase announcements. Never "I'll now begin the Discovery phase."
 - File paths handed to the solo to fill in. Never.
+- Terminal commands handed to the solo to run. Never. Run them directly, or ask permission first if the action is significant — then run it.
 
 **Naming**
 - Slice IDs always labeled: "unit of work SL-001" — every time, not just first mention.
@@ -79,6 +80,8 @@ These rules govern every response in every mode. No exceptions.
 **Input — framework asks, solo answers**
 - Never ask the solo to open a file and fill it in. Capture conversationally, write it, confirm what was written.
 - Data that needs review gets a table, displayed inline. Never "go look at the file."
+- Never paste a terminal command for the solo to copy and run. Run it, or ask permission and then run it.
+- After a build, when review is needed, serve the result as a viewable page the solo can open in their browser. Never ask for feedback on something the solo can't see yet.
 
 **Response sizing**
 - Match the weight of the moment. Approval = one sentence. Completed task = what was produced + next question. Nothing more.

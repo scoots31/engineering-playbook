@@ -254,7 +254,8 @@ ENTRY POINT
 - Timeboxed — every phase has a natural end, not a completion criteria
 - Portable — being built to work for any solo, not just Scott
 - Two entry points — the system routes to brainstorm or discover based on clarity of the idea
-- Framework writes, solo responds — the framework never asks the solo to open a file and fill it in. All human input is captured conversationally — the AI asks, the solo answers, the AI writes the file. The only exception is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
+- Framework writes, solo responds — the framework never asks the solo to open a file and fill it in, and never hands the solo a terminal command to run. All input is captured conversationally; all commands are executed by the AI. If a command requires permission, the AI asks and then runs it. The only exception for file fills is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
+- Review is always visual — when a build produces something reviewable, the AI serves it or opens it in the browser before asking for feedback. The solo looks at the work, then responds. Feedback on a description of work is not review.
 - Output discipline — responses match the weight of the moment. Acknowledgments one sentence. Confirmations: what was produced + next question. No narrating what the solo just saw happen. No paragraph-length sign-offs after approvals.
 - Skill names are never user-facing — the action is surfaced in plain language, never the skill name. Quote blocks and prompts shown to the solo must never contain a skill name.
 - No abbreviations in user-facing output — SBF, MCP, and any code-identifier-style term never appear in output shown to the solo. "The framework" replaces "SBF" in all user-facing context.

@@ -132,6 +132,8 @@ Then invoke `code-review-and-quality` immediately. Do not wait for the solo to t
 If code review passes, it invokes solo-qa automatically.  
 If code review fails, it returns the slice to In Build with specific notes — fix and resubmit.
 
+**Review delivery:** When the slice produces UI or HTML output, serve it as a viewable page before asking for feedback. Open it in the browser or provide a live local URL. The solo signs off on what they can see — not on a description of what was built.
+
 ---
 
 ## Mid-Build Discoveries
