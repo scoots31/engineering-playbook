@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Release Notes — Solo Builder Framework</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0F1729;
+    color: #fff;
+    min-height: 100vh;
+    padding: 60px 24px;
+  }
+  .container { max-width: 680px; width: 100%; margin: 0 auto; }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-bottom: 48px;
+    transition: color 0.2s;
+  }
+  .back:hover { color: rgba(255,255,255,0.6); }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  h1 em { color: #60A5FA; font-style: normal; }
+  .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin-bottom: 48px;
+    max-width: 500px;
+  }
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: #2563EB;
+    border-radius: 2px;
+    margin-bottom: 56px;
+  }
+
+  .entry {
+    margin-bottom: 56px;
+  }
+  .entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .entry-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: #60A5FA;
+    flex-shrink: 0;
+  }
+  .entry-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: #fff;
+  }
+
+  .entry-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin-bottom: 20px;
+  }
+
+  .change-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .change-item {
+    display: flex;
+    gap: 16px;
+  }
+  .change-badge {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    height: fit-content;
+    white-space: nowrap;
+  }
+  .badge-new {
+    background: rgba(16,185,129,0.15);
+    color: #34D399;
+    border: 1px solid rgba(16,185,129,0.2);
+  }
+  .badge-improved {
+    background: rgba(96,165,250,0.12);
+    color: #93C5FD;
+    border: 1px solid rgba(96,165,250,0.18);
+  }
+  .badge-fixed {
+    background: rgba(251,191,36,0.1);
+    color: #FCD34D;
+    border: 1px solid rgba(251,191,36,0.16);
+  }
+  .change-body { flex: 1; min-width: 0; }
+  .change-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .change-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back" href="index.html">← Back to docs</a>
+
+  <div class="eyebrow">Solo Builder Framework</div>
+  <h1>Release <em>Notes</em></h1>
+  <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
+  <div class="rule"></div>
+
+  <!-- ── APRIL 24 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 24</div>
+      <div class="entry-title">Output Discipline &amp; Design Sprint Precision</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Output Contract — two new load-bearing principles</div>
+          <div class="change-desc">Explicit rules now govern what never appears in user-facing output: no skill names, no internal abbreviations, no phase announcements. Principle #10 (output discipline) and the "framework writes, solo responds" principle were added and propagated across all files. The contract is now the authoritative reference for output behavior across every mode.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Plain language audit — complete pass across all files</div>
+          <div class="change-desc">Every file was reviewed and scrubbed of internal abbreviations (SBF), skill names in user-facing text, and technical shorthand. The framework's external voice now matches the output contract fully.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-name">Named project resume</div>
+        <div class="change-desc">Saying "auto pilot on [project name]" now picks up any in-flight project without needing a saved prompt or prior setup. Context is restored automatically at session start.</div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Nivya — on-demand framework and project companion</div>
+          <div class="change-desc">New skill that recalls both framework mechanics and active project context on demand. Distinct from framework-health (always-on health monitor) and product-continuity (session state tracker). Nivya is invoked when you need to ask a question about how the framework works or where a project stands.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Design Sprint — pre-flight gate + Figma layer enumeration</div>
+          <div class="change-desc">A pre-flight gate now runs before any HTML is produced in Design Sprint on-ramp 2. Figma frame enumeration happens upfront — all frames and layers are captured before the sprint begins, not discovered mid-build. Fidelity standard tightened to require extracting exact Figma values (not approximations).</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">framework-health — gate confirmations, milestone lines, fork format</div>
+          <div class="change-desc">Explicit gate confirmations and milestone lines added. Two-path fork format standardized. Anti-patterns for vague transitions documented. Framework-health now checks for upstream updates at mode activation.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APRIL 23 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 23</div>
+      <div class="entry-title">Workshop, Gates, and the Phase Guide Library</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Workshop framework — separate path for spike work</div>
+          <div class="change-desc">Spike and tool-shaped work now has its own entry, its own skills (scope-check, spike, land), and a clear boundary with the main build flow. Workshop work doesn't go through the phase chain — it enters, explores, and lands as a defined artifact or a decision to proceed.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Onboard skill — bring existing projects into the framework</div>
+          <div class="change-desc">Projects that predate the framework can now enter it without repeating discovery from scratch. Onboard maps prior work to framework anchors and picks up where the project actually is.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Phase gates throughout — explicit confirmations at every phase end</div>
+          <div class="change-desc">Every phase now ends with a named gate: actual output files listed, followed by a direct two-option prompt — start the next phase now, or close out here. Passive "good stopping point" language retired.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Process promoted to fourth anchor</div>
+          <div class="change-desc">The four required anchors are now: design, data, done, and process. No slice reaches Ready without all four. Process is no longer an implicit input — it's a named requirement.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Phase Guide Library — nine guides, one per phase</div>
+          <div class="change-desc">Full walkthroughs added for every phase: Brainstorm, Discover &amp; Tech Context, Design Sprint, Data &amp; Design Review, Plan, Build, QA &amp; Acceptance, Phase Test, and Deploy. Each guide covers what to expect, what gets produced, and what the gate looks like.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Getting Started + FAQ</div>
+          <div class="change-desc">Two new entry-level docs. Getting Started covers first sessions, entry points, session modes, and session hygiene. FAQ answers real questions from mid-discovery, mid-design, mid-build, QA, and out-of-order situations.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">design-review — Tier 2 multi-agent orchestrator + stakeholder handoff</div>
+          <div class="change-desc">Tier 2 multi-agent review added for high-stakes design decisions. Stakeholder handoff package now produced at the end of both design-sprint and design-review — not just on request.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Session hygiene formalized</div>
+          <div class="change-desc">Close loop, resume prompt, and model guidance are now a defined framework pattern — not ad hoc. Sessions have a consistent shape: open with context restore, close with a handoff artifact.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Language audit — "visual contract" and "decision surface"</div>
+          <div class="change-desc">"Rosetta Stone" retired as a metaphor across all files. Replaced with "visual contract" (the design artifact as a binding reference) and "decision surface" (what the design review exposes for a decision). More precise, less metaphor-dependent.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APRIL 22 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 22</div>
+      <div class="entry-title">Governance Layer and Communications Launch</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Framework Curator — governance for framework changes</div>
+          <div class="change-desc">Any change to the framework now has a defined path: read the affected files, draft a cascade proposal, preview every change, wait for approval, execute, then validate integrity. Drift can no longer accumulate silently — every change is deliberate and documented.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Communications hub launched</div>
+          <div class="change-desc">Index page, landing structure, and robots.txt added — the comms docs now have a proper home rather than a flat directory of files.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Reference material separated from framework skills</div>
+          <div class="change-desc">Reference docs moved out of the skills directory. Clear boundary between what the framework does (skills) and what it documents (reference). Skills stay lean; reference grows without cluttering the skill set.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">product-continuity — phase marker added</div>
+          <div class="change-desc"><code>current-phase.md</code> now tracks the active phase across sessions. Context restore at session start picks this up automatically.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APRIL 21 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 21</div>
+      <div class="entry-title">Framework Ships</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Solo Builder Framework — complete skill set</div>
+          <div class="change-desc">The full framework shipped: all phase skills, always-on skills, support skills, and the complete phase chain from Brainstorm through Deploy. The foundation everything else is built on.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Deploy and Retrospective skills</div>
+          <div class="change-desc">Closed the back end of the phase chain. Deploy handles the production launch sequence. Retrospective captures what was learned at the end of every build cycle so it feeds the next one.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Process anchor — integrated from day one</div>
+          <div class="change-desc">Process sketch added as a moment in brainstorming. Process anchor wired into prd-to-plan. Process became a first-class input from the very start — not retrofitted later.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">process-mapper integrated into design-review</div>
+          <div class="change-desc">The to-be process map now feeds directly into design review. Design decisions are grounded in the process they serve, not evaluated in isolation.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Communications suite — shipped alongside the framework</div>
+          <div class="change-desc">Process map, Executive Deck, Solo Builder Deck, and Skills Reference all launched on day one. The framework shipped with a complete external story, not just internal tooling.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Portable setup</div>
+          <div class="change-desc">README and Cursor user rules updated so the framework works on any machine without local path assumptions. Fresh-machine install works without manual fixes.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
