@@ -483,10 +483,12 @@
       <div class="skill-tag">data-scaffold</div>
       <div class="skill-tag" style="margin-left:4px">design-review</div>
       <ul>
-        <li>data-scaffold: generates realistic mock data for all screen entities</li>
+        <li>data-scaffold: generates realistic mock data · flags list entities as data behavior candidates · updates mock after data questions resolve</li>
         <li>design-review: PM + Tech Lead + Data lenses applied every round</li>
+        <li>Data behavior pass — volume, list behavior, nulls, empty/error/loading states asked for every screen with external data → produces data questions log</li>
+        <li>Unresolved data question blocks dependent UI slices from Ready</li>
         <li>Coverage check: every to-be step mapped to a slice or decided</li>
-        <li>Slice Ready requires: design ref, done criteria, process anchor, no open spikes</li>
+        <li>Slice Ready requires: design ref, done criteria, process anchor, no open spikes, no blocking data questions</li>
       </ul>
     </div>
     <!-- Plan -->
@@ -498,6 +500,7 @@
         <li>Sequences by risk order AND process order — conflicts named explicitly</li>
         <li>Infrastructure slices always first</li>
         <li>Defines deliverables: groups slices by shared outcome, assigns type (Screen/Logic), writes three-field record (technical spec · solo description · acceptance criteria)</li>
+        <li>Integration deliverables — Screen deliverable with external data gets a companion Logic deliverable (Data Integration); sequences after Screen is Accepted; requires data questions log resolved before scoping</li>
         <li>Deliverables presented alongside plan — both approved together before build starts</li>
         <li>to-issues: creates GitHub issues in dependency order</li>
       </ul>
@@ -509,6 +512,7 @@
         <li>Creates feature branch on slice start</li>
         <li>Requires four anchors: design · data · done · process</li>
         <li>Surfaces deliverable orientation before first slice in each deliverable</li>
+        <li>Integration deliverables sequence after their Screen companion is Accepted</li>
         <li>Journey order — first screen before second</li>
         <li>Mid-build discoveries surfaced immediately</li>
         <li>Map-level conflict → auto-invokes process-change; current slice moves to In Review</li>
@@ -531,6 +535,7 @@
         <li>Unexpected findings → qa-triage: bug / missing req / regression / map-level gap</li>
         <li>Map-level gap (no to-be step for this behavior) → qa-triage auto-invokes process-change</li>
         <li>When all slices in a deliverable are Done → auto-runs deliverable acceptance: verifies all acceptance criteria against the full running experience, prompts solo sign-off on the build contract</li>
+        <li>Integration deliverable acceptance — UX impact check: does live data produce anything the design didn't account for? If yes → flag for design review, affected UI slices reopen</li>
       </ul>
     </div>
     <!-- Phase Test -->

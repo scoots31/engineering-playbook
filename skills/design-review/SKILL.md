@@ -115,6 +115,36 @@ Each per-screen comment becomes a finding classified like any other — design g
 
 If the approval status is "Approved to build" with no per-screen changes, log the approval in the Review Log and continue. If "Needs another round," that's a signal to schedule another handoff after the current round's changes land.
 
+### Step 2.7: Data Behavior Pass
+
+Required for any screen with external data — lists, feeds, or dynamic fields from an API or database. Skip only if a screen has no external data dependency.
+
+For every screen with external data, ask:
+
+- **Volume:** What's the expected number of records? Can this be 5 or 5,000?
+- **List behavior:** Does the user need to search, filter, or sort? Is pagination or lazy loading required?
+- **Null and missing fields:** Which fields can be absent? What percentage of real records will have them?
+- **Empty state:** What does the screen look like when the API returns zero results?
+- **Error state:** What does the screen look like when the API fails or times out?
+- **Loading state:** Does the design account for in-flight requests?
+
+Capture every unanswered question in the **data questions log** — appended to `docs/backlog.md`:
+
+```markdown
+## Data Questions Log
+
+| Screen | Question | Status | Answer | Source | Resolved |
+|--------|----------|--------|--------|--------|---------|
+| Player List | Will the list paginate? | Open | — | — | — |
+| Player List | Can slot_target be null? | Resolved | Yes, ~15% | API docs | 2026-04-25 |
+```
+
+**Gate:** Any UI slice whose design depends on an unresolved data question cannot reach Ready. The question must be answered first — via research spike, direct API check, or stakeholder confirmation. Once answered, update the log to Resolved and update the mock data before dependent slices finalize.
+
+**When questions surface design changes:** If the answer changes what the design needs to show (pagination controls, loading skeleton, empty state layout), treat it as a design gap finding and update the design before defining dependent slices.
+
+---
+
 ### Step 3: Define or Refine Slices
 
 As each element reaches enough clarity, define it as a slice. A slice is the unit of work — what gets built, what done looks like, what has to exist first.
@@ -289,6 +319,8 @@ End each round by stating explicitly:
 | Waiting for all slices to be Ready before building | Waterfall — defeats the point | Build starts when first meaningful Ready set exists |
 | Vague done criteria | "It works" is not a criterion | 2–3 specific, verifiable statements |
 | Skipping the data lens | Design implies data that doesn't exist | Every field on every screen gets a "where does this come from" pass |
+| Skipping the data behavior pass | Scale and behavior questions surface in phase-test instead of design review — expensive to fix that late | Run the pass on every screen with external data, every round |
+| Leaving data questions open while promoting slices to Ready | Slices get built against wrong design assumptions — pagination added mid-build, empty states missing | Resolve data questions before dependent slices reach Ready |
 | One mega-slice per screen | Too large to build, too vague to verify | Break screens into the smallest meaningful unit of work |
 | Updating backlog only at the end of a round | Loses the thread | Update as the round proceeds |
 | Reviewing without the design artifact open | Working from memory | Always review against the actual HTML screens |

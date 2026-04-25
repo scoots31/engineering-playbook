@@ -1027,7 +1027,7 @@
           <div class="skill-name">data-scaffold</div>
           <div class="skill-badge">Phase skill</div>
         </div>
-        <div class="skill-description">Generates realistic mock data for all screen data entities. Creates a clean mock layer with a single swap seam — easy to replace with real API data when ready. Also produces the data mapping document, which serves as a proto-API contract for the build phase.</div>
+        <div class="skill-description">Generates realistic mock data for all screen data entities. Creates a clean mock layer with a single swap seam — easy to replace with real API data when ready. Flags data behavior candidates (lists, external feeds) so design review can ask the right scale and behavior questions before UI slices are finalized. Updates mock data after those questions are resolved.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1035,8 +1035,10 @@
               <li>Derives all entities from design sprint screens</li>
               <li>Generates realistic (not placeholder) values — names, amounts, dates that look real</li>
               <li>Single mock/real seam — one place to swap, nothing hardcoded across the codebase</li>
+              <li>Flags list entities and external API sources as <strong>data behavior candidates</strong> in data-mapping.md — these need the design review data behavior pass</li>
               <li>Mock indicator badge on screens during development</li>
-              <li>data-mapping.md documents field-to-source mapping for every screen entity</li>
+              <li>data-mapping.md documents field-to-source mapping, behavior notes (pagination, null rates), and connection status</li>
+              <li><strong>Updates mock after data questions resolve</strong> — pagination edge cases, null field rates, empty/error states seeded before dependent slices finalize</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1044,6 +1046,7 @@
             <ul>
               <li>Phase 2.5 — runs after design sprint</li>
               <li>Runs before or alongside design review (not blocked by it)</li>
+              <li>Re-runs (Step 7) when data questions log has newly resolved entries</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1051,7 +1054,7 @@
             <ul>
               <li><div class="output-tag">data/mock/[entity].json</div></li>
               <li><div class="output-tag">docs/data-mapping.md</div></li>
-              <li>Proto-API contract — field names, types, source for every screen entity</li>
+              <li>Proto-API contract — field names, types, source, behavior notes per screen entity</li>
             </ul>
           </div>
         </div>
@@ -1070,6 +1073,7 @@
               <li>Reads <code>docs/stakeholder-feedback/*.md</code> as first-class input — per-screen comments become findings</li>
               <li>Three lenses every round: <strong>PM</strong> (right problem?), <strong>Tech Lead</strong> (buildable?), <strong>Data</strong> (where does every field come from?)</li>
               <li>Process coverage check every round — coverage map vs. to-be, every uncovered step surfaced as decision</li>
+              <li><strong>Data behavior pass</strong> — required for every screen with external data: volume, list behavior, nulls, empty/error/loading states. Produces a data questions log. Unresolved question blocks dependent UI slices from Ready.</li>
               <li><strong>Process anchor required</strong> on every slice before it reaches Ready</li>
               <li>Slice states: Ready / In Review / Blocked / Deferred / In Build / Done</li>
               <li>Build signal: enough Ready slices to form a coherent Phase 1 starting point</li>
@@ -1127,6 +1131,7 @@
               <li>On approval: updates backlog with process anchors for every slice</li>
               <li>Groups slices into <strong>Deliverables</strong> — each deliverable carries a technical spec (AI-facing), solo description (solo-facing), and acceptance criteria (shared contract between both)</li>
               <li>Deliverable type assigned: <strong>Screen</strong> (reviewed visually) or <strong>Logic</strong> (reviewed against evidence)</li>
+              <li><strong>Integration deliverables</strong> — every Screen deliverable with external data gets a companion Logic deliverable for data integration. Always sequences after its Screen companion is Accepted. Data questions log must be resolved before integration slices can be scoped.</li>
             </ul>
           </div>
           <div class="skill-section">

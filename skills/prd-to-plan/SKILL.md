@@ -114,6 +114,34 @@ Present deliverables alongside the phased plan. Both are reviewed and approved t
 
 ---
 
+### 5c. Integration Deliverables
+
+For every Screen deliverable that reads from external data, define a companion Logic deliverable for data integration. This is where real API connections, data flow, and UI reactions to live data are built and verified.
+
+**Rules:**
+- Always a **Logic** type — reviewed against evidence, not visual inspection
+- Always sequences after its Screen companion is Accepted — never in the same phase
+- Cannot be fully scoped until the data questions log is fully resolved
+- Named: "[Screen Name] — Data Integration"
+
+**Standard done criteria for every integration slice:**
+- API connected and returning data in expected shape
+- `docs/data-mapping.md` updated from proto to confirmed — field names reconciled, behavior documented
+- Mock indicator badge removed from affected screens
+- Pagination / filtering / search working correctly (if applicable per data questions log)
+- Empty state renders correctly with a real no-results API response
+- Error state renders correctly with a real API error
+- Loading / in-flight state renders correctly
+- All fields rendering from the real source — none hardcoded
+- Auth confirmed working in the test environment (if applicable)
+
+**Data questions gate:** If the data questions log still has open entries when defining integration slices, those slices cannot be scoped. Surface it explicitly:
+> "Data questions for [entity] are unresolved — the data integration deliverable for [Screen] cannot be fully defined until these are answered. Resolve via research spike or direct API check."
+
+**Sequencing:** Integration deliverables always follow their Screen companions. Where one integration deliverable de-risks data assumptions for multiple Screen deliverables, it may sequence ahead of later Screen deliverables — name this explicitly in the plan.
+
+---
+
 ### 6. Sequence by Risk and Process Order
 
 Two sequencing forces in tension — resolve them explicitly:

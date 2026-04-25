@@ -179,10 +179,16 @@ ENTRY POINT
    └── Round N: refine slices, promote to Ready, update backlog
    └── Reads docs/stakeholder-feedback/*.md as first-class input — per-screen comments become findings, blockers gate Ready
    └── process-mapper cross-reference every round — coverage map against to-be, uncovered steps surfaced as decisions
+   └── Data behavior pass — required for every screen with external data: volume, list behavior, nulls, empty/error/loading states
+       → Produces data questions log in docs/backlog.md
+       → Unresolved question blocks dependent UI slices from Ready
+       → Questions resolved via research spike, API check, or stakeholder confirmation
+       → Mock data updated after questions resolve, before dependent slices finalize
    └── Process anchor required on every slice before it reaches Ready
    └── Build signal: enough slices Ready to form a coherent Phase 1 starting point
    └── Continues in parallel with build for remaining slices
    └── Output: docs/backlog.md — ID, Name, Process Anchor, Description, Dependency, Status per slice
+             + data questions log
              + review log appended each round
    └── Gate: backlog.md with a coherent set of Ready slices for Phase 1
 
@@ -208,7 +214,12 @@ ENTRY POINT
        · Technical spec — what the skill reads. Implementation-level, written for the AI.
        · Solo description — what the solo sees. Plain language, outcome-focused, written for the human.
        · Acceptance criteria — shared contract. AI builds and self-verifies against it. Solo reviews against it. One set of criteria, agreed before build starts.
-   └── Two review levels: slice approval (unit of work complete) + deliverable acceptance (full body of work done and matching the contract)
+   └── Integration deliverables — every Screen deliverable with external data gets a companion Logic deliverable for data integration
+       · Always sequences after its Screen companion is Accepted
+       · Cannot be fully scoped until data questions log is resolved
+       · Named: "[Screen Name] — Data Integration"
+       · Standard done criteria: API connected, data-mapping.md confirmed, pagination/filter/search, empty/error/loading states, auth
+   └── Two review levels: slice approval (unit of work complete) + deliverable acceptance (full body of work done and matching the build contract)
    └── Two views available at any time during build:
        · "show progress" — active deliverable, all slices, current status, acceptance criteria
        · "show plan" — all deliverables across the full build, delivered / in progress / backlog
@@ -223,6 +234,7 @@ ENTRY POINT
    └── Map-level gap — if qa-triage surfaces a missing requirement where the to-be map has no step at all, invoke process-change before QA resumes on that slice
    └── Done = code review logged + AI verified with evidence + solo confirmed in browser
    └── No solo sign-off while an open missing requirement exists — define or defer it first
+   └── Integration deliverable acceptance — UX impact check before accepting: does live data produce anything the design didn't account for? If yes → flag for design review, affected UI slices reopen
    └── Deliverable acceptance — when all slices in a deliverable are Done, solo-qa runs a deliverable-level check:
        Screen deliverable: visual pass against acceptance criteria in browser
        Logic deliverable: evidence pass — test results, data state, or simulated flow through affected screens

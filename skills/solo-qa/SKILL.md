@@ -215,6 +215,19 @@ Evidence-based verification:
 - Walk through affected screens to confirm the logic surfaces correctly
 - Document each criterion with named evidence in the same format above
 
+**Integration deliverable — UX impact check:**
+For Logic deliverables where any slice's data anchor points to a real API or database (not the mock layer), run this check before presenting the acceptance prompt.
+
+Review the running experience with live data against the original Screen deliverable's design. Ask:
+> "Does live data produce anything a user would see or interact with that the design didn't account for — field values at scale, list behavior, empty or error state appearance, pagination controls, loading states?"
+
+- **No:** Continue to the acceptance prompt.
+- **Yes:** Do not present the acceptance prompt. Surface the gap with specific evidence:
+
+> "Live data reveals a UX gap in [Screen]: [what the design assumed] vs. [what real data produces]. Flagging for design review before accepting this deliverable."
+
+Flag for design review with the specific evidence. Move affected Screen deliverable slices back to In Review. The integration deliverable acceptance waits until design review completes and the affected UI slices are rebuilt and re-verified.
+
 ### Step 3 — Deliverable Acceptance Prompt
 
 When all criteria are verified, present the solo with a clear acceptance prompt — distinct from a slice sign-off:

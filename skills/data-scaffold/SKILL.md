@@ -101,6 +101,13 @@ Generate the data with:
 - At least one edge case — a bye week, a zero score, a missing field — so empty states are tested
 - Consistent IDs that cross-reference between entities
 
+**Flag data behavior candidates:** For any entity that is a list or pulls from an external API with scale implications, add a flag to the data-mapping.md connection status table. These entities need the data behavior pass in design review before dependent UI slices can reach Ready:
+
+| Entity | Mock file | Real source | Status | Data behavior candidate |
+|--------|-----------|-------------|--------|------------------------|
+| Players | data/mock/players.json | MFL API | ⏳ Pending | ✓ List — needs data behavior pass |
+| Performance | data/mock/performance.json | Internal DB | ⏳ Pending | ✓ List — needs data behavior pass |
+
 ### Step 4: Wire the Mock Layer to the Screens
 
 Update the design screens to pull from the mock layer instead of having data hardcoded in the HTML. The UI should not know or care whether data is real or mock — it just reads from the data source.
@@ -224,6 +231,26 @@ When a real data source is ready:
 
 The UI code does not change. Only the data layer underneath.
 ```
+
+### Step 7: Update Mock After Data Questions Resolve
+
+When the data questions log (in `docs/backlog.md`) has newly resolved entries, update the mock data layer to reflect confirmed behavior. This step and slice finalization happen together — not sequentially.
+
+For each resolved question, update the relevant mock file:
+
+- **Pagination confirmed:** Add edge case records — last page (1 record), empty page (0 records), single-result list
+- **Null fields confirmed:** Seed the expected percentage of records with null values matching the real-world rate
+- **Empty state confirmed:** Add a named empty-state record set that can be activated during development
+- **Error state confirmed:** Add an error response mock for testing gracefully degraded UI states
+- **Volume confirmed:** Ensure enough records to reflect real list behavior (10+ if large lists expected)
+
+Update `docs/data-mapping.md` with a "Behavior notes" column in the connection status table:
+
+| Entity | Mock file | Real source | Status | Data behavior candidate | Behavior notes |
+|--------|-----------|-------------|--------|------------------------|----------------|
+| Players | data/mock/players.json | MFL API | ⏳ Pending | ✓ | Paginates at 25, slot_target null ~15% |
+
+The mock indicator badge stays active. The mock layer now reflects confirmed real-world behavior — not just placeholder structure — so UI slices are built against realistic conditions from the start.
 
 ---
 
