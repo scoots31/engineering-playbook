@@ -471,6 +471,7 @@
     <a href="#code-review-and-quality" class="nav-skill" style="color:rgba(251,113,133,0.7)"><span class="nav-dot" style="background:#BE123C"></span>code-review-and-quality</a>
     <a href="#solo-qa" class="nav-skill" style="color:rgba(251,113,133,0.7)"><span class="nav-dot" style="background:#BE123C"></span>solo-qa</a>
     <a href="#qa-triage" class="nav-skill" style="color:rgba(251,113,133,0.7)"><span class="nav-dot" style="background:#BE123C"></span>qa-triage</a>
+    <a href="#process-change" class="nav-skill" style="color:rgba(251,113,133,0.7)"><span class="nav-dot" style="background:#BE123C"></span>process-change</a>
   </div>
 
   <div class="nav-group">
@@ -1410,9 +1411,9 @@
         <div class="category-icon">✅</div>
         <div>
           <div class="category-title">QA Chain</div>
-          <div class="category-desc">Three skills that chain automatically from code-complete — no user invocation needed until browser sign-off.</div>
+          <div class="category-desc">Three skills that chain automatically from code-complete — no user invocation needed until browser sign-off. Plus process-change for map-level conflicts.</div>
         </div>
-        <div class="skill-count">3 skills</div>
+        <div class="skill-count">4 skills</div>
       </div>
 
       <div class="skill-card" id="code-review-and-quality">
@@ -1519,10 +1520,49 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>Classification: bug / missing requirement / regression</li>
+              <li>Classification: bug / missing requirement / regression / map-level gap</li>
               <li>Scope assessment and routing decision</li>
               <li>qa-triage log entry in backlog</li>
               <li>Routed to correct fix path — test run continues on unaffected areas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="process-change">
+        <div class="skill-card-header">
+          <div class="skill-name">process-change</div>
+          <div class="skill-badge">Solo-invoked or Auto — from solo-build, qa-triage, phase-test</div>
+        </div>
+        <div class="skill-description">Consistent protocol for changes to the agreed to-be process map — regardless of cause or where it surfaces. Stakeholder input, demo gaps, technical constraints, solo realizations: all receive the same seven-step protocol. The where is unpredictable. The response is not.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li><strong>Cause-agnostic:</strong> four trigger sources, one protocol</li>
+              <li><strong>Three-tier impact scan:</strong> scheduled work · in-progress work · completed work — every item gets an explicit verdict</li>
+              <li><strong>Solo decides:</strong> Revise / Retire / Reopen / Create / Absorb — per affected slice</li>
+              <li><strong>Re-prioritization:</strong> resume order + revised schedule + new work from the change, surfaced explicitly</li>
+              <li><strong>Hard gate:</strong> solo confirms updated state before build resumes</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li>Solo invokes directly when they realize the to-be map needs to change</li>
+              <li>Auto-detected by <strong>solo-build</strong> when a map-level conflict is found mid-build</li>
+              <li>Auto-detected by <strong>qa-triage</strong> when a missing requirement has no to-be map step at all</li>
+              <li>Auto-detected by <strong>phase-test</strong> Stage 6 when acceptance review finds a process-level mismatch</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output</div>
+            <ul>
+              <li>Updated to-be map (Refinement / Addition / Restructure)</li>
+              <li>Backlog updated — revised, retired, reopened, or new slices as decided</li>
+              <li>Deliverable records updated where needed</li>
+              <li>Re-prioritized build sequence</li>
+              <li>Process change record in product-continuity</li>
             </ul>
           </div>
         </div>

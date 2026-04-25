@@ -208,6 +208,9 @@ Flag it in the backlog immediately. Note which slices are affected and why. Cont
 **Blocks the current slice — a dependency wasn't actually resolved**
 Stop the current slice. Move it back to In Review with a note. Pick the next appropriate slice while the blocker is resolved.
 
+**Map-level conflict — the build reveals the to-be map itself is wrong**
+Stop the current slice. Move it back to In Review. Invoke `process-change` immediately — this is not a design gap or a dependency issue, it is the agreed process step itself that is incorrect or missing. The current slice stays In Review until process-change completes and a new or revised process anchor is confirmed.
+
 ---
 
 ## Backlog Updates During Build

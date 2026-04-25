@@ -6,7 +6,7 @@
 
 If you're an AI (Cursor, Claude, or similar) reading this repository to understand how to operate:
 
-**What this is:** A complete lifecycle framework for building software with AI. It contains 28 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses guided or piloted mode — silent by default. One companion skill (`nivya`) is on-demand — the solo invokes her by name to recall and explain, never to do work.
+**What this is:** A complete lifecycle framework for building software with AI. It contains 29 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses guided or piloted mode — silent by default. One companion skill (`nivya`) is on-demand — the solo invokes her by name to recall and explain, never to do work.
 
 **What to do:**
 1. Default session mode is bare — no routing, no always-on. Skills load only when invoked.
@@ -37,7 +37,7 @@ A complete lifecycle system for building software with AI — from first idea th
 
 Most AI coding tools help you write code faster. This framework replaces the discipline a real team provides — the PM challenge, the tech review, the design artifact, the QA gate, the process map — so a solo builder has all of it without needing a team.
 
-**28 skills** cover the full lifecycle. **4 always-on skills** activate on guided or piloted mode — silent in bare mode. **1 companion skill** (`nivya`) is on-demand — the solo invokes her by name for recall and explanation. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
+**29 skills** cover the full lifecycle. **4 always-on skills** activate on guided or piloted mode — silent in bare mode. **1 companion skill** (`nivya`) is on-demand — the solo invokes her by name for recall and explanation. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
 
 → See [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) for full detail on every skill.
 
@@ -133,6 +133,7 @@ Open a new project in your editor. Describe what you want to build. The `start` 
 | 3 | `prd-to-plan` + `to-issues` | Phased plan sequenced by risk + process order, GitHub issues created |
 | 4 | `solo-build` | Slice-by-slice build — four anchors required, feature branch per slice |
 | Auto | `code-review-and-quality` → `solo-qa` | 7-check gate + active testing — auto-triggered on code-complete |
+| On-demand / Auto | `process-change` | Consistent protocol for to-be map changes — solo-invoked or auto-detected from build, QA, or phase test |
 | 5 — explicit | `phase-test` | 7-specialist-stage test — invoke with `/phase-test` when phase is built |
 | 6 | `deploy` | Stack-driven deploy — reads tech-context, confirms gate open, verifies live |
 
@@ -179,7 +180,7 @@ Open any HTML file in a browser. Slide decks use arrow keys to navigate.
 ## What's in this repo
 
 ```
-skills/                  All 28 framework skills + nivya (companion) — one folder per skill, SKILL.md inside
+skills/                  All 29 framework skills + nivya (companion) — one folder per skill, SKILL.md inside
 docs/
   communications/        Process map, slide decks, skills reference
   process/               as-is and to-be maps (created per project)

@@ -511,6 +511,7 @@
         <li>Surfaces deliverable orientation before first slice in each deliverable</li>
         <li>Journey order — first screen before second</li>
         <li>Mid-build discoveries surfaced immediately</li>
+        <li>Map-level conflict → auto-invokes process-change; current slice moves to In Review</li>
         <li>"show progress" / "show plan" available on-demand and surfaced at key moments</li>
         <li>Commits on code-complete → auto-invokes code-review-and-quality</li>
         <li>When all slices in a deliverable are Done → auto-triggers deliverable acceptance</li>
@@ -521,13 +522,15 @@
       <div class="skill-tag">code-review-and-quality</div>
       <div class="skill-tag" style="margin-left:4px;margin-top:4px">solo-qa</div>
       <div class="skill-tag" style="margin-left:4px;margin-top:4px">qa-triage</div>
+      <div class="skill-tag" style="margin-left:4px;margin-top:4px">process-change</div>
       <ul>
         <li>7-check gate: pattern, data sourcing, expandability, cleanliness, scope, docs, stack</li>
         <li>Pass → logs confirmation → auto-invokes solo-qa</li>
         <li>solo-qa Part 1: active testing — renders screen, cross-checks values against mock data</li>
         <li>solo-qa Part 2: structured solo browser sign-off</li>
-        <li>Unexpected findings → qa-triage: bug / missing req / regression</li>
-        <li>When all slices in a deliverable are Done → auto-runs deliverable acceptance: verifies all acceptance criteria against the full running experience, prompts solo sign-off on the contract</li>
+        <li>Unexpected findings → qa-triage: bug / missing req / regression / map-level gap</li>
+        <li>Map-level gap (no to-be step for this behavior) → qa-triage auto-invokes process-change</li>
+        <li>When all slices in a deliverable are Done → auto-runs deliverable acceptance: verifies all acceptance criteria against the full running experience, prompts solo sign-off on the build contract</li>
       </ul>
     </div>
     <!-- Phase Test -->
@@ -538,7 +541,7 @@
         <li>Stage 2: Use case creator — test plan from discovery brief + design</li>
         <li>Stage 3: Data specialist — mock→real swap, API read/write verified</li>
         <li>Stage 4+5: Tester + Regression specialist</li>
-        <li>Stage 6: Acceptance reviewer — PM lens vs. discovery brief</li>
+        <li>Stage 6: Acceptance reviewer — PM lens vs. discovery brief; process-level mismatch → process-change before gate</li>
         <li>Stage 7: Gate — OPEN or HOLD with specific items</li>
       </ul>
     </div>

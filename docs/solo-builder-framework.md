@@ -197,6 +197,7 @@ ENTRY POINT
    └── Four anchors required before starting any slice:
        design anchor (screen + element) · data anchor (mock fields) · done anchor (criteria) · process anchor (to-be step)
    └── Mid-build discoveries surfaced immediately — never silently resolved
+   └── Map-level conflict — if build reveals the to-be map itself is wrong, invoke process-change immediately. Current slice moves to In Review until process-change completes.
    └── Code-complete → status: In QA → hand to solo-qa
    └── Gate (per slice): four anchors confirmed + solo sign-off in browser
    └── Deliverables — slices roll up into deliverables. A deliverable is the agreed body of work a set of slices collectively produce.
@@ -218,7 +219,8 @@ ENTRY POINT
    └── On pass: logs confirmation in backlog → auto-invokes solo-qa
    └── solo-qa Part 1 (AI) → gate check + full spec review + active testing with evidence + design fidelity
    └── solo-qa Part 2 (solo) → browser sign-off: visual, behavior, criteria in practice
-   └── Unexpected discovery → qa-triage: classifies (bug / missing req / regression), scopes, routes, logs
+   └── Unexpected discovery → qa-triage: classifies (bug / missing req / regression / map-level gap), scopes, routes, logs
+   └── Map-level gap — if qa-triage surfaces a missing requirement where the to-be map has no step at all, invoke process-change before QA resumes on that slice
    └── Done = code review logged + AI verified with evidence + solo confirmed in browser
    └── No solo sign-off while an open missing requirement exists — define or defer it first
    └── Deliverable acceptance — when all slices in a deliverable are Done, solo-qa runs a deliverable-level check:
@@ -235,7 +237,7 @@ ENTRY POINT
    └── Stage 4 + 5: Tester + Regression specialist (run together)
        Tester walks every scenario with named evidence
        Regression re-walks all Done slices, checks integration points between slices
-   └── Stage 6: Acceptance reviewer — PM lens: does what was built match discovery brief intent?
+   └── Stage 6: Acceptance reviewer — PM lens: does what was built match discovery brief intent? If process-level mismatch found, invoke process-change — gate stays HOLD until complete.
    └── Stage 7: Gate decision — OPEN (deploy) or HOLD (specific items to resolve)
    └── HOLD: fix affected items, re-test affected scenarios only — no full re-run
    └── Failures at any stage → qa-triage (test run continues on unaffected scenarios)
@@ -299,6 +301,7 @@ ENTRY POINT
 | `solo-build` | Slice-by-slice execution — four anchors, journey order, dependency blocking | ✅ Built |
 | `solo-qa` | Two-part verification — active AI testing with evidence + solo browser sign-off required for Done | ✅ Built |
 | `qa-triage` | Routes unexpected QA discoveries — bugs, missing requirements, regressions — to the correct path | ✅ Built |
+| `process-change` | Consistent protocol for to-be map changes at any phase — capture trigger, three-tier impact scan, re-prioritize, confirm. Solo-invoked or auto-detected from build, QA, or phase test. | ✅ Built |
 | `phase-test` | Full-phase testing orchestrator — 7 specialist lenses, gate decision, required before deploy | ✅ Built |
 | `tdd` | Test-driven build (technique, invoked from solo-build) | ✅ Built |
 | `code-review-and-quality` | 7-check quality gate — auto-invoked by solo-build, chains to solo-qa on pass | ✅ Built |

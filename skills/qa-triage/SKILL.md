@@ -74,6 +74,7 @@ Where does this live and how far does it reach?
 | Larger gap — slice-level behavior | Create a new slice in the backlog. Current slice ships with an explicit scope note: *"[behavior] deferred to SL-[new ID]."* Solo sign-off proceeds with that scope boundary acknowledged. |
 | Multiple slices / a screen | Design review trigger. Pause QA on affected slices. Don't define slice-spanning requirements in a QA session — that's design review's job. |
 | Flow-level | Design review trigger. A flow-level missing requirement means the discovery brief or design sprint didn't surface something important. It needs a real conversation, not a quick fix. |
+| Map-level gap — the to-be map has no step covering this behavior at all | Invoke `process-change`. This is not a missing requirement within the agreed process — the process itself is incomplete. Process change runs before QA resumes on the affected slice. |
 
 **Regressions:**
 

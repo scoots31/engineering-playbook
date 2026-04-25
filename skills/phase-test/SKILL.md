@@ -242,6 +242,8 @@ Pass or fail. With specific evidence if it fails.
 
 It's asking: did we build the right thing, and does a person using it feel like we did?
 
+**Process-level mismatch:** If the acceptance reviewer determines that the delivered experience doesn't match the discovery intent at the *process* level — not a missing feature, not a design gap, but the agreed steps in the to-be map were wrong or incomplete — invoke `process-change` before the gate decision. The gate stays on HOLD until process-change completes.
+
 **Output:** Pass/fail per use case. Summary of whether Phase 1 achieves its intent. Specific gaps named if it doesn't.
 
 ---
