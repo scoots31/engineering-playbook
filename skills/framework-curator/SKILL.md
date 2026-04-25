@@ -40,6 +40,7 @@ These principles are what make the Solo Builder Framework what it is. Any propos
 7. **Stop on missing prerequisites** — skills stop rather than work around missing inputs (missing to-be map, missing anchors, missing tech-context).
 8. **One sentence of orientation, then start** — the framework never announces itself or explains phases to the solo.
 9. **Output Contract** — all user-facing output is governed by the Output Contract in `CLAUDE.md` (section: Solo Builder Framework — Output Contract). That file is authoritative. Any proposed change to output behavior must be made there first. The contract covers: voice, what never appears, naming conventions, input capture, response sizing, and transition formats.
+10. **Framework executes, solo responds** — no proposed change may ask the solo to open a file, fill something in, or run a command. The framework does it. If a proposal requires the solo to take any action beyond reviewing and approving, redesign it so the framework takes that action instead.
 
 If a proposed change violates one of these, the curator flags it explicitly and asks whether the principle is being changed intentionally.
 
@@ -79,6 +80,11 @@ Read only what the change requires.
 - Every skill that implements the pattern
 - The framework doc section that codifies it
 - Communications materials that articulate it
+
+**Always check Cursor — both locations:**
+- `templates/cursor-user-rules-global-playbook.md` — source template
+- `~/.cursor/rules/*.mdc` — installed Cursor rules on the machine
+Both must be updated in the same pass. Never update one without the other.
 
 **Check MemPalace for history:**
 - Search MemPalace for related decisions: `mempalace search "<relevant topic>"`
@@ -124,7 +130,26 @@ Principle check:
 - Stop on missing      — OK
 - One-sentence start   — OK
 - Output Contract      — OK (no user-facing output changes) / FLAG: output behavior changing — update CLAUDE.md first
+- Framework executes   — FLAG if any step asks the solo to open/fill/run. Redesign first.
 ```
+
+**Before finalizing the cascade — two required checks:**
+
+*Downstream check* — does this change have downstream effects on QA, Phase Test, or Deploy? If yes, those skills and their guide pages are in the cascade.
+
+*Framework-executes check* — scan the proposal for any moment where the solo is asked to open a file, fill something in, or run a command. If found, redesign that part so the framework does it instead.
+
+---
+
+### Step 3b — Two-Part Changes
+
+When a change is both conceptual (docs, language, principles) and behavioral (skill execution, routing, output), split it into two passes:
+
+**Part 1 — lock the language.** Update framework doc, comms docs, phase guides, blog. Get approval and execute. The solo sees and agrees to the concept before any skill changes.
+
+**Part 2 — wire the behavior.** Update SKILL.md files to match what was agreed in Part 1. Get approval and execute.
+
+**When to split:** if the change touches both what the framework says it does and how it actually does it, split it. Small corrections to a single skill can stay as one pass.
 
 ---
 
@@ -144,9 +169,9 @@ The solo's response is one of:
 On approval:
 1. Execute every file change from the cascade in order
 2. Commit with a clear message describing the framework change
-3. Show the diff summary
-4. Ask if the change should be pushed to origin
-5. On push: offer to update MemPalace with the decision context
+3. Push to GitHub — automatic, not a question
+4. Deploy to Cloudflare — automatic, same pass as the push
+5. Offer to update MemPalace with the decision context
 
 ---
 
@@ -177,8 +202,13 @@ When anything in the framework changes, these are the locations that may need to
 | `docs/communications/deck-business.html` | Slide 5 mapping, slide 7 phase flow, slide 9 diff-list |
 | `docs/communications/deck-solo.html` | Slide 4 phase flow, relevant phase slides |
 | `docs/communications/index.html` | Document descriptions if count/scope shifts |
-| `templates/cursor-user-rules-global-playbook.md` | Phase skills table, always-on list |
+| `templates/cursor-user-rules-global-playbook.md` | Phase skills table, always-on list, Output Contract |
+| `~/.cursor/rules/*.mdc` | Any behavior change — always updated in same pass as the template |
+| `~/.claude/CLAUDE.md` | Output Contract changes — always first, before any other file |
 | `CURSOR-SETUP-PROMPT.md` | Reading list if a new always-on skill is added |
+| `docs/communications/blog.html` | Significant framework changes — add a release notes entry |
+| `docs/communications/getting-started.html` | New solo-facing patterns, phrases, or entry points |
+| `docs/communications/guide-*.html` | Phase behavior changes — update the relevant phase guide |
 
 ---
 
@@ -202,6 +232,10 @@ When anything in the framework changes, these are the locations that may need to
 | Changing load-bearing principles silently | The framework's identity erodes one small change at a time | Flag principle changes explicitly; require acknowledgment |
 | Adding skills without category placement | New skill floats with no home in the phase flow | Every new skill gets a category assignment and appears in skills-reference sidebar nav |
 | Bypassing MemPalace on framework changes | Historical reasoning is lost, old debates get re-opened | Search MemPalace for related decisions before proposing |
+| Updating template without installed Cursor files | Cursor runs on the installed files, not the template — they drift silently | Always update both in the same pass |
+| Missing the downstream check | Changes to build or review behavior silently break QA, Phase Test, Deploy | Ask the downstream question before finalizing the cascade |
+| Two-part change executed as one | Concept and behavior land together before the solo agrees to the concept | Lock language first, wire behavior second |
+| Proposal asks the solo to open, fill, or run something | Violates "framework executes, solo responds" | Redesign the proposal so the framework takes that action |
 
 ---
 
