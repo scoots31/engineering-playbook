@@ -179,12 +179,12 @@
   .phase-arrow { color:var(--blue-light); font-size:16px; padding:0 4px; flex-shrink:0; }
 
   /* Always-on grid */
-  .always-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:820px; }
-  .always-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:22px; }
-  .always-card .ac-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-  .always-card .ac-name { font-size:16px; font-weight:700; color:var(--white); margin-bottom:10px; font-family:'SF Mono',monospace; }
-  .always-card .ac-desc { font-size:13px; color:var(--gray); line-height:1.55; }
-  .always-card .ac-activates { margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.07); font-size:11px; color:var(--gray); }
+  .always-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:820px; }
+  .always-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 16px; }
+  .always-card .ac-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; }
+  .always-card .ac-name { font-size:15px; font-weight:700; color:var(--white); margin-bottom:7px; font-family:'SF Mono',monospace; }
+  .always-card .ac-desc { font-size:12px; color:var(--gray); line-height:1.5; }
+  .always-card .ac-activates { margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.07); font-size:11px; color:var(--gray); }
   .always-card .ac-activates strong { color:var(--gray-light); }
 
   .pill-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
@@ -335,7 +335,7 @@
         <div class="ac-activates"><strong>Active across:</strong> Every phase — flags in moment, processes at phase end</div>
       </div>
     </div>
-    <div style="margin-top:24px;padding:18px 22px;border:1px solid rgba(217,70,239,0.3);border-radius:8px;background:rgba(217,70,239,0.06)">
+    <div style="margin-top:12px;padding:14px 18px;border:1px solid rgba(217,70,239,0.3);border-radius:8px;background:rgba(217,70,239,0.06)">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#E879F9;margin-bottom:6px">Companion — on-demand, not always-on</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.78);line-height:1.55"><strong style="color:#F0ABFC">nivya</strong> — conversational companion invoked by name with <code style="color:#F0ABFC;background:rgba(217,70,239,0.12);padding:1px 6px;border-radius:3px;font-size:12px">/nivya</code>. She's read the framework and the project's continuity and process artifacts. Answers questions — doesn't do work. Nothing gets captured from a Nivya conversation without explicit consent. For focused sit-downs, Nivya offers to huddle as a dedicated subagent.</div>
     </div>
@@ -347,7 +347,7 @@
       <div class="section-label sl-blue">Phase 2</div>
       <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-0.6px;margin-bottom:22px">The design artifact is the <em style="color:var(--blue-light)">visual contract</em></h2>
       <p style="font-size:15px;color:var(--gray);line-height:1.6;margin-bottom:20px">Before a line of code is written, the Design Sprint produces an HTML artifact — all screens, interactive, good enough to make real decisions from.</p>
-      <p style="font-size:15px;color:var(--gray);line-height:1.6">This artifact isn't a deliverable — it's a thinking tool that surfaces four categories of work that couldn't be seen before.</p>
+      <p style="font-size:15px;color:var(--gray);line-height:1.6">This artifact isn't a finished product — it's a thinking tool that surfaces four categories of work that couldn't be seen before.</p>
     </div>
     <div class="split-right bg-blue">
       <div class="accent-line accent-blue"></div>
@@ -377,7 +377,8 @@
   <div class="slide slide-dark" data-slide="7">
     <div class="section-label sl-teal">Phase 3 → Build</div>
     <h2 class="slide-h2">Not a user story. Not a feature. <em style="color:var(--teal-light)">A contract.</em></h2>
-    <p style="color:var(--gray);font-size:14px;line-height:1.6;max-width:740px;margin-bottom:24px">A user story describes what a user wants. A feature describes what the product does. Both are written for stakeholders — they live outside the build. A <strong style="color:var(--white)">deliverable</strong> is the agreed body of work between the solo and the framework. Defined before build starts. Accepted when it's complete. The framework reads and understands every field — it holds the full picture and surfaces the right thing at the right moment.</p>
+    <p style="color:var(--gray);font-size:14px;line-height:1.6;max-width:740px;margin-bottom:12px">A user story describes what a user wants. A feature describes what the product does. Both are written for stakeholders — they live outside the build. A <strong style="color:var(--white)">deliverable</strong> is the agreed body of work between the solo and the framework. Defined before build starts. Accepted when it's complete. The framework reads and understands every field — it holds the full picture and surfaces the right thing at the right moment.</p>
+    <p style="color:var(--gray);font-size:14px;line-height:1.6;max-width:740px;margin-bottom:24px">Each deliverable is made up of <strong style="color:var(--white)">slices</strong> — individual units of work built, reviewed, and marked Done one at a time. When all the slices in a deliverable are complete, the deliverable moves to acceptance.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;max-width:820px">
       <div style="background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2);border-radius:12px;padding:16px 18px">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal-light);margin-bottom:6px">Screen deliverable</div>
