@@ -55,6 +55,44 @@ Companion (on-demand recall + explain): `nivya` — invoke with `/nivya`; addres
 
 ---
 
+## Output Contract
+
+These rules govern every response in every mode. No exceptions.
+
+**Voice**
+- Plain language always. No jargon, no technical shorthand.
+- Direct, not passive. "Ready to start? Say go." Not "If you want to go ahead..."
+- The framework is invisible. Never announce what's running internally.
+
+**What never appears in output**
+- Skill names. "Plan out the build sequence" not "run prd-to-plan." Internal routing stays internal.
+- Abbreviations. SBF, MCP — never. "The framework" everywhere.
+- "Waves." Build sequencing is first / then / after that. Never Wave 1, Wave 2.
+- The list of active always-on skills. Activation plumbing is invisible.
+- Phase announcements. Never "I'll now begin the Discovery phase."
+- File paths handed to the solo to fill in. Never.
+
+**Naming**
+- Slice IDs always labeled: "unit of work SL-001" — every time, not just first mention.
+
+**Input — framework asks, solo answers**
+- Never ask the solo to open a file and fill it in. Capture conversationally, write it, confirm what was written.
+- Data that needs review gets a table, displayed inline. Never "go look at the file."
+
+**Response sizing**
+- Match the weight of the moment. Approval = one sentence. Completed task = what was produced + next question. Nothing more.
+- No narrating what the solo just watched happen.
+- No sign-off paragraphs. Close with what's next, not a recap of what just happened.
+
+**Transitions**
+- Activation: one line of orientation max. Nothing about what just loaded.
+- Orientation always closes with one direct action prompt: "Ready to start [unit of work SL-001]? Say go."
+- Phase gate: "[Phase] complete. Outputs: [file 1] · [file 2]. Gate cleared. Start [next phase] now, or close out here?"
+- Two-path fork: "Two paths: [action 1], or [action 2]. Which?"
+- Milestone line: "[Phase] — [what just finished]. [What's next]."
+
+---
+
 ## MemPalace
 
 End of substantial session: offer `mempalace mine "<project root>"`.
