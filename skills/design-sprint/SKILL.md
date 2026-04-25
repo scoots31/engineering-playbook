@@ -111,7 +111,18 @@ Do not skip this question. Skin direction saved two full rounds in testing.
 
 2. **Identify the hero.** From the confirmed frame list, identify which frame shows the moment of value. State: *"Hero screen is [frame name] — it's the moment of value because [one sentence]."*
 
-3. **Capture all layers per frame.** When converting any Figma frame to HTML, inspect every layer in that frame — including overlays, modals, drawers, tooltips, empty states, and error states. Each layer gets rendered as a distinct visible state in the HTML output. Do not produce only the base layer. If a layer's trigger is unclear, ask: *"[Layer name] — is this a modal, a hover state, or something else?"*
+3. **Extract exact design values.** Before producing any HTML, read the Figma node properties via MCP and extract:
+   - Colors — exact hex codes for all fills, borders, backgrounds
+   - Typography — font family, weight, size, line height, letter spacing for every text style in use
+   - Spacing — padding, margin, gap values
+   - Border radius, shadows, opacity values
+
+   State the extracted values before building:
+   > "Extracted from Figma: primary #1A2B3C · background #F5F5F5 · font: Inter 16px/400, 24px/600 · radius: 8px · gap: 16px. Building from these — not approximating."
+
+   Every CSS value in the HTML output must trace to an extracted Figma value. No approximation when the source data is available.
+
+4. **Capture all layers per frame.** When converting any Figma frame to HTML, inspect every layer in that frame — including overlays, modals, drawers, tooltips, empty states, and error states. Each layer gets rendered as a distinct visible state in the HTML output. Do not produce only the base layer. If a layer's trigger is unclear, ask: *"[Layer name] — is this a modal, a hover state, or something else?"*
 
 4. Skip Step 4 structure pass. Go to Step 5 (warmer/colder on story alignment, not layout).
 
@@ -317,7 +328,8 @@ The deferred decisions log feeds `prd-to-plan`. Phases are sequenced around what
 | Building all screens before hero is approved | Aesthetic drift, rework across all screens | Hero screen approved first, everything else inherits from it |
 | Skipping the walk-through | No build/defer decisions, planning inherits too much scope | Walk-through is mandatory — it's the gate, not a nice-to-have |
 | Treating the deferred log as optional | prd-to-plan phases get bloated with deferred scope | Every visible element gets a decision: Phase 1 or deferred |
-| Perfect fidelity on every screen | Slows the sprint, wrong level of investment | Good enough to point at and make decisions from — not pixel perfect |
+| Perfect fidelity on every screen (on-ramp 1) | Slows the sprint when building from scratch | Good enough to point at and make decisions from — not pixel perfect |
+| Approximating values when Figma MCP is available (on-ramp 2) | The AI has exact values from the source but guesses anyway — producing output that doesn't match the design | Extract exact values from Figma nodes first. Every CSS value traces to a Figma source value. No guessing when the data is right there. |
 | Translating Figma to code | Double work, Figma and HTML go out of sync | HTML artifact IS the first frontend output |
 | Wireframing from scratch when a Figma exists | Ignores the on-ramp decision, wastes the solo's existing design investment, produces a parallel artifact that conflicts with Figma | State the on-ramp back at Step 1.5. If on-ramp 2, import Figma via MCP — do not wireframe |
 | Enumerating only the hero frame on on-ramp 2 | Secondary screens get missed; solo has to ask for each one manually | Enumerate all Figma frames upfront in Step 3 and confirm the list before proceeding |
