@@ -1175,6 +1175,7 @@
         </div>
         <div class="gate-body">
           <p style="margin-bottom: 12px;">Every slice in the phase must reach Done status before the phase gate opens. Not most of them. Not the important ones. Every one. A slice is Done only when all three links in the QA chain have passed: code-review-and-quality confirmed, AI verified with evidence, solo confirmed in browser.</p>
+          <p>When all slices in a deliverable are Done, QA runs a deliverable-level acceptance check before moving on. This is a second, higher-level verification — not a repeat of slice QA. <strong>Screen deliverables</strong> get a visual pass: the full deliverable is viewed in the browser and verified against the deliverable acceptance criteria. <strong>Logic deliverables</strong> get an evidence pass: test results, data state, or a simulated flow through the affected screens confirm the logic is working as agreed. Deliverable acceptance is the contract being honored — the solo and the AI agreed on what would be delivered; this is the moment that agreement is verified.</p>
           <p>Once all slices are at Done, the phase is ready for Phase Test. Phase Test does not auto-trigger — <strong>the solo invokes it explicitly.</strong> It is a separate, full-phase testing pass run by a set of specialist lenses. QA passes individual slices; Phase Test assesses the whole phase as a coherent, shippable unit.</p>
         </div>
       </div>

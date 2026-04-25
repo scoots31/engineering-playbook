@@ -199,6 +199,18 @@ ENTRY POINT
    └── Mid-build discoveries surfaced immediately — never silently resolved
    └── Code-complete → status: In QA → hand to solo-qa
    └── Gate (per slice): four anchors confirmed + solo sign-off in browser
+   └── Deliverables — slices roll up into deliverables. A deliverable is the agreed body of work a set of slices collectively produce.
+       Two types:
+       · Screen — output is visible. Reviewed visually in the browser.
+       · Logic — output is invisible. Reviewed against evidence (test results, data state, simulated flow through affected screens).
+       Three fields per deliverable:
+       · Technical spec — what the skill reads. Implementation-level, written for the AI.
+       · Solo description — what the solo sees. Plain language, outcome-focused, written for the human.
+       · Acceptance criteria — shared contract. AI builds and self-verifies against it. Solo reviews against it. One set of criteria, agreed before build starts.
+   └── Two review levels: slice approval (unit of work complete) + deliverable acceptance (full body of work done and matching the contract)
+   └── Two views available at any time during build:
+       · "show progress" — active deliverable, all slices, current status, acceptance criteria
+       · "show plan" — all deliverables across the full build, delivered / in progress / backlog
 
 5. QA / ACCEPTANCE  ← BUILT
    └── Triggered automatically — solo-build invokes code-review-and-quality on code-complete
@@ -209,10 +221,14 @@ ENTRY POINT
    └── Unexpected discovery → qa-triage: classifies (bug / missing req / regression), scopes, routes, logs
    └── Done = code review logged + AI verified with evidence + solo confirmed in browser
    └── No solo sign-off while an open missing requirement exists — define or defer it first
+   └── Deliverable acceptance — when all slices in a deliverable are Done, solo-qa runs a deliverable-level check:
+       Screen deliverable: visual pass against acceptance criteria in browser
+       Logic deliverable: evidence pass — test results, data state, or simulated flow through affected screens
    └── Gate: all phase slices at ✓ Done status
 
 5.5 PHASE TEST  ← BUILT (/phase-test)
    └── Solo invokes explicitly when all phase slices are Done — deliberate decision, not automatic
+   └── Deliverable-structured pass — walks each deliverable in the phase, confirms deliverable acceptance was completed, then verifies all deliverables hold together in integration
    └── Stage 1: Environment readiness — pre-flight gate, nothing runs until this passes
    └── Stage 2: Use case creator — derives test plan from discovery brief + design + backlog
    └── Stage 3: Data specialist — mock→real swap confirmed, API/DB read/write verified

@@ -1124,6 +1124,8 @@
               <li>Infrastructure slices always sequenced first, regardless of process order</li>
               <li>Each phase shows: slices, process steps completed, what it proves, dependencies, definition of done</li>
               <li>On approval: updates backlog with process anchors for every slice</li>
+              <li>Groups slices into <strong>Deliverables</strong> — each deliverable carries a technical spec (AI-facing), solo description (solo-facing), and acceptance criteria (shared contract between both)</li>
+              <li>Deliverable type assigned: <strong>Screen</strong> (reviewed visually) or <strong>Logic</strong> (reviewed against evidence)</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1467,6 +1469,7 @@
               <li>Design fidelity check against sprint HTML</li>
               <li>Part 2: structured prompt listing exact done criteria for solo browser verification</li>
               <li>Unexpected findings → <strong>qa-triage</strong> (classify before fixing)</li>
+              <li><strong>Deliverable acceptance</strong> — when all slices in a deliverable are Done, runs a deliverable-level check: screen deliverables get a visual pass; logic deliverables get an evidence pass (test results, data state, or simulated flow through affected screens)</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1553,6 +1556,7 @@
               <li><strong>Stage 4+5:</strong> Tester + Regression specialist — every scenario with named evidence, all Done slices re-walked</li>
               <li><strong>Stage 6:</strong> Acceptance reviewer — PM lens, does what was built match discovery brief intent?</li>
               <li><strong>Stage 7:</strong> Gate — OPEN (deploy) or HOLD (specific items). HOLD: re-test affected scenarios only.</li>
+              <li><strong>Deliverable-structured pass</strong> — walks each deliverable in the phase, confirms deliverable acceptance completed, then verifies all deliverables hold together in integration</li>
             </ul>
           </div>
           <div class="skill-section">
