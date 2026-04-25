@@ -98,6 +98,13 @@ Format rules:
 - List the specific files produced — not categories, actual filenames
 - One question, two options, nothing else
 
+**When there's a genuine two-path fork** (e.g. design review complete → either prd-to-plan or solo-build depending on state), name both paths explicitly in one sentence each, then ask which:
+
+> "**Design review complete.** Outputs: backlog.md. Gate cleared.
+> Two paths: run prd-to-plan to sequence slices into issues, or start solo-build directly on SL-001. Which?"
+
+Same discipline — no suggestions, no hedging, no filler. One sentence per option, one question.
+
 ---
 
 ### During the Session — Session Hygiene Reminder
@@ -211,3 +218,5 @@ No output when everything is running correctly. The absence of health monitor ou
 | Repeating a deferred issue mid-session | Interrupts flow | Log it to handoff, check again at session end |
 | Output when everything is healthy | Creates noise, trains the solo to ignore it | Silent when healthy — output is always meaningful |
 | Checking for framework updates mid-session | Interrupts flow for something that should be resolved at session start | Version check runs once at mode activation only — never mid-session |
+| "Suggested next move for you" language | Hedging, passive, invites ambiguity — the solo has to ask what to do next | Name the phase complete, list outputs, ask a direct question with named options |
+| Offering two paths without naming them clearly | Solo doesn't know what each path actually does | Name each option in one sentence, then ask which — never describe options in a run-on clause |
