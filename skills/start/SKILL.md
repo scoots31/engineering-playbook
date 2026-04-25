@@ -31,6 +31,18 @@ If context already exists — read it, orient to where the project is, and conti
 
 ---
 
+## Named Project Resume
+
+If the opening message contains "auto pilot on [name]", "/auto-pilot [name]", "resume [name]", or "pick up [name]":
+
+1. Read `[PLAYBOOK_ROOT]/projects.md` — find the row matching the name (case-insensitive)
+2. If found: read `[path]/docs/continuity/handoff.md` — orient in one sentence, close with direct action prompt. Do not run routing logic.
+3. If not found: stop. "I don't have [name] in the projects registry. What's the path to that project?" — add the entry, then resume.
+
+> "Picking up [project] — [one sentence on current state from handoff]. Ready to start [unit of work X]? Say go."
+
+---
+
 ## Step 1: Check for Existing Context
 
 Before reading what the person brought in, scan for project context:

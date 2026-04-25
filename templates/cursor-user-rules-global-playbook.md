@@ -23,6 +23,7 @@ Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, repl
 Default is **bare** — no routing, no always-on. Skills load only when invoked.
 
 - "auto-pilot mode" → read `[PLAYBOOK_ROOT]/skills/start/SKILL.md`. Full phase chain. Always-on fires.
+- "auto-pilot on [name]" or "/auto-pilot [name]" → read `[PLAYBOOK_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
 - "assisted mode" → read always-on skills once, then wait for user to invoke phases.
 - "bare mode" → return to default. Silent until invoked.
 

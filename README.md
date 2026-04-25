@@ -186,6 +186,7 @@ docs/
   continuity/            Session memory, decisions, handoffs (created per project)
   design/                Design sprint HTML artifacts (created per project)
   engineering/           Supporting docs — playbook, handoff template, integration guides
+projects.md                               Registry of project names → paths (named resume)
 templates/
   cursor-user-rules-global-playbook.md   Paste into Cursor User Rules (replace [PLAYBOOK_ROOT])
 ```

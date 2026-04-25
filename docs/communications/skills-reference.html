@@ -614,6 +614,8 @@
             <ul>
               <li><strong>Cursor:</strong> "auto-pilot mode"</li>
               <li><strong>Claude Code:</strong> <code>/auto-pilot</code></li>
+              <li><strong>Named resume — Cursor:</strong> "auto pilot on [project name]"</li>
+              <li><strong>Named resume — Claude Code:</strong> <code>/auto-pilot [project name]</code></li>
             </ul>
           </div>
           <div class="skill-section">
@@ -640,7 +642,8 @@
           <li><strong>Mode footprint:</strong> auto-pilot (full chain — highest cost) · assisted (always-on only — moderate) · bare (nothing — zero). Switch mid-project as the work changes.</li>
           <li><strong>Session length:</strong> Phase gates are natural session reset points. The gate output is what the next phase reads — not conversation history. One phase = one session as a rule of thumb.</li>
           <li><strong>Model:</strong> Heavy thinking (design, architecture, discovery) → strongest model. Execution (build, bug-fix, QA) → faster, lighter model. Same guidance applies in Cursor and Claude Code.</li>
-          <li><strong>Closing:</strong> Say <em>"let's close out"</em> — <code>product-continuity</code> captures state and generates a resume prompt to copy for next session.</li>
+          <li><strong>Closing:</strong> Say <em>"let's close out"</em> — continuity tracking captures state and updates the handoff for next session.</li>
+              <li><strong>Resuming by name:</strong> Register projects in <code>projects.md</code> (playbook root). Then "auto pilot on [name]" picks up exactly where you left off — no saved prompt needed.</li>
           <li><strong>The reminder:</strong> Once per session, at a natural pause or gate, <code>framework-health</code> will surface a clean close point. That's your signal — wrap up if you're done for the day.</li>
         </ul>
       </div>
