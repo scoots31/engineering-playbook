@@ -54,15 +54,15 @@ Before classifying into Shape A/B/C, check for **existing-project shape** — wo
 
 **Existing-project shape signals:**
 - "I have prior work on [project]", "I've been working on [project] outside the framework"
-- "I want to bring [project] into SBF / the framework"
+- "I want to bring [project] into the framework"
 - "I want to pick up [project] and start using the framework"
-- A file path is mentioned with no SBF context found in that directory
+- A file path is mentioned with no framework context found in that directory
 
 If the opening is existing-project shaped, route to `onboard`. Do not run Shape A/B/C routing.
 
 ---
 
-Before classifying into Shape A/B/C, also check for **spike-shape** — work that belongs in the Workshop companion framework, not SBF.
+Before classifying into Shape A/B/C, also check for **spike-shape** — work that belongs in the Workshop companion framework, not the main build flow.
 
 **Spike-shape signals:**
 - "Let me try...", "quick script to...", "see if I can...", "one-shot to...", "I'm curious about..."
@@ -136,7 +136,7 @@ One sentence. Warm. Then just start. The framework is invisible.
 ```
 New conversation opens
 │
-├── Existing SBF context found → orient and continue, don't restart
+├── Existing framework context found → orient and continue, don't restart
 ├── Resume prompt found + handoff.md exists → orient from handoff, skip routing
 │
 └── No existing context

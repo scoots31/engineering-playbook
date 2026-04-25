@@ -101,7 +101,7 @@ Format rules:
 **When there's a genuine two-path fork** (e.g. design review complete → either prd-to-plan or solo-build depending on state), name both paths explicitly in one sentence each, then ask which:
 
 > "**Design review complete.** Outputs: backlog.md. Gate cleared.
-> Two paths: run prd-to-plan to sequence slices into issues, or start solo-build directly on SL-001. Which?"
+> Two paths: plan out the build sequence from the backlog, or start building SL-001 directly. Which?"
 
 Same discipline — no suggestions, no hedging, no filler. One sentence per option, one question.
 
@@ -163,7 +163,7 @@ Expected outputs present before the next phase runs. Checks by file existence �
 **Skill chain integrity**
 The automatic chain (solo-build → code-review-and-quality → solo-qa) should complete without gaps. The signal is the code review confirmation logged in the backlog slice detail. If a slice is In QA without that confirmation logged, surface it.
 
-> "SL-007 is showing In QA but there's no code review confirmation in the slice record. Code-review-and-quality may not have run. Should we run it now before solo-qa proceeds?"
+> "SL-007 is showing In QA but there's no code review confirmation in the slice record. Code review may not have run. Should we run it now before your sign-off?"
 
 **Backlog currency**
 Slice statuses should reflect actual state. If the At a Glance counts look inconsistent with what's been described as happening, flag it. Don't read every slice — read the header counts only.

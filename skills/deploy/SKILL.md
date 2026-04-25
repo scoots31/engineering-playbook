@@ -48,7 +48,7 @@ Before anything else, read `docs/tech-context.md`. Extract:
 
 If any of these are not defined in tech-context, stop. Ask the solo to add the missing deploy configuration to `docs/tech-context.md` before proceeding.
 
-> "The deploy target isn't defined in docs/tech-context.md. Before we can deploy, we need to know: where does this live, and how is it deployed? Add this to the Deployment section of tech-context and we'll continue."
+> "The deploy target isn't defined yet. Before we can deploy, we need to know: where does this live, and how is it deployed? Add this to the Deployment section of the tech setup doc and we'll continue."
 
 ---
 
@@ -62,7 +62,7 @@ Confirm:
 - Phase test report referenced in the record exists
 
 If the gate is not OPEN: stop.
-> "Phase [N] gate is not open. Phase test must pass before deploy. Run /phase-test to complete testing."
+> "Phase [N] gate is not open. Phase testing must pass before deploying. Should we run that now?"
 
 If the phase completion record doesn't exist: stop.
 > "No phase completion record found for Phase [N]. Phase test must complete successfully before deploy."

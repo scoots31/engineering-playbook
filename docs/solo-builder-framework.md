@@ -256,6 +256,8 @@ ENTRY POINT
 - Two entry points — the system routes to brainstorm or discover based on clarity of the idea
 - Framework writes, solo responds — the framework never asks the solo to open a file and fill it in. All human input is captured conversationally — the AI asks, the solo answers, the AI writes the file. The only exception is external stakeholders (people outside the conversation) who receive a fillable template because they cannot be interviewed directly.
 - Output discipline — responses match the weight of the moment. Acknowledgments one sentence. Confirmations: what was produced + next question. No narrating what the solo just saw happen. No paragraph-length sign-offs after approvals.
+- Skill names are never user-facing — the action is surfaced in plain language, never the skill name. Quote blocks and prompts shown to the solo must never contain a skill name.
+- No abbreviations in user-facing output — SBF, MCP, and any code-identifier-style term never appear in output shown to the solo. "The framework" replaces "SBF" in all user-facing context.
 
 ---
 

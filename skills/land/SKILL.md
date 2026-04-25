@@ -1,6 +1,6 @@
 ---
 name: land
-description: The Workshop exit skill. Three outcomes — Toss (capture learning, archive), Keep (personal tool with minimal hygiene), Promote (hand to SBF with a prepared brief).
+description: The Workshop exit skill. Three outcomes — Toss (capture learning, archive), Keep (personal tool with minimal hygiene), Promote (hand to the framework with a prepared brief).
 ---
 
 # Workshop — Land
@@ -54,8 +54,8 @@ Actions:
    - What's in the code today vs what's not
    - What the graduation triggers revealed about scope
    - Known hacks and shortcuts that must not survive promotion
-3. Hand to SBF `start` with the brief as the opening context
-4. From here, the Solo Builder Framework runs. Discover, design sprint, the full chain.
+3. Start the framework with the brief as the opening context
+4. From here, the full framework runs. Discover, design sprint, the full chain.
 
 ---
 
@@ -88,5 +88,4 @@ ends up full of spike hacks.
 Both Toss and Keep write to MemPalace. This is where Workshop compounds over time —
 the library of learnings and personal tools becomes the solo's actual knowledge base.
 
-Promote does not write to MemPalace directly — SBF's product-continuity takes over
-from there.
+Promote does not write to MemPalace directly — the framework's continuity tracking takes over from there.

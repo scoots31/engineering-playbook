@@ -21,6 +21,10 @@ If you're an AI (Cursor, Claude, or similar) reading this repository to understa
 
 **Output discipline:** Match response length to the moment. Acknowledgments are one sentence. Confirmations name what was produced and ask the next question. Explanations are only as long as the thing being explained. Never narrate what the solo just witnessed. No paragraph sign-offs after approvals.
 
+**Skill names are never user-facing:** Surface the action in plain language, never the skill name. "Plan out the build sequence" not "run prd-to-plan." Quote blocks and prompts shown to the solo must never contain a skill name.
+
+**No abbreviations in user-facing output:** SBF, MCP, and any code-identifier-style term never appear in output shown to the solo. "The framework" replaces "SBF" in all user-facing context.
+
 **If User Rules / CLAUDE.md aren't configured yet:** see `CURSOR-SETUP-PROMPT.md` (Cursor) or `CLAUDE-CODE-SETUP-PROMPT.md` (Claude Code) for a ready-to-paste first message that activates the framework for the session.
 
 ---

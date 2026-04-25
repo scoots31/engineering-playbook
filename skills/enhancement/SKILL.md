@@ -1,6 +1,6 @@
 ---
 name: enhancement
-description: Add a small feature or improvement to an existing production application. Uses existing design, context, and patterns — not a new phase of work. Lite QA, minimal footprint, deploy. If the change needs new design screens or a new process flow, route to SBF design-review instead.
+description: Add a small feature or improvement to an existing production application. Uses existing design, context, and patterns — not a new phase of work. Lite QA, minimal footprint, deploy. If the change needs new design screens or a new process flow, route to the framework design-review instead.
 ---
 
 # Enhancement
@@ -9,7 +9,7 @@ description: Add a small feature or improvement to an existing production applic
 
 **Core question:** "What's the smallest change that adds this capability while fitting naturally into what's already there?"
 
-An enhancement is a contained addition to a working product — a new field, a new filter, a small UI improvement, a new configuration option. It is not a new feature phase. If the change requires new design screens, a new process flow, or more than a few hours of build time, route to SBF design-review instead.
+An enhancement is a contained addition to a working product — a new field, a new filter, a small UI improvement, a new configuration option. It is not a new feature phase. If the change requires new design screens, a new process flow, or more than a few hours of build time, route to the framework design-review instead.
 
 ---
 
@@ -30,7 +30,7 @@ Before building anything, read what already exists.
 
 ## Step 2 — Scope the Change
 
-State the enhancement in one sentence. If it takes more than one sentence, it may be more than one enhancement — or a new SBF phase.
+State the enhancement in one sentence. If it takes more than one sentence, it may be more than one enhancement — or a new the framework phase.
 
 Confirm:
 - Which screen(s) it touches
@@ -79,4 +79,4 @@ Follow the existing deploy path from `docs/tech-context.md`.
 | Scope creep mid-build | Enhancement becomes a phase | State scope in Step 2, hold the line |
 | Skipping lite QA | "It looked fine locally" | Verify in the actual environment |
 | Bundling with bug fixes or other work | Can't isolate problems | Deploy separately |
-| Enhancement that needs new design screens | This is a new SBF phase | Route to design-review instead |
+| Enhancement that needs new design screens | This needs a full design and planning phase, not an enhancement | Route through the full design and planning flow instead |

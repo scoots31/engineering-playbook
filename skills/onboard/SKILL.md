@@ -1,26 +1,26 @@
 ---
 name: onboard
-description: Brings an existing project into the Solo Builder Framework. Reads the project directory, semantically matches content to SBF gate artifacts, synthesizes matched content into framework-format files with solo confirmation, surfaces gaps as targeted discussion prompts, and loops until the project is fully represented in SBF docs and placed at the correct starting phase.
+description: Brings an existing project into the Solo Builder Framework. Reads the project directory, semantically matches content to the framework gate artifacts, synthesizes matched content into framework-format files with solo confirmation, surfaces gaps as targeted discussion prompts, and loops until the project is fully represented in the framework docs and placed at the correct starting phase.
 ---
 
 # Onboard
 
 *The framework meets you where you are.*
 
-**Core question:** "What has already been decided and built — and what's the right SBF starting point from here?"
+**Core question:** "What has already been decided and built — and what's the right the framework starting point from here?"
 
-Onboard is for projects that started outside the SBF. Discovery was done in conversation. Planning happened in notes. Architecture decisions live in a README. The work is real — it just isn't in framework format. Onboard translates it without redoing it.
+Onboard is for projects that started outside the the framework. Discovery was done in conversation. Planning happened in notes. Architecture decisions live in a README. The work is real — it just isn't in framework format. Onboard translates it without redoing it.
 
 ---
 
 ## When to Run
 
 Invoked when:
-- The solo has prior work on a project and wants to bring it into the SBF
+- The solo has prior work on a project and wants to bring it into the the framework
 - Opening message signals existing work: "I have prior work on [project]", "I want to
-  pick up [project] using the framework", "I've been working on [project] outside SBF"
+  pick up [project] using the framework", "I've been working on [project] outside the framework"
 
-`start` routes here when the opening message signals existing work with no SBF context
+`start` routes here when the opening message signals existing work with no the framework context
 found. Also invokable directly via `/onboard`.
 
 **Does not fire for new projects** — those go through `start` → `brainstorm` or `discover`.
@@ -57,13 +57,13 @@ For each file read: note filename, rough content type, key topics covered.
 
 ---
 
-## Step 3 — Map to SBF Gate Artifacts
+## Step 3 — Map to the framework Gate Artifacts
 
-For each SBF gate file, search the inventory for matching content. Matching is
+For each the framework gate file, search the inventory for matching content. Matching is
 semantic — content in `ff-eval-notes.md` may be a discovery brief; a `stack.md` may
 be tech context. Name doesn't matter. Content does.
 
-| SBF Gate File | Look for |
+| the framework Gate File | Look for |
 |---|---|
 | `docs/discovery-brief.md` | Use cases, user stories, problem statement, who uses it and why |
 | `docs/process/as-is-*.md` | Current (manual/existing) process description |
@@ -93,7 +93,7 @@ Solo responses:
 - **Edit** → adjust and write
 - **Reject** → treat as gap, move on
 
-One mapping at a time. Never write a SBF file without confirmation.
+One mapping at a time. Never write a the framework file without confirmation.
 
 ---
 
@@ -115,7 +115,7 @@ Process maps:
   - Walk me through the target flow — what does the user do, step by step?
 ```
 
-Work through gaps in conversation. As each is answered, synthesize into the SBF file
+Work through gaps in conversation. As each is answered, synthesize into the the framework file
 and confirm before writing.
 
 ---
@@ -157,9 +157,9 @@ the first session.
 > **Created:** discovery-brief.md · tech-context.md · backlog.md (12 slices)
 > **Starting phase:** Design Review — backlog needs a round of review before slices
 > reach Ready
-> **First move:** run /design-review to refine slices and get to Ready
+> **First move:** review the designs and refine slices until they're ready to build
 >
-> Continuity docs initialized. framework-health will run clean from here."
+> Continuity docs initialized. The framework will run clean from here."
 
 One clear statement. Then stop.
 
@@ -180,10 +180,10 @@ The loop does not block indefinitely.
 
 | Anti-Pattern | Problem | Instead |
 |---|---|---|
-| Writing SBF files without confirmation | Solo loses trust in what was produced | Show preview, confirm, then write |
+| Writing the framework files without confirmation | Solo loses trust in what was produced | Show preview, confirm, then write |
 | Literal filename matching | Misses content in non-standard file names | Read content, match semantically |
 | Reading all code files | Token-expensive, low signal | Docs and notes first; code only if no docs exist |
 | Treating every gap as a blocker | Onboard never completes | Classify: undocumented (ask) vs. not done yet (starting phase) |
 | Presenting all mappings at once | Overwhelming, hard to verify | One mapping at a time, confirm each |
-| Redoing phases that are done | Wastes existing work | Translate into SBF format, don't redo |
+| Redoing phases that are done | Wastes existing work | Translate into the framework format, don't redo |
 | Skipping continuity initialization | First real session starts blind | Always write current-phase.md and handoff.md before exiting |

@@ -80,8 +80,7 @@ When a graduation trigger fires, stop spiking. Run `land` with Promote intent.
 - Does not produce a design artifact (no UI to design, or the UI is the code)
 - Does not map a process (there isn't one yet)
 - Does not set up CI, tests, deploy, or any other infrastructure
-- Does not invoke SBF's always-on skills — process-mapper, product-continuity,
-  framework-health, retrospective are sized for bigger work
+- Does not invoke the framework's always-on tracking and mapping — those are sized for bigger work
 
 ---
 

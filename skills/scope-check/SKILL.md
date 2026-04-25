@@ -1,6 +1,6 @@
 ---
 name: scope-check
-description: Entry gate for Workshop. Asks one question — who is this for and how long does it live? — then routes to Workshop (spike/tool) or hands to SBF (product).
+description: Entry gate for Workshop. Asks one question — who is this for and how long does it live? — then routes to Workshop (spike/tool) or hands to the framework (product).
 ---
 
 # Workshop — Scope Check
@@ -18,7 +18,7 @@ opens with "I want to try...", "quick script to...", "let me see if...", "I'm
 curious about...", "one-shot to...", route here first.
 
 If the opening is clearly a product — "I want to build an app that other people
-will use" — skip Workshop entirely and go to SBF `start`.
+will use" — skip Workshop entirely and go to the framework `start`.
 
 ---
 
@@ -32,7 +32,7 @@ The answer routes:
 |---|---|---|
 | "Me, right now. Hours to days." | **Spike** | `spike` skill with a timebox |
 | "Me, ongoing. Personal utility." | **Tool** | `spike` skill framed as Keep-intent |
-| "Other people, indefinitely." | **Product** | Hand to SBF `start` |
+| "Other people, indefinitely." | **Product** | Hand to the framework `start` |
 
 If the solo is uncertain, ask one clarifying question. Don't proceed on ambiguity.
 
@@ -73,7 +73,7 @@ Hand off to `spike`.
 
 ## What scope-check does not do
 
-- Does not route everything to SBF. If it routes everything to SBF, the companion
+- Does not route everything to the framework. If it routes everything to the framework, the companion
   framework doesn't exist.
 - Does not let the solo pick Workshop to avoid ceremony when the work is actually
   a product. Hold the line.
