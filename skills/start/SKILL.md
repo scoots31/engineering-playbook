@@ -33,7 +33,7 @@ If context already exists — read it, orient to where the project is, and conti
 
 ## Named Project Resume
 
-If the opening message contains "auto pilot on [name]", "/auto-pilot [name]", "resume [name]", or "pick up [name]":
+If the opening message contains "guided on [name]", "/guided [name]", "resume [name]", or "pick up [name]":
 
 1. Read `[PLAYBOOK_ROOT]/projects.md` — find the row matching the name (case-insensitive)
 2. If found: read `[path]/docs/continuity/handoff.md` — orient in one sentence, close with direct action prompt. Do not run routing logic.

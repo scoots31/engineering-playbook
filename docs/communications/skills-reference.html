@@ -419,8 +419,8 @@
   <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(148,163,184,0.6)">Session Modes</span>
     <a href="#mode-bare" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>bare</a>
-    <a href="#mode-assisted" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>assisted</a>
-    <a href="#mode-auto-pilot" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>auto-pilot</a>
+    <a href="#mode-piloted" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>piloted</a>
+    <a href="#mode-guided" class="nav-skill" style="color:rgba(148,163,184,0.7)"><span class="nav-dot" style="background:#475569"></span>guided</a>
   </div>
 
   <div class="nav-group">
@@ -516,7 +516,7 @@
   <div class="page-header">
     <div class="ph-eyebrow">Solo Builder Framework</div>
     <h1>Skills Reference</h1>
-    <p>Every skill in the framework — what it does, how it works, what triggers it, and what it produces. Skills are organized by phase. Always-on skills activate when the user chooses auto-pilot or assisted mode — silent in bare mode (the default).</p>
+    <p>Every skill in the framework — what it does, how it works, what triggers it, and what it produces. Skills are organized by phase. Always-on skills activate when the user chooses guided or piloted mode — silent in bare mode (the default).</p>
     <div class="header-stats">
       <div class="header-stat"><div class="hs-num">36</div><div class="hs-label">Skills</div></div>
       <div class="header-stat"><div class="hs-num">4</div><div class="hs-label">Always-on</div></div>
@@ -534,7 +534,7 @@
         <div class="category-icon">⚙️</div>
         <div>
           <div class="category-title">Session Modes</div>
-          <div class="category-desc">Controls how much the framework activates at the start of a session. Bare is the default — the framework is silent until you invoke a skill. Token cost scales with activation: auto-pilot (highest) · assisted (moderate) · bare (lowest). Switch modes verbally in Cursor or with slash commands in Claude Code.</div>
+          <div class="category-desc">Controls how much the framework activates at the start of a session. Bare is the default — the framework is silent until you invoke a skill. Token cost scales with activation: guided (highest) · piloted (moderate) · bare (lowest). Switch modes verbally in Cursor or with slash commands in Claude Code.</div>
         </div>
         <div class="skill-count">3 modes</div>
       </div>
@@ -571,9 +571,9 @@
         </div>
       </div>
 
-      <div class="skill-card" id="mode-assisted">
+      <div class="skill-card" id="mode-piloted">
         <div class="skill-card-header">
-          <div class="skill-name">assisted</div>
+          <div class="skill-name">piloted</div>
           <div class="skill-badge">Flexible</div>
         </div>
         <div class="skill-description">Always-on skills activate once and persist for the session. Phase skills are invoked manually — you choose what to run and when. The framework is present but you're driving.</div>
@@ -581,7 +581,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Invoke</div>
             <ul>
-              <li><strong>Cursor:</strong> "assisted mode"</li>
+              <li><strong>Cursor:</strong> "piloted mode"</li>
               <li><strong>Claude Code:</strong> <code>/assisted</code></li>
             </ul>
           </div>
@@ -602,9 +602,9 @@
         </div>
       </div>
 
-      <div class="skill-card" id="mode-auto-pilot">
+      <div class="skill-card" id="mode-guided">
         <div class="skill-card-header">
-          <div class="skill-name">auto-pilot</div>
+          <div class="skill-name">guided</div>
           <div class="skill-badge">Full chain</div>
         </div>
         <div class="skill-description">Full framework engagement. The start skill reads your opening message and routes automatically. Always-on skills load and persist. The phase chain drives the session — gates, anchors, QA chain, all of it.</div>
@@ -612,10 +612,10 @@
           <div class="skill-section">
             <div class="skill-section-label">Invoke</div>
             <ul>
-              <li><strong>Cursor:</strong> "auto-pilot mode"</li>
-              <li><strong>Claude Code:</strong> <code>/auto-pilot</code></li>
+              <li><strong>Cursor:</strong> "guided mode"</li>
+              <li><strong>Claude Code:</strong> <code>/guided</code></li>
               <li><strong>Named resume — Cursor:</strong> "auto pilot on [project name]"</li>
-              <li><strong>Named resume — Claude Code:</strong> <code>/auto-pilot [project name]</code></li>
+              <li><strong>Named resume — Claude Code:</strong> <code>/guided [project name]</code></li>
             </ul>
           </div>
           <div class="skill-section">
@@ -639,7 +639,7 @@
         <div class="skill-section-label" style="margin-bottom:0.6rem">Session Hygiene</div>
         <p style="margin:0 0 0.75rem; color:rgba(237,232,224,0.75); font-size:0.85rem; line-height:1.6">Mode is a performance decision, not just a philosophy one. Match mode and model to the work — and end sessions at gates, not mid-phase.</p>
         <ul style="margin:0; padding-left:1.25rem; color:rgba(237,232,224,0.75); font-size:0.85rem; line-height:1.9">
-          <li><strong>Mode footprint:</strong> auto-pilot (full chain — highest cost) · assisted (always-on only — moderate) · bare (nothing — zero). Switch mid-project as the work changes.</li>
+          <li><strong>Mode footprint:</strong> guided (full chain — highest cost) · piloted (always-on only — moderate) · bare (nothing — zero). Switch mid-project as the work changes.</li>
           <li><strong>Session length:</strong> Phase gates are natural session reset points. The gate output is what the next phase reads — not conversation history. One phase = one session as a rule of thumb.</li>
           <li><strong>Model:</strong> Heavy thinking (design, architecture, discovery) → strongest model. Execution (build, bug-fix, QA) → faster, lighter model. Same guidance applies in Cursor and Claude Code.</li>
           <li><strong>Closing:</strong> Say <em>"let's close out"</em> — continuity tracking captures state and updates the handoff for next session.</li>
@@ -1624,7 +1624,7 @@
         <div class="category-icon">⚡</div>
         <div>
           <div class="category-title">Always-On Skills</div>
-          <div class="category-desc">Activate on auto-pilot or assisted mode. One load per session — do not reload on each skill invocation. Silent in bare mode (the default).</div>
+          <div class="category-desc">Activate on guided or piloted mode. One load per session — do not reload on each skill invocation. Silent in bare mode (the default).</div>
         </div>
         <div class="skill-count">4 skills</div>
       </div>
@@ -1734,7 +1734,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Active Across</div>
             <ul>
-              <li><strong>Mode activation</strong> — checks for existing context, handoff, framework documents when auto-pilot or assisted mode activates</li>
+              <li><strong>Mode activation</strong> — checks for existing context, handoff, framework documents when guided or piloted mode activates</li>
               <li><strong>Between phases</strong> — checks that phase prerequisites exist</li>
               <li><strong>Session end</strong> — ensures handoff is current</li>
             </ul>

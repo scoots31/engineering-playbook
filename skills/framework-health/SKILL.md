@@ -1,6 +1,6 @@
 ---
 name: framework-health
-description: Background health monitor for the Solo Builder Framework. Always-on in auto-pilot and assisted mode — silent in bare mode (the default). Never sits in the critical path. Activates at mode selection, between phases, and session end. Checks signals — file existence and the handoff + backlog At a Glance section — not full document reads. Only goes deeper when a signal is wrong. Surfaces one issue at a time with a specific recovery path. Never blocks progress.
+description: Background health monitor for the Solo Builder Framework. Always-on in guided and piloted mode — silent in bare mode (the default). Never sits in the critical path. Activates at mode selection, between phases, and session end. Checks signals — file existence and the handoff + backlog At a Glance section — not full document reads. Only goes deeper when a signal is wrong. Surfaces one issue at a time with a specific recovery path. Never blocks progress.
 ---
 
 # Framework Health
@@ -44,7 +44,7 @@ A missing file is a signal. Read it only if the signal needs clarification.
 
 ### Mode Activation (replaces session start)
 
-When auto-pilot or assisted mode activates, run these checks in order:
+When guided or piloted mode activates, run these checks in order:
 
 **1. Framework version check — runs first, before reading any project documents.**
 

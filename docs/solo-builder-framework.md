@@ -120,7 +120,7 @@ This works because most people can't describe what they want visually until they
 
 ## Always-On Skills
 
-These four skills activate when the user chooses **auto-pilot** or **assisted** mode. In bare mode (the default), they do not load. Once activated, they persist for the session — they do not reload on each skill invocation.
+These four skills activate when the user chooses **guided** or **assisted** mode. In bare mode (the default), they do not load. Once activated, they persist for the session — they do not reload on each skill invocation.
 
 | Skill | Active across | Function |
 |-------|--------------|----------|
@@ -361,13 +361,13 @@ Every phase transition has a gate — the output that enables the next phase. Th
 
 ## Session Hygiene
 
-Context fills over time. Long sessions with auto-pilot or assisted mode active accumulate context from always-on skills, phase work, and conversation history. Three levers manage this — match each one to the work at hand.
+Context fills over time. Long sessions with guided or piloted mode active accumulate context from always-on skills, phase work, and conversation history. Three levers manage this — match each one to the work at hand.
 
 ### Three levers
 
 **Mode — match to guidance needed**
-- `auto-pilot` — full framework chain + always-on. Highest context cost. Right for new projects and unfamiliar territory.
-- `assisted` — always-on loads once, phase skills on demand. Moderate cost. Right for builders who know the framework and want continuity without the full chain.
+- `guided` — full framework chain + always-on. Highest context cost. Right for new projects and unfamiliar territory.
+- `piloted` — always-on loads once, phase skills on demand. Moderate cost. Right for builders who know the framework and want continuity without the full chain.
 - `bare` — nothing loads until invoked. Zero overhead. Right for focused execution, single-skill sessions, or when you know exactly what you need.
 
 Mode can be switched mid-project. If a session starts on a familiar phase, drop to assisted. If you need one specific skill, go bare.

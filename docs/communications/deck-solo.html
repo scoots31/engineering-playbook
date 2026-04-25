@@ -304,11 +304,38 @@
     </ul>
   </div>
 
-  <!-- ── SLIDE 5: ALWAYS-ON SKILLS ── -->
+  <!-- ── SLIDE 5: MODES ── -->
   <div class="slide slide-dark" data-slide="5">
+    <div class="section-label sl-blue">Session Modes</div>
+    <h2 class="slide-h2">Three modes. You choose <em style="color:var(--blue-light)">how much the framework carries.</em></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:960px;margin-bottom:28px">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray);margin-bottom:8px">bare <span style="font-size:10px;background:rgba(255,255,255,0.08);color:var(--gray);padding:2px 7px;border-radius:4px;margin-left:4px;letter-spacing:0">default</span></div>
+        <div style="font-size:13px;color:var(--gray-light);line-height:1.6;margin-bottom:12px">Nothing loads until you ask for it. You invoke the skill you need, it runs, the framework stays out of the way.</div>
+        <div style="font-size:12px;color:var(--gray);border-top:1px solid rgba(255,255,255,0.07);padding-top:10px"><strong style="color:var(--gray-light)">Right for:</strong> focused work where you know exactly what you want.</div>
+      </div>
+      <div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.25);border-radius:12px;padding:22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue-light);margin-bottom:8px">piloted</div>
+        <div style="font-size:13px;color:var(--gray-light);line-height:1.6;margin-bottom:12px">You're flying it. The four always-on skills load at session start — memory, continuity, process accountability, health. You set the course: you choose which phase to run next.</div>
+        <div style="font-size:12px;color:var(--gray);border-top:1px solid rgba(96,165,250,0.15);padding-top:10px"><strong style="color:var(--gray-light)">Right for:</strong> builders who want instruments live while staying in control.</div>
+      </div>
+      <div style="background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.25);border-radius:12px;padding:22px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal-light);margin-bottom:8px">guided</div>
+        <div style="font-size:13px;color:var(--gray-light);line-height:1.6;margin-bottom:12px">The framework leads, you decide. Always-on skills active plus the full phase chain — phases flow forward automatically. You're in every conversation and every sign-off, but not managing the navigation.</div>
+        <div style="font-size:12px;color:var(--gray);border-top:1px solid rgba(45,212,191,0.15);padding-top:10px"><strong style="color:var(--gray-light)">Right for:</strong> new projects or when you want to stay in the work, not the framework.</div>
+      </div>
+    </div>
+    <div style="background:rgba(217,70,239,0.06);border:1px solid rgba(217,70,239,0.2);border-radius:8px;padding:14px 20px;max-width:960px">
+      <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#E879F9;margin-right:10px">Enhanced mode</span>
+      <span style="font-size:13px;color:var(--gray)">Claude Code only — a separate capability layer, not a session mode. Unlocks multi-agent orchestration for supported skills. Can combine with any of the three modes above.</span>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: ALWAYS-ON SKILLS ── -->
+  <div class="slide slide-dark" data-slide="6">
     <div class="section-label sl-gold">Always-On</div>
-    <h2 class="slide-h2">Four skills that activate on <em style="color:var(--gold-light)">auto-pilot or assisted mode</em> — silent in bare</h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:20px;max-width:600px">Bare mode is the default — framework is silent until you invoke a skill. Say <strong style="color:rgba(255,255,255,0.8)">"auto-pilot mode"</strong> or <strong style="color:rgba(255,255,255,0.8)">"assisted mode"</strong> to activate these four. One load per session. Token cost: auto-pilot (highest) · assisted (moderate) · bare (lowest).</p>
+    <h2 class="slide-h2">Four skills that activate on <em style="color:var(--gold-light)">piloted or guided mode</em> — silent in bare</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:20px;max-width:600px">Bare mode is the default — framework is silent until you invoke a skill. Say <strong style="color:rgba(255,255,255,0.8)">"guided mode"</strong> or <strong style="color:rgba(255,255,255,0.8)">"piloted mode"</strong> to activate these four. One load per session. Token cost: guided (highest) · piloted (moderate) · bare (lowest).</p>
     <div class="always-grid">
       <div class="always-card">
         <div class="ac-label" style="color:var(--blue-light)">Process Accountability</div>
@@ -341,8 +368,8 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 6: THE DESIGN ARTIFACT ── -->
-  <div class="slide slide-split" data-slide="6">
+  <!-- ── SLIDE 7: THE DESIGN ARTIFACT ── -->
+  <div class="slide slide-split" data-slide="7">
     <div class="split-left">
       <div class="section-label sl-blue">Phase 2</div>
       <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-0.6px;margin-bottom:22px">The design artifact is the <em style="color:var(--blue-light)">visual specification</em></h2>
@@ -373,8 +400,8 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 7: THE DELIVERABLE ── -->
-  <div class="slide slide-dark" data-slide="7">
+  <!-- ── SLIDE 8: THE DELIVERABLE ── -->
+  <div class="slide slide-dark" data-slide="8">
     <div class="section-label sl-teal">Phase 3 → Build</div>
     <h2 class="slide-h2">Not a user story. Not a feature. <em style="color:var(--teal-light)">A contract.</em></h2>
     <p style="color:var(--gray);font-size:14px;line-height:1.6;max-width:740px;margin-bottom:12px">A user story describes what a user wants. A feature describes what the product does. Both are written for stakeholders — they live outside the build. A <strong style="color:var(--white)">deliverable</strong> is the agreed body of work between the solo and the framework. Defined before build starts. Accepted when it's complete. The framework reads and understands every field — it holds the full picture and surfaces the right thing at the right moment.</p>
@@ -414,8 +441,8 @@
     <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5">Two views available at any time — <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">show progress</code> for the active deliverable &nbsp;·&nbsp; <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">show plan</code> for the full build</p>
   </div>
 
-  <!-- ── SLIDE 8: BUILD DISCIPLINE ── -->
-  <div class="slide slide-dark" data-slide="8">
+  <!-- ── SLIDE 9: BUILD DISCIPLINE ── -->
+  <div class="slide slide-dark" data-slide="9">
     <div class="section-label sl-teal">Phase 4 — Build</div>
     <h2 class="slide-h2">No slice starts without <em style="color:var(--teal-light)">four anchors</em></h2>
     <div class="anchor-grid">
@@ -443,8 +470,8 @@
     <p style="color:var(--gray);font-size:13px;margin-top:22px;line-height:1.5">If a slice has no process anchor → the framework stops and asks: <em style="color:var(--gray-light)">"Is this building something not in the agreed process?"</em> That question matters.</p>
   </div>
 
-  <!-- ── SLIDE 9: QA CHAIN ── -->
-  <div class="slide slide-dark" data-slide="9">
+  <!-- ── SLIDE 10: QA CHAIN ── -->
+  <div class="slide slide-dark" data-slide="10">
     <div class="section-label sl-teal">Automatic QA</div>
     <h2 class="slide-h2">Code-complete triggers an <em style="color:var(--teal-light)">automatic QA chain</em> — ending in deliverable acceptance</h2>
     <div class="chain-flow" style="margin-bottom:24px">
@@ -479,8 +506,8 @@
     <p style="color:var(--gray);font-size:13px;line-height:1.5;max-width:780px">When testing surfaces something unexpected → <code style="color:var(--teal-light);background:rgba(13,148,136,0.12);padding:2px 7px;border-radius:4px;font-size:11px">qa-triage</code> classifies it: bug / missing requirement / regression — then routes it correctly. Fix the right thing, not the nearest thing.</p>
   </div>
 
-  <!-- ── SLIDE 10: PROCESS THREAD ── -->
-  <div class="slide slide-split" data-slide="10">
+  <!-- ── SLIDE 11: PROCESS THREAD ── -->
+  <div class="slide slide-split" data-slide="11">
     <div class="split-left">
       <div class="section-label sl-gold">The Backbone</div>
       <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-0.6px;margin-bottom:22px">The process thread runs from <em style="color:var(--gold-light)">first conversation to final test</em></h2>
@@ -528,8 +555,8 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 11: PHASE TEST ── -->
-  <div class="slide slide-dark" data-slide="11">
+  <!-- ── SLIDE 12: PHASE TEST ── -->
+  <div class="slide slide-dark" data-slide="12">
     <div class="section-label sl-purple">Phase 5 — Explicit</div>
     <h2 class="slide-h2">Phase Test: <em style="color:var(--purple-light)">seven specialist lenses</em> before anything ships</h2>
     <div class="chip-group">
@@ -561,8 +588,8 @@
     <p style="color:var(--gray);font-size:13px;margin-top:24px;line-height:1.5">You invoke <code style="color:var(--purple-light);background:rgba(124,58,237,0.12);padding:2px 7px;border-radius:4px;font-size:11px">/phase-test</code> explicitly when you decide the phase is built. Deliberate — not automatic.</p>
   </div>
 
-  <!-- ── SLIDE 12: WHAT SETS IT APART ── -->
-  <div class="slide slide-dark" data-slide="12">
+  <!-- ── SLIDE 13: WHAT SETS IT APART ── -->
+  <div class="slide slide-dark" data-slide="13">
     <div class="section-label sl-blue">Factual Differentiation</div>
     <h2 class="slide-h2">What makes this different</h2>
     <ul class="diff-list">
@@ -589,8 +616,8 @@
     </ul>
   </div>
 
-  <!-- ── SLIDE 13: HOW TO START ── -->
-  <div class="slide slide-end" data-slide="13">
+  <!-- ── SLIDE 14: HOW TO START ── -->
+  <div class="slide slide-end" data-slide="14">
     <h2>Start with one idea.<br>Run it <em>end to end.</em></h2>
     <p>Open a new project. Let the framework route you — Brainstorm or Discover. Stay with it through Design Sprint, Build, and Phase Test. Everything else follows from there.</p>
     <div class="pill-row" style="justify-content:center">
@@ -607,7 +634,7 @@
 <nav class="nav" id="nav">
   <button id="prev" onclick="go(-1)" disabled>‹</button>
   <div class="progress-dots" id="dots"></div>
-  <div class="slide-counter" id="counter">1 / 13</div>
+  <div class="slide-counter" id="counter">1 / 14</div>
   <button id="next" onclick="go(1)">›</button>
 </nav>
 

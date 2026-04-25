@@ -1,6 +1,6 @@
 ---
 name: process-mapper
-description: Documents as-is and to-be process maps throughout the Solo Builder Framework. Always-on in auto-pilot and assisted mode — silent in bare mode (the default). Loads once at mode activation. Active within discover, design sprint, design review, solo-build, and phase-test. Produces structured Mermaid flowcharts in docs/process/ that serve as the process contract for the entire build. Holds the framework accountable to what was agreed.
+description: Documents as-is and to-be process maps throughout the Solo Builder Framework. Always-on in guided and piloted mode — silent in bare mode (the default). Loads once at mode activation. Active within discover, design sprint, design review, solo-build, and phase-test. Produces structured Mermaid flowcharts in docs/process/ that serve as the process contract for the entire build. Holds the framework accountable to what was agreed.
 ---
 
 # Process Mapper
@@ -11,7 +11,7 @@ description: Documents as-is and to-be process maps throughout the Solo Builder 
 
 The process mapper produces two artifacts and maintains them as the authoritative reference for everything that follows: the **as-is map** (how the process works today) and the **to-be map** (how it will work when the product is built). Every design decision, every slice, every test scenario traces back to one of these maps. When something in build or QA contradicts what was mapped and agreed, the process mapper flags it.
 
-This skill activates when auto-pilot or assisted mode is chosen — not in bare mode (the default). It loads once per session and remains active through the phases it lives in.
+This skill activates when guided or piloted mode is chosen — not in bare mode (the default). It loads once per session and remains active through the phases it lives in.
 
 ---
 
@@ -200,4 +200,4 @@ Both documents are updated as the framework progresses — never recreated. Anno
 | Treating to-be map as aspirational | It becomes decoration instead of a contract | Validate and agree before design sprint — then hold everything to it |
 | Letting screens drive the to-be map | Design decisions overwrite the agreed process | Process map comes first, screens come second |
 | Silent drift | Build or design changes the process without a decision | Any change to the to-be map requires an explicit decision and an update to the map |
-| Process mapper being invoked by the solo | It activates at mode selection, not per-phase — don't prompt it manually | In auto-pilot or assisted mode it loads at mode activation and runs through discover, design sprint, design review, build, and phase test. In bare mode it does not load. |
+| Process mapper being invoked by the solo | It activates at mode selection, not per-phase — don't prompt it manually | In guided or piloted mode it loads at mode activation and runs through discover, design sprint, design review, build, and phase test. In bare mode it does not load. |

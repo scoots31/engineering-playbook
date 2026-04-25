@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: Continuous learning mechanism for the Solo Builder Framework. Two modes — flag mode captures observations in the moment as lightweight notes (via product-continuity), retro mode processes those notes at defined moments to identify patterns, root causes, and proposed improvements. Distinguishes project-level adjustments from framework-level improvements to the playbook itself. Activates automatically at phase end and after phase test when auto-pilot or assisted mode is active. Directly invokable in any mode — including bare — via /retrospective or /retro.
+description: Continuous learning mechanism for the Solo Builder Framework. Two modes — flag mode captures observations in the moment as lightweight notes (via product-continuity), retro mode processes those notes at defined moments to identify patterns, root causes, and proposed improvements. Distinguishes project-level adjustments from framework-level improvements to the playbook itself. Activates automatically at phase end and after phase test when guided or piloted mode is active. Directly invokable in any mode — including bare — via /retrospective or /retro.
 ---
 
 # Retrospective
@@ -9,7 +9,7 @@ description: Continuous learning mechanism for the Solo Builder Framework. Two m
 
 **Core question:** "What did we learn — and what specifically should change as a result?"
 
-This skill has two activation paths: automatic (fires at phase end and after phase test when auto-pilot or assisted mode is active) and direct invocation (/retrospective or /retro, available in any mode including bare).
+This skill has two activation paths: automatic (fires at phase end and after phase test when guided or piloted mode is active) and direct invocation (/retrospective or /retro, available in any mode including bare).
 
 This skill has two modes that work together. Flag mode captures observations in the moment without interrupting flow. Retro mode processes those observations at natural pause points — finding patterns, naming root causes, proposing specific improvements, and closing the loop back to the playbook.
 

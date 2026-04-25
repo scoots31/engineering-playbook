@@ -22,16 +22,16 @@ Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, repl
 
 Default is **bare** — no routing, no always-on. Skills load only when invoked.
 
-- "auto-pilot mode" → read `[PLAYBOOK_ROOT]/skills/start/SKILL.md`. Full phase chain. Always-on fires.
-- "auto-pilot on [name]" or "/auto-pilot [name]" → read `[PLAYBOOK_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
-- "assisted mode" → read always-on skills once, then wait for user to invoke phases.
+- "guided mode" → read `[PLAYBOOK_ROOT]/skills/start/SKILL.md`. Full phase chain. Always-on fires.
+- "guided on [name]" or "/guided [name]" → read `[PLAYBOOK_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
+- "piloted mode" → read always-on skills once, then wait for user to invoke phases.
 - "bare mode" → return to default. Silent until invoked.
 
 ---
 
 ## Always-on skills
 
-Fire on `auto-pilot` or `assisted` mode activation. One load, persist for the session.
+Fire on `guided` or `piloted` mode activation. One load, persist for the session.
 
 - `[PLAYBOOK_ROOT]/skills/process-mapper/SKILL.md`
 - `[PLAYBOOK_ROOT]/skills/product-continuity/SKILL.md`

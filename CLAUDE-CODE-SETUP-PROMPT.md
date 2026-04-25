@@ -18,10 +18,10 @@ I've cloned the Solo Builder Framework repo to ~/Developer/engineering-playbook 
 1. ~/Developer/engineering-playbook/README.md — what this is and how it's organized
 2. ~/Developer/engineering-playbook/skills/start/SKILL.md — how to route new projects (includes Workshop pre-check)
 3. ~/Developer/engineering-playbook/workshop/README.md — the companion framework for spikes and tools
-4. The session mode model: default is bare (no routing, no always-on). Say "auto-pilot mode" to engage the full phase chain and always-on skills. Say "assisted mode" to load always-on skills and invoke phases manually.
+4. The session mode model: default is bare (no routing, no always-on). Say "guided mode" to engage the full phase chain and always-on skills. Say "piloted mode" to load always-on skills and invoke phases manually.
 
 After reading, confirm you understand:
-- The 3 session modes: bare (default), assisted, auto-pilot — and what each activates
+- The 3 session modes: bare (default), assisted, guided — and what each activates
 - The phase routing (start → discover → design-sprint → etc.)
 - The Workshop companion — spike-shaped openings route to workshop/scope-check/SKILL.md, not Discover
 - The four required anchors before any slice can be Ready
