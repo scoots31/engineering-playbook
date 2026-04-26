@@ -72,6 +72,16 @@ If something is out of sync: surface it before new work begins.
 
 One issue. Specific. Recovery path offered. Then step back.
 
+**3. Long-gap check.** The handoff date parsed in Step 2 is compared to today. If the gap is 21 or more days, surface this before any other orientation:
+
+> "Last session was [N] days ago. Before we pick up new work, a re-entry check is worth running — codebase state, environment, and whether the open decisions still hold. Run the re-entry check now, or skip straight to [next action from handoff]?"
+
+If yes: product-continuity runs the long-gap re-entry protocol. No new work starts until the check completes or the solo explicitly skips it.
+
+If no: orient from the handoff as normal. Log "long-gap re-entry skipped" to the session handoff.
+
+If the gap is fewer than 21 days: silent. Continue.
+
 ---
 
 ### Between Phases
@@ -157,6 +167,9 @@ Check three things only:
 **Framework version currency**
 At mode activation, checks whether the local engineering-playbook is behind `origin/main`. Surfaces once if an update is available — with the pull command ready to run. Never repeats after the solo acknowledges it.
 
+**Long-gap detection**
+At mode activation, the date in handoff.md is compared to today. A gap of 21+ days triggers a re-entry recommendation before the session begins. Silent for shorter gaps. Never repeats after acknowledged.
+
 **Phase gate integrity**
 Expected outputs present before the next phase runs. Checks by file existence — not by reading the files.
 
@@ -218,5 +231,6 @@ No output when everything is running correctly. The absence of health monitor ou
 | Repeating a deferred issue mid-session | Interrupts flow | Log it to handoff, check again at session end |
 | Output when everything is healthy | Creates noise, trains the solo to ignore it | Silent when healthy — output is always meaningful |
 | Checking for framework updates mid-session | Interrupts flow for something that should be resolved at session start | Version check runs once at mode activation only — never mid-session |
+| Running re-entry check for short gaps | Overhead without payoff — short gaps don't produce meaningful drift | Threshold is 21 days. Under that, silent. |
 | "Suggested next move for you" language | Hedging, passive, invites ambiguity — the solo has to ask what to do next | Name the phase complete, list outputs, ask a direct question with named options |
 | Offering two paths without naming them clearly | Solo doesn't know what each path actually does | Name each option in one sentence, then ask which — never describe options in a run-on clause |

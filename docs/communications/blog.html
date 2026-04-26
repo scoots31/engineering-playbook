@@ -238,6 +238,14 @@
         </div>
       </div>
 
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Long-gap recovery — framework-health detection + product-continuity re-entry protocol</div>
+          <div class="change-desc">When a session resumes after 21 or more days, the framework now detects the gap and responds to it. framework-health parses the handoff date at mode activation — the same read it was already doing — and if the gap is 21+ days, surfaces a re-entry prompt before any work begins. product-continuity handles the re-entry as three sequential checks: codebase state (git log since last session, uncommitted changes, open branches), environment (does the app run, any dependency drift), and context validity (blocking questions that may have been answered, assumptions that may have gone stale, key context that may have shifted). A re-entry summary closes the check and hands back to normal session flow. Short gaps are silent. No new skill — detection wired into an existing signal, re-entry wired into existing context documents.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 

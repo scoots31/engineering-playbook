@@ -38,6 +38,55 @@ This skill activates when guided or piloted mode is chosen — not in bare mode 
 
 ---
 
+## Long-Gap Re-entry
+
+When framework-health surfaces a long-gap signal (21+ days since last session) and the solo says yes, run these three checks in sequence. Do not start new work until all three complete or are explicitly skipped.
+
+---
+
+**Check 1 — Codebase state**
+
+Read the last session date from `docs/continuity/handoff.md`. Run `git log` from that date forward. Check for uncommitted changes. Check for open branches not mentioned in the handoff.
+
+Surface anything meaningful:
+- Commits since last session that weren't produced in that session (external changes, merges)
+- Uncommitted work not flagged in the handoff
+- Open branches not accounted for
+
+If clean: "Codebase clean — no changes since last session."
+
+If not: name each finding specifically. Ask whether each is expected before moving to Check 2.
+
+---
+
+**Check 2 — Environment**
+
+Ask the solo to confirm whether the app or service runs. If the project has a known start command (in tech-context.md or the handoff), name it. Check whether any dependency manifest has changed since last session (package.json, requirements.txt, go.mod, or equivalent). If dependencies changed, flag it — don't assume things still work.
+
+> "Environment check: does [the app/service] start and run without errors? Any dependency changes since we last worked?"
+
+Wait for the solo's answer. If they surface an issue, help diagnose before proceeding to Check 3.
+
+---
+
+**Check 3 — Context validity**
+
+Review the three continuity documents most at risk of staleness after a significant gap:
+
+1. `docs/continuity/questions.md` — any questions marked Blocking that are still Open after 21+ days? Name them. They may have been answered (update the log) or may still be blocking (surface for resolution before new work starts).
+
+2. `docs/continuity/assumptions.md` — any Unvalidated assumptions whose validation window has passed? Name them. Ask whether they've been validated or whether they're still being treated as true.
+
+3. `docs/continuity/handoff.md` — read the "Key context to carry" section aloud. Ask: "Does this still hold, or has anything shifted since we last worked?"
+
+At the end of Check 3, produce a re-entry summary:
+
+> "Re-entry check complete. [Codebase: clean / N findings resolved]. [Environment: running / issue resolved]. [Context: all valid / N stale questions or assumptions addressed]. Ready to pick up at [next session action from handoff]?"
+
+The solo's yes moves to normal session flow.
+
+---
+
 ## Nivya Conversations
 
 When `nivya` is active in the conversation, product-continuity does not capture passively. Nivya handles the routing — if something said in her conversation should be logged, she will ask the solo first, and only on an explicit yes does capture happen. This prevents exploratory thinking from being recorded as settled decisions.
@@ -373,3 +422,4 @@ The solo copies it, pastes it next session. No re-explaining, no cold start.
 | Target state updated only at the end | Documentation that's always out of date | Update after each phase completes |
 | Glossary skipped because "everyone knows what it means" | New sessions start from scratch on terminology | Capture terms as they develop, not after the fact |
 | Handoff document not read at session start | Session opens without orientation | Handoff is always the first thing read |
+| Skipping re-entry after a long gap | Codebase drift, broken environment, and stale assumptions surface mid-build instead of at session start | When framework-health flags a 21+ day gap, always run the three-check protocol before starting new work |

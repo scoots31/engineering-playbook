@@ -125,8 +125,8 @@ These four skills activate when the user chooses **guided** or **assisted** mode
 | Skill | Active across | Function |
 |-------|--------------|----------|
 | `process-mapper` | Discover → Phase Test | Maintains as-is + to-be process maps. Cross-references screens, slices, and test scenarios against the agreed process. Flags drift. |
-| `product-continuity` | All phases, all sessions | Captures decisions with reasoning, outstanding questions, assumptions, risks, changes, glossary, session logs, and target state documentation. Updates handoff at session end. |
-| `framework-health` | All phases, all sessions | Background health monitor. Checks signals — file existence, handoff, backlog At a Glance — not full document reads. Surfaces one issue at a time with recovery path. Silent when healthy. Never blocks. |
+| `product-continuity` | All phases, all sessions | Captures decisions with reasoning, outstanding questions, assumptions, risks, changes, glossary, session logs, and target state documentation. Updates handoff at session end. On 21+ day gaps, runs three-check re-entry protocol: codebase state, environment, context validity. |
+| `framework-health` | All phases, all sessions | Background health monitor. Checks signals — file existence, handoff, backlog At a Glance — not full document reads. Detects 21+ day session gaps and routes to re-entry. Surfaces one issue at a time with recovery path. Silent when healthy. Never blocks. |
 | `retrospective` | All phases, all sessions | Flag mode captures observations in the moment (via product-continuity). Retro mode processes at phase end and after phase test — patterns, root causes, proposed fixes. Evolves the playbook from real usage. |
 
 ---
