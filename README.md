@@ -103,6 +103,10 @@ when opening any new project to route correctly.
 
 For phase skills, role lenses, and always-on skills see:
 ~/Developer/engineering-playbook/README.md
+
+**Session modes:** Default is bare (no routing, no always-on). Say "guided mode"
+to engage the full phase chain and always-on skills. Say "piloted mode" to load
+always-on skills and invoke phases manually.
 ```
 
 Adjust the path if you cloned somewhere else.
