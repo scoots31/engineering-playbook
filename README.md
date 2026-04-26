@@ -88,28 +88,15 @@ That's it. Cursor now knows the full framework and will use it automatically.
 git clone git@github.com:scoots31/engineering-playbook.git ~/Developer/engineering-playbook
 ```
 
-**Step 2 — Add to your global CLAUDE.md**
+**Step 2 — Run the install**
 
-Open (or create) `~/.claude/CLAUDE.md` and add:
+Tell Claude Code:
 
-```markdown
-## Global engineering playbook
-
-**Playbook root:** ~/Developer/engineering-playbook
-
-This playbook contains the Solo Builder Framework — read
-~/Developer/engineering-playbook/skills/start/SKILL.md
-when opening any new project to route correctly.
-
-For phase skills, role lenses, and always-on skills see:
-~/Developer/engineering-playbook/README.md
-
-**Session modes:** Default is bare (no routing, no always-on). Say "guided mode"
-to engage the full phase chain and always-on skills. Say "piloted mode" to load
-always-on skills and invoke phases manually.
+```
+Read ~/Developer/engineering-playbook/INSTALL.md and follow the instructions.
 ```
 
-Adjust the path if you cloned somewhere else.
+Claude writes the framework block to `~/.claude/CLAUDE.md` and outputs the Cursor User Rules for you to paste. Adjust the path if you cloned somewhere else.
 
 ---
 
