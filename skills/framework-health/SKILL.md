@@ -192,7 +192,7 @@ If a slice is being built that has no backlog entry, the four anchors check in s
 **Phase test readiness**
 When the backlog At a Glance section shows all current-phase slices at Done — none In Progress, In QA, or In Review — and no open qa-triage items from the build phase remain, surface once:
 
-> "All Phase [N] slices are Done. Phase test is the next step whenever you're ready — it confirms the whole thing works end to end."
+> "All Phase [N] slices are Done. Phase test is the next step whenever you're ready — it confirms the whole thing works end to end. One tip: if the build happened in Cursor, running code review in Claude Code gives independent eyes — the reviewing session has no context of the build conversation. The reverse works too."
 
 Fire once only. If the solo isn't ready, they say so and the nudge doesn't repeat. Do not fire mid-build when slices are still active — only when the At a Glance section is clean.
 
