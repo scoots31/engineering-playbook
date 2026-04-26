@@ -17,12 +17,28 @@ This is not a repeat of slice QA. Slice QA verified each slice against its done 
 
 The solo invokes `/phase-test` when they have made a deliberate decision: this phase is built. Not when the last slice hits Done automatically — when the solo looks at the backlog and says "we're done with Phase 1."
 
-**Before invoking, the solo should be able to say:**
-- All Phase 1 slices are Done in the backlog
-- The product is deployed to a test environment
-- They believe a real user could walk through the core journey
+**Readiness — three states:**
 
-If any of those aren't true, it's too early. Phase test against an incomplete build produces unreliable results.
+**Ready (invoke now)**
+- All current-phase slices show ✓ Done in the backlog
+- All open qa-triage items from the build phase are resolved, or explicitly deferred to a future phase with a backlog entry
+- All integration deliverables are Done — not just the Screen companions
+- No new slices are being added — scope is frozen for this phase
+- The solo can describe the core user journey without checking the design
+
+**Not yet (hold off)**
+- Any slice is In Progress, In QA, or In Review
+- Open qa-triage items from the build phase haven't been classified yet
+- Integration deliverables were scoped but haven't completed
+- The solo isn't sure what's left — uncertainty means the backlog isn't current, not that nothing's left
+
+**Overdue (invoke now — you're drifting)**
+- All slices have been Done for multiple sessions and new slices keep being added that weren't in the original plan
+- The solo is running solo-qa on slices that already show ✓ Done
+- Changes are being made as polish or "small improvements" rather than resolving a specific open item
+- Scope is expanding to absorb work that could be Phase 2
+
+The key reframe: phase test isn't evidence you're done — it's the process for finding out if you are. The criteria above confirm you've built what you planned. Phase test confirms that what you built actually works.
 
 ---
 
@@ -384,3 +400,4 @@ Contains:
 | Treating acceptance review as a repeat of testing | Different question entirely | Tester asks "does it work?" — acceptance asks "is it the right thing?" |
 | Full re-run after fixing a hold item | Wasteful and unnecessary | Re-test only affected scenarios |
 | Solo sign-off at the phase level without phase test | Slice QA alone isn't sufficient | Phase test is the gate before deploy — not optional |
+| Continuing to add slices when all planned slices are Done | Scope creep disguised as due diligence — the gate exists to answer whether the plan was right | When the backlog is clean and all slices Done, invoke phase test rather than expanding scope |

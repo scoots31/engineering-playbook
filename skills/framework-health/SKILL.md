@@ -189,6 +189,13 @@ Slice statuses should reflect actual state. If the At a Glance counts look incon
 **Scope drift signal**
 If a slice is being built that has no backlog entry, the four anchors check in solo-build will catch it. The health monitor's signal here is simpler: if the solo describes work being done and there's no corresponding slice status in the backlog, flag it.
 
+**Phase test readiness**
+When the backlog At a Glance section shows all current-phase slices at Done — none In Progress, In QA, or In Review — and no open qa-triage items from the build phase remain, surface once:
+
+> "All Phase [N] slices are Done. Phase test is the next step whenever you're ready — it confirms the whole thing works end to end."
+
+Fire once only. If the solo isn't ready, they say so and the nudge doesn't repeat. Do not fire mid-build when slices are still active — only when the At a Glance section is clean.
+
 ---
 
 ## How It Surfaces Issues
@@ -232,5 +239,6 @@ No output when everything is running correctly. The absence of health monitor ou
 | Output when everything is healthy | Creates noise, trains the solo to ignore it | Silent when healthy — output is always meaningful |
 | Checking for framework updates mid-session | Interrupts flow for something that should be resolved at session start | Version check runs once at mode activation only — never mid-session |
 | Running re-entry check for short gaps | Overhead without payoff — short gaps don't produce meaningful drift | Threshold is 21 days. Under that, silent. |
+| Surfacing the phase test readiness nudge before all slices are Done | Creates noise mid-build | Check At a Glance — all current-phase slices Done and zero open qa-triage items before firing |
 | "Suggested next move for you" language | Hedging, passive, invites ambiguity — the solo has to ask what to do next | Name the phase complete, list outputs, ask a direct question with named options |
 | Offering two paths without naming them clearly | Solo doesn't know what each path actually does | Name each option in one sentence, then ask which — never describe options in a run-on clause |

@@ -1608,7 +1608,8 @@
             <div class="skill-section-label">When It Runs</div>
             <ul>
               <li>Explicitly engaged via <code>/phase-test</code> — deliberate, not automatic</li>
-              <li>The solo builder decides when all phase slices are Done and the phase is ready for full test</li>
+              <li><strong>Readiness table:</strong> three states — Ready (all slices Done, qa-triage clear, integration deliverables complete) · Not Yet (anything still in progress) · Overdue (solo is adding scope when everything is Done — invoke now)</li>
+              <li>Phase test isn't evidence you're done — it's the process for finding out if you are</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1776,6 +1777,7 @@
               <li>Never halts progress; deferred issues go to handoff</li>
               <li>Token-efficient by design</li>
               <li><strong>Long-gap detection</strong> — 21+ days since last session triggers re-entry check before work begins</li>
+              <li><strong>Phase test readiness</strong> — fires once when all current-phase slices are Done and no open build qa-triage items remain</li>
             </ul>
           </div>
           <div class="skill-section">
