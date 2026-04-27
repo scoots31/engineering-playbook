@@ -12,6 +12,7 @@ Turn a PRD into a sequenced, multi-phase implementation plan. The goal is not ju
 ### 1. Read Context Documents
 
 Before doing anything else, read:
+- `docs/records-spec.md` — the canonical record format. Every phase and deliverable created this session must conform to it.
 - `docs/backlog.md` — existing slices from design review, their Ready status, dependencies
 - `docs/process/to-be-[name].md` — the agreed to-be process map
 - `docs/tech-context.md` — stack, infrastructure slices, engineering principles
@@ -85,32 +86,61 @@ Once slices are designed, group them into deliverables. A deliverable is the agr
 
 **Grouping rule:** Group slices by what they collectively deliver to the solo. A natural deliverable is a screen, a user-facing flow, a piece of background logic that enables other screens, or an infrastructure layer. Do not group slices that don't share a visible outcome — they belong in separate deliverables.
 
-**Deliverable type:**
-- **Screen** — output is visible. Reviewed visually in the browser.
+**Deliverable types:**
+- **Screen** — output is visible UI. Reviewed visually in the browser. Built against mock data.
 - **Logic** — output is invisible. Reviewed against evidence: test results, data state, or a simulated flow through affected screens.
+- **Integration** — connects real data to a Screen deliverable. May contain both UI slices and data integration slices. Reviewed against both visual output and data evidence.
 
-**Every deliverable carries three fields:**
+**Every deliverable carries these fields — all required:**
 
-- **Technical spec** — what the skill reads during build. Implementation-level, precise, written for the AI. Covers the architecture decisions, integration points, and technical constraints for this deliverable.
-- **Solo description** — what the solo sees at review time. Plain language, outcome-focused. "When this deliverable is done, you'll have [X] — here's what it does and how to tell it's working."
-- **Acceptance criteria** — the shared contract. Both the skill and the solo read the same criteria. The AI builds and self-verifies against them. The solo reviews against them. One set, agreed before build starts.
-
-**Format per deliverable:**
 ```
-Deliverable [D-ID] — [Name]
-Type: Screen | Logic
-Technical spec: [implementation-level description — for the AI]
-Solo description: [plain-language outcome — for the solo]
+D-[ID] · [Name]
+
+Status: Defined
+Type: Screen | Logic | Integration
+Phase: [N]
+
+Plain language description:
+[What the solo will specifically see, interact with, or have when this
+deliverable is complete. Written fresh — not a summary of its slices.
+No technical terms. As long as needed.]
+
+Technical description:
+[Integration points, constraints, component structure, data flow for
+this specific deliverable. Written fresh — not copied from any slice.
+As long as needed.]
+
+Screens:
+  - [screen file → screen name (primary | affected)]
+
 Acceptance criteria:
-  1. [verifiable criterion]
+  1. [verifiable criterion — flow or capability level, not slice level]
   2. [verifiable criterion]
   3. [verifiable criterion]
-Slices: SL-001, SL-002, SL-003
+
+Self-verification checklist:
+  - [confirms slices work correctly together — flow, handoffs, data passing]
+  - [confirms complete user journey through all slices in this deliverable]
+
+Builder confirmation:
+Pending build
+
+Slices: SL-[ID], SL-[ID]
+References:
+  - [source — why vital to this deliverable]
+Depends on: [D-ID | none]
+Notes: [decisions, constraints, anything non-obvious at the deliverable level]
 ```
 
-If the deliverable record cannot be defined — missing design reference, unclear outcome, no verifiable criteria — stop. The deliverable must be defined and agreed before the plan is approved. A plan with undefined deliverables is not approvable.
+**Field rules:**
+- Plain language description and technical description are written fresh and independently at the deliverable level. Neither summarizes the slices beneath it, and neither copies from a phase record above it.
+- Screens lists every screen this deliverable touches — primary screen being built and any screens affected by underlying changes.
+- Acceptance criteria operate at the flow or capability level, not the slice level. "A user can complete [this flow] from start to finish" not "the search input returns results."
+- Self-verification checklist confirms the slices work together — not a re-check of individual slices.
 
-Present deliverables alongside the phased plan. Both are reviewed and approved together. On approval, write the deliverable records to `docs/backlog.md` alongside the slice records.
+If any required field cannot be defined — missing design reference, unclear outcome, no verifiable criteria — stop. The deliverable must be fully defined and agreed before the plan is approved. A plan with undefined or partial deliverable records is not approvable.
+
+Present deliverables alongside the phased plan. Both are reviewed and approved together.
 
 ---
 
@@ -155,13 +185,50 @@ Two sequencing forces in tension — resolve them explicitly:
 
 **Infrastructure slices first, always.** Read `docs/tech-context.md` infrastructure slices — these are prerequisites for everything else and sequence before any feature slice regardless of process order.
 
-For each phase, show:
-- **Phase name** and short description
-- **Slices in this phase** — each with its process anchor noted
-- **What process steps this phase completes** — which to-be steps are implemented
-- **What this phase proves or de-risks**
-- **Blocked by** — prior phases or external dependencies
-- **Definition of done** — how you know this phase is complete
+For each phase, produce a full phase record — all fields required:
+
+```
+Phase [N] · [Name]
+
+Status: Planning
+Question this phase answers: [one sentence]
+Deliverables: [D-ID, D-ID]
+
+Plain language description:
+[What the product can do when this phase is complete — the capability
+unlocked. Written fresh — not a summary of its deliverables. As long
+as needed.]
+
+Technical description:
+[The architectural approach, what gets proven at the system level, what
+foundational work this phase establishes. Written fresh. As long as needed.]
+
+Process steps completed: [to-be step names]
+Proves / de-risks: [what you now know that you did not before]
+
+Explicitly out of scope:
+[Things someone might reasonably expect in this phase but will not find,
+and why. Not exhaustive — only the things whose absence would confuse.]
+
+Blocked by: [Phase N | external dependency | none]
+Definition of done: [how you know this phase is complete]
+
+Acceptance criteria:
+  1. [verifiable criterion — capability level, not deliverable level]
+  2. [verifiable criterion]
+  3. [verifiable criterion]
+
+Self-verification checklist:
+  - [confirms deliverables work correctly together end-to-end]
+  - [confirms the phase answers its stated question with evidence]
+
+Builder confirmation:
+Pending build
+
+Notes: [decisions, constraints, anything non-obvious at the phase level]
+```
+
+**Phase anti-pattern:** A phase is not a time box, a sprint, or a feature list. If the question this phase answers cannot be stated in one sentence, the phase boundary is wrong — redefine it before presenting the plan.
 
 ### 7. Flag Open Questions
 
@@ -179,7 +246,41 @@ Show the full plan. Ask:
 - Are uncovered process steps accounted for correctly?
 - Are any open questions blockers, or can we proceed with a stated assumption?
 
-Iterate until approved. When approved, update `docs/backlog.md` with the process anchor for each slice — it must be in the slice record before build starts.
+Iterate until approved. When approved, execute the backlog write immediately — all four steps, in this order, before the session closes.
+
+### 8b. Write the Approved Plan to the Backlog
+
+On solo approval, update `docs/backlog.md` with the full plan. This is not optional and does not wait for the next session.
+
+**Step 1 — Write all phase records.**
+Add the Phase records section to `docs/backlog.md` with every phase record in full. Status set to `Planning` on all phases.
+
+**Step 2 — Write all deliverable records.**
+Add the Deliverable records section with every deliverable record in full. Status set to `Defined` on all deliverables.
+
+**Step 3 — Update every slice record.**
+Go into every slice record in the backlog and add the two fields that only prd-to-plan can set:
+- `Phase: [N]` — replace "Pending prd-to-plan"
+- `Deliverable: [D-ID]` — replace "Pending prd-to-plan"
+
+Every Ready slice must leave this step with both fields populated. No exceptions.
+
+**Step 4 — Add the Decisions and Change Log section.**
+If it doesn't exist, add it to the bottom of `docs/backlog.md`:
+
+```markdown
+## Decisions and Change Log
+
+*Append-only. Every material change to the plan is logged here.*
+
+### [YYYY-MM-DD] — Plan approved
+Decision: Implementation plan approved. [N] phases, [N] deliverables, [N] slices.
+Reason: Plan sequenced by risk and process order. Approved by solo.
+Impact: Phase records, deliverable records, and slice phase/deliverable assignments written to backlog.
+Confirmed by: Solo
+```
+
+After the write is complete, confirm: *"Backlog updated — [N] phases, [N] deliverables, [N] slices. Phase and deliverable assignments written to all slice records. Ready to build."*
 
 ### 9. Optional Next Step
 
