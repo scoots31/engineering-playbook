@@ -932,7 +932,9 @@
           <div class="flow-chevron">›</div>
           <div class="flow-node">solo-qa Part 2 (solo)</div>
           <div class="flow-chevron">›</div>
-          <div class="flow-node done-node">Done</div>
+          <div class="flow-node" style="background:#F0FDF4;color:#15803D;border:1px solid #86EFAC">In Test</div>
+          <div class="flow-chevron">›</div>
+          <div class="flow-node done-node">Done (via phase-test)</div>
         </div>
         <div class="chain" style="margin: 0 24px 20px; background: var(--gray-50);">
           <div class="chain-title">Step by step</div>
@@ -955,21 +957,21 @@
               <div class="chain-node qa-step">3</div>
               <div class="chain-content">
                 <div class="chain-label">solo-qa Part 1 — AI verification</div>
-                <div class="chain-desc">Gate check confirms code review pass is logged. AI reads all 4 anchors, actively tests each done criterion against the running output with named evidence, and verifies design fidelity. If anything fails: slice returns to In Build with specific notes.</div>
+                <div class="chain-desc">Gate check confirms code review pass is logged and builder confirmation is populated. AI reads all 4 anchors, actively tests each done criterion against the running output with named evidence, and verifies design fidelity. If anything fails: slice returns to In Build with specific notes.</div>
               </div>
             </div>
             <div class="chain-step">
               <div class="chain-node qa-step">4</div>
               <div class="chain-content">
                 <div class="chain-label">solo-qa Part 2 — Solo browser sign-off</div>
-                <div class="chain-desc">AI presents the sign-off request. Solo opens the running slice in browser alongside the design reference, walks through each done criterion, and confirms. The AI waits. Done is not marked until the solo confirms.</div>
+                <div class="chain-desc">AI presents the sign-off request with builder confirmation already shown. Solo opens the running slice in browser alongside the design reference, walks through each done criterion, and confirms. The AI waits. In Test is not marked until the solo confirms.</div>
               </div>
             </div>
             <div class="chain-step">
-              <div class="chain-node done">5</div>
+              <div class="chain-node" style="background:#F0FDF4;color:#15803D;border:2px solid #86EFAC;font-size:10px;font-weight:800">5</div>
               <div class="chain-content">
-                <div class="chain-label plain">Done logged in backlog</div>
-                <div class="chain-desc">Backlog updated: status → Done. Done criteria summary logged with code review, AI verification, and solo sign-off recorded. Dependent slices checked for unblocking. Version control action taken per branching model.</div>
+                <div class="chain-label plain">In Test logged in backlog</div>
+                <div class="chain-desc">Backlog updated: status → In Test. QA pass summary logged with code review, AI verification, and solo sign-off recorded. Dependent slices checked for unblocking. Version control action taken per branching model. The slice reaches Done when phase-test gate opens.</div>
               </div>
             </div>
           </div>
@@ -1055,7 +1057,7 @@
         <div class="section-icon">&#x25CF;</div>
         <div>
           <div class="section-title">What "Done" actually requires</div>
-          <div class="section-subtitle">All three. In order. Solo sign-off is the final gate and cannot be skipped or substituted.</div>
+          <div class="section-subtitle">Four checks, two statuses. Solo sign-off moves the slice to In Test. Phase-test moves it to Done.</div>
         </div>
       </div>
 
@@ -1065,7 +1067,7 @@
           <div class="card-badge gate">All required</div>
         </div>
         <div class="card-desc">
-          A slice is Done when all of the following are confirmed. Meeting some of them is not Done. Meeting most of them is not Done. All of them, in order — that is Done. The solo's in-browser confirmation is the final step and can never be substituted by a screenshot, a summary, or the AI's assessment of how it probably looks.
+          A slice moves through two status milestones before it is truly Done. Solo QA sign-off is not the finish line — it is the gate to In Test. Done requires phase-test to confirm the slice works as part of the complete phase, end-to-end with real data. Meeting all QA checks is required but not sufficient on its own.
         </div>
         <div style="padding: 0 0 0 0; overflow-x: auto;">
           <table class="done-table">
@@ -1093,8 +1095,14 @@
               <tr>
                 <td>Solo confirmed in browser</td>
                 <td>solo-qa Part 2</td>
-                <td><span class="done-check">solo sign-off</span></td>
-                <td>The solo looked at the running slice in a browser — not a screenshot, not a summary — with the design reference open alongside. Walked through each criterion. Gave an explicit confirmation. This is the final gate. Done is not marked before this.</td>
+                <td><span class="done-check">solo sign-off → In Test</span></td>
+                <td>The solo looked at the running slice in a browser — not a screenshot, not a summary — with the design reference open alongside. Walked through each criterion. Gave an explicit confirmation. Slice moves to <strong>In Test</strong>. Not Done yet — phase-test is the final gate.</td>
+              </tr>
+              <tr>
+                <td>Phase-level verification</td>
+                <td>phase-test</td>
+                <td><span class="done-check">gate open → Done</span></td>
+                <td>Phase-test confirms all slices work together as a complete experience with real data. When the gate opens, every In Test slice in the phase moves to <strong>Done</strong> and the phase record moves to <strong>Completed</strong>.</td>
               </tr>
             </tbody>
           </table>
@@ -1171,12 +1179,12 @@
 
       <div class="gate-block">
         <div class="gate-header">
-          <div class="gate-header-text">Gate condition: all phase slices at Done status</div>
+          <div class="gate-header-text">Gate condition: all phase slices at In Test status</div>
         </div>
         <div class="gate-body">
-          <p style="margin-bottom: 12px;">Every slice in the phase must reach Done status before the phase gate opens. Not most of them. Not the important ones. Every one. A slice is Done only when all three links in the QA chain have passed: code-review-and-quality confirmed, AI verified with evidence, solo confirmed in browser.</p>
-          <p>When all slices in a deliverable are Done, QA runs a deliverable-level acceptance check before moving on. This is a second, higher-level verification — not a repeat of slice QA. <strong>Screen deliverables</strong> get a visual pass: the full deliverable is viewed in the browser and verified against the deliverable acceptance criteria. <strong>Logic deliverables</strong> get an evidence pass: test results, data state, or a simulated flow through the affected screens confirm the logic is working as agreed. Deliverable acceptance is the contract being honored — the solo and the AI agreed on what would be delivered; this is the moment that agreement is verified.</p>
-          <p>Once all slices are at Done, the phase is ready for Phase Test. Phase Test does not auto-trigger — <strong>the solo invokes it explicitly.</strong> It is a separate, full-phase testing pass run by a set of specialist lenses. QA passes individual slices; Phase Test assesses the whole phase as a coherent, shippable unit.</p>
+          <p style="margin-bottom: 12px;">Every slice in the phase must reach <strong>In Test</strong> status before the phase gate opens. Not most of them. Not the important ones. Every one. A slice reaches In Test only when all QA chain links have passed: code-review-and-quality confirmed, AI verified with evidence, solo confirmed in browser.</p>
+          <p>When all slices in a deliverable are In Test, QA runs a deliverable-level acceptance check. This is a separate, higher-level verification — not a repeat of slice QA. solo-qa reads the deliverable's plain language description, technical description, screens list, and acceptance criteria from the backlog record. Three deliverable types, three review methods: <strong>Screen</strong> deliverables get a visual pass in the browser against the deliverable acceptance criteria. <strong>Logic</strong> deliverables get an evidence pass — test results, data state, or a simulated flow. <strong>Integration</strong> deliverables get both — visual output and data source evidence. When the solo accepts, deliverable status moves to <strong>Accepted</strong>.</p>
+          <p>Once all deliverables are Accepted, the phase is ready for Phase Test. Phase Test does not auto-trigger — <strong>the solo invokes it explicitly.</strong> Phase Test confirms the complete phase works end-to-end with real data, and its gate-open moves all In Test slices to <strong>Done</strong> and the phase to <strong>Completed</strong>.</p>
         </div>
       </div>
     </div>

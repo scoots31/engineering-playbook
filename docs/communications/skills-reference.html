@@ -1074,7 +1074,8 @@
               <li>Process coverage check every round — coverage map vs. to-be, every uncovered step surfaced as decision</li>
               <li><strong>Data behavior pass</strong> — required for every screen with external data: volume, list behavior, nulls, empty/error/loading states. Produces a data questions log. Unresolved question blocks dependent UI slices from Ready.</li>
               <li><strong>Process anchor required</strong> on every slice before it reaches Ready</li>
-              <li>Slice states: Ready / In Review / Blocked / Deferred / In Build / Done</li>
+              <li><strong>Two descriptions per slice — both required:</strong> plain language description (what the solo will see) and technical description (what the builder needs to know). Neither copies from the other. Neither can be blank.</li>
+              <li>Slice statuses: In Review · Blocked · Deferred · Ready (full lifecycle in Backlog Status Reference)</li>
               <li>Build signal: enough Ready slices to form a coherent Phase 1 starting point</li>
               <li>Blocked slices have a named spike — never left open without a specific question</li>
             </ul>
@@ -1091,7 +1092,7 @@
             <div class="skill-section-label">Output</div>
             <ul>
               <li><div class="output-tag">docs/backlog.md</div></li>
-              <li>Slice records: ID, Name, Process Anchor, Design Ref, Done Criteria, Dependencies, Status</li>
+              <li>Slice records: ID, Name, Plain language description, Technical description, Design anchor, Data anchor, Process anchor, Done criteria, Self-verification checklist, Dependencies, Status</li>
               <li>Process coverage map per round</li>
               <li>Review log appended each round</li>
               <li><strong>Gate:</strong> enough Ready slices before build starts</li>
@@ -1282,7 +1283,9 @@
               <li><strong>Four anchors required</strong> before writing code: design, data, done, process</li>
               <li>Journey order — first screen before second, dependencies block</li>
               <li>Mid-build discoveries surfaced immediately — never silently resolved</li>
+              <li><strong>Self-verification checklist run before code-complete</strong> — builder confirmation populated with ✓/✗ results before any handoff</li>
               <li>Commit on code-complete: <code>SL-[ID] code-complete — [name]</code></li>
+              <li>Status after code-complete: <strong>In QA</strong> (not Done — QA and phase-test complete the chain)</li>
               <li>Auto-invokes <strong>code-review-and-quality</strong> on code-complete</li>
             </ul>
           </div>
@@ -1436,30 +1439,31 @@
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
-              <li>Gate check first: requires code review log in backlog before starting</li>
+              <li>Gate check first: requires code review log in backlog AND builder confirmation populated before starting</li>
               <li>Reads all four anchors (design, data, done, process) — not just done criteria</li>
               <li><strong>Active testing</strong> — opens preview, verifies rendered values against mock data file. Evidence required, not code inspection.</li>
               <li>Design fidelity check against sprint HTML</li>
-              <li>Part 2: structured prompt listing exact done criteria for solo browser verification</li>
+              <li>Part 2: structured prompt showing builder confirmation + exact done criteria for solo browser verification</li>
               <li>Unexpected findings → <strong>qa-triage</strong> (classify before fixing)</li>
-              <li><strong>Deliverable acceptance</strong> — when all slices in a deliverable are Done, runs a deliverable-level check: screen deliverables get a visual pass; logic deliverables get an evidence pass (test results, data state, or simulated flow through affected screens)</li>
+              <li><strong>Slice status after solo sign-off: In Test</strong> (not Done — Done is set by phase-test)</li>
+              <li><strong>Deliverable acceptance</strong> — when all slices in a deliverable are In Test, runs a deliverable-level check. Reads plain language description, technical description, screens list, and acceptance criteria from the backlog record. Three types: Screen (visual pass), Logic (evidence pass), Integration (both). Status moves to <strong>Accepted</strong> on solo sign-off.</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">When It Runs</div>
             <ul>
               <li>Framework activates Part 1 automatically when <strong>code-review-and-quality</strong> passes</li>
-              <li>Part 2 requires solo browser verification before the slice is marked Done</li>
+              <li>Part 2 requires solo browser verification before the slice moves to In Test</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
               <li>QA verification with named evidence</li>
-              <li>Slice status: <strong>Done</strong> in backlog</li>
+              <li>Slice status: <strong>In Test</strong> in backlog (Done set later by phase-test)</li>
+              <li>Deliverable status: <strong>Accepted</strong> when all slices verified together</li>
               <li>Feature branch pushed, PR created</li>
               <li>Any unexpected findings → qa-triage log</li>
-              <li><strong>Gate:</strong> solo browser sign-off required for Done</li>
             </ul>
           </div>
         </div>
@@ -1565,17 +1569,17 @@
               <li><strong>Stage 1:</strong> Environment readiness — pre-flight gate. Mock inactive, all slices deployed, app loads clean. Nothing runs until this passes.</li>
               <li><strong>Stage 2:</strong> Use case creator — derives test plan from discovery brief + to-be map. Not invented.</li>
               <li><strong>Stage 3:</strong> Data specialist — mock→real swap confirmed, API read/write verified, data-mapping.md validated</li>
-              <li><strong>Stage 4+5:</strong> Tester + Regression specialist — every scenario with named evidence, all Done slices re-walked</li>
+              <li><strong>Stage 4+5:</strong> Tester + Regression specialist — every scenario with named evidence, all In Test slices re-walked</li>
               <li><strong>Stage 6:</strong> Acceptance reviewer — PM lens, does what was built match discovery brief intent?</li>
               <li><strong>Stage 7:</strong> Gate — OPEN (deploy) or HOLD (specific items). HOLD: re-test affected scenarios only.</li>
-              <li><strong>Deliverable-structured pass</strong> — walks each deliverable in the phase, confirms deliverable acceptance completed, then verifies all deliverables hold together in integration</li>
+              <li><strong>On OPEN:</strong> all In Test slices move to <strong>Done</strong>, phase record moves to <strong>Completed</strong>, phase completion record appended to backlog.md</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">When It Runs</div>
             <ul>
               <li>Explicitly engaged via <code>/phase-test</code> — deliberate, not automatic</li>
-              <li><strong>Readiness table:</strong> three states — Ready (all slices Done, qa-triage clear, integration deliverables complete) · Not Yet (anything still in progress) · Overdue (solo is adding scope when everything is Done — invoke now)</li>
+              <li><strong>Readiness table:</strong> three states — Ready (all slices In Test, deliverables Accepted, qa-triage clear) · Not Yet (anything still In Build or In QA) · Overdue (solo is adding scope when everything is In Test — invoke now)</li>
               <li>Phase test isn't evidence you're done — it's the process for finding out if you are</li>
             </ul>
           </div>
@@ -1585,7 +1589,7 @@
               <li><div class="output-tag">docs/phase-test-[phase]-[date].md</div></li>
               <li>Full test report — all 7 stages</li>
               <li>Gate: OPEN or HOLD with specific items</li>
-              <li>On OPEN: phase completion record appended to backlog.md</li>
+              <li>On OPEN: slices → Done · phase → Completed · completion record → backlog.md</li>
               <li><strong>Gate:</strong> OPEN required before deploy</li>
             </ul>
           </div>

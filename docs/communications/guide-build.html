@@ -1625,11 +1625,11 @@
           <div class="chain-step">
             <div class="chain-step-label">Auto-invoked on pass</div>
             <div class="chain-step-name">solo-qa</div>
-            <div class="chain-step-desc">Part 1: AI active testing with evidence. Part 2: solo browser sign-off. Done = both passed.</div>
+            <div class="chain-step-desc">Part 1: AI active testing with evidence. Part 2: solo browser sign-off. After sign-off: status → In Test.</div>
           </div>
         </div>
         <div class="chain-note">
-          <strong>On pass:</strong> solo-qa logs confirmation in backlog, status updates to Done. <strong>On fail:</strong> code-review returns the slice to In Build with specific notes — fix the issues and resubmit. The solo does not manage this handoff — it runs automatically when code-complete is declared.
+          <strong>On pass:</strong> solo-qa logs confirmation in backlog, status updates to <strong>In Test</strong>. The slice reaches <strong>Done</strong> when phase-test completes and the gate opens. <strong>On fail:</strong> code-review returns the slice to In Build with specific notes — fix the issues and resubmit. The solo does not manage this handoff — it runs automatically when code-complete is declared.
         </div>
       </div>
 
@@ -1646,6 +1646,7 @@
           <div>
             <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 8px;">Code-complete means</div>
             <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+              <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Self-verification checklist run — builder confirmation populated with ✓/✗ results</li>
               <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Slice renders correctly against mock data</li>
               <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> Visual matches the design screen</li>
               <li style="font-size: 13px; color: var(--gray-700); padding-left: 14px; position: relative;"><span style="position:absolute;left:0;color:var(--green)">✓</span> No hardcoded values where data should be</li>
@@ -1669,19 +1670,26 @@
           <div class="exec-step">
             <div class="exec-num">1</div>
             <div class="exec-content">
+              <h4>Run the self-verification checklist</h4>
+              <p>Before declaring code-complete, the builder runs the slice's self-verification checklist from the backlog record and populates the builder confirmation field with ✓/✗ results and observations. This is not optional — solo-qa reads the builder confirmation on arrival. An empty confirmation means the builder did not complete their self-check.</p>
+            </div>
+          </div>
+          <div class="exec-step">
+            <div class="exec-num">2</div>
+            <div class="exec-content">
               <h4>Commit the work</h4>
               <p>The build skill executes the commit directly — it is never handed to the solo to run. Commit message format: <code>SL-[ID] code-complete — [slice name]</code>. The slice ID makes every commit traceable in git history. Never use vague messages ("wip", "updates", "fix").</p>
             </div>
           </div>
           <div class="exec-step">
-            <div class="exec-num">2</div>
+            <div class="exec-num">3</div>
             <div class="exec-content">
               <h4>Update the backlog</h4>
               <p>Move the slice status from <code>In Build</code> to <code>In QA</code>. The backlog is a live document — if it's stale, the next session starts from the wrong place.</p>
             </div>
           </div>
           <div class="exec-step">
-            <div class="exec-num">3</div>
+            <div class="exec-num">4</div>
             <div class="exec-content">
               <h4>Invoke code-review-and-quality immediately</h4>
               <p>Do not wait for the solo to trigger it. The handoff is automatic. State code-complete, declare the invocation, and run the review. The solo manages the product — not the QA handoff chain.</p>
@@ -1777,7 +1785,7 @@
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
             <h4>Stale backlog during a build session</h4>
-            <p>The backlog is the solo's persistent context across sessions. Every status change is written immediately — before moving to the next action. Not at session end. Ready → In Build before the first line of code. In Build → In QA before triggering code review. In QA → Done before the next slice starts. If it's stale at any point mid-session, the next session starts from the wrong place.</p>
+            <p>The backlog is the solo's persistent context across sessions. Every status change is written immediately — before moving to the next action. Not at session end. Ready → In Build before the first line of code. In Build → In QA before triggering code review. In QA → In Test after solo sign-off. In Test → Done when phase-test gate opens. If it's stale at any point mid-session, the next session starts from the wrong place.</p>
           </div>
         </div>
 

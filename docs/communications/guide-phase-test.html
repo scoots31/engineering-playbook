@@ -1388,9 +1388,9 @@ Only affected scenarios re-run — no full re-run.
 
       <div class="card">
         <div class="card-body">
-          <p>When the gate opens, the orchestrator does one final action before handing to deploy: it appends a phase completion record to <code style="font-family: monospace; font-size: 12.5px; background: var(--gray-100); padding: 2px 6px; border-radius: 4px; color: var(--amber);">docs/backlog.md</code>. This is the definitive statement that a chunk of work is finished — not a technical log, but a clear declaration you can point at, share with a stakeholder, or orient from at the start of the next session.</p>
+          <p>When the gate opens, the orchestrator does three things before handing to deploy. First: every slice in the phase moves from <strong>In Test</strong> to <strong>Done</strong> in the backlog — this is the only moment Done is set at the slice level. Second: the phase record status updates from <strong>In Progress</strong> to <strong>Completed</strong>, and the phase-level builder confirmation is populated with the phase test results. Third: a phase completion record is appended to <code style="font-family: monospace; font-size: 12.5px; background: var(--gray-100); padding: 2px 6px; border-radius: 4px; color: var(--amber);">docs/backlog.md</code> — a clear declaration you can point at, share with a stakeholder, or orient from at the start of the next session.</p>
           <p>The phase completion record includes: what was delivered (plain English, no slice IDs), slices completed count, test confirmation with report reference, and what comes next in the following phase.</p>
-          <p>Before the record is appended, version control must be clean: all Done slice branches pushed and merged, no open feature branches for this phase, the base branch reflecting the full phase.</p>
+          <p>Before the record is appended, version control must be clean: all In Test slice branches pushed and merged, no open feature branches for this phase, the base branch reflecting the full phase.</p>
         </div>
       </div>
 
@@ -1442,9 +1442,9 @@ Only affected scenarios re-run — no full re-run.
         </thead>
         <tbody>
           <tr>
-            <td>Invoking phase test before all slices are Done</td>
+            <td>Invoking phase test before all slices are In Test</td>
             <td>Testing an incomplete build produces unreliable results. Passes that don't mean anything. Failures that are just "not built yet." The test plan scenarios reference work that doesn't exist.</td>
-            <td>Confirm every slice in the phase is ✓ Done before invoking <code>/phase-test</code>. In QA doesn't count. In Progress definitely doesn't count.</td>
+            <td>Confirm every slice in the phase is <strong>In Test</strong> before invoking phase-test — meaning solo-qa has signed off on each one individually. In QA doesn't count. In Build definitely doesn't count.</td>
           </tr>
           <tr>
             <td>Treating HOLD as optional or soft</td>
