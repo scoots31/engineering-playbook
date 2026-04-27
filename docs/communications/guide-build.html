@@ -1128,7 +1128,7 @@
       <div class="intro-card">
         <p>Build does not decide scope — that was settled in Design Review. It does not design — that was settled in the Design Sprint. Build executes what was decided, correctly, in the right order, with the right anchors confirmed before a single line is written.</p>
         <p>The <strong>tracer bullet goes first</strong>: the thinnest path through the full user journey, end to end, before any individual screen is expanded. Once the core loop is proven to work, each step gets built out in full.</p>
-        <p>Before anchors are even checked, the slice must be in <strong>Ready status</strong>. Any other status — In Review, In QA, Deferred — means the slice does not enter build. No discussion, no partial starts, no "we can work on the design while we build." Ready is the gate before the gate. If there are no Ready slices, build pauses and routes to whatever skill will unblock them — it does not find workarounds.</p>
+        <p>Before anchors are even checked, the slice must be in <strong>Ready status</strong>. Any other status — In Review, In QA, Deferred — means the slice does not enter build. No discussion, no partial starts, no "we can work on the design while we build." Ready is the gate before the gate. If there are no Ready slices, build reaches <strong>Build Active, no Ready slices</strong> status and routes to whatever skill will unblock them — it does not find workarounds.</p>
         <p>Once status is confirmed, every slice requires <strong>four anchors confirmed</strong> before code starts: a design anchor, a data anchor, a done anchor, and a process anchor. Any missing anchor means the slice doesn't start. This is the gate, not a checklist.</p>
         <p>When something surfaces mid-build — a design conflict, a missing data field, a dependency that wasn't fully resolved — it comes up immediately. It is never silently absorbed into the implementation and never resolved by quietly simplifying the design without a decision being made.</p>
         <p>When a slice reaches code-complete, solo-build declares it and hands off to <strong>code-review-and-quality</strong> automatically. That skill chains to <strong>solo-qa</strong> on pass. Build does not declare Done. QA does.</p>
@@ -1158,6 +1158,7 @@
         </div>
         <div class="selection-statement">
           <p>State it out loud before starting: <code>"Building SL-[ID] — [Name]. It's next in journey order, dependencies are clear, and it has all four anchors."</code></p>
+          <p style="margin-top:12px;font-size:13px;color:var(--gray-700);"><strong>The skill reads the plan and states the next slice — it does not ask.</strong> If the solo wants to divert from priority order, they say so. The skill confirms the diversion explicitly before proceeding.</p>
         </div>
       </div>
     </section>
@@ -1740,7 +1741,15 @@
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
             <h4>Starting build on a slice that isn't Ready</h4>
-            <p>A slice in "In Review" has open design decisions. Starting build before those close means the code will contradict a decision made later — producing work that needs to be redone. When there are no Ready slices, the right move is finishing design review and promoting slices, not finding a way to start build anyway. "We can work on the design while we build" is not an option.</p>
+            <p>A slice in "In Review" has open design decisions. Starting build before those close means the code will contradict a decision made later — producing work that needs to be redone. When there are no Ready slices, build reaches <strong>Build Active, no Ready slices</strong> status — the right move is finishing design review and promoting slices, not finding a way to start build anyway. "We can work on the design while we build" is not an option.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Asking the solo what to work on next</h4>
+            <p>The plan and priority already exist in the backlog. Asking "what would you like to work on?" hands a decision back to the solo that the framework already made. Read the backlog, identify the next Ready slice in priority order, and state it.</p>
           </div>
         </div>
 

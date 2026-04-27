@@ -1,6 +1,6 @@
 ---
 name: solo-build
-description: Slice-by-slice build execution for the solo builder framework. Checks slice status before anything else — only Ready slices can enter build. Selects the right slice based on dependency order and user journey sequence, surfaces all four anchors (design, data, done, process) before writing a line of code, and hands off to solo-qa when the slice is code-complete. When no Ready slices exist, diagnoses blockers and hands off to the right skill. Never builds on a non-Ready slice.
+description: Slice-by-slice build execution for the solo builder framework. Checks slice status before anything else — only Ready slices can enter build. States the next Ready slice by plan priority — never asks the solo what to work on. Surfaces all four anchors (design, data, done, process) before writing a line of code, and hands off to solo-qa when the slice is code-complete. When no Ready slices exist, reaches Build Active, no Ready slices status — diagnoses blockers and hands off to the right skill. Never builds on a non-Ready slice.
 ---
 
 # Solo Build
@@ -27,6 +27,13 @@ Name the status. Name the gap. Do not offer alternatives. Do not suggest working
 > "There are no Ready slices right now. [N] slices are In Review, pending design review decisions. The next step is finishing design review to promote slices to Ready — not starting build on In Review slices."
 
 This is not negotiable and not a conversation. A slice in any status other than Ready has open decisions that build will contradict.
+
+---
+
+**Plan-driven selection.** When moving to the next slice, read the backlog, identify the highest-priority Ready slice in journey order, and state it:
+> "Next up: SL-[ID] — [Name]. It's [N] in journey order and first in priority among Ready slices."
+
+Do not ask the solo "what would you like to work on?" The plan exists. The skill reads it and follows it. If the solo wants to divert from priority order, they say so — and the skill confirms the divergence explicitly before proceeding: *"You've asked to move to SL-[X] instead of SL-[Y] which is next in priority. Confirming that diversion and proceeding."*
 
 ---
 
@@ -239,9 +246,9 @@ Never let the backlog get out of sync with the actual build state. It's the solo
 
 ---
 
-## Build Pause — When There Are No Ready Slices
+## Build Active, No Ready Slices
 
-When all current-phase slices are either Done, In Review, or Deferred — and none are Ready — build is paused, not closed. The build phase stays active.
+When all current-phase slices are either Done, In Review, or Deferred — and none are Ready — the build reaches **Build Active, no Ready slices** status. The build is not closed — it is ongoing, waiting for slices to advance to Ready.
 
 **Step 1 — Diagnose.** Read each In Review slice from the backlog. Name the specific reason it isn't Ready:
 - Open design decisions → design review needed
@@ -249,7 +256,7 @@ When all current-phase slices are either Done, In Review, or Deferred — and no
 - Blocked on another slice → name the blocking slice and what it needs
 
 **Step 2 — Surface the state:**
-> "Build is paused — no Ready slices.
+> "Build Active, no Ready slices.
 > - SL-[ID]: [specific blocker, one line]
 > - SL-[ID]: [specific blocker, one line]
 >
@@ -259,7 +266,7 @@ When all current-phase slices are either Done, In Review, or Deferred — and no
 
 **Step 4 — Resume.** When the unblocking skill promotes a slice to Ready, it says: *"SL-[ID] is now Ready. Build can resume."* Solo-build picks back up with the newly promoted slice, starting from the status gate.
 
-Paused build is not a reason to start work on In Review slices. The status gate still applies — always.
+Build Active, no Ready slices is not a reason to start work on In Review slices. The status gate still applies — always.
 
 ---
 
@@ -281,4 +288,4 @@ Paused build is not a reason to start work on In Review slices. The status gate 
 |---|---|---|
 | Starting or partially working on a non-Ready slice | Build contradicts the open design decisions — producing work that needs to be redone | Hard stop on non-Ready status. Name the status, name what's needed to reach Ready, offer nothing else |
 | Offering "we can knock out X while we build Y" | Rationalizes starting work that isn't anchored — exactly the gap the status gate exists to prevent | One path: promote the slice to Ready first, then build |
-| Leaving build after hitting zero Ready slices without diagnosing blockers | The solo doesn't know why they're stuck or where to go next | Run the build pause protocol — diagnose each In Review slice, name the right next skill, hand off |
+| Leaving build after hitting zero Ready slices without diagnosing blockers | The solo doesn't know why they're stuck or where to go next | Surface Build Active, no Ready slices — diagnose each In Review slice, name the right next skill, hand off |
