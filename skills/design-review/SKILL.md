@@ -49,7 +49,7 @@ Before the round begins, read:
 - All design screens in `docs/design/`
 - Current backlog at `docs/backlog.md` (if it exists — first round creates it)
 - Deferred decisions log at `docs/design/deferred-decisions.md`
-- **To-be process map at `docs/process/to-be-[name].md`** — the agreed process. Every slice should implement a step in it.
+- **To-be process map at `docs/process/to-be-[name].md`** — the agreed process. Every slice must implement a step in it.
 - Any spike results in `docs/spikes/`
 - Stakeholder feedback at `docs/stakeholder-feedback/*.md` (if any new files since last round)
 

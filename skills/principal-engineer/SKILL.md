@@ -23,7 +23,7 @@ The PE is not part of every phase. It's called at specific moments where an arch
 The stack is established. Before committing to a design that locks in technical assumptions, have the PE review the proposed approach. Are there constraints in the tech-context that the design needs to account for? Are there architectural risks in the plan that should surface before screens are drawn?
 
 **When a research spike returns a consequential finding**
-A spike investigated a technical unknown and found something significant. Before the finding is absorbed and the project continues, the PE should assess whether it changes the architecture — not just the implementation.
+A spike investigated a technical unknown and found something significant. Before the finding is absorbed and the project continues, the PE assesses whether it changes the architecture — not just the implementation.
 
 **Before plan (prd-to-plan)**
 The design is done, slices are defined. Before sequencing the build, the PE reviews whether the phase sequence makes architectural sense. Infrastructure slices in the right order? Dependencies correctly typed? Anything being deferred that will become a rewrite later?

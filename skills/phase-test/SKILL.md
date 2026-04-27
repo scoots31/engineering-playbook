@@ -347,7 +347,7 @@ Regressions found: [0 / N resolved]
 - No open feature branches for this phase — every slice branch is merged
 - The base branch (`development` or `main`) reflects the full phase
 
-If any slice branches are still open: merge them before marking the phase complete. The phase completion record should reflect a clean, unified state — not a mix of merged and unmerged work.
+If any slice branches are still open: merge them before marking the phase complete. The phase completion record must reflect a clean, unified state — not a mix of merged and unmerged work.
 
 **Why this lives in the backlog:**
 The backlog is the document everyone already reads — the solo at session start, the framework for context, a stakeholder wanting a status. Adding the phase completion record there means the full story is in one place: slice-by-slice progress AND phase-by-phase milestones. No hunting across multiple documents to understand where the project stands.

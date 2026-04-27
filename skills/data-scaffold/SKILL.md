@@ -110,7 +110,7 @@ Generate the data with:
 
 ### Step 4: Wire the Mock Layer to the Screens
 
-Update the design screens to pull from the mock layer instead of having data hardcoded in the HTML. The UI should not know or care whether data is real or mock — it just reads from the data source.
+Update the design screens to pull from the mock layer instead of having data hardcoded in the HTML. The UI must not know or care whether data is real or mock — it just reads from the data source.
 
 How this looks depends on the stack:
 

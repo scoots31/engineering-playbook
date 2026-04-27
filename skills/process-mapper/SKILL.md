@@ -52,9 +52,9 @@ Saved to: `docs/process/as-is-[process-name].md`
 
 ## The To-Be Map
 
-The to-be map is the **process contract**. It defines how the process will work when the product is built. Every screen in the design sprint should trace to a step in the to-be map. Every slice in the backlog should implement a step or support a decision point. Every test scenario in phase test should walk a path through the to-be map.
+The to-be map is the **process contract**. It defines how the process will work when the product is built. Every screen in the design sprint must trace to a step in the to-be map. Every slice in the backlog must implement a step or support a decision point. Every test scenario in phase test must walk a path through the to-be map. Anything that doesn't trace to the map is surfaced as a decision — it is never silently absorbed.
 
-The to-be map is agreed on during discover — with the solo, before any design or build work begins. Once agreed, it is the line that nothing should drift from.
+The to-be map is agreed on during discover — with the solo, before any design or build work begins. Once agreed, nothing drifts from it without an explicit decision. Any change to the to-be map requires invoking process-change — the map is updated, not quietly accommodated.
 
 **To-be map format:**
 

@@ -82,7 +82,7 @@ When the conversation has enough shape — you understand who this is for, rough
 
 **What triggers it:** The idea is clear enough to picture but still abstract enough that a visual would sharpen the conversation. Usually happens after you understand the value moment and the preliminary process sketch is done.
 
-**What it is:** A single rough HTML screen — intentionally low fidelity — showing approximately what the moment of value looks like. Structure and content only. No polish. Reference the process sketch when deciding what to show — the screen should reflect a step in the to-be process.
+**What it is:** A single rough HTML screen — intentionally low fidelity — showing approximately what the moment of value looks like. Structure and content only. No polish. Reference the process sketch when deciding what to show — the screen must reflect a step in the to-be process. If no process step maps cleanly to the value moment, that is a signal — the process sketch needs more work before the visual will be useful.
 
 **What it does:** Gives the conversation something to react to. Almost always surfaces things that weren't said — a field that implies a data source, a flow that has a gap, a capability that looked simple but isn't. The sketch doesn't have to be right. It has to be react-able.
 

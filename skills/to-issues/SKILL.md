@@ -32,7 +32,7 @@ If `gh` is not authenticated: `gh auth login` and follow the prompts.
 
 ### Step 2 — Determine Issue Structure
 
-Each slice in the plan becomes one GitHub issue. The issue must be self-contained — a builder should be able to start the slice from the issue alone without reading any other document.
+Each slice in the plan becomes one GitHub issue. The issue must be self-contained — a builder must be able to start the slice from the issue alone without reading any other document.
 
 **Required fields per issue:**
 

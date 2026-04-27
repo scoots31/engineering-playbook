@@ -65,7 +65,7 @@ Before producing anything, read:
 If no discovery brief exists, stop. Run the `discover` skill first.
 If no to-be process map exists, stop. The process map should have been produced during discover — run that step before continuing.
 
-**Cross-reference screens against the to-be map as the sprint progresses.** Every step in the to-be map should have at least one screen that supports it. After each screen is approved, annotate the to-be map with the screen reference. Gaps — steps with no screen — are surfaced as decisions: is this handled in the background, or does it need a UI state?
+**Cross-reference screens against the to-be map as the sprint progresses.** Every step in the to-be map must have at least one screen that supports it. After each screen is approved, annotate the to-be map with the screen reference. Any step with no screen is a gap — surface it as a decision immediately: is this step handled in the background, or does it need a UI state? Do not move to the next screen until the gap is resolved.
 
 > "Step 4 in the to-be map — 'system validates eligibility' — doesn't have a screen yet. Is this a background step the user never sees, or does it need an error/confirmation state on screen?"
 
@@ -184,7 +184,7 @@ Once the hero screen is approved (structure + skin), extend to remaining screens
 
 Each screen inherits the design system established in the hero screen. The skin does not change screen to screen — only the content and layout patterns.
 
-For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens should move faster than the hero because the design language is already settled.
+For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens move faster than the hero because the design language is already settled.
 
 Save each screen to `docs/design/sprint-[screen-id].html`.
 
@@ -202,7 +202,7 @@ For each screen, ask two questions:
 > "Is everything visible on this screen in scope for Phase 1, or are we deferring anything?"
 > "What has to exist behind this screen before it can work — data, APIs, logic — and is any of that a Phase 1 dependency or something we're not building yet?"
 
-The AI should proactively flag both categories:
+Flag both categories proactively:
 - Visible elements that imply multiple data sources or complex queries
 - UI controls that look simple but have significant backend implications
 - Features that require infrastructure that isn't in scope yet

@@ -179,7 +179,7 @@ The automatic chain (solo-build → code-review-and-quality → solo-qa) should 
 > "SL-007 is showing In QA but there's no code review confirmation in the slice record. Code review may not have run. Should we run it now before your sign-off?"
 
 **Backlog currency**
-Slice statuses should reflect actual state. If the At a Glance counts look inconsistent with what's been described as happening, flag it. Don't read every slice — read the header counts only.
+Verify slice statuses reflect actual state. If the At a Glance counts look inconsistent with what's been described as happening, flag it — don't wait to be asked. Don't read every slice — read the header counts only.
 
 **Open items accumulating**
 - qa-triage items unresolved for more than one session → surface

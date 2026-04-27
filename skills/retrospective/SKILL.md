@@ -36,7 +36,7 @@ When anything surfaces during a session that's worth examining — a skill that 
 
 No analysis. No proposed fix. Just the observation while it's fresh. The retro processes it later.
 
-**Positive observations are captured too.** Something that worked better than expected is as valuable as something that didn't. It should be reinforced, not accidentally removed in a future update.
+**Positive observations are captured too.** Something that worked better than expected is as valuable as something that didn't. Reinforce it — don't accidentally remove it in a future update.
 
 ---
 

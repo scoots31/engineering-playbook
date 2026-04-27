@@ -68,7 +68,7 @@ After all planned updates are complete:
 
 Follow the deploy path from `docs/tech-context.md`.
 
-- Deploy during low-traffic periods when possible
+- Deploy during low-traffic periods. If the solo wants to deploy during a high-traffic window, name that explicitly and confirm before proceeding.
 - Know the rollback path before deploying — how to revert to the previous lockfile if needed
 - Verify in production that the application is running correctly after deploy
 

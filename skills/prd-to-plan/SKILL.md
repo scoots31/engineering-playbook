@@ -67,7 +67,7 @@ Each slice cuts through ALL integration layers end-to-end, delivering a narrow b
 **Slice rules:**
 - Each slice must be independently demoable or verifiable
 - Prefer many thin slices over few thick ones
-- The first slice should prove the riskiest assumption in the system
+- The first slice must prove the riskiest assumption in the system. If the current ordering doesn't satisfy this, reorder before presenting the plan.
 - Later slices build on confirmed foundations, not on hope
 - Horizontal slices (e.g. "build all the DB models first") are not allowed — they defer integration risk
 
@@ -146,9 +146,9 @@ For every Screen deliverable that reads from external data, define a companion L
 
 Two sequencing forces in tension — resolve them explicitly:
 
-**Risk order:** Address the hardest, most uncertain, most load-bearing parts first. The first slice should prove the riskiest assumption.
+**Risk order:** Address the hardest, most uncertain, most load-bearing parts first. The first slice must prove the riskiest assumption. If it doesn't, reorder until it does.
 
-**Process order:** Slices that implement earlier steps in the to-be map should generally come before slices that implement later steps. A user can't reach Step 3 if Step 1 isn't built.
+**Process order:** Slices that implement earlier steps in the to-be map come before slices that implement later steps. A user can't reach Step 3 if Step 1 isn't built. Follow process order — don't reorder these for convenience.
 
 **When they conflict:** Risk order wins for infrastructure and foundation slices. Process order wins for feature slices once infrastructure is in place. Name the conflict explicitly when it occurs:
 > "Step 3 (slot context display) implements an earlier process step than Step 5 (context switch), but Step 5 de-risks the state management approach we haven't proven yet. Building Step 5 first as a tracer."
@@ -179,7 +179,7 @@ Show the full plan. Ask:
 - Are uncovered process steps accounted for correctly?
 - Are any open questions blockers, or can we proceed with a stated assumption?
 
-Iterate until approved. When approved, update `docs/backlog.md` with the process anchor for each slice — it should be in the slice record before build starts.
+Iterate until approved. When approved, update `docs/backlog.md` with the process anchor for each slice — it must be in the slice record before build starts.
 
 ### 9. Optional Next Step
 
