@@ -638,6 +638,7 @@ These files may be changed in any curator session. The curator is responsible fo
 | File | Purpose | Changes when |
 |------|---------|-------------|
 | `skills/*/SKILL.md` | Behavior instructions for each skill | Skill behavior, routing, output, or anchors change |
+| `docs/records-spec.md` | Canonical field definitions for Slice, Deliverable, Phase records | Record format, status chain, verification model, re-phasing protocol change. Skills read this first — any record-level behavior change starts here |
 | `README.md` | AI-facing overview + external overview | Skill count, phase list, always-on table, repo structure change |
 | `docs/solo-builder-framework.md` | Full phase chain + principles source | Phase flow, skill table, always-on list, session modes, gates change |
 | `docs/communications/skills-reference.html` | All skill cards + sidebar nav | Any skill added, removed, or described differently |
@@ -645,9 +646,12 @@ These files may be changed in any curator session. The curator is responsible fo
 | `docs/communications/deck-business.html` | Executive deck (11 slides) | Material framework changes affecting the story told to business audiences |
 | `docs/communications/deck-solo.html` | Practitioner deck (12 slides) | Phase flow, mechanics, QA chain, anchors change |
 | `docs/communications/guide-build.html` | Build phase guide | solo-build, code-review-and-quality, solo-qa, qa-triage behavior changes |
+| `docs/communications/guide-qa.html` | QA phase guide | solo-qa, code-review-and-quality behavior changes |
+| `docs/communications/guide-phase-test.html` | Phase test guide | phase-test behavior changes |
 | `docs/communications/guide-discover.html` | Discover phase guide | discover, process-mapper behavior changes |
+| `docs/communications/backlog-status-reference.html` | Status reference for Slice/Deliverable/Phase | Any status name change, new status added, ownership change |
 | `docs/communications/index.html` | Communications hub | New docs added, existing docs renamed or removed |
-| `docs/communications/blog.html` | Release notes | Significant framework changes |
+| `docs/communications/blog.html` | Release notes | Significant framework changes — always included in the cascade for any material behavior change |
 | `templates/cursor-user-rules-global-playbook.md` | Cursor User Rules source template | Any behavior change affecting Cursor |
 | `templates/claude-global-playbook.md` | Claude global playbook template | Any behavior change affecting Claude Code |
 | `~/.claude/CLAUDE.md` | Installed Claude rules — authoritative Output Contract | Output Contract changes (always first), session modes, routing logic |
