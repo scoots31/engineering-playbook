@@ -46,6 +46,7 @@ The solo is always the fourth voice — domain expert, final decision maker, the
 ### Step 1: Read Current State
 
 Before the round begins, read:
+- `docs/records-spec.md` — the canonical record format. Every slice created this round must conform to it.
 - All design screens in `docs/design/`
 - Current backlog at `docs/backlog.md` (if it exists — first round creates it)
 - Deferred decisions log at `docs/design/deferred-decisions.md`
@@ -151,8 +152,9 @@ As each element reaches enough clarity, define it as a slice. A slice is the uni
 
 **A slice is ready to define when:**
 - The design reference is clear — you can point at the exact element on a screen
-- You can describe what it does in one sentence
+- You can write a plain language description and a technical description independently
 - You can state 2–3 criteria that would tell you it's built correctly
+- You can define a self-verification checklist for the builder
 
 **A slice is NOT ready to define when:**
 - The design for it is still unclear
@@ -164,28 +166,82 @@ For slices not yet ready — keep them as named items in the backlog with status
 **Coherence check — before defining a new slice:**
 Does the codebase already express this pattern somewhere? Ask: are we extending something that exists, or creating something new? If extending — build on the existing vocabulary. If new — that's valid, but name it explicitly in the slice notes so the next session isn't surprised by the divergence.
 
+**When defining a slice, capture all fields in full:**
+
+```
+SL-[ID] · [Name]
+
+Status: In Review
+Phase: Pending prd-to-plan
+Deliverable: Pending prd-to-plan
+
+Plain language description:
+[What the solo will see or have when this slice is done. No technical
+terms. As long as needed to be unambiguous.]
+
+Technical description:
+[What the builder needs to know — implementation approach, constraints,
+edge cases. As long as needed.]
+
+Design anchor: [screen file — specific element]
+Data anchor: [file path — specific fields | Pending data-scaffold | None]
+Process anchor: [to-be step name] → [main path | branch | exception | infrastructure]
+
+References:
+  - [source — why the builder must read this to execute the slice correctly]
+
+Done criteria:
+  - [verifiable statement]
+  - [verifiable statement]
+  - [verifiable statement]
+
+Self-verification checklist:
+  - [what the builder confirms this specific slice does correctly before presenting]
+
+Builder confirmation:
+Pending build
+
+Depends on: [SL-XXX | external dependency | none]
+Notes: [decisions, constraints, spike results, non-obvious things]
+```
+
+**Field rules:**
+- Plain language description and technical description are written fresh and independently. One does not summarize the other.
+- Data anchor is marked "Pending data-scaffold" if mock data does not exist yet — never left blank.
+- Phase and deliverable are marked "Pending prd-to-plan" — never left blank.
+- References lists only vital sources — things the builder cannot skip without producing the wrong result.
+- Done criteria must be verifiable without ambiguity. "It works" is not a criterion.
+
 ### Step 4: Determine Slice Status
 
 Every slice in the backlog has one of these states at all times:
 
 | Status | Meaning |
 |--------|---------|
-| `Ready` | Design reference clear, done criteria set, dependencies known — can be built now |
-| `In Review` | Identified but needs more refinement before it can be built |
-| `Blocked` | Waiting on a specific spike result — named explicitly |
-| `Deferred` | Explicitly set aside — not in current scope, trigger condition noted |
-| `In Build` | Currently being worked on |
-| `Done` | Complete and verified |
+| `In Review` | Identified but needs more definition before it can be built |
+| `Blocked` | Waiting on a named dependency — named explicitly |
+| `Deferred` | Explicitly set aside — trigger condition noted |
+| `Ready` | Fully defined, can be built now |
+| `In Build` | Work is active on this slice |
+| `In QA` | Code complete, solo-qa running |
+| `In Test` | QA passed, phase-test running |
+| `Done` | Built and verified against its data anchor |
 
 **A slice reaches Ready when ALL of these are true:**
-- Design reference is unambiguous — specific screen and element
-- Done looks like is defined — 2–3 criteria, not vague
-- Dependencies are identified and either resolved or not blocking
+- Plain language description written — no technical terms, clear to the solo
+- Technical description written — precise enough for a builder to start without questions
+- Design anchor is unambiguous — specific screen file and specific element
+- Process anchor is set — which to-be step, which path, or explicitly documented as infrastructure
+- Done criteria defined — 2–3 verifiable statements, not vague
+- Self-verification checklist defined — what the builder confirms before presenting
+- Dependencies identified — resolved or explicitly not blocking
 - No open spike on it
-- **Process anchor is set** — which step in the to-be map this slice implements, or explicitly documented as infrastructure/background logic that doesn't map to a user-facing step
-- The solo confirms it's clear enough to hand to a builder
+- Data anchor filled OR explicitly marked "Pending data-scaffold"
+- Solo confirms it is clear enough to hand to a builder
 
-This is the answer to "when do we build it." Not when the overall design is done. When this specific slice has these things. The backlog shows you — no ceremony required.
+A slice cannot reach Ready with any field blank or marked as pending except data anchor and process anchor where the explicit pending notation is present. Every other field must be complete.
+
+This is the answer to "when do we build it." Not when the overall design is done. When this specific slice has all of these things. The backlog shows you — no ceremony required.
 
 ### Step 5: The Build Signal
 
@@ -224,47 +280,66 @@ This document serves two audiences equally: the solo (knowing where they are and
 
 ## At a Glance
 
+### Slice Status
 | Status | Count |
 |--------|-------|
-| ✅ Ready | N |
 | 🔄 In Review | N |
-| 🔬 Blocked (spike) | N |
+| 🔬 Blocked | N |
 | ⏸ Deferred | N |
+| ✅ Ready | N |
 | 🔨 In Build | N |
+| 🔍 In QA | N |
+| 🧪 In Test | N |
 | ✓ Done | N |
 
-**Currently in build:** [SL-XXX, SL-XXX]
-**Next up (Ready, not started):** [SL-XXX, SL-XXX]
-**Open spikes:** [spike topic → blocks SL-XXX]
+### Traffic
+| | |
+|---|---|
+| **Currently in build** | SL-XXX · [Name], SL-XXX · [Name] |
+| **Next up (Ready, not started)** | SL-XXX · [Name], SL-XXX · [Name] |
+| **Blocked — waiting on** | SL-XXX · [spike/dependency name] |
+| **Open spikes** | [spike topic → blocks SL-XXX] |
 
----
-
-## Backlog
-
-| ID | Name | Phase | Status | Depends on |
-|----|------|-------|--------|------------|
-| SL-001 | [Name] | 1 | ✅ Ready | — |
-| SL-002 | [Name] | 1 | 🔄 In Review | — |
-| SL-003 | [Name] | 1 | 🔬 Blocked | Spike: [topic] |
-| SL-004 | [Name] | 2 | ⏸ Deferred | — |
+*Phases and deliverables added when prd-to-plan runs.*
 
 ---
 
 ## Slice Detail
 
 ### SL-001 · [Name]
-**Status:** ✅ Ready  
-**Phase:** 1  
-**Design reference:** [screen file — specific element]  
-**Description:** [One sentence — what this slice builds]  
-**Process anchor:** [to-be process step name] → [main path / branch / exception / infrastructure]  
-**Done looks like:**
-- [Acceptance criterion 1]
-- [Acceptance criterion 2]
-- [Acceptance criterion 3]
 
-**Depends on:** [SL-XXX / API: X / none]  
-**Notes:** [Anything relevant — decisions made, constraints, spike results that informed this]
+Status: In Review
+Phase: Pending prd-to-plan
+Deliverable: Pending prd-to-plan
+
+Plain language description:
+[What the solo will see or have when this slice is done. No technical
+terms. As long as needed to be unambiguous.]
+
+Technical description:
+[What the builder needs to know — implementation approach, constraints,
+edge cases. As long as needed.]
+
+Design anchor: [screen file — specific element]
+Data anchor: [file path — specific fields | Pending data-scaffold | None]
+Process anchor: [to-be step name] → [main path | branch | exception | infrastructure]
+
+References:
+  - [source — why the builder must read this to execute the slice correctly]
+
+Done criteria:
+  - [verifiable statement]
+  - [verifiable statement]
+  - [verifiable statement]
+
+Self-verification checklist:
+  - [what the builder confirms this specific slice does correctly before presenting]
+
+Builder confirmation:
+Pending build
+
+Depends on: [SL-XXX | external dependency | none]
+Notes: [decisions, constraints, spike results, non-obvious things]
 
 ---
 
@@ -281,6 +356,18 @@ This document serves two audiences equally: the solo (knowing where they are and
 **Spikes triggered:** [Topics]
 **Design changes:** [What was updated]
 **Next round focus:** [What needs attention next]
+
+---
+
+## Decisions and Change Log
+
+*Append-only. Every material change to the plan is logged here.*
+
+### [YYYY-MM-DD] — [What changed]
+Decision: [what was decided]
+Reason: [why]
+Impact: [what records were updated]
+Confirmed by: Solo
 ```
 
 ---
@@ -328,6 +415,11 @@ End each round by stating explicitly:
 | Skipping the process coverage check | Slices pile up around screens, whole process steps go unbuilt | Run coverage map every round — every to-be step must have a slice or an explicit decision |
 | Slices reaching Ready without a process anchor | prd-to-plan can't sequence by process order; phase test has no grounding | Process anchor is a Ready requirement, not an optional field |
 | Defining a new slice without a coherence check | Creates silent duplicates — two things do the same job, neither done well | Ask if the codebase already expresses this pattern before defining. Extend or explicitly diverge. |
+| Single description field on a slice | Two audiences — the solo and the builder — need different language | Every slice gets a plain language description and a technical description, written independently |
+| Copying description from deliverable into a slice or vice versa | Descriptions copied across levels haven't been thought through at the right scope | Each description is written fresh for its object — never derived from the level above or below |
+| Data anchor left blank instead of marked Pending | A blank field looks like an oversight; a pending marker is a decision | Mark "Pending data-scaffold" explicitly — never omit |
+| Self-verification checklist missing before Ready | The builder has no defined standard to check their work against before presenting | Self-verification checklist is a Ready requirement — if it's not defined, the slice is not Ready |
+| Phase and deliverable left blank | Creates partial records that prd-to-plan has to guess at | Mark "Pending prd-to-plan" explicitly on every new slice |
 
 ---
 
