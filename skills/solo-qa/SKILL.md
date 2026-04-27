@@ -148,21 +148,23 @@ Wait for the solo's response. Do not mark Done until they confirm.
 
 | Response | Action |
 |----------|--------|
-| "Yes / Looks good / Done" | Mark Done, update backlog, check if dependent slices unblock |
+| "Yes / Looks good / Done" | Mark In Test, update backlog, check if dependent slices unblock |
 | "Almost — [small thing]" | Fix it, re-present. No need to re-run full AI verification for minor adjustments |
 | "No — [specific issue]" | Return to In Build if it's a build issue. Flag for design review if it's a design issue |
 | "Something feels off but I can't place it" | Ask one focused question: "Is it the layout, the data, or the behavior?" Narrow it, then decide path forward |
 
 ---
 
-## Marking Done
+## Marking In Test
 
 When solo confirms:
 
-1. Update backlog: status → `✓ Done`
-2. Add to slice detail: *"Done [date]. Verified: [done criteria summary]. Code review: passed. AI verification: passed. Solo sign-off: confirmed."*
+1. Update backlog: slice status → `In Test`
+2. Add to slice detail: *"QA passed [date]. Verified: [done criteria summary]. Code review: passed. AI verification: passed. Solo sign-off: confirmed."*
 3. Check if any slices were blocked on this one — if so, they can now move to Ready or In Build
 4. Update At a Glance counts in the backlog header
+
+The slice moves to `Done` when phase-test completes and the gate opens. `In Test` means: QA passed, waiting on phase-level verification.
 
 **Then handle version control** — read `docs/tech-context.md` for the project's branching model and follow it:
 
@@ -191,10 +193,13 @@ When all slices in a deliverable are Done, solo-qa runs a deliverable-level acce
 
 ### Step 1 — Read the Deliverable Record
 
-From `docs/backlog.md`, read the deliverable's three fields:
-- **Technical spec** — confirms what was supposed to be built at the implementation level
-- **Solo description** — what gets presented to the solo at acceptance time
-- **Acceptance criteria** — what gets verified. These are the same criteria that were agreed before build started.
+From `docs/backlog.md`, read the full deliverable record. The fields needed for this check:
+- **Plain language description** — what gets presented to the solo at acceptance time; read this exactly, don't paraphrase
+- **Technical description** — what was supposed to be built at the implementation level; confirms scope
+- **Screens** — which screens this deliverable touches (primary and affected); confirms what to open in the browser
+- **Acceptance criteria** — what gets verified; these are the same criteria agreed before build started
+- **Self-verification checklist** — what the builder should have confirmed before triggering this check
+- **Builder confirmation** — already populated by the builder at presentation time; read it before running your own verification. If it's missing or empty, stop: the builder did not complete their self-verification. Return to In Build.
 
 Also read the **type** — it determines the verification method.
 
@@ -263,7 +268,7 @@ Wait for the solo's response. Do not advance to the next deliverable until they 
 ### Step 4 — Record Acceptance
 
 When the solo accepts:
-1. Update backlog: deliverable status → `✓ Accepted`
+1. Update backlog: deliverable status → `Accepted`
 2. Add acceptance record: `"Accepted [date]. Criteria verified. Solo sign-off confirmed."`
 3. Check if all deliverables in the phase are now Accepted — if so, surface the phase gate:
 > "All deliverables in this phase are accepted. Phase gate: all slices Done, all deliverables accepted. Ready for Phase Test when you are."
@@ -288,19 +293,20 @@ When any of these surface — during AI verification or solo sign-off — invoke
 
 ## The Done Definition — In Full
 
-A slice is Done when ALL of the following are confirmed:
+A slice moves through four confirmed states before reaching Done:
 
-| Check | Who | What |
+| Check | Who | Status after |
 |-------|-----|------|
-| Code quality | `code-review-and-quality` | Built to standard — patterns, data sourcing, cleanliness, docs, stack |
-| Gate confirmation | `solo-qa` | Code review pass logged in backlog before Part 1 starts |
-| Done criteria | AI (solo-qa Part 1) | Each criterion verified actively with named evidence |
-| Design fidelity | AI (solo-qa Part 1) | Built implementation matches design screen clearly |
-| Visual confirmation | Solo (Part 2) | Looked at it running in browser, matches the design |
-| Behavior confirmation | Solo (Part 2) | Feels right in the context of the product |
-| Criteria confirmation | Solo (Part 2) | Done criteria hold in practice, not just on paper |
+| Code quality | `code-review-and-quality` | — (still In QA) |
+| Gate confirmation | `solo-qa` | — (begins Part 1) |
+| Done criteria | AI (solo-qa Part 1) | — (still In QA) |
+| Design fidelity | AI (solo-qa Part 1) | — (still In QA) |
+| Visual confirmation | Solo (Part 2) | — |
+| Behavior confirmation | Solo (Part 2) | — |
+| Criteria confirmation | Solo (Part 2) | **In Test** |
+| Phase-level verification | `phase-test` | **Done** |
 
-All required. In order. Solo sign-off is the final gate and cannot be skipped or substituted.
+All required. In order. The slice reaches `In Test` when solo signs off. It reaches `Done` when phase-test confirms the full phase works end-to-end. Solo sign-off is the slice gate and cannot be skipped or substituted. Phase-test is the phase gate and cannot be skipped or substituted.
 
 ---
 

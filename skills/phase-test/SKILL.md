@@ -20,21 +20,21 @@ The solo invokes `/phase-test` when they have made a deliberate decision: this p
 **Readiness — three states:**
 
 **Ready (invoke now)**
-- All current-phase slices show ✓ Done in the backlog
+- All current-phase slices show `In Test` in the backlog — meaning solo-qa has signed off on each one individually
 - All open qa-triage items from the build phase are resolved, or explicitly deferred to a future phase with a backlog entry
-- All integration deliverables are Done — not just the Screen companions
+- All integration deliverables are Accepted — not just the Screen companions
 - No new slices are being added — scope is frozen for this phase
 - The solo can describe the core user journey without checking the design
 
 **Not yet (hold off)**
-- Any slice is In Progress, In QA, or In Review
+- Any slice is still In Build, In QA, or blocked — not yet reached `In Test`
 - Open qa-triage items from the build phase haven't been classified yet
-- Integration deliverables were scoped but haven't completed
+- Integration deliverables were scoped but haven't been Accepted
 - The solo isn't sure what's left — uncertainty means the backlog isn't current, not that nothing's left
 
 **Overdue (invoke now — you're drifting)**
-- All slices have been Done for multiple sessions and new slices keep being added that weren't in the original plan
-- The solo is running solo-qa on slices that already show ✓ Done
+- All slices have been `In Test` for multiple sessions and new slices keep being added that weren't in the original plan
+- The solo is running solo-qa on slices that already show `In Test`
 - Changes are being made as polish or "small improvements" rather than resolving a specific open item
 - Scope is expanding to absorb work that could be Phase 2
 
@@ -46,9 +46,10 @@ The key reframe: phase test isn't evidence you're done — it's the process for 
 
 Before any specialist lens runs, read:
 
+- `docs/records-spec.md` — canonical record formats and status definitions; confirms what each status means before any status transitions are made
 - `docs/discovery-brief.md` — the original use cases, the problem being solved, the user and their need
 - `docs/design/sprint-[id].html` — the design artifact, all screens, the intended journey
-- `docs/backlog.md` — all Done slices, their done criteria, their design and data anchors
+- `docs/backlog.md` — all In Test slices, their done criteria, their design and data anchors, and the phase record being tested
 - `docs/data-mapping.md` — field names, API sources, expected data shapes
 - `docs/tech-context.md` — stack, API patterns, environment configuration
 
@@ -352,13 +353,20 @@ If any slice branches are still open: merge them before marking the phase comple
 **Why this lives in the backlog:**
 The backlog is the document everyone already reads — the solo at session start, the framework for context, a stakeholder wanting a status. Adding the phase completion record there means the full story is in one place: slice-by-slice progress AND phase-by-phase milestones. No hunting across multiple documents to understand where the project stands.
 
+**When the gate opens, execute these backlog updates immediately — before handing to deploy:**
+
+1. **Update all slice statuses** — every slice in this phase moves from `In Test` to `Done` in `docs/backlog.md`. This is what `Done` means: built, QA signed-off, and phase-verified end-to-end.
+2. **Update the phase record status** — in the phase record in `docs/backlog.md`, update `Status: In Progress` to `Status: Completed`. Also populate the phase-level `Builder confirmation` field with the phase test results summary.
+3. **Update At a Glance** — reflect the new Done counts and Completed phase status.
+
 **What "tested and ready to deploy" means:**
-- All phase slices are `✓ Done` in the backlog
+- All phase slices are `Done` in the backlog — updated in step 1 above
+- Phase record shows `Completed` in the backlog — updated in step 2 above
 - Phase test gate is OPEN (confirmed in the report)
 - No open qa-triage items from the phase test
 - Acceptance reviewer confirmed use case intent
 
-That status line is not a guess or an optimistic label. It's a confirmed statement with receipts in the phase test report.
+That status line is not a guess or an optimistic label. It's a confirmed statement with receipts in the phase test report — and the backlog record matches it.
 
 ---
 
@@ -394,7 +402,7 @@ Contains:
 
 | Anti-Pattern | Problem | Instead |
 |---|---|---|
-| Invoking phase-test before all Phase 1 slices are Done | Testing an incomplete build produces unreliable results | Confirm all slices Done first |
+| Invoking phase-test before all current-phase slices are In Test | Testing an incomplete build produces unreliable results | Confirm all slices reached In Test (solo-qa signed off) before invoking |
 | Skipping environment readiness | Everything downstream is unreliable | Stage 1 must pass before anything else runs |
 | Stopping the full test run on first failure | Misses other failures; incomplete picture | Route to qa-triage, continue with other scenarios |
 | Treating acceptance review as a repeat of testing | Different question entirely | Tester asks "does it work?" — acceptance asks "is it the right thing?" |
