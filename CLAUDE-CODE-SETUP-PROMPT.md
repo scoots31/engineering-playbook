@@ -27,7 +27,6 @@ framework for this session:
 
 1. ~/Developer/engineering-playbook/README.md — what this is and how it's organized
 2. ~/Developer/engineering-playbook/skills/start/SKILL.md — how to route new projects
-3. ~/Developer/engineering-playbook/workshop/README.md — the companion framework for spikes and tools
 
 The session mode model: default is bare. Say "guided mode" to engage the full phase chain and
 always-on skills. Say "piloted mode" to load always-on skills and invoke phases manually.

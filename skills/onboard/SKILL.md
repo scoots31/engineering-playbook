@@ -9,14 +9,14 @@ description: Brings an existing project into the Solo Builder Framework. Reads t
 
 **Core question:** "What has already been decided and built — and what's the right the framework starting point from here?"
 
-Onboard is for projects that started outside the the framework. Discovery was done in conversation. Planning happened in notes. Architecture decisions live in a README. The work is real — it just isn't in framework format. Onboard translates it without redoing it.
+Onboard is for projects that started outside the framework. Discovery was done in conversation. Planning happened in notes. Architecture decisions live in a README. The work is real — it just isn't in framework format. Onboard translates it without redoing it.
 
 ---
 
 ## When to Run
 
 Invoked when:
-- The solo has prior work on a project and wants to bring it into the the framework
+- The solo has prior work on a project and wants to bring it into the framework
 - Opening message signals existing work: "I have prior work on [project]", "I want to
   pick up [project] using the framework", "I've been working on [project] outside the framework"
 
@@ -59,11 +59,11 @@ For each file read: note filename, rough content type, key topics covered.
 
 ## Step 3 — Map to the framework Gate Artifacts
 
-For each the framework gate file, search the inventory for matching content. Matching is
+For each framework gate file, search the inventory for matching content. Matching is
 semantic — content in `ff-eval-notes.md` may be a discovery brief; a `stack.md` may
 be tech context. Name doesn't matter. Content does.
 
-| the framework Gate File | Look for |
+| Framework Gate File | Look for |
 |---|---|
 | `docs/discovery-brief.md` | Use cases, user stories, problem statement, who uses it and why |
 | `docs/process/as-is-*.md` | Current (manual/existing) process description |
@@ -115,7 +115,7 @@ Process maps:
   - Walk me through the target flow — what does the user do, step by step?
 ```
 
-Work through gaps in conversation. As each is answered, synthesize into the the framework file
+Work through gaps in conversation. As each is answered, synthesize into the framework file
 and confirm before writing.
 
 ---

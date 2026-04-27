@@ -1,9 +1,4 @@
-# Solo Builder Framework — Working Document
-**Started:** 2026-04-20
-**Updated:** 2026-04-20
-**Status:** Design sprint skill built. Brainstorming integration next.
-
----
+# Solo Builder Framework
 
 ## The Core Problem
 
@@ -120,7 +115,7 @@ This works because most people can't describe what they want visually until they
 
 ## Always-On Skills
 
-These four skills activate when the user chooses **guided** or **assisted** mode. In bare mode (the default), they do not load. Once activated, they persist for the session — they do not reload on each skill invocation.
+These four skills activate when the user chooses **guided** or **piloted** mode. In bare mode (the default), they do not load. Once activated, they persist for the session — they do not reload on each skill invocation.
 
 | Skill | Active across | Function |
 |-------|--------------|----------|
@@ -385,7 +380,7 @@ Context fills over time. Long sessions with guided or piloted mode active accumu
 - `piloted` — always-on loads once, phase skills on demand. Moderate cost. Right for builders who know the framework and want continuity without the full chain.
 - `bare` — nothing loads until invoked. Zero overhead. Right for focused execution, single-skill sessions, or when you know exactly what you need.
 
-Mode can be switched mid-project. If a session starts on a familiar phase, drop to assisted. If you need one specific skill, go bare.
+Mode can be switched mid-project. If a session starts on a familiar phase, drop to piloted. If you need one specific skill, go bare.
 
 **Session length — end at gates, not mid-phase**
 Phase gates are natural session reset points. The gate output is what the next phase reads — not conversation history. A fresh session that reads the gate output starts with full context and zero overhead.

@@ -140,22 +140,21 @@ Status: DEPLOYED ✅ / FAILED ❌
 
 **When:** Deploy requires running a specific command — a CLI tool, a script, a direct push.
 
-Tech-context should have documented the exact command. The deploy skill surfaces it and confirms the solo has executed it.
+Tech-context should have documented the exact command. The deploy skill reads it, asks permission, then runs it directly.
 
 **Steps:**
 1. Read the deploy command from tech-context
-2. Present it to the solo:
-   > "Deploy command for this project: `[command from tech-context]`
-   > Run this from [directory], confirm it completes successfully, then confirm here."
-3. Wait for solo confirmation
-4. Log the deploy with timestamp and solo confirmation
+2. State the command and ask permission:
+   > "Ready to deploy. Command: `[command from tech-context]`, run from [directory]. Say go and I'll execute it."
+3. On confirmation, run the command directly and capture the output
+4. Log the deploy with timestamp and output
 
 **Report:**
 ```
 Deploy — Phase [N]
 Method: Manual CLI
 Command: [command]
-Confirmed by: Solo — [timestamp]
+Output: [captured output]
 Status: DEPLOYED ✅
 ```
 

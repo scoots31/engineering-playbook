@@ -43,9 +43,7 @@ Ask the user (or infer from context): which brand's design language fits this pr
 
 ### 2. Fetch the DESIGN.md
 
-Direct the user to copy the DESIGN.md from `https://getdesign.md/<brand>/design-md` into their project root as `DESIGN.md`.
-
-If the user wants you to reference it directly in context, ask them to paste the contents.
+Use WebFetch to retrieve the DESIGN.md from `https://getdesign.md/<brand>/design-md` and write it to the project root as `DESIGN.md`. Confirm the file was written before proceeding.
 
 ### 3. Apply it
 

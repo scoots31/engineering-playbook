@@ -183,4 +183,4 @@ Iterate until approved. When approved, update `docs/backlog.md` with the process
 
 ### 9. Optional Next Step
 
-Offer to run `/to-issues` to convert the approved plan into GitHub issues in dependency order.
+Offer to convert the approved plan into GitHub issues in dependency order.

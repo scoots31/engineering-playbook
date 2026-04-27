@@ -17,11 +17,10 @@ I've cloned the Solo Builder Framework repo. I don't have the User Rules pasted 
 
 1. README.md — what this is and how it's organized
 2. skills/start/SKILL.md — how to route new projects (includes Workshop pre-check)
-3. workshop/README.md — the companion framework for spikes and tools
-4. The session mode model: default is bare (no routing, no always-on). Say "guided mode" to engage the full phase chain and always-on skills. Say "piloted mode" to load always-on skills and invoke phases manually.
+3. The session mode model: default is bare (no routing, no always-on). Say "guided mode" to engage the full phase chain and always-on skills. Say "piloted mode" to load always-on skills and invoke phases manually.
 
 After reading, confirm you understand:
-- The 3 session modes: bare (default), assisted, guided — and what each activates
+- The 3 session modes: bare (default), piloted, guided — and what each activates
 - The phase routing (start → discover → design-sprint → etc.)
 - The Workshop companion — spike-shaped openings route to `workshop/scope-check/SKILL.md`, not Discover
 - The four required anchors before any slice can be Ready

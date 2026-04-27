@@ -124,7 +124,7 @@ Do not skip this question. Skin direction saved two full rounds in testing.
 
 4. **Capture all layers per frame.** When converting any Figma frame to HTML, inspect every layer in that frame — including overlays, modals, drawers, tooltips, empty states, and error states. Each layer gets rendered as a distinct visible state in the HTML output. Do not produce only the base layer. If a layer's trigger is unclear, ask: *"[Layer name] — is this a modal, a hover state, or something else?"*
 
-4. Skip Step 4 structure pass. Go to Step 5 (warmer/colder on story alignment, not layout).
+5. Skip Step 4 structure pass. Go to Step 5 (warmer/colder on story alignment, not layout).
 
 **On-ramp 1 or 3:** proceed as written below.
 
