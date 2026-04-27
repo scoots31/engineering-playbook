@@ -17,12 +17,13 @@ This skill is the execution layer of the framework. The backlog tells you what e
 
 At the start of every build session, before selecting or starting any slice, read these documents:
 
-1. **Backlog** — current slice statuses, deliverable structure, priority order
-2. **Discovery brief** — the agreed problem, users, and constraints
-3. **To-be process map** — the agreed process being implemented
-4. **Tech context** — stack, conventions, constraints
-5. **Data mapping** — field sources and mock data structure
-6. **Design sprint artifact(s)** — the visual contract
+1. **Records spec** at `docs/records-spec.md` — the canonical record format for slice, deliverable, and phase records
+2. **Backlog** — current slice statuses, deliverable structure, phase structure, priority order
+3. **Discovery brief** — the agreed problem, users, and constraints
+4. **To-be process map** — the agreed process being implemented
+5. **Tech context** — stack, conventions, constraints
+6. **Data mapping** — field sources and mock data structure
+7. **Design sprint artifact(s)** — the visual contract
 
 Do not rely on conversation history or memory from a previous session. Read the current state of these files. If any document is missing, name it before proceeding.
 
@@ -73,9 +74,11 @@ Screens with no shared infrastructure and no journey dependencies (settings, aut
 **Deliverable orientation** — if this is the first slice in a deliverable, surface the deliverable context before starting. The solo needs to know what's being delivered before the first line of code is written:
 
 ---
-> **Starting Deliverable [D-ID] — [Name]** *(Type: Screen | Logic)*
+> **Starting Deliverable [D-ID] — [Name]** *(Type: Screen | Logic | Integration)*
 >
-> What you'll have when this is done: [solo description]
+> What you'll have when this is done: [plain language description]
+>
+> Screens: [screen file → screen name (primary | affected)]
 >
 > Acceptance criteria we're building toward:
 > 1. [criterion 1]
@@ -171,29 +174,75 @@ Typing the dependency makes it clear what's actually blocking and what can be wo
 
 ### When build is code-complete
 
-"Code-complete" means: the slice renders correctly against mock data and matches the design screen. It does not mean done. Done requires QA — two stages of it.
+"Code-complete" means: the slice renders correctly against mock data and matches the design screen. It does not mean done. Done requires the builder to self-verify, present to the solo, and get sign-off.
 
-State it and trigger the chain:
+**Step 1 — Run the self-verification checklist.**
+Before committing or stating code-complete, work through every item on the slice's self-verification checklist from the backlog record. Check each item independently. Then populate the builder confirmation field in the slice record:
 
-> "SL-[ID] is code-complete. Committing and running code-review-and-quality."
+```
+Builder confirmation:
+  ✓/✗ [item — what was observed]
+  ✓/✗ [item — what was observed]
+```
 
-**Commit the work:**
+If any item is flagged (✗), fix it before proceeding. Do not present a slice to the solo with a flagged self-verification item.
+
+**Step 2 — Commit the work.**
 Execute the commit directly — do not hand this to the solo. Read `docs/tech-context.md` for any project-specific commit conventions, then stage the changed files and commit with message: `SL-[ID] code-complete — [slice name]`.
 
 Commit message format is deliberate: the slice ID makes it traceable in git history. Never use vague messages ("wip", "updates", "fix"). Every commit must be traceable to a backlog slice.
 
-Update the backlog: status → `In QA`.
+**Step 3 — Update the backlog: status → `In QA`.**
 
-Then invoke `code-review-and-quality` immediately. Do not wait for the solo to trigger it. The handoff is automatic — solo-build to code-review-and-quality to solo-qa is a chain, not a handoff the solo manages.
+**Step 4 — Present to the solo.**
+Show the completed builder confirmation and state readiness for review:
 
-If code review passes, it invokes solo-qa automatically.  
+> "SL-[ID] — [Name] is ready for review.
+>
+> Builder confirmation:
+>   ✓ [item — what was observed]
+>   ✓ [item — what was observed]
+>
+> Done criteria to verify:
+>   - [criterion 1]
+>   - [criterion 2]
+>
+> [viewable link or browser instruction]"
+
+**Step 5 — Invoke `code-review-and-quality` immediately.**
+Do not wait for the solo to trigger it. The handoff is automatic — solo-build to code-review-and-quality to solo-qa is a chain, not a handoff the solo manages.
+
+If code review passes, it invokes solo-qa automatically.
 If code review fails, it returns the slice to In Build with specific notes — fix and resubmit.
 
 **Review delivery:** When the slice produces UI or HTML output, serve it as a viewable page before asking for feedback. Open it in the browser or provide a live local URL. The solo signs off on what they can see — not on a description of what was built.
 
-**Deliverable completion check** — after a slice is marked Done, check if all slices in its deliverable are now Done. If they are:
-> "All slices in Deliverable [D-ID] — [Name] are Done. Running deliverable acceptance."
-Then trigger solo-qa deliverable acceptance automatically. Do not wait for the solo to ask for it.
+**Deliverable completion check** — after a slice is marked Done, check if all slices in its deliverable are now Done. If they are, run the deliverable self-verification checklist before triggering acceptance:
+
+**Step 1 — Run the deliverable self-verification checklist.**
+This checks that all slices work correctly together — not a re-check of individual slices. Flow, state handoffs, data passing between components, the complete user journey through all slices. Populate the deliverable builder confirmation field in the backlog:
+
+```
+Builder confirmation:
+  ✓/✗ [item — how slices interact, what was observed]
+  ✓/✗ [item — end-to-end flow result]
+```
+
+If any item is flagged, fix it before presenting the deliverable for acceptance.
+
+**Step 2 — Present to the solo:**
+> "All slices in Deliverable [D-ID] — [Name] are Done. Builder confirmation complete:
+>
+>   ✓ [deliverable-level item — what was observed]
+>   ✓ [deliverable-level item — what was observed]
+>
+> Acceptance criteria to verify:
+>   1. [criterion 1]
+>   2. [criterion 2]
+>
+> Ready for your sign-off."
+
+**Step 3 — Trigger solo-qa deliverable acceptance automatically.** Do not wait for the solo to ask for it. Update deliverable status → `Pending Acceptance`.
 
 ---
 
@@ -258,7 +307,10 @@ The backlog is a live document. Every status change is written immediately — b
 
 - Slice enters build → **Ready → In Build** — update before writing the first line of code
 - Slice is code-complete → **In Build → In QA** — update before triggering code review
-- Slice passes QA → **In QA → Done** — update before moving to the next slice
+- Slice passes code review → **In QA → In Test** — update when solo-qa hands off to phase-test
+- Slice passes QA → **In Test → Done** — update before moving to the next slice
+- Deliverable all slices Done → **Defined → Pending Acceptance** — update when presenting to solo
+- Deliverable solo signs off → **Pending Acceptance → Accepted** — update immediately on sign-off
 - A discovery affects another slice → note it in that slice's record now, before continuing
 
 The test: if the session ended right now, would the backlog correctly reflect the build state? If not, it's already out of sync.
@@ -289,6 +341,23 @@ Build Active, no Ready slices is not a reason to start work on In Review slices.
 
 ---
 
+## Re-Phasing Protocol
+
+When the solo requests moving a slice or deliverable to a different phase during build, this protocol executes in full — no partial execution. A quiet edit to the phase field is not acceptable.
+
+1. Solo states what's moving and why
+2. Log the decision immediately in the Decisions and Change Log in `docs/backlog.md`
+3. Update the moved item — phase field updated in the slice or deliverable record
+4. Update the source phase record — add to "Explicitly out of scope" noting what moved and why
+5. Update the destination phase record — add to its deliverables list
+6. Assess source phase — does it still answer its stated question with the item removed? If not, update the phase description and question
+7. Assess destination phase — does the moved item fit the question that phase answers? If not, update the phase description and question
+
+All seven steps happen in the same action. The log entry and the record updates are never separated. Confirm when complete:
+> "SL-[ID] moved from Phase [N] to Phase [N]. Backlog updated — source and destination phase records revised, decision logged."
+
+---
+
 ## What Build Does Not Do
 
 - Does not decide scope — that's the backlog
@@ -308,3 +377,6 @@ Build Active, no Ready slices is not a reason to start work on In Review slices.
 | Starting or partially working on a non-Ready slice | Build contradicts the open design decisions — producing work that needs to be redone | Hard stop on non-Ready status. Name the status, name what's needed to reach Ready, offer nothing else |
 | Offering "we can knock out X while we build Y" | Rationalizes starting work that isn't anchored — exactly the gap the status gate exists to prevent | One path: promote the slice to Ready first, then build |
 | Leaving build after hitting zero Ready slices without diagnosing blockers | The solo doesn't know why they're stuck or where to go next | Surface Build Active, no Ready slices — diagnose each In Review slice, name the right next skill, hand off |
+| Skipping the self-verification checklist before presenting to the solo | The solo reviews work that the builder hasn't verified — "looks good" reviews happen | Run every self-verification item, populate builder confirmation, present confirmation alongside the work |
+| Presenting a deliverable for acceptance without running deliverable-level self-verification | Slice-level Done doesn't catch cross-slice integration bugs | Deliverable self-verification is a separate pass — checks flow, handoffs, and end-to-end journey |
+| Moving a slice to a different phase with a quiet field edit | Phase records go out of sync silently — source and destination phases no longer reflect the plan | Execute the full re-phasing protocol — 7 steps, decision logged, all affected records updated |
