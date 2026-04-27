@@ -1,6 +1,6 @@
 ---
 name: solo-build
-description: Slice-by-slice build execution for the solo builder framework. Selects the right slice to build next based on dependency order and user journey sequence, surfaces all four anchors (design, data, done, process) before writing a line of code, and hands off to solo-qa when the slice is code-complete. Never builds ahead of the journey. Never starts a slice without all four anchors.
+description: Slice-by-slice build execution for the solo builder framework. Checks slice status before anything else — only Ready slices can enter build. Selects the right slice based on dependency order and user journey sequence, surfaces all four anchors (design, data, done, process) before writing a line of code, and hands off to solo-qa when the slice is code-complete. When no Ready slices exist, diagnoses blockers and hands off to the right skill. Never builds on a non-Ready slice.
 ---
 
 # Solo Build
@@ -15,7 +15,20 @@ This skill is the execution layer of the framework. The backlog tells you what e
 
 ## Slice Selection — What Gets Built Next
 
-Not all Ready slices are equal. The order matters.
+Not all Ready slices are equal. The order matters. But before any ordering logic runs, one check happens first.
+
+**Status gate — before anything else.**
+Only slices in `Ready` status can enter build. This check runs before slice selection rules, before the four anchors, before any build discussion.
+
+If the next candidate slice is not in `Ready` status, stop:
+> "SL-[ID] is [current status] — not Ready. Build cannot start until design review closes the open items and promotes it to Ready."
+
+Name the status. Name the gap. Do not offer alternatives. Do not suggest working on design "while building." If there are no Ready slices at all, surface that directly:
+> "There are no Ready slices right now. [N] slices are In Review, pending design review decisions. The next step is finishing design review to promote slices to Ready — not starting build on In Review slices."
+
+This is not negotiable and not a conversation. A slice in any status other than Ready has open decisions that build will contradict.
+
+---
 
 **Rule 1 — Tracer bullet first.**
 Before building any individual screen in full, build the thinnest path all the way through the user journey. The minimum that proves the core loop works end to end — even if every step is minimal. For a player evaluation tool: can you look up a player, see their core evaluation, navigate to the next screen? That thin path first. Then expand each step.
@@ -226,6 +239,30 @@ Never let the backlog get out of sync with the actual build state. It's the solo
 
 ---
 
+## Build Pause — When There Are No Ready Slices
+
+When all current-phase slices are either Done, In Review, or Deferred — and none are Ready — build is paused, not closed. The build phase stays active.
+
+**Step 1 — Diagnose.** Read each In Review slice from the backlog. Name the specific reason it isn't Ready:
+- Open design decisions → design review needed
+- Open spike needed → research-spike
+- Blocked on another slice → name the blocking slice and what it needs
+
+**Step 2 — Surface the state:**
+> "Build is paused — no Ready slices.
+> - SL-[ID]: [specific blocker, one line]
+> - SL-[ID]: [specific blocker, one line]
+>
+> [Skill name] is the next step to unblock [slice IDs]. Switching now."
+
+**Step 3 — Hand off** to the right skill. Do not wait for the solo to invoke it.
+
+**Step 4 — Resume.** When the unblocking skill promotes a slice to Ready, it says: *"SL-[ID] is now Ready. Build can resume."* Solo-build picks back up with the newly promoted slice, starting from the status gate.
+
+Paused build is not a reason to start work on In Review slices. The status gate still applies — always.
+
+---
+
 ## What Build Does Not Do
 
 - Does not decide scope — that's the backlog
@@ -234,3 +271,14 @@ Never let the backlog get out of sync with the actual build state. It's the solo
 - Does not build out of journey order without explicit reason
 - Does not start a slice without all four anchors
 - Does not hardcode data that should come from the mock layer
+- Does not start, discuss, or partially execute any slice not in Ready status — including suggesting to "work on design while building"
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Problem | Instead |
+|---|---|---|
+| Starting or partially working on a non-Ready slice | Build contradicts the open design decisions — producing work that needs to be redone | Hard stop on non-Ready status. Name the status, name what's needed to reach Ready, offer nothing else |
+| Offering "we can knock out X while we build Y" | Rationalizes starting work that isn't anchored — exactly the gap the status gate exists to prevent | One path: promote the slice to Ready first, then build |
+| Leaving build after hitting zero Ready slices without diagnosing blockers | The solo doesn't know why they're stuck or where to go next | Run the build pause protocol — diagnose each In Review slice, name the right next skill, hand off |
