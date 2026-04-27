@@ -149,6 +149,82 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── APRIL 27 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 27</div>
+      <div class="entry-title">Canonical Records — The Backlog Gets a Specification</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Records specification — canonical format for all three record types</div>
+          <div class="change-desc">The backlog now has a single authoritative specification for what every record must contain. Every skill that reads or writes backlog records reads this document first. It defines the full field set for Slice (14 fields), Deliverable (13 fields), and Phase (14 fields) — including status structures, field rules, the skill ownership table, re-phasing protocol, and the decisions and change log format. No skill invents fields. No skill omits required fields. The spec is the contract.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Two descriptions required on every record — plain language and technical</div>
+          <div class="change-desc">Every slice, deliverable, and phase now carries two independent descriptions. The plain language description is written for the solo — what they will see, have, or be able to do when the work is complete. The technical description is written for the builder — implementation approach, constraints, edge cases. Neither copies from the other. Neither summarizes the level below it. A phase description is not a summary of its deliverables. A deliverable description is not a summary of its slices. Writing them fresh at every level forces the author to think about what each object actually delivers, independently.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Three-level verification — self-verification checklist, acceptance criteria, builder confirmation</div>
+          <div class="change-desc">Every record type now carries the same three verification fields. The self-verification checklist is what the builder runs before presenting to the solo. The acceptance criteria is the shared contract — the same list the builder checks and the solo reviews, independently. The builder confirmation is populated at presentation time with ✓/✗ results and observations, so the solo arrives at review with the builder's work already shown. Each level checks what only that level can see: slices verify individual elements, deliverables verify slices working together, phases verify deliverables working end-to-end.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">In Test — new slice status between solo QA sign-off and Done</div>
+          <div class="change-desc">Slices now move to In Test after solo-qa sign-off, not directly to Done. Done is reserved for phase-test completion — when the full phase has been verified end-to-end with real data. This resolves a genuine ambiguity: a slice that passed solo QA against mock data and a slice that has been confirmed working in the complete, integrated phase are meaningfully different things. In Test makes that visible in the backlog. The full chain: In Build → In QA → In Test → Done. Phase-test is what closes the final gap.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Integration — third deliverable type</div>
+          <div class="change-desc">Deliverables now have three types: Screen, Logic, and Integration. Integration connects real data to a Screen deliverable — it may contain both UI slices and data integration slices, always sequences after its Screen companion is Accepted, and can spawn new slices when real data reveals gaps. This makes the mock-to-real transition explicit in the plan rather than buried in individual slices. An Integration deliverable is Accepted only when every gap revealed by live data has been addressed — including any newly discovered slices.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Re-phasing protocol — formal process for moving work between phases</div>
+          <div class="change-desc">When a slice or deliverable needs to move to a different phase mid-build, a 7-step protocol now executes in full: solo confirms the move → decision logged → moved item updated → source phase "Explicitly out of scope" updated → destination phase deliverables list updated → source phase re-assessed (does it still answer its question?) → destination phase re-assessed (does the moved item fit?). All seven steps happen in the same action. The decision log entry and the record updates are never separated. No quiet edits.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Backlog Status Reference — standalone reference page</div>
+          <div class="change-desc">New page in the comms docs showing all three status grids side by side — Slice (8 statuses), Deliverable (4 statuses), Phase (4 statuses) — with flow chains, plain-language meanings, who sets each status, and the skill ownership table. Linked from the index under Framework Overview. When the backlog shows an unfamiliar status, this is the one-click answer.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Build, QA, and phase test guides aligned with the new record format</div>
+          <div class="change-desc">The build guide, QA guide, phase test guide, and skills reference all updated to reflect the new status chain and record format. Builder self-verification step added to the code-complete protocol. In Test introduced throughout the QA flow. Done definition table updated to show phase-test as the final step. Phase test readiness and handoff sections updated to match. Six skill cards in the skills reference updated for the new status names and deliverable fields.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── APRIL 25 ── -->
   <div class="entry">
     <div class="entry-header">
