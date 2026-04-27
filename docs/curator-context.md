@@ -801,9 +801,10 @@ Append an entry after every curator session. Format: date, what changed, why, wh
 **Why:** As the framework grows in complexity, curator sessions need reliable access to the reasoning behind decisions — not just the instructions themselves. Git history and MemPalace are too many steps removed from the actual files being changed. This document puts the reasoning adjacent to the work.
 
 **Pending work from audit:**
-- Backlog items 001, 003, 004, 005, 006, 007 against solo-build (plain language audit, design sprint file review, info duplication, real-time status updates, code commenting, terminal command execution)
+- ~~Backlog items 001, 003, 004, 005, 006, 007~~ — all resolved (see 2026-04-27 entries below)
 - Step 3 of audit initiative: design and wire curator hook in `.claude/settings.json`
 - Step 4 of audit initiative: communications docs reconciliation pass against audit findings
+- Plain language audit: solo-facing output across all skills — not yet executed
 
 ---
 
@@ -866,3 +867,19 @@ Append an entry after every curator session. Format: date, what changed, why, wh
 *In Test introduced.* Slice reaches `In Test` after solo-qa sign-off. Reaches `Done` only after phase-test gate opens. Eliminates ambiguity about whether a Done slice has been phase-verified.
 
 **What was rejected:** Making Done mean "verified at any data layer" without distinguishing mock vs real — rejected because it made Done ambiguous and deferred the hard question. Making the integration work part of the Screen deliverable — rejected because it conflated two distinct review modes (visual vs evidence-based) and obscured whether real-data work was actually complete.
+
+---
+
+### 2026-04-27 — Framework backlog items 001, 003, 004, 005, 007 verified resolved
+
+**What was found:** All five remaining backlog items against solo-build were already addressed in the current `skills/solo-build/SKILL.md` — resolved by the records-spec cascade (item 006) without a separate targeted fix for each. Verified by reading the SKILL.md directly.
+
+- **001 (design sprint files ignored):** Session Start Step 7 reads design sprint artifacts; "Before writing code" Step 3 requires reading and reporting the anchor element from the file before writing code.
+- **003 (re-asking captured info):** Session Start reads all discovery/design docs upfront; four anchors come from the backlog record — the information is already present, no reason to ask.
+- **004 (status updates delayed):** "Backlog Updates During Build" section added explicit "Not at session end" language; every transition listed with immediacy.
+- **005 (commenting not happening during build):** "During build" added "Comment non-obvious logic as you write it — not as a cleanup pass."
+- **007 (terminal commands handed to solo):** Code-complete Step 2 says "Execute the commit directly — do not hand this to the solo."
+
+**Why they were resolved without being explicitly targeted:** The records-spec work restructured the session start, code-complete protocol, and backlog update protocol in ways that addressed these behaviors as a side effect of making the skill coherent. The backlog items described symptoms; the records-spec work addressed the underlying structure.
+
+**Remaining:** Plain language audit — not yet executed.
