@@ -5,3 +5,4 @@ to resume a named project — "guided on [name]" or `/guided [name]`.
 
 | Name | Path |
 |------|------|
+| player-evaluation | /Users/scottheinemeier/Developer/Fantasy Player Evaluation System |
