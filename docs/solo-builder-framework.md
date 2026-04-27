@@ -20,7 +20,6 @@ Solo, you don't have that. Claude defaults to building what you describe rather 
 
 The skills library we've built is essentially a roster of specialists:
 - `grill-me` — skeptical PM
-- `agent-room` — architecture review panel
 - `tdd` — QA engineer
 - `prd-to-plan` — tech lead breaking work into slices
 - `discover` — the day-one engineer/UX conversation
@@ -304,7 +303,6 @@ ENTRY POINT
 | `to-prd` | Synthesizes context into PRD | ✅ Built |
 | `prd-to-plan` | Phases implementation by risk, from deferred decisions log | ✅ Built |
 | `to-issues` | Breaks plan into GitHub issues | ✅ Built |
-| `agent-room` | Multi-perspective decisions | ✅ Built |
 | `solo-build` | Slice-by-slice execution — four anchors, journey order, dependency blocking | ✅ Built |
 | `solo-qa` | Two-part verification — active AI testing with evidence + solo browser sign-off required for Done | ✅ Built |
 | `qa-triage` | Routes unexpected QA discoveries — bugs, missing requirements, regressions — to the correct path | ✅ Built |
