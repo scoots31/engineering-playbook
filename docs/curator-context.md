@@ -800,3 +800,31 @@ Append an entry after every curator session. Format: date, what changed, why, wh
 - Backlog items 001, 003, 004, 005, 006, 007 against solo-build (plain language audit, design sprint file review, info duplication, real-time status updates, code commenting, terminal command execution)
 - Step 3 of audit initiative: design and wire curator hook in `.claude/settings.json`
 - Step 4 of audit initiative: communications docs reconciliation pass against audit findings
+
+---
+
+### 2026-04-27 — Framework-wide language pass: directives not suggestions
+
+**What changed:** Two-pass audit across 14 SKILL.md files. Eliminated soft/suggestive language throughout — every instruction that read as a recommendation now reads as a directive with defined consequence.
+
+**Pass 1 (modal swaps where enforcement context was already defined):**
+- `data-scaffold/SKILL.md`: "The UI should not know or care" → "must not know or care"
+- `phase-test/SKILL.md`: "should reflect a clean, unified state" → "must reflect"
+- `principal-engineer/SKILL.md`: "the PE should assess" → "the PE assesses"
+- `retrospective/SKILL.md`: "It should be reinforced" → "Reinforce it"
+- `tdd/SKILL.md`: "Tests should verify behavior" → "Tests verify... must not change"
+- `to-issues/SKILL.md`: "a builder should be able" → "must be able"
+- `to-prd/SKILL.md`: two "should" swaps in user story requirements
+- `design-review/SKILL.md`: "Every slice should implement" → "must implement"
+
+**Pass 2 (full rewrites adding action + consequence where none existed):**
+- `design-sprint/SKILL.md`: uncovered process steps now require immediate surface as a decision; "secondary screens should move faster" → factual; "should proactively flag" → "flag proactively"
+- `prd-to-plan/SKILL.md`: "first slice should prove" → rewrite adding reorder requirement; process order → "don't reorder these for convenience"; backlog anchor → "must be in the record before build starts"
+- `process-mapper/SKILL.md`: three "should" instances rewritten — to-be map traces are now "must" with explicit consequence ("never silently absorbed"); drift clause adds explicit decision requirement and process-change invocation
+- `framework-health/SKILL.md`: "should reflect" → "Verify... reflect... flag it — don't wait to be asked"
+- `brainstorming/SKILL.md`: "should reflect a step" → "must reflect... no clean mapping is a signal — process sketch needs more work"
+- `dependency-upgrade/SKILL.md`: "when possible" clause replaced with explicit high-traffic-window confirmation protocol
+
+**Why:** Surface-level "should → must" swaps were correctly identified as insufficient. The real problem is instructions that describe a required state without defining what the AI does when that state isn't met. Pass 2 targets those — instructions now carry an action path and a consequence.
+
+**What was rejected:** Simple find-replace across all instances. The two-pass strategy was chosen because ~30 of the 84 hits were quality descriptions of output (acceptable), ~24 were inside quotes/templates (not actionable) — blanket replacement would have corrupted those.
