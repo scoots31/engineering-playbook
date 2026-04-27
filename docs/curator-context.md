@@ -828,3 +828,37 @@ Append an entry after every curator session. Format: date, what changed, why, wh
 **Why:** Surface-level "should → must" swaps were correctly identified as insufficient. The real problem is instructions that describe a required state without defining what the AI does when that state isn't met. Pass 2 targets those — instructions now carry an action path and a consequence.
 
 **What was rejected:** Simple find-replace across all instances. The two-pass strategy was chosen because ~30 of the 84 hits were quality descriptions of output (acceptable), ~24 were inside quotes/templates (not actionable) — blanket replacement would have corrupted those.
+
+---
+
+### 2026-04-27 — Backlog item 006: canonical record format for slice, deliverable, and phase
+
+**What changed:** Six skills updated, one new spec document created.
+
+**New file — `docs/records-spec.md`:** Canonical specification for all three record types (Slice, Deliverable, Phase). Every skill that reads or writes backlog records must read this first. Contains: status structures for all three types, full field definitions, two-description rule, three-level verification model, Done vs Accepted distinction, re-phasing protocol (7 steps), decisions and change log format, skill ownership table.
+
+**Skills updated:**
+- `design-review/SKILL.md`: reads records-spec.md first; full new slice record format embedded with field rules; At a Glance Traffic section; Ready gate expanded to 10 conditions; new anti-patterns for missing descriptions, copying across levels, blank fields
+- `data-scaffold/SKILL.md`: new Step 3.5 — immediately update slice records after generating mock files; slices with Pending data-scaffold cannot reach Ready
+- `prd-to-plan/SKILL.md`: reads records-spec.md first; full deliverable record format (Integration as third type); full phase record format with anti-pattern; Step 8b post-approval backlog write protocol (4 steps)
+- `solo-build/SKILL.md`: reads records-spec.md first; 5-step code-complete protocol with builder confirmation; deliverable completion 3-step protocol; re-phasing protocol (7 steps); new anti-patterns
+- `solo-qa/SKILL.md`: deliverable acceptance reads new record fields (plain language, technical, screens, acceptance criteria, self-verification checklist, builder confirmation); slices move to `In Test` (not Done) after solo sign-off; Done is reserved for phase-test completion; deliverable status uses `Accepted` (not `✓ Accepted`)
+- `phase-test/SKILL.md`: reads records-spec.md; readiness gate checks for `In Test` (not Done); gate-open protocol explicitly updates slice statuses to `Done` and phase status to `Completed` in backlog
+
+**Core decisions made:**
+
+*Two descriptions at every level.* Every record carries a plain language description (solo audience) and a technical description (builder audience), both written fresh at that level — never copied or paraphrased from another level. A phase description is not a summary of its deliverables.
+
+*Three-level verification.* Self-verification checklist + acceptance criteria + builder confirmation at slice, deliverable, and phase. Each level checks what only that level can see. Slice: does this element work on its own. Deliverable: do the slices work together. Phase: does the complete capability work end-to-end.
+
+*Integration deliverable as third type.* Screen | Logic | Integration. Integration connects real data to a Screen deliverable — contains both UI slices and data integration slices; always sequences after its Screen companion is Accepted; can spawn new slices when real data reveals gaps. This resolved the ambiguity around when Done means mock data vs real data.
+
+*Done vs Accepted.* Done lives at the slice level (built and verified against its data anchor). Accepted lives at the deliverable level (solo signed off). These were previously conflated.
+
+*Status naming — no duplicates.* Deliverable statuses renamed to Defined | Active | Pending Acceptance | Accepted to eliminate collision with slice-level In Review and In Build.
+
+*Re-phasing protocol.* 7-step formal process when a slice/deliverable moves phases. Requires solo confirmation, decision log entry, and update of source + destination phase records. All 7 steps in the same action.
+
+*In Test introduced.* Slice reaches `In Test` after solo-qa sign-off. Reaches `Done` only after phase-test gate opens. Eliminates ambiguity about whether a Done slice has been phase-verified.
+
+**What was rejected:** Making Done mean "verified at any data layer" without distinguishing mock vs real — rejected because it made Done ambiguous and deferred the hard question. Making the integration work part of the Screen deliverable — rejected because it conflated two distinct review modes (visual vs evidence-based) and obscured whether real-data work was actually complete.
