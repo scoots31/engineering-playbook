@@ -108,6 +108,27 @@ Generate the data with:
 | Players | data/mock/players.json | MFL API | ⏳ Pending | ✓ List — needs data behavior pass |
 | Performance | data/mock/performance.json | Internal DB | ⏳ Pending | ✓ List — needs data behavior pass |
 
+### Step 3.5: Update Slice Records in the Backlog
+
+Immediately after generating mock data files — before wiring anything to screens — open `docs/backlog.md` and update every slice record that has `Data anchor: Pending data-scaffold`.
+
+For each affected slice:
+1. Identify which mock file and which fields that slice reads
+2. Replace `Pending data-scaffold` with the specific file path and field names
+
+```
+Data anchor: data/mock/players.json → id, name, position, nfl_team, status
+```
+
+Do this for every slice that reads from the newly created mock data. Do not leave any slice with `Pending data-scaffold` once the mock data for that entity exists. A slice whose data anchor is still Pending cannot reach Ready — completing this step is what unblocks those slices from advancing.
+
+If a slice reads from multiple mock files, list all of them:
+```
+Data anchor:
+  - data/mock/players.json → id, name, position
+  - data/mock/performance.json → week, actual_pts, delta
+```
+
 ### Step 4: Wire the Mock Layer to the Screens
 
 Update the design screens to pull from the mock layer instead of having data hardcoded in the HTML. The UI must not know or care whether data is real or mock — it just reads from the data source.
@@ -294,3 +315,4 @@ When a real data source is ready to connect:
 | Skipping edge cases | Empty states untested until production | Always include bye week, zero score, missing field |
 | Forgetting to label it | Confusion about what's real | Mock indicator badge + comment pattern everywhere |
 | Delaying data scaffold until build | Design review happens against empty screens | Run data scaffold before or during first design review |
+| Skipping the backlog update after generating mock data | Slices stay blocked on Pending data-scaffold when the data they need exists | Update every affected slice record in docs/backlog.md immediately after generating mock files — Step 3.5 is not optional |
