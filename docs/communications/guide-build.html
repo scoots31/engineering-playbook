@@ -1126,6 +1126,7 @@
       </div>
 
       <div class="intro-card">
+        <p><strong>Every build session starts with a read, not a build.</strong> Before selecting any slice, the build skill reads the current state of six documents: the backlog (status and priority), the discovery brief (the agreed problem), the to-be process map (the agreed process), the tech context (stack and conventions), the data mapping (field sources), and the design sprint artifact (the visual contract). This is not optional and is not replaced by conversation history from a prior session. The first output is a context-loaded confirmation — what's in the backlog, what's Ready, what's next — before any slice work begins.</p>
         <p>Build does not decide scope — that was settled in Design Review. It does not design — that was settled in the Design Sprint. Build executes what was decided, correctly, in the right order, with the right anchors confirmed before a single line is written.</p>
         <p>The <strong>tracer bullet goes first</strong>: the thinnest path through the full user journey, end to end, before any individual screen is expanded. Once the core loop is proven to work, each step gets built out in full.</p>
         <p>Before anchors are even checked, the slice must be in <strong>Ready status</strong>. Any other status — In Review, In QA, Deferred — means the slice does not enter build. No discussion, no partial starts, no "we can work on the design while we build." Ready is the gate before the gate. If there are no Ready slices, build reaches <strong>Build Active, no Ready slices</strong> status and routes to whatever skill will unblock them — it does not find workarounds.</p>
@@ -1669,7 +1670,7 @@
             <div class="exec-num">1</div>
             <div class="exec-content">
               <h4>Commit the work</h4>
-              <p>Use the slice ID format: <code>git commit -m "SL-[ID] code-complete — [slice name]"</code>. The slice ID makes every commit traceable in git history. Never use vague messages ("wip", "updates", "fix").</p>
+              <p>The build skill executes the commit directly — it is never handed to the solo to run. Commit message format: <code>SL-[ID] code-complete — [slice name]</code>. The slice ID makes every commit traceable in git history. Never use vague messages ("wip", "updates", "fix").</p>
             </div>
           </div>
           <div class="exec-step">
@@ -1776,7 +1777,7 @@
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
             <h4>Stale backlog during a build session</h4>
-            <p>The backlog is the solo's persistent context across sessions. If slice status, dependencies discovered during build, or cross-slice impacts aren't logged as they happen, the next session starts with an inaccurate picture of where the project stands.</p>
+            <p>The backlog is the solo's persistent context across sessions. Every status change is written immediately — before moving to the next action. Not at session end. Ready → In Build before the first line of code. In Build → In QA before triggering code review. In QA → Done before the next slice starts. If it's stale at any point mid-session, the next session starts from the wrong place.</p>
           </div>
         </div>
 

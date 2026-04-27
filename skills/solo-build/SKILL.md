@@ -13,6 +13,24 @@ This skill is the execution layer of the framework. The backlog tells you what e
 
 ---
 
+## Session Start — Read Before Building
+
+At the start of every build session, before selecting or starting any slice, read these documents:
+
+1. **Backlog** — current slice statuses, deliverable structure, priority order
+2. **Discovery brief** — the agreed problem, users, and constraints
+3. **To-be process map** — the agreed process being implemented
+4. **Tech context** — stack, conventions, constraints
+5. **Data mapping** — field sources and mock data structure
+6. **Design sprint artifact(s)** — the visual contract
+
+Do not rely on conversation history or memory from a previous session. Read the current state of these files. If any document is missing, name it before proceeding.
+
+After reading, confirm:
+> "Session context loaded: [N] slices in backlog, [N] Ready. Active deliverable: [D-ID] — [Name]. Next slice in priority: SL-[ID]."
+
+---
+
 ## Slice Selection — What Gets Built Next
 
 Not all Ready slices are equal. The order matters. But before any ordering logic runs, one check happens first.
@@ -82,7 +100,10 @@ The exact screen and element this slice builds. Not just the file — the specif
 Format: `[screen-file] → [element name] → [location on screen]`
 Example: `sprint-p1.html → Slot context card → top of overview body, below player tabs`
 
-Open the file. Look at the element. Make sure the implementation target is unambiguous.
+Read the design file now. Find the element. Before writing a line of code, confirm what you see:
+> "Design anchor confirmed: [screen-file] open. [Element name] — [describe what you see: layout, fields, colors, interactions]."
+
+If the element cannot be found in the file, stop. Do not build from memory of what the element might look like.
 
 **Anchor 2 — Data anchor**
 The specific mock data fields this slice consumes, and where they live.
@@ -122,7 +143,7 @@ If the slice doesn't map to a step in the to-be map, stop and ask: is this slice
    - Example: `feature/SL-003-player-overview-card`
    - Branch from the base branch specified in tech-context (e.g., `development` for Bayer Aurora, `main` for a general solo project)
 2. State all four anchors explicitly
-3. Read the design screen — not from memory, actually open it
+3. Read the design screen file. Find the anchor element. Report what you see before proceeding.
 4. Read the relevant mock data — know the exact field names
 5. State a brief build plan: *"1. Create component structure → verify: renders. 2. Wire mock data → verify: correct values display. 3. Apply styles from design → verify: matches screen."*
 
@@ -133,6 +154,7 @@ If the slice doesn't map to a step in the to-be map, stop and ask: is this slice
 - Match the design closely enough that the QA visual check will pass — not pixel-perfect, but clearly the same thing
 - When something in the build conflicts with the design, stop and surface it: *"The design shows X but implementing it reveals Y — do we update the design or adjust the implementation?"* Don't silently resolve it.
 - If a discovery during build would affect other slices, flag it: *"Building this slice reveals that SL-007 will need to account for Z — noting in the backlog."*
+- Comment non-obvious logic as you write it — not as a cleanup pass. If code is doing something that would surprise a reader (a workaround, a subtle invariant, a constraint from the design that isn't obvious from the code), add the comment before moving on. Obvious code needs no comment. Logic that derives from a specific design decision or data model does.
 
 ### Dependency typing — be explicit
 
@@ -156,12 +178,9 @@ State it and trigger the chain:
 > "SL-[ID] is code-complete. Committing and running code-review-and-quality."
 
 **Commit the work:**
-```
-git add [changed files]
-git commit -m "SL-[ID] code-complete — [slice name]"
-```
+Execute the commit directly — do not hand this to the solo. Read `docs/tech-context.md` for any project-specific commit conventions, then stage the changed files and commit with message: `SL-[ID] code-complete — [slice name]`.
 
-Commit message format is deliberate: the slice ID makes it traceable in git history. Do not use vague messages ("wip", "updates", "fix"). Every commit should be traceable to a backlog slice.
+Commit message format is deliberate: the slice ID makes it traceable in git history. Never use vague messages ("wip", "updates", "fix"). Every commit must be traceable to a backlog slice.
 
 Update the backlog: status → `In QA`.
 
@@ -235,14 +254,14 @@ Stop the current slice. Move it back to In Review. Invoke `process-change` immed
 
 ## Backlog Updates During Build
 
-The backlog is a live document. Update it as build progresses:
+The backlog is a live document. Every status change is written immediately — before moving to the next action. Not at session end. Not after the slice is Done. The moment the status changes, the file changes.
 
-- Slice status: Ready → In Build → In QA → Done
-- Dependencies discovered during build: add them
-- Slices affected by current build: note them
-- Any open items that need design review attention: flag them
+- Slice enters build → **Ready → In Build** — update before writing the first line of code
+- Slice is code-complete → **In Build → In QA** — update before triggering code review
+- Slice passes QA → **In QA → Done** — update before moving to the next slice
+- A discovery affects another slice → note it in that slice's record now, before continuing
 
-Never let the backlog get out of sync with the actual build state. It's the solo's persistent context — if it's stale, the next session starts from the wrong place.
+The test: if the session ended right now, would the backlog correctly reflect the build state? If not, it's already out of sync.
 
 ---
 
