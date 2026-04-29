@@ -930,3 +930,20 @@ Added "When Stuck" section to solo-build: two failed attempts with no progress �
 - v1.2.0 → commit `c456257` — builder discipline + review_url + projects.md fix
 
 **Files changed:** `CHANGELOG.md` (new), `skills/framework-curator/SKILL.md`, `docs/curator-context.md`, `.gitignore`, `projects.md` (removed from tracking).
+
+---
+
+### 2026-04-29 — solo-qa: "Done" → "In Test" in deliverable acceptance section (bug fix)
+
+**What changed:** Three instances of "Done" in the Deliverable Acceptance section of `skills/solo-qa/SKILL.md` were using the wrong status. The canonical definition at the bottom of the same file (lines 296–309) is unambiguous: slices reach `In Test` after solo sign-off and only reach `Done` after phase-test completes. The three ambiguous lines created a false reading that deliverable acceptance could trigger when all slices were solo-signed-off (i.e., effectively Done), allowing phase test to be skipped.
+
+**Root cause:** This was a framework bug, not solely a builder compliance failure. The deliverable acceptance section was written with "Done" as shorthand for "passed QA" — but in the canonical status chain, Done has a precise meaning reserved for phase-test completion. The inconsistency gave builders a plausible reading that bypassed the phase gate.
+
+**Lines fixed in `skills/solo-qa/SKILL.md`:**
+- Line 192: "When all slices in a deliverable are Done" → "In Test"
+- Line 243: "All [N] slices are Done." → "All [N] slices are In Test."
+- Line 274: "all slices Done" → "all slices In Test"
+
+**What was rejected:** Adding a more explicit warning block at the top of the Deliverable Acceptance section. Rejected — fixing the status terminology is the right correction. A warning block treats the symptom; correcting the language treats the cause.
+
+**Files changed:** `skills/solo-qa/SKILL.md`, `docs/curator-context.md`.

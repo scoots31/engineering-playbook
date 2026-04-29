@@ -189,7 +189,7 @@ Done is permanent unless a later slice reveals a regression — in which case, r
 
 ## Deliverable Acceptance
 
-When all slices in a deliverable are Done, solo-qa runs a deliverable-level acceptance check. This is triggered automatically by solo-build — not by the solo. It is separate from and in addition to individual slice sign-offs. A deliverable is not accepted by the sum of its slice approvals — it requires its own verification pass.
+When all slices in a deliverable are In Test, solo-qa runs a deliverable-level acceptance check. This is triggered automatically by solo-build — not by the solo. It is separate from and in addition to individual slice sign-offs. A deliverable is not accepted by the sum of its slice approvals — it requires its own verification pass.
 
 ### Step 1 — Read the Deliverable Record
 
@@ -240,7 +240,7 @@ When all criteria are verified, present the solo with a clear acceptance prompt 
 ---
 > **Deliverable [D-ID] — [Name] — ready for acceptance** *(Screen | Logic)*
 >
-> All [N] slices are Done. Here's what was delivered:
+> All [N] slices are In Test. Here's what was delivered:
 > [solo description]
 >
 > Acceptance criteria — all verified:
@@ -271,7 +271,7 @@ When the solo accepts:
 1. Update backlog: deliverable status → `Accepted`
 2. Add acceptance record: `"Accepted [date]. Criteria verified. Solo sign-off confirmed."`
 3. Check if all deliverables in the phase are now Accepted — if so, surface the phase gate:
-> "All deliverables in this phase are accepted. Phase gate: all slices Done, all deliverables accepted. Ready for Phase Test when you are."
+> "All deliverables in this phase are accepted. Phase gate: all slices In Test, all deliverables accepted. Ready for Phase Test when you are."
 
 ---
 
