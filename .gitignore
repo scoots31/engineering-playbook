@@ -16,3 +16,6 @@ docs/communications/.wrangler/
 *.swo
 .env
 .env.*
+
+# Personal project registry — each user maintains their own local copy
+projects.md
