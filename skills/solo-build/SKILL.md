@@ -334,11 +334,12 @@ The backlog is a live document. Every status change is written immediately — b
 - Slice is code-complete → **In Build → In QA** — update before triggering code review
 - Slice passes code review → **In QA → In Test** — update when solo-qa hands off to phase-test
 - Slice passes QA → **In Test → Done** — update before moving to the next slice
+- Slice marked Done → **update handoff immediately**: "What was just completed" (this slice's details), "Where we are" (current build state), "Next session picks up at" (next slice in priority). Same pass as the backlog update — not deferred to session end.
 - Deliverable all slices Done → **Defined → Pending Acceptance** — update when presenting to solo
 - Deliverable solo signs off → **Pending Acceptance → Accepted** — update immediately on sign-off
 - A discovery affects another slice → note it in that slice's record now, before continuing
 
-The test: if the session ended right now, would the backlog correctly reflect the build state? If not, it's already out of sync.
+The test: if the session ended right now, would the backlog AND the handoff correctly reflect the build state? If not, both are already out of sync.
 
 ---
 

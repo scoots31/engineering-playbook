@@ -25,9 +25,12 @@ This skill activates when guided or piloted mode is chosen — not in bare mode 
 - Something changes from a previous decision or design → change log
 - A new term or concept is introduced with project-specific meaning → glossary
 
+**When a slice is marked Done (not session end):**
+- Handoff updated immediately: "What was just completed" (this slice), "Where we are" (current build state), "Next session picks up at" (next slice in priority). This fires at slice close — same moment as the backlog status update — not deferred. If the session ended right now, the handoff must be current.
+
 **At the end of every session:**
 - Session documentation entry
-- Session handoff summary updated
+- Handoff validated — confirm it reflects the last completed slice. If the slice-level update happened correctly during build, this is a check, not a rewrite.
 
 **At phase completion:**
 - Target state documentation updated
