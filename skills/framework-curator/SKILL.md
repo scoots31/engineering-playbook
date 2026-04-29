@@ -168,10 +168,17 @@ The solo's response is one of:
 
 On approval:
 1. Execute every file change from the cascade in order
-2. Commit with a clear message describing the framework change
-3. Push to GitHub — automatic, not a question
-4. Deploy to Cloudflare — automatic, same pass as the push
-5. Offer to update MemPalace with the decision context
+2. Update `CHANGELOG.md` — add a new versioned entry (BREAKING / RECOMMENDED / MINOR) with what changed and any action required
+3. Commit with a clear message describing the framework change
+4. Tag the commit with the new version: `git tag -a vX.Y.Z -m "vX.Y.Z — [one-line summary]"`
+5. Push to GitHub with tags: `git push origin main --tags` — automatic, not a question
+6. Deploy to Cloudflare — automatic, same pass as the push
+7. Offer to update MemPalace with the decision context
+
+**Version bump rules:**
+- BREAKING change → increment major (v1.x.x → v2.0.0)
+- New capability or meaningful behavior change → increment minor (v1.0.x → v1.1.0)
+- Correction, clarification, small fix → increment patch (v1.0.0 → v1.0.1)
 
 ---
 
@@ -206,6 +213,7 @@ When anything in the framework changes, these are the locations that may need to
 | `~/.cursor/rules/*.mdc` | Any behavior change — always updated in same pass as the template |
 | `~/.claude/CLAUDE.md` | Output Contract changes — always first, before any other file |
 | `CURSOR-SETUP-PROMPT.md` | Reading list if a new always-on skill is added |
+| `CHANGELOG.md` | Every change — new versioned entry with severity label and action required |
 | `docs/communications/blog.html` | Significant framework changes — add a release notes entry |
 | `docs/communications/getting-started.html` | New solo-facing patterns, phrases, or entry points |
 | `docs/communications/guide-*.html` | Phase behavior changes — update the relevant phase guide |

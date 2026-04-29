@@ -911,3 +911,22 @@ Added "When Stuck" section to solo-build: two failed attempts with no progress �
 **What was rejected:** Requiring the builder to produce longer evidence statements before build (e.g., a full walkthrough of the design file). Rejected as too slow for routine slices. One specific observation from each document is the minimum that proves the file was actually read — not so burdensome that it creates friction on fast slices, not so light that memory substitutes for reading.
 
 **Files changed:** `skills/solo-build/SKILL.md`, `docs/records-spec.md`, `skills/solo-qa/SKILL.md`, `docs/communications/guide-build.html`, `docs/curator-context.md`.
+
+---
+
+### 2026-04-29 — CHANGELOG.md + versioned releases + projects.md isolation
+
+**Context:** Framework now has multiple users. Need release discipline so users can understand what changed and whether they must update.
+
+**Changes made:**
+- `CHANGELOG.md` created at repo root — versioned entries with BREAKING / RECOMMENDED / MINOR severity labels and explicit action required per release. Machine and human readable. Backfilled to v1.0.0.
+- `skills/framework-curator/SKILL.md` — Step 5 updated: curator now writes a CHANGELOG entry, tags the commit, and pushes with `--tags` on every change. Version bump rules documented (major/minor/patch).
+- Documentation cascade table updated: `CHANGELOG.md` added as always-updated on every change.
+- `projects.md` removed from repo tracking and added to `.gitignore`. Replaced with empty template. Personal project paths were leaking to other users' installs — the start skill was resuming the wrong person's projects on fresh installs.
+
+**Version anchors:**
+- v1.0.0 → commit `9af130f` — records-spec cascade
+- v1.1.0 → commit `9093629` — plan-driven selection + Build Active
+- v1.2.0 → commit `c456257` — builder discipline + review_url + projects.md fix
+
+**Files changed:** `CHANGELOG.md` (new), `skills/framework-curator/SKILL.md`, `docs/curator-context.md`, `.gitignore`, `projects.md` (removed from tracking).
