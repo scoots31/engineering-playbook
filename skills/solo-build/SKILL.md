@@ -141,6 +141,15 @@ If the slice doesn't map to a step in the to-be map, stop and ask: is this slice
 
 ### Before writing code
 
+**Step 0 — Read the full slice spec and design file. This is not optional.**
+Before creating a branch or writing any code, read the complete slice record from the backlog — every field, not just the anchors. Then open and read the design file if a design anchor is present. Do not rely on memory of a prior read. Do not skip this for slices that seem simple or familiar.
+
+Confirm both were read by stating:
+- One specific behavior or constraint from the technical description
+- One specific element, state, or layout detail from the design file (visual slices only)
+
+If you cannot produce those statements from what the files actually say right now, you have not read them. Read them before proceeding.
+
 1. **Create the feature branch** — read `docs/tech-context.md` for the project's branching model, then create the branch:
    - Standard format: `feature/SL-[ID]-[short-slug]`
    - Example: `feature/SL-003-player-overview-card`
@@ -176,23 +185,27 @@ Typing the dependency makes it clear what's actually blocking and what can be wo
 
 "Code-complete" means: the slice renders correctly against mock data and matches the design screen. It does not mean done. Done requires the builder to self-verify, present to the solo, and get sign-off.
 
-**Step 1 — Run the self-verification checklist.**
-Before committing or stating code-complete, work through every item on the slice's self-verification checklist from the backlog record. Check each item independently. Then populate the builder confirmation field in the slice record:
+**Step 1 — Run the self-verification checklist against the running app.**
+Open the running app. Work through every item on the self-verification checklist by looking at the rendered output — not by reading the code. For each item, state what was actually observed:
 
 ```
 Builder confirmation:
-  ✓/✗ [item — what was observed]
-  ✓/✗ [item — what was observed]
+  ✓/✗ [item] — [what was seen: "the player name 'Josh Allen' renders in the slot row, matching slot_tag in players.json"]
 ```
 
-If any item is flagged (✗), fix it before proceeding. Do not present a slice to the solo with a flagged self-verification item.
+The difference:
+- ❌ "Data renders correctly." — code assertion, not verification
+- ✅ "The player name 'Josh Allen' renders in the slot row — matches `slot_tag: 'Josh Allen'` in players.json." — observed output
+
+Stating what the code is supposed to produce is not valid evidence. Only what was observed in the running output counts. If any item cannot be verified against the running app, fix the blocker first. If any item is flagged (✗), fix it before presenting. Do not present a slice with an unresolved self-verification item.
 
 **Step 2 — Commit the work.**
 Execute the commit directly — do not hand this to the solo. Read `docs/tech-context.md` for any project-specific commit conventions, then stage the changed files and commit with message: `SL-[ID] code-complete — [slice name]`.
 
 Commit message format is deliberate: the slice ID makes it traceable in git history. Never use vague messages ("wip", "updates", "fix"). Every commit must be traceable to a backlog slice.
 
-**Step 3 — Update the backlog: status → `In QA`.**
+**Step 3 — Update the backlog: status → `In QA`. Write review_url.**
+Set slice status to `In QA`. Write the review URL to the `Review URL` field in the slice record — the exact URL where the solo can open the completed work in a browser. If the slice has no previewable output (pure logic, infrastructure), write `None`.
 
 **Step 4 — Present to the solo.**
 Show the completed builder confirmation and state readiness for review:
@@ -200,14 +213,14 @@ Show the completed builder confirmation and state readiness for review:
 > "SL-[ID] — [Name] is ready for review.
 >
 > Builder confirmation:
->   ✓ [item — what was observed]
->   ✓ [item — what was observed]
+>   ✓ [item] — [what was observed]
+>   ✓ [item] — [what was observed]
 >
 > Done criteria to verify:
 >   - [criterion 1]
 >   - [criterion 2]
 >
-> [viewable link or browser instruction]"
+> Review: [review_url from slice record]"
 
 **Step 5 — Invoke `code-review-and-quality` immediately.**
 Do not wait for the solo to trigger it. The handoff is automatic — solo-build to code-review-and-quality to solo-qa is a chain, not a handoff the solo manages.
@@ -301,6 +314,18 @@ Stop the current slice. Move it back to In Review. Invoke `process-change` immed
 
 ---
 
+## When Stuck
+
+**Two failed attempts with no progress on the same problem: stop.**
+
+Do not make a third attempt. Re-read the full slice spec and the design file from scratch — not from memory, not from a prior read in this session. Report what the spec says vs. what was built. Then ask one diagnostic question before touching any code.
+
+**If the solo asks to step back at any point: execute it immediately.**
+
+Do not assess whether a restart is warranted. Do not suggest one more attempt. Do not express confidence that the current approach will work. Stop, re-read the full slice spec and design file, and report what was found. The solo's direction to step back overrides the builder's judgment about progress — without exception.
+
+---
+
 ## Backlog Updates During Build
 
 The backlog is a live document. Every status change is written immediately — before moving to the next action. Not at session end. Not after the slice is Done. The moment the status changes, the file changes.
@@ -380,3 +405,7 @@ All seven steps happen in the same action. The log entry and the record updates 
 | Skipping the self-verification checklist before presenting to the solo | The solo reviews work that the builder hasn't verified — "looks good" reviews happen | Run every self-verification item, populate builder confirmation, present confirmation alongside the work |
 | Presenting a deliverable for acceptance without running deliverable-level self-verification | Slice-level Done doesn't catch cross-slice integration bugs | Deliverable self-verification is a separate pass — checks flow, handoffs, and end-to-end journey |
 | Moving a slice to a different phase with a quiet field edit | Phase records go out of sync silently — source and destination phases no longer reflect the plan | Execute the full re-phasing protocol — 7 steps, decision logged, all affected records updated |
+| Starting a slice without stating one specific observation from the slice spec and one from the design file | Building from memory produces work that contradicts the spec or design — a full rebuild is the cost | Produce those two statements from the actual files before writing code. No statements = not read |
+| Self-verification that asserts ("data renders correctly") instead of observing | Assertions are code inspection — the same check code-review-and-quality already ran | Open the running app; state what was seen in the rendered output. Observed output only |
+| Continuing past two failed attempts on the same problem | Spiral without direction — the solo's time burns while confidence substitutes for diagnosis | Hard stop. Re-read the full slice spec and design file from scratch, report what was found, ask one question |
+| Declining or deferring a solo request to step back | The builder's assessment that progress is close does not override the solo's direction | The solo's step-back request is an immediate directive — stop, re-read, report. No exceptions |

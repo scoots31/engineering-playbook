@@ -130,7 +130,7 @@ When AI verification passes, present the solo with a clear, structured sign-off 
 > **SL-[ID] [Name] — ready for your sign-off**
 >
 > AI verification passed. Please open these two things side by side:
-> - Running slice: [URL or preview path]  
+> - Running slice: [review_url from slice record]  
 > - Design reference: [design file path] → [element name]
 >
 > Confirm each of these:

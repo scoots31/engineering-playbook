@@ -883,3 +883,31 @@ Append an entry after every curator session. Format: date, what changed, why, wh
 **Why they were resolved without being explicitly targeted:** The records-spec work restructured the session start, code-complete protocol, and backlog update protocol in ways that addressed these behaviors as a side effect of making the skill coherent. The backlog items described symptoms; the records-spec work addressed the underlying structure.
 
 **Remaining:** Plain language audit — not yet executed.
+
+---
+
+### 2026-04-29 — Pre-build read gate, evidence-based self-verification, review_url field, stuck protocol
+
+**Source:** Notes from the Solo Companion project build session (2026-04-28), captured in `docs/continuity/framework-improvements.md` and `docs/continuity/handoff.md` in the solo-companion project.
+
+**What changed:** Four additions to `skills/solo-build/SKILL.md`, one to `docs/records-spec.md`, one to `skills/solo-qa/SKILL.md`, three watchfor items to `docs/communications/guide-build.html`.
+
+**1 — Pre-build read gate (Proposals 1 + 3)**
+Added Step 0 to "Before writing code": builder must read the full slice record and open the design file before writing any code. Confirmed by stating one specific observation from each. Cannot be skipped for slices that seem familiar. Source: SL-011 was rebuilt from scratch because the builder inferred the layout from memory instead of reading the design file (right-side panel built instead of centered modal).
+
+**Why the evidence requirement:** "I read it" is not verifiable. Requiring the builder to produce one concrete observation from each document closes the gap between "read" and "skimmed" or "assumed from context."
+
+**2 — Evidence-based self-verification (Proposal 3)**
+Updated Step 1 of code-complete: self-verification must be run against the running app, not the code. Every checklist item requires a statement of what was actually observed in the rendered output. "Data renders correctly" is explicitly invalid. Source: builder was listing self-verification items by reading code and assuming the output was correct — the same check code-review-and-quality already ran. Four hours were lost in one session before the solo forced a restart.
+
+**Why the evidence standard matches solo-qa Part 1:** solo-qa already had the correct standard ("rendered value is X — matches field Y in mock file Z"). Self-verification was the missing enforcement of that same standard earlier in the chain.
+
+**3 — review_url field on slice records (Proposal 2)**
+Added `Review URL` field to the slice record template in `docs/records-spec.md` and its field definition. Builder writes it at code-complete alongside the status → In QA update. It is the exact URL where the solo can open the completed work in a browser. `None` for non-previewable slices. solo-qa reads it from the record (not reconstructed informally). Source: Solo Companion already expected this field (renders a "▶ Review" button in the companion app); the framework had no formal definition for it.
+
+**4 — Stuck protocol (Proposal 3)**
+Added "When Stuck" section to solo-build: two failed attempts with no progress → stop. Re-read the full slice spec and design file from scratch before any further code changes. Report what was found. Ask one diagnostic question. And: the solo's explicit request to step back is an immediate directive — the builder does not evaluate whether it is warranted, does not suggest one more attempt, does not express confidence that the current approach will work. Source: builder refused the solo's direct requests to step back twice in the same session while stuck on an HTML rendering issue with unclosed brackets. "Being confident progress is close" is not a valid reason to override the solo.
+
+**What was rejected:** Requiring the builder to produce longer evidence statements before build (e.g., a full walkthrough of the design file). Rejected as too slow for routine slices. One specific observation from each document is the minimum that proves the file was actually read — not so burdensome that it creates friction on fast slices, not so light that memory substitutes for reading.
+
+**Files changed:** `skills/solo-build/SKILL.md`, `docs/records-spec.md`, `skills/solo-qa/SKILL.md`, `docs/communications/guide-build.html`, `docs/curator-context.md`.

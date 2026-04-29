@@ -134,6 +134,8 @@ Builder confirmation:
   ✓/✗ [item — what was observed]
   ✓/✗ [item — what was observed]
 
+Review URL: [URL where this slice's output can be previewed | None]
+
 Depends on: [SL-XXX | D-ID | external dependency | none — explicit always]
 Notes: [Decisions made, constraints discovered, spike results, non-obvious things.
         Not a summary of what the slice does — that's the descriptions above.]
@@ -156,6 +158,8 @@ Notes: [Decisions made, constraints discovered, spike results, non-obvious thing
 **References** — Any source — internal document, external URL, API spec, stakeholder feedback, spike result, prior decision — that a builder must read to execute this slice correctly. If the builder could complete the slice without it, it does not belong here. If missing it would produce the wrong result or require a redo, it belongs here. Each entry states what it is and why it is required.
 
 **Depends on** — Other slices or external things that must exist before this slice can start. Named explicitly — not "backend" but "SL-003" or "API: player search endpoint confirmed." None is a valid answer and must be stated explicitly.
+
+**Review URL** — The URL where the completed slice can be previewed. Written by the builder at code-complete, alongside the status update to `In QA`. A local server URL, running preview path, or deployed preview link — whatever the solo needs to open the work in a browser. `None` for slices with no previewable output (pure logic, infrastructure). Never left blank.
 
 **Notes** — The why and the non-obvious. Things that would surprise a builder who had not been in the room. Not a summary of what the slice does.
 
@@ -342,7 +346,7 @@ All seven steps happen in the same action. The log entry and the record updates 
 | `design-review` | Births slice records. Captures: ID, name, status, plain language description, technical description, design anchor, process anchor, done criteria, self-verification checklist, dependencies, references, notes. Marks data anchor as Pending if data-scaffold has not run. Leaves phase and deliverable blank — marked pending. |
 | `data-scaffold` | Fills data anchor on every slice it creates mock data for. Goes back into the slice record and completes that field. |
 | `prd-to-plan` | Creates all deliverable and phase records — full records, all fields. Goes back into every slice record and adds phase and deliverable assignment. Nothing leaves prd-to-plan with blank phase or deliverable fields on Ready slices. |
-| `solo-build` | Updates status throughout the lifecycle. Populates builder confirmation at slice, deliverable, and phase presentation time. Executes re-phasing protocol when needed. |
+| `solo-build` | Updates status throughout the lifecycle. Populates builder confirmation at slice, deliverable, and phase presentation time. Writes review_url to the slice record at code-complete. Executes re-phasing protocol when needed. |
 | `solo-qa` | Drives slice from In QA toward In Test. May add notes to slice record. |
 | `phase-test` | Drives phase from In Test toward Completed. |
 

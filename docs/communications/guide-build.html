@@ -1789,6 +1789,30 @@
           </div>
         </div>
 
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Starting a visual slice without re-reading the design file</h4>
+            <p>The design anchor names the file — "design anchor check" means actually opening and reading that file before writing code, not recalling it from memory or a prior read. A single missed read produced a full overlay rebuild when the builder inferred the layout instead of consulting the file. The pre-build read is required for every visual slice, every time.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Self-verification that asserts instead of observes</h4>
+            <p>"Data renders correctly" is a code assertion — it tells you what the code is supposed to do, not what the solo will actually see. Self-verification must be done against the running app. Every checklist item requires a statement of what was observed in the rendered output. The standard is identical to QA: named evidence only. If the builder cannot state what was seen on screen, the check has not been run.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Continuing past two failed attempts without stopping</h4>
+            <p>After two attempts with no progress on the same problem, the builder stops and re-reads the full slice spec and design file from scratch before touching any code. Confidence that the next attempt will work is not a reason to continue — it's the same confidence that produced the two failed attempts. And if the solo asks to step back, that is an immediate directive, not a suggestion to evaluate.</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
