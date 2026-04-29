@@ -153,6 +153,17 @@ Identified from the tech stack and platform constraints.]
 
 ---
 
+## Runtime
+
+[How to start the app locally. Used by the Solo Companion to surface a Start & Review button
+when the app is not running. Omit for projects with no local server (static exports, APIs without
+a dev server, etc.).]
+
+- **Start command:** `[full command to start the local server, run from the project root]`
+- **App port:** `[port the server listens on — used for the port-alive check]`
+
+---
+
 ## Profile Reference
 
 [Which profile this was built from, or "general solo" if built from scratch.]
@@ -172,6 +183,8 @@ Identified from the tech stack and platform constraints.]
 **Plan** — slice done criteria are written with technical specificity from the stack. "RTK Query endpoint wired and returning mock data" not "data displays correctly."
 
 **Build** — the tech context is the build bible. Stack, principles, branching model, secrets pattern — all referenced here.
+
+**Solo Companion** — reads `Start command` and `App port` from the `## Runtime` section at sync time. These power the Start & Review button — when a slice has a review URL and the app is stopped, the companion starts it automatically. If the Runtime section is absent, the companion falls back to Review-only mode (no Start & Review).
 
 ---
 
