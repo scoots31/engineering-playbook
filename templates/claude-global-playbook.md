@@ -40,6 +40,8 @@ Support (post-deploy on-demand): `bug-fix` · `enhancement` · `dependency-upgra
 
 Companion (on-demand recall + explain): `nivya` — invoke with `/nivya`; addressable by name once loaded. Recall only — never captures, decides, or builds. Routes to the right skill with consent.
 
+Testing (on-demand autonomous test runs): `solo-simulator` — invoke with `/solo-simulator`. Stands in for the solo at every framework gate during a test run. Operates from a locked brief. Approves what matches, pushes back on drift, escalates after one failed round. Produces a decision log and post-run report.
+
 ---
 
 ### Handoffs

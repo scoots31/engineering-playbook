@@ -6,7 +6,7 @@
 
 If you're an AI (Cursor, Claude, or similar) reading this repository to understand how to operate:
 
-**What this is:** A complete lifecycle framework for building software with AI. It contains 38 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses guided or piloted mode — silent by default. One companion skill (`nivya`) is on-demand — the solo invokes her by name to recall and explain, never to do work.
+**What this is:** A complete lifecycle framework for building software with AI. It contains 39 skills organized into phases — each skill is a `SKILL.md` file in `skills/<name>/`. Always-on skills activate when the user chooses guided or piloted mode — silent by default. One companion skill (`nivya`) is on-demand — the solo invokes her by name to recall and explain, never to do work.
 
 **What to do:**
 1. Default session mode is bare — no routing, no always-on. Skills load only when invoked.
@@ -29,7 +29,7 @@ If you're an AI (Cursor, Claude, or similar) reading this repository to understa
 
 ---
 
-A complete lifecycle system for building software with AI — from first idea through deployed and tested. Covers 38 skills spanning discovery, design, planning, build, QA, testing, and deploy. Works with **Cursor** and **Claude Code**.
+A complete lifecycle system for building software with AI — from first idea through deployed and tested. Covers 39 skills spanning discovery, design, planning, build, QA, testing, and deploy. Works with **Cursor** and **Claude Code**.
 
 ---
 
@@ -37,7 +37,7 @@ A complete lifecycle system for building software with AI — from first idea th
 
 Most AI coding tools help you write code faster. This framework replaces the discipline a real team provides — the PM challenge, the tech review, the design artifact, the QA gate, the process map — so a solo builder has all of it without needing a team.
 
-**38 skills** cover the full lifecycle. **4 always-on skills** activate on guided or piloted mode — silent in bare mode. **1 companion skill** (`nivya`) is on-demand — the solo invokes her by name for recall and explanation. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
+**39 skills** cover the full lifecycle. **4 always-on skills** activate on guided or piloted mode — silent in bare mode. **1 companion skill** (`nivya`) is on-demand — the solo invokes her by name for recall and explanation. The QA chain is automatic. Every phase has gates. The whole system is built on a process contract — an agreed to-be map that every phase is held accountable to.
 
 → See [`docs/communications/skills-reference.html`](docs/communications/skills-reference.html) for full detail on every skill.
 
@@ -169,7 +169,7 @@ Open any HTML file in a browser. Slide decks use arrow keys to navigate.
 ## What's in this repo
 
 ```
-skills/                  All 38 framework skills + nivya (companion) — one folder per skill, SKILL.md inside
+skills/                  All 39 framework skills + nivya (companion) — one folder per skill, SKILL.md inside
 docs/
   communications/        Process map, slide decks, skills reference
   process/               as-is and to-be maps (created per project)

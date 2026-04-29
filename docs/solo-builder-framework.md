@@ -320,6 +320,7 @@ ENTRY POINT
 | `awesome-design-md` | On-ramp 3 — reference-based design | ✅ Built |
 | `framework-curator` | Tends the framework itself — proposes, previews, and executes changes to skills and documentation | ✅ Built |
 | `nivya` | On-demand companion — recall and explain only. Reads framework + project continuity + process maps + MemPalace. Answers questions without capturing, deciding, or building. Routes to the right skill with explicit consent when a conversation produces something that belongs in the record. | ✅ Built |
+| `solo-simulator` | On-demand autonomous test runner — stands in for the solo at every framework gate during a test run. Operates from a locked brief generated via Q&A. Approves aligned artifacts, pushes back on drift with specific brief-field citations, escalates after one unresolved round with a best-call decision. Produces a live flag surface during the run and a post-run decision log and report. | ✅ Built |
 
 ---
 

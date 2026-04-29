@@ -947,3 +947,28 @@ Added "When Stuck" section to solo-build: two failed attempts with no progress �
 **What was rejected:** Adding a more explicit warning block at the top of the Deliverable Acceptance section. Rejected — fixing the status terminology is the right correction. A warning block treats the symptom; correcting the language treats the cause.
 
 **Files changed:** `skills/solo-qa/SKILL.md`, `docs/curator-context.md`.
+
+---
+
+### 2026-04-29 — solo-simulator skill added
+
+**What it is:** A new on-demand skill that stands in for the human solo at every framework decision gate during a test run. Operates from a locked brief generated via a 13-question Q&A sequence. Approve / pushback / escalate + best-call decision logic. Produces a live flag surface during the run and a persistent decision log + post-run report.
+
+**Why it was built:** Three converging needs: (1) framework testing without a human at every gate, (2) token usage comparison data between framework and no-framework builds, (3) long-term autopilot mode for the framework. The same skill serves all three purposes at increasing levels of sophistication.
+
+**Activation taxonomy:** On-demand. Invoked with `/solo-simulator`. Never auto-loaded. Runs for the duration of the test run, then exits.
+
+**Design decisions:**
+- Brief is locked at confirmation — never changes mid-run. Mid-run changes require a new run.
+- Pushback is always specific — cites the exact brief field and states observed vs. required. Never vague.
+- Never blocks after Round 2 — escalate + best-call keeps the run moving regardless.
+- Human override always possible — logged as a distinct decision type, not overwritten.
+- Live flag surface is observability only — not a control gate. Run continues without human action.
+- Every decision logged including approvals — the log is the full calibration record.
+
+**First test project:** Gift Tracker (Option C from test project selection). Scott runs non-framework version; simulator runs framework version. Metrics captured in `docs/session-metrics.md`.
+
+**Non-visual product note:** This build revealed that the framework's design sprint phase doesn't apply to skill files. A spec pass (defining exact structure and format of each output file before writing) was used instead. This is the first real data point for closing Hole #1 (non-visual products).
+
+**Files created:** `skills/solo-simulator/SKILL.md`, `templates/solo-sim-brief-template.md`.
+**Files updated:** `README.md` (skill count 38→39), `docs/solo-builder-framework.md`, `templates/cursor-user-rules-global-playbook.md`, `templates/claude-global-playbook.md`, `~/.claude/CLAUDE.md`, `docs/curator-context.md`.
