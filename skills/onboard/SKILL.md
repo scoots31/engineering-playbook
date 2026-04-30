@@ -66,8 +66,8 @@ be tech context. Name doesn't matter. Content does.
 | Framework Gate File | Look for |
 |---|---|
 | `docs/discovery-brief.md` | Use cases, user stories, problem statement, who uses it and why |
-| `docs/process/as-is-*.md` | Current (manual/existing) process description |
-| `docs/process/to-be-*.md` | Target process — the agreed flow the product enables |
+| `docs/process/as-is-[project-slug].md` | Current (manual/existing) process description |
+| `docs/process/to-be-[project-slug].md` | Target process — the agreed flow the product enables |
 | `docs/tech-context.md` | Stack, language, framework, architecture, deployment target |
 | `docs/design/sprint-*.html` | Visual design artifact, screens, UI structure |
 | `docs/design/deferred-decisions.md` | Scope decisions, what's in/out, deferred items |
