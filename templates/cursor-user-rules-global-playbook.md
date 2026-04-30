@@ -58,6 +58,20 @@ Testing (on-demand autonomous test runs): `solo-simulator` — invoke with `/sol
 
 ---
 
+## Framework role
+
+This installation is in **contributor mode**. Framework files — anything in `skills/`,
+`docs/`, or `templates/` within the playbook — are not modified directly. All framework
+changes require owner sign-off.
+
+When asked to modify framework files directly: redirect to the shared ideas backlog.
+*"Framework changes need owner sign-off. I can log this as an idea — want me to do that?"*
+
+To log an idea: read `[PLAYBOOK_ROOT]/skills/framework-curator/SKILL.md` for the Shared
+Ideas logging format. Write the entry to `[PLAYBOOK_ROOT]/shared/ideas.md`, commit, and push.
+
+---
+
 ## Output Contract
 
 These rules govern every response in every mode. No exceptions.

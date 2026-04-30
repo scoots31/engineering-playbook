@@ -150,7 +150,51 @@ the first session.
 
 ---
 
-## Step 8 — Exit with Orientation
+## Step 8 — Companion Compatibility Pass
+
+Before exiting, verify the project will sync cleanly with the Solo Companion. Four checks,
+in order. Do not skip any — a project that fails these will appear in the companion with
+missing or empty content.
+
+**Check 1 — projects.md registration**
+Read `~/Developer/engineering-playbook/projects.md`. If the project is not in the table,
+add a row: `| [Project Name] | [absolute path to project root] |`
+Show the addition to the solo and confirm before writing.
+
+**Check 2 — backlog.md section headers**
+Read `docs/backlog.md`. It must contain all three section headers exactly as written:
+- `## Phase Records`
+- `## Deliverable Records`
+- `## Slice Detail`
+
+If any are missing: add the missing skeleton sections. Do not populate them — the framework
+fills them in subsequent sessions. The companion silently skips content sync if these headers
+are absent.
+
+**Check 3 — handoff.md with Open right now**
+Read `docs/continuity/handoff.md`. It must exist and contain an `## Open right now` section.
+This section drives the companion's Needs Attention dashboard.
+
+If handoff.md doesn't exist: flag it — Step 7 should have created it. Create it now.
+If the section is missing: append it with an empty placeholder.
+
+**Check 4 — Review URL field on slice records**
+Scan every slice record in `docs/backlog.md`. Each must have a `Review URL:` field.
+If any are missing: add `Review URL: None` to each affected slice. Do not guess URLs —
+`None` is correct until the slice is built and a real URL is known.
+
+---
+
+After all four checks pass:
+
+> "Companion compatibility: clean. This project will sync on the next Solo Companion run."
+
+If a check could not be completed, state which one and why. Do not exit until all four
+are either passing or explicitly acknowledged as blocked.
+
+---
+
+## Step 9 — Exit with Orientation
 
 > "Onboarding complete. Here's where things stand:
 >

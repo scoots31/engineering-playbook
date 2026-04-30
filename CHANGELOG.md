@@ -8,6 +8,48 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.3.0 — 2026-04-30 — RECOMMENDED
+
+**Onboard companion pass, shared ideas backlog, deployed-project new cycle**
+
+### What changed
+
+**Companion compatibility pass (onboard)**
+Onboard now ends with a four-check pass verifying the project will sync cleanly with the
+Solo Companion: projects.md registration, backlog.md section headers, handoff.md with
+`## Open right now`, and `Review URL` field on slice records. A project that fails these
+checks shows as empty in the companion. The pass fills or flags each gap before exiting.
+
+**Shared ideas backlog (framework-curator)**
+New `shared/ideas.md` in the playbook repo. The framework curator can log proposed ideas
+from any session and surface pending approvals at session start. Two modes: owner (can
+approve/reject/execute) and contributor (propose only). Mode is determined by presence of
+`Framework role: owner` in the loaded context — set in the private CLAUDE.md on Scott's
+machine, absent from all other installs. Contributor installs redirect direct framework
+file edits to the ideas backlog.
+
+**Deployed project — new cycle (start)**
+The start skill now detects when all phases in an existing project are at `Deployed` status.
+Instead of continuing old work, it routes to a new cycle protocol: orients on what was
+shipped, asks what's being added, scopes to the right starting phase, opens a new phase in
+the existing backlog, and updates the handoff. Deployed phases are read-only — the new
+cycle adds on top of the prior record without touching it.
+
+**Framework files guardrail**
+Explicit rule added to CLAUDE.md and Cursor contributor rules: framework files in `skills/`,
+`docs/`, and `templates/` are only modified via the framework-curator workflow. Direct edits
+outside a curator session redirect to the curator.
+
+### Action required
+
+- **Owner install:** pull to get the new skill changes. No config changes needed — the
+  `Framework role: owner` line has been added to your private CLAUDE.md automatically.
+- **Contributor install (Cursor):** pull and re-paste Cursor rules from
+  `templates/cursor-user-rules-global-playbook.md`. The contributor mode section is new
+  and won't be active until the rules are updated.
+
+---
+
 ## v1.2.0 — 2026-04-29 — RECOMMENDED
 
 **Builder discipline, review_url field, project isolation**

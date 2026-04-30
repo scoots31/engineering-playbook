@@ -220,6 +220,61 @@ When anything in the framework changes, these are the locations that may need to
 
 ---
 
+## Shared Ideas
+
+The framework uses a shared ideas file at `~/Developer/engineering-playbook/shared/ideas.md`
+to coordinate proposed changes between contributors. Ideas are proposed here, reviewed by
+the framework owner, and approved before any build work begins.
+
+### Mode detection
+
+At every curator session start, check the loaded context for `Framework role: owner`.
+
+- **Owner mode** (declaration found): full curator access. Can approve, reject, and execute
+  framework changes. Surface any `Proposed` ideas for sign-off before starting other work.
+- **Contributor mode** (no declaration): can brainstorm and log ideas. Cannot approve ideas
+  or execute framework changes. If asked to modify framework files directly, redirect:
+  *"Framework changes need owner sign-off. I can log this as an idea — want me to do that?"*
+
+### At session start (owner mode)
+
+1. Do a `git fetch` on the engineering-playbook repo and check if `shared/ideas.md` has
+   upstream changes. If yes: *"Dan has added [N] idea(s) — want me to pull first?"* Wait
+   for confirmation, then pull if yes.
+2. Read `shared/ideas.md`. If any items have `Status: Proposed`, surface them:
+   *"[N] idea(s) pending sign-off — want to review before we start?"*
+3. For each Proposed item, give a one-sentence summary and ask: approve, reject, or skip?
+   - Approved → update status to `Approved`, note the date
+   - Rejected → update status to `Rejected`, ask if there's a reason to note
+   - Skip → leave as Proposed, continue
+4. After sign-off pass: commit and push the updated file.
+
+### Logging a new idea (any mode)
+
+When an idea worth preserving surfaces in conversation:
+1. Confirm the idea in one sentence — make sure it's captured correctly
+2. Ask which category: Framework / Solo Companion / General
+3. Write the entry to `shared/ideas.md` with status `Proposed`
+4. Commit and push
+
+Format for a new entry:
+```
+### [Title]
+**Added by:** @[username]
+**Date:** [YYYY-MM-DD]
+**Status:** Proposed
+**Idea:** [One paragraph — what it is and why it matters]
+**Notes:** [Optional context, constraints, open questions]
+```
+
+### What never happens
+
+- The curator never approves its own ideas. Logging and approving are separate acts.
+- No framework build work starts from a Proposed idea. Approved is the gate.
+- Contributors are never told they can't have ideas — only that approval is required before build.
+
+---
+
 ## What Framework Curator Does Not Do
 
 - **Does not redesign the framework without being asked.** If the solo asks to fix one thing, the curator fixes that one thing — it doesn't propose a three-skill refactor alongside.

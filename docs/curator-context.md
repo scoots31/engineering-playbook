@@ -1063,3 +1063,30 @@ For well-scoped, low-ambiguity builds — where design decisions are already mad
 **What was rejected:** Claiming the framework produces production-ready code. Honest position: the framework produces production-quality process and documentation — discovery, design, decisions log, acceptance criteria, handoff. The code output is a structured, reviewable, defensible starting point for an engineering team. The engineering review step doesn't disappear — it starts from a better foundation.
 
 **Files changed:** `docs/curator-context.md`.
+
+---
+
+### 2026-04-30 — Companion pass, shared ideas backlog, deployed new cycle, framework guardrail
+
+**Companion compatibility pass added to onboard (Step 8)**
+Four checks before exit: projects.md registration, backlog.md section headers, handoff.md `## Open right now` section, `Review URL` field on all slice records. Fills or flags each gap. Exit blocked until all four pass or are acknowledged as blocked.
+
+**Why these four:** Derived from reading the Solo Companion's actual sync logic (`sync.py`, `parsers.py`). These are the exact conditions that cause silent sync failures — the companion ingests the project but produces empty dashboards and missing cards. The pass makes the failure mode visible during onboard instead of at first companion sync.
+
+**Shared ideas backlog (framework-curator Shared Ideas section + `shared/ideas.md`)**
+A new `shared/ideas.md` in the repo serves as a staging area for proposed framework changes from any contributor. The framework-curator skill now has a Shared Ideas section that handles: mode detection (owner vs contributor), session-start sign-off surface for owner sessions, idea logging for any session, and the `git fetch` + pull prompt for owner sessions where upstream changes exist.
+
+**Identity mechanism:** `Framework role: owner` declaration in `~/.claude/CLAUDE.md` (private, local-only). Contributor installs — Cursor rules on other machines — have no such declaration. The role determines which mode the curator operates in. This is a workflow convention, not a security lock. Trusted collaborators; behavioral guardrails against accidents, not adversarial enforcement.
+
+**What was rejected:** Checking `git config user.email` against a declared owner. Rejected because git config is user-settable and could drift. The private CLAUDE.md is more reliable and explicit — it's the file that's always in context for Scott's sessions and never shared.
+
+**Deployed project — new cycle (start)**
+Added routing branch: existing context found AND all phases at Deployed status → new cycle protocol. Protocol: orient on shipped state, understand new work, scope to right starting phase, open new phase in existing backlog (deployed phases read-only), update handoff, orient and proceed.
+
+**Why in `start`, not a new skill:** "One door" design principle — the solo doesn't think about which skill to invoke, they just open the project and start talking. `start` handles the routing invisibly. A separate `/cycle` or `/resume` command would require the solo to know which entry point to use and when. Routing within `start` removes that decision entirely.
+
+**Backlog archiving logged as Proposed idea:** `shared/ideas.md` seeded with the archiving design item. Scope deferred — design it when a real project needs it, not in advance.
+
+**Framework files guardrail:** Added to `~/.claude/CLAUDE.md` (owner) and Cursor contributor rules (template + installed). Redirects direct framework file edits to the curator workflow. Catches accidents, not adversaries.
+
+**Files changed:** `skills/onboard/SKILL.md`, `skills/framework-curator/SKILL.md`, `skills/start/SKILL.md`, `shared/ideas.md` (new), `~/.claude/CLAUDE.md`, `~/.cursor/rules/solo-builder-start.mdc`, `templates/cursor-user-rules-global-playbook.md`, `CHANGELOG.md`, `docs/curator-context.md`.

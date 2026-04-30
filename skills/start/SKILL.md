@@ -58,6 +58,8 @@ If any of these exist, do not run the routing logic. Orient to the current state
 
 > "Picking up from [where handoff says] — [one sentence on current state]. Let's go."
 
+**Deployed project, new work:** If existing context is found AND all phase records in `docs/backlog.md` are at `Deployed` status — do not continue the old work. Route to the new cycle protocol below. A deployed project with new work is not a resume — it is a new cycle starting from a stable foundation.
+
 ---
 
 ## Step 2: Read What They Brought
@@ -148,7 +150,10 @@ One sentence. Warm. Then just start. The framework is invisible.
 ```
 New conversation opens
 │
-├── Existing framework context found → orient and continue, don't restart
+├── Existing framework context found
+│   ├── Active phases in progress → orient and continue, don't restart
+│   └── All phases at Deployed status → new cycle protocol
+│
 ├── Resume prompt found + handoff.md exists → orient from handoff, skip routing
 │
 └── No existing context
@@ -159,6 +164,47 @@ New conversation opens
         ├── Exploratory (Shape B) → Brainstorm
         └── Ambiguous (Shape C) → one question → route
 ```
+
+---
+
+## Deployed Project — New Cycle
+
+When a project is found at Deployed status and new work is being discussed, do not
+re-run discovery, do not recreate docs, do not touch existing phase records.
+Everything that was built stays exactly as it is — Phase 1 (or the most recent deployed
+phase) is complete and its record is read-only. The new cycle adds on top of it.
+
+**Step 1 — Orient on what was shipped**
+Read `docs/backlog.md` phase summary and `docs/continuity/handoff.md`. One sentence:
+what the product does and what was built in the last deployed phase.
+
+**Step 2 — Understand the new work**
+If not already described in the opening message, ask one question:
+*"What are you adding?"*
+
+**Step 3 — Scope to the right starting point**
+Based on what's described:
+- New capability or new user journey → route to `discover`
+- Defined new screens with known requirements → route to `design-review` with new slices
+- Small bounded addition (one feature, one screen) → route to `enhancement`
+- Bug or regression → route to `bug-fix`
+
+The routing is invisible. One sentence of orientation, then start the appropriate skill.
+
+**Step 4 — Open a new phase in the existing backlog**
+Before routing: add a new Phase record to `docs/backlog.md`.
+- Name: Phase 2 (or Phase N continuing the sequence)
+- Status: Planning
+- Do not modify any existing phase records — deployed phases are read-only from here
+
+**Step 5 — Update the handoff**
+Rewrite `docs/continuity/handoff.md` to reflect the new cycle: previous phase complete,
+new phase starting, where to begin.
+
+**Step 6 — Orient and proceed**
+> "[Project] Phase [N-1] is live. Adding [one sentence on new work]. [Next move]."
+
+Then start. Nothing more.
 
 ---
 
