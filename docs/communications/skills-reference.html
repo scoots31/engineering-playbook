@@ -666,13 +666,14 @@
           <div class="skill-name">start</div>
           <div class="skill-badge">Framework entry</div>
         </div>
-        <div class="skill-description">The framework's front door. Reads the opening message of a new project conversation and routes automatically to Brainstorm (exploratory ideas) or Discover (clear solution in mind). Checks for existing context before routing — never restarts a project already in progress.</div>
+        <div class="skill-description">The framework's front door. Reads the opening message of a new project conversation and routes automatically to Brainstorm (exploratory ideas) or Discover (clear solution in mind). Checks for existing context before routing — never restarts a project already in progress. Detects deployed projects and opens a new cycle rather than continuing closed work.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
               <li>Reads opening tone — exploratory vs. articulated idea</li>
               <li>Checks for existing context (blueprint, discovery brief, active sprint) before routing</li>
+              <li>Detects deployed projects — routes to new cycle protocol, opens new phase in existing backlog, never touches completed phases</li>
               <li>Asks one question if routing is ambiguous</li>
               <li>Never announces the framework or explains phases</li>
               <li>One sentence of orientation, then just starts</li>
@@ -688,7 +689,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>Routing decision: <strong>Brainstorm</strong> or <strong>Discover</strong></li>
+              <li>Routing decision: <strong>Brainstorm</strong>, <strong>Discover</strong>, or <strong>new cycle</strong> for deployed projects</li>
               <li>Hands off immediately — no intermediate output</li>
             </ul>
           </div>
@@ -699,7 +700,7 @@
           <div class="skill-name">onboard</div>
           <div class="skill-badge">Framework entry</div>
         </div>
-        <div class="skill-description">Brings an existing project into the SBF without redoing the work. Reads the project directory, semantically maps content to gate artifacts, synthesizes with solo confirmation, and places the project at the correct starting phase.</div>
+        <div class="skill-description">Brings an existing project into the framework without redoing the work. Reads the project directory, semantically maps content to gate artifacts, synthesizes with solo confirmation, places the project at the correct starting phase, and verifies the project will sync cleanly with the Solo Companion before exiting.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Invoke</div>
@@ -714,18 +715,20 @@
             <ul>
               <li>Reads docs, notes, and planning files — skips code files</li>
               <li>Semantic matching — content-based, not filename-based</li>
-              <li>Shows mapping preview before writing any SBF file</li>
+              <li>Shows mapping preview before writing any framework file</li>
               <li>Gaps surface as targeted discussion questions, not just file names</li>
               <li>Classifies remaining gaps: undocumented work (ask) vs. work not done yet (starting phase)</li>
               <li>Initializes continuity docs and exits with clear orientation</li>
+              <li><strong>Companion compatibility pass</strong> — verifies projects.md registration, backlog section headers, handoff <code>## Open right now</code> section, and Review URL field on all slice records before exiting</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>SBF gate files synthesized from existing project content</li>
-              <li><code>docs/continuity/current-phase.md</code> + <code>handoff.md</code> initialized</li>
+              <li>Framework gate files synthesized from existing project content</li>
+              <li><code>docs/continuity/handoff.md</code> initialized with <code>## Open right now</code></li>
               <li>Clear statement of starting phase and first move</li>
+              <li>Companion compatibility confirmed — project syncs on next Solo Companion run</li>
             </ul>
           </div>
         </div>
@@ -2093,7 +2096,7 @@
           <div class="skill-name">framework-curator</div>
           <div class="skill-badge">On-demand skill</div>
         </div>
-        <div class="skill-description">The framework's institutional collaborator. Invoked when expanding, modifying, fixing, or validating the Solo Builder Framework itself. Knows every skill, every doc, every gate, every principle, and the history of decisions behind them. Always proposes changes for approval before executing — never modifies the framework silently.</div>
+        <div class="skill-description">The framework's institutional collaborator. Invoked when expanding, modifying, fixing, or validating the Solo Builder Framework itself. Knows every skill, every doc, every gate, every principle, and the history of decisions behind them. Always proposes changes for approval before executing — never modifies the framework silently. Supports a shared ideas backlog for contributor proposals with owner sign-off before any build work begins.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -2101,6 +2104,8 @@
               <li><strong>Load-bearing principles:</strong> checks every proposed change against the principles that define the framework — flags violations explicitly</li>
               <li><strong>Documentation cascade:</strong> identifies every file a change touches (SKILL.md, README, framework doc, skills reference, process map, decks, cursor template)</li>
               <li><strong>Proposal-first:</strong> drafts a full change proposal with preview of every edit before touching a single file</li>
+              <li><strong>Shared ideas backlog:</strong> logs proposed changes from any session to <code>shared/ideas.md</code>; surfaces pending approvals at owner session start</li>
+              <li><strong>Owner / contributor modes:</strong> owner can approve and execute framework changes; contributors can propose only — direct edits are redirected to the ideas backlog</li>
               <li><strong>MemPalace-aware:</strong> searches for related decisions to preserve the "why" — doesn't re-litigate closed debates</li>
               <li><strong>Integrity validation:</strong> after any change, checks for orphaned references, missing nav entries, and taxonomy drift</li>
               <li><strong>Scope boundary:</strong> operates on the framework repo only — never on projects</li>
@@ -2115,6 +2120,7 @@
               <li>Retiring a skill</li>
               <li>Changing a framework-wide principle or pattern</li>
               <li>Running a framework integrity / drift check</li>
+              <li>Logging or reviewing ideas in the shared ideas backlog</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -2123,6 +2129,7 @@
               <li>Four-part change proposal: what's changing · cascade of files · preview of each edit · principle check</li>
               <li>Executed cascade (after approval) with diff summary</li>
               <li>Framework integrity report — drift flagged or <em>Framework integrity: clean</em></li>
+              <li>Shared ideas entry logged and pushed (contributor or owner sessions)</li>
               <li>Optional MemPalace entry recording the decision and reasoning</li>
             </ul>
           </div>
