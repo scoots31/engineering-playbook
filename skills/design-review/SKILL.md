@@ -196,9 +196,20 @@ Done criteria:
   - [verifiable statement]
 
 Quality contract:
-  - [non-functional requirement — error handling, edge case, validation, or resilience behavior]
-  - [e.g. "If the API call fails, the user sees an error message and the failure is logged"]
-  - [e.g. "Input X rejects empty string and values over N chars at the point of submission"]
+  Failure states:
+    - [What does the system do when an external call fails, times out, or returns an error?]
+    - [e.g. "If the API call fails, user sees an error message — not a blank screen — and the failure is logged"]
+  Edge cases:
+    - [What happens at boundaries — empty data, maximum values, zero results, concurrent actions?]
+    - [e.g. "Empty list renders the defined empty state, not a blank section"]
+  Input validation:
+    - [What inputs are rejected, at what point, with what user feedback?]
+    - [e.g. "Name field rejects empty string and strings over 100 chars at submission — inline error appears"]
+  Security:
+    - [Is user input sanitized before display? Is data scoped to the right user? Are auth checks server-side?]
+    - [e.g. "User-supplied content is escaped before rendering — no raw HTML injection possible"]
+
+Not every category applies to every slice. Mark inapplicable categories as `N/A — [reason]`. A blank category is not acceptable — it means the writer didn't think about it.
 
 Self-verification checklist:
   - [what the builder confirms this specific slice does correctly before presenting]
@@ -216,7 +227,7 @@ Notes: [decisions, constraints, spike results, non-obvious things]
 - Phase and deliverable are marked "Pending prd-to-plan" — never left blank.
 - References lists only vital sources — things the builder cannot skip without producing the wrong result.
 - Done criteria must be verifiable without ambiguity. "It works" is not a criterion.
-- Quality contract must name specific failure states, edge cases, or validation rules — not "handle errors gracefully." Each line must be checkable: either the behavior exists in the code or it doesn't.
+- Quality contract covers four categories: failure states, edge cases, input validation, and security. Each category must be addressed or explicitly marked `N/A — [reason]`. Each line must name a specific, checkable behavior — not "handle errors gracefully." Either the behavior exists in the code or it doesn't.
 
 ### Step 4: Determine Slice Status
 
@@ -340,8 +351,14 @@ Done criteria:
   - [verifiable statement]
 
 Quality contract:
-  - [specific error handling, edge case, or validation requirement]
-  - [e.g. "If the API call fails, user sees an error message; failure is logged"]
+  Failure states:
+    - [e.g. "If the API call fails, user sees an error message — not a blank screen — and the failure is logged"]
+  Edge cases:
+    - [e.g. "Empty list renders the defined empty state, not a blank section"]
+  Input validation:
+    - [e.g. "Name field rejects empty string and strings over 100 chars at submission — inline error appears"]
+  Security:
+    - [e.g. "User-supplied content is escaped before rendering — no raw HTML injection possible"]
 
 Self-verification checklist:
   - [what the builder confirms this specific slice does correctly before presenting]

@@ -1162,4 +1162,16 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 **Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`, `Solo Companion/parsers.py`, `Solo Companion/db.py`, `Solo Companion/sync.py`, `Solo Companion/push.py`, `solo-companion-cloud/src/index.js`.
 
-**Files changed:** `skills/solo-build/SKILL.md`, `skills/solo-qa/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `skills/phase-test/SKILL.md`, `skills/onboard/SKILL.md`, `scripts/session-signal-push.sh` (new), `shared/session-log.md` (new), `CHANGELOG.md`, `docs/curator-context.md`.
+### 2026-05-01 — Quality contract expanded to four-category scaffold; security added as Check 9
+
+**The problem addressed (second pass):** The quality contract field existed but was unstructured — writers might cover error handling but skip edge cases or security entirely, not from negligence but from lack of prompting. The code review had no independent security baseline — security was only checked if the contract mentioned it.
+
+**Quality contract scaffold (design-review):** The contract field now has four required categories: Failure states, Edge cases, Input validation, Security. Each must be addressed or explicitly marked `N/A — [reason]`. A blank category is not acceptable — the writer must affirm they considered it. The scaffold is enforced at design review's Ready gate — the same gate that blocks slice promotion to Ready.
+
+**Solo-build updated:** The build plan format now includes steps for observable quality contract items (simulate failure, trigger validation, submit bad input). The Step 1 self-verification walkthrough now explicitly covers these — the builder must trigger failure states and confirm error rendering, not just confirm the happy path.
+
+**Check 9 — Security (code-review-and-quality):** A fixed five-sub-check security gate added as Check 9, independent of the quality contract. Runs on every slice regardless of contract content. Sub-checks: (9a) input sanitization — no raw innerHTML/dangerous rendering; (9b) data scoping — data scoped to authenticated user; (9c) auth checks server-side — no client-side-only access control; (9d) injection prevention — user input not string-concatenated into queries or commands; (9e) no secrets in client-visible code. All five are binary pass/fail with specific violation reporting. Failures route back to build, same as checks 1–8.
+
+**Why Check 9 is independent:** The quality contract is written per-slice and may mark security as N/A for slices with no user input or external calls. Check 9 still runs — it catches omissions regardless of what the contract says, and catches classes of vulnerability (injection, secrets) that might not occur to a contract writer. The two are complementary: the contract enforces slice-specific non-functional requirements; Check 9 enforces universal security baselines.
+
+**Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`.

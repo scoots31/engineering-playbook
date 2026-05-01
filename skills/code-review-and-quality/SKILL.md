@@ -1,6 +1,6 @@
 ---
 name: code-review-and-quality
-description: Seven-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, and stack compliance. On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to In Build.
+description: Nine-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, stack compliance, quality contract compliance, and security. On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to In Build.
 ---
 
 # Code Review and Quality
@@ -32,9 +32,9 @@ If the quality contract is missing, stop:
 
 ---
 
-## The Seven Checks
+## The Nine Checks
 
-Run all seven. Each returns ✅ pass or ❌ fail with a specific note.
+Run all nine. Each returns ✅ pass or ❌ fail with a specific note.
 
 ### Check 1 — Pattern compliance
 Does this slice follow the patterns already established in the project? Look for: component structure, naming conventions, state management approach, how data flows from the mock layer to the UI. A slice that invents a new pattern where an existing one fits is a fail.
@@ -91,6 +91,24 @@ A contract line is only ✅ if the specific behavior exists and is reachable. A 
 **Pass:** Every quality contract line has a traceable, correct implementation.  
 **Fail:** Names the specific contract line unmet and what was found (or not found) in the code.
 
+### Check 9 — Security
+Independent of the quality contract. Runs on every slice regardless of what the contract says. Five fixed requirements — all must pass.
+
+**9a — Input sanitization:** Any user-supplied content rendered to the UI must be escaped. Look for raw `innerHTML`, `dangerouslySetInnerHTML`, template interpolation without escaping, or server-side rendering that writes unescaped input into HTML. A slice that renders user input without escaping fails — even if it "worked in testing."
+
+**9b — Data scoping:** Data returned from the backend must be scoped to the authenticated user. Look for queries that fetch by resource ID without verifying ownership, API responses that include other users' fields, or admin-only data reachable without an auth check.
+
+**9c — Auth checks are server-side:** Authorization logic must live on the server. Client-side role checks, feature flags, or visibility toggles that are not also enforced server-side are a fail. A hidden UI element is not access control.
+
+**9d — Injection prevention:** User input passed to a database query, shell command, or `eval` must be parameterized or sanitized. String concatenation into SQL, shell interpolation of user values, or `eval` of any external input is a fail.
+
+**9e — No secrets in client-visible code:** API keys, tokens, passwords, or internal endpoint paths must not appear in client-side code, HTML source, or JavaScript bundles. Environment variables accessed server-side are acceptable; the same value embedded in a JS file or response payload is not.
+
+For each sub-check: state what was looked for and what was found. Return ✅ if clean, ❌ if a violation exists.
+
+**Pass:** All five security sub-checks are clean.  
+**Fail:** Names the specific sub-check, the line or pattern that violates it, and the required fix.
+
 ---
 
 ## Output
@@ -112,14 +130,22 @@ Quality contract — SL-[ID]
   [contract line 1]             ✅ / ❌
   [contract line 2]             ✅ / ❌
   [contract line N]             ✅ / ❌
+
+Security — SL-[ID]
+  9a Input sanitization         ✅ / ❌
+  9b Data scoping               ✅ / ❌
+  9c Auth checks server-side    ✅ / ❌
+  9d Injection prevention       ✅ / ❌
+  9e No secrets in client code  ✅ / ❌
 ```
 
 For each ❌ in checks 1–7: one sentence naming the specific problem and what the fix is.
 For each ❌ in the quality contract: name the contract line, what was found in the code, and what the implementation must do to satisfy it.
+For each ❌ in Check 9: name the sub-check, the specific violation, and the required fix.
 
 ---
 
-**On pass (all 7 ✅):**
+**On pass (all 9 ✅):**
 
 Update the backlog entry for SL-[ID]:
 > Code review passed — [date]

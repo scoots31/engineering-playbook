@@ -167,7 +167,11 @@ A paraphrase or general description does not count. If you cannot produce a verb
 2. State all four anchors explicitly
 3. Read the design screen file. Find the anchor element. Report what you see before proceeding.
 4. Read the relevant mock data — know the exact field names
-5. State a brief build plan: *"1. Create component structure → verify: renders. 2. Wire mock data → verify: correct values display. 3. Apply styles from design → verify: matches screen."*
+5. State a brief build plan that covers both functional steps and quality contract implementation. Contract steps are not an afterthought — they appear in the numbered sequence alongside functional steps:
+
+   *"1. Create component structure → verify: renders. 2. Wire mock data → verify: correct values display. 3. Apply styles from design → verify: matches screen. 4. Implement error state per contract [failure state line] → verify: error renders on simulated failure. 5. Add input validation per contract [validation line] → verify: empty string rejected at submission."*
+
+   If the quality contract has no applicable items for a step type (e.g. a pure display slice with no user inputs), note it explicitly in the plan rather than leaving it out silently.
 
 ### During build
 
@@ -195,8 +199,15 @@ Typing the dependency makes it clear what's actually blocking and what can be wo
 
 "Code-complete" means: the slice renders correctly against mock data and matches the design screen. It does not mean done. Done requires the builder to self-verify, present to the solo, and get sign-off.
 
-**Step 1 — Run the self-verification checklist against the running app.**
+**Step 1 — Run the self-verification checklist against the running app, then walk the quality contract.**
 Open the running app. Work through every item on the self-verification checklist by looking at the rendered output — not by reading the code. For each item, state what was actually observed:
+
+After the checklist, walk every observable quality contract item in the running app. Don't just confirm the happy path — trigger the failure states, test the edge cases, submit bad input:
+- Simulate a failure (disconnect, bad response, empty data) and confirm the error state renders
+- Submit empty or invalid input and confirm validation fires at the right point with the right message
+- For any security contract line — confirm user-supplied content is not rendered raw
+
+For each contract item walked: state what was triggered and what was observed. If a contract item is not observable in the running app (pure backend logic), note it — code review will cover it. Do not skip observable contract items. Presenting a slice that hasn't been walked through its own contract is the failure mode this step exists to prevent.
 
 ```
 Builder confirmation:
