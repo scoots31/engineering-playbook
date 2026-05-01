@@ -67,6 +67,10 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
    - If free choice: recommend based on deployment target (CloudWatch if AWS-hosted, Datadog otherwise)
    - If not needed: record as `none` — don't leave it blank
 
+   If a tool is declared, ask one follow-up: "Is there anything specific that must be tracked — compliance events, SLA thresholds, specific business metrics? Or is standard operational health (errors, logs, uptime) sufficient?"
+   - If standard only: record as `Standard operational health — errors, logs, uptime`. No additional architecture constraints needed.
+   - If specific requirements exist: capture each one. These go into Architecture Constraints in `docs/tech-context.md` and generate named instrumentation slices in the backlog — one per requirement, beyond the baseline setup slice.
+
 When enough is known, summarize and confirm:
 > "Based on what you've shared: [brief stack summary]. Before I write this up — anything else that would constrain how we build?"
 
@@ -108,6 +112,7 @@ and any platform constraints that affect design and build decisions.]
 | Linting | [ESLint Airbnb / other] | |
 | Testing | [Jest / pytest / TBD] | |
 | Observability | [Datadog / CloudWatch / none] | [Org-mandated or free choice] |
+| Observability requirements | [Standard operational health / Compliance: X, SLA: Y, Metrics: Z] | |
 
 ---
 
