@@ -1162,6 +1162,26 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 **Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`, `Solo Companion/parsers.py`, `Solo Companion/db.py`, `Solo Companion/sync.py`, `Solo Companion/push.py`, `solo-companion-cloud/src/index.js`.
 
+### 2026-05-01 — Plain language audit: skill names and internal jargon removed from solo-facing output
+
+**What changed:** 12 targeted edits across 4 skill files. All changes are in solo-facing output — quoted examples, output templates, and gate decision formats.
+
+**framework-health:** Removed git pull command from the update-available prompt (solo was being handed a command to run — the skill should execute it on yes). Removed "The process mapper handles this step" from the between-phase cross-reference prompt (skill name exposed). Replaced "qa-triage items" with "open issues" in the session close check (both the section label and the output example). Removed "with the pull command ready to run" from the internal description of what the skill watches.
+
+**design-review:** Replaced "Go to Discover and agree the to-be process" with plain-language direction that doesn't name the skill.
+
+**solo-build:** Replaced "Run prd-to-plan to define deliverables" with a plain-language gate message that doesn't name the skill.
+
+**phase-test:** Replaced "routing to qa-triage" in the data specialist output example. Replaced "open qa-triage items" with "open issues" in the Stage 7 collect list. Replaced "2 open in qa-triage" with "2 open issues" in the gate decision template. Replaced "[qa-triage item]" labels in the HOLD gate format. Replaced "All qa-triage items" with "All open issues" in the phase completion record structure.
+
+**What was NOT changed:** Internal builder instructions that use skill names to direct routing (e.g., "invoke qa-triage" in solo-qa's internal instructions). Those are correct — the skill needs to know where to route. The fix target was strictly what the solo reads.
+
+**What was ruled out:** The session-signals terminal commands in solo-build, code-review-and-quality, solo-qa, and phase-test are not violations — they are instructions telling the builder to execute the command, not commands handed to the solo.
+
+**Files changed:** `skills/framework-health/SKILL.md`, `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/phase-test/SKILL.md`, `docs/curator-context.md`.
+
+---
+
 ### 2026-05-01 — Quality contract expanded to four-category scaffold; security added as Check 9
 
 **The problem addressed (second pass):** The quality contract field existed but was unstructured — writers might cover error handling but skip edge cases or security entirely, not from negligence but from lack of prompting. The code review had no independent security baseline — security was only checked if the contract mentioned it.
