@@ -153,6 +153,88 @@
   <div class="entry">
     <div class="entry-header">
       <div class="entry-date">May 1</div>
+      <div class="entry-title">The Retro Now Listens. And Talks to the Framework.</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Session-present listening — retrospective captures in the moment, not at phase end</div>
+          <div class="change-desc">The retrospective used to wait. It fired at phase end, read the notes, and wrote a report. By then, the moment was gone and the details were thin. Now it listens throughout every guided and piloted session. Three trigger types: <strong>framework-detected</strong> (stuck protocol fired, code review failed twice, builder self-corrected), <strong>solo-expressed</strong> (any signal that the output wasn't what was expected — "why did that happen", "that took way longer than it should have"), and <strong>explicit-flag</strong> (solo says "note this"). Mid-session acknowledgment is one line and the work continues. Nothing is lost to end-of-session recollection.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Cross-machine retro log — observations from all sessions reach the framework owner</div>
+          <div class="change-desc">Session observations now flow to a shared log in the engineering-playbook repo. At session end, the Stop hook pushes retro notes to <code>shared/retro-log.md</code> alongside session signals. The framework curator reads this log at session start in owner mode — the only consumer. Framework skills never read it. Same-day skip logic prevents surfacing the same observations twice in one day. This is how real usage patterns across all machines and all projects become visible to the framework — not through manual reporting, but through the session itself.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
+      <div class="entry-title">Session Boundaries That Mean Something</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Mid-deliverable checkpoint — automatic handoff update at slice 4</div>
+          <div class="change-desc">When a deliverable has more than four slices and the fourth is complete, the framework updates the handoff automatically and continues building. No pause, no solo approval. This is a context hygiene measure: if the session is interrupted or context compresses, the handoff has a current record of where things stand. It fires once per deliverable. The solo doesn't have to do anything — it happens in the background.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Deliverable completion — framework recommends closing the session</div>
+          <div class="change-desc">When a deliverable is fully accepted, the framework names the boundary: the work is coherent, the handoff has something meaningful to record, and the next deliverable starts fresh without inheriting this session's context. The solo can close out or continue — it's an explicit choice. The point isn't to force stops, it's to surface the right moment when one exists. A deliverable boundary is a real seam in the work. The framework now says so.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
+      <div class="entry-title">Structure Before Skin — Design Sprint Round One Gets a Rule</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Wireframe-first round one — no color, no typography until structure is confirmed</div>
+          <div class="change-desc">Round one of the design sprint now produces structure only: white background, dark text, gray borders, system fonts. No color decisions. No typography decisions. No skin of any kind. The constraint is absolute. The solo confirms the layout is right before any aesthetic direction begins. This prevents the common failure mode where a solo is reacting to the visual treatment before they've agreed on the underlying structure — and misses a layout problem that would have been obvious in a wireframe.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Element naming pass — builder names every interactive element before feedback begins</div>
+          <div class="change-desc">After producing the round one HTML, the builder walks every interactive element in the artifact in order: names the component type (dropdown, filter, search, toggle) and the expected behavior. The solo corrects anything misidentified before layout feedback starts. This is a one-time identification pass that prevents the builder from silently categorizing a filter as decorative or a search box as non-functional. The solo knows exactly what they're looking at before they say anything about it.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── MAY 1 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
       <div class="entry-title">Autopilot — Build Without a Solo in the Loop</div>
     </div>
     <div class="entry-divider"></div>

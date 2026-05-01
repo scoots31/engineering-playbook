@@ -1092,19 +1092,23 @@
           <div class="step-header">
             <div class="step-num">4</div>
             <div>
-              <div class="step-title">Build the first pass — structure only</div>
-              <div class="step-subtitle">Layout, hierarchy, component placement — skin intentionally light</div>
+              <div class="step-title">Build the first pass — structure only, no skin</div>
+              <div class="step-subtitle">Wireframe-first: monochrome, system fonts, layout only — no color or typography decisions until structure is confirmed warm</div>
             </div>
           </div>
           <div class="step-body">
-            <p>The first HTML pass of the hero screen is produced with <strong>structure first, skin second discipline</strong>. This means investing in layout — information hierarchy, component placement, data relationships — without heavy investment in the design system yet.</p>
+            <p>Round one is structure only. The constraint is absolute: <strong>white background, dark text, gray borders, system fonts</strong>. No color decisions. No typography decisions. No skin of any kind. This is not "skin intentionally light" — it is no skin at all until the solo confirms structure is correct.</p>
+            <p>This rule applies to on-ramp 1 and on-ramp 3 only. On-ramp 2 (Figma source) has a defined visual system — skin discipline applies but the wireframe-first constraint does not.</p>
             <ul>
+              <li>White background, dark text, gray borders — no palette decisions</li>
+              <li>System fonts only — no typography decisions</li>
               <li>Intentionally rough is fine. The question is: does this layout correctly represent what the person does here?</li>
               <li>Use placeholder data that feels real — real-looking names, realistic numbers, plausible states</li>
               <li>Include all interactive elements that are visible — every button, filter, toggle, tab becomes a gate question in the walk-through</li>
               <li>Save to <span class="filepath">docs/design/sprint-[screen-id].html</span> and serve so it opens in a browser</li>
             </ul>
-            <p>After producing: <em>"Here's the first pass. I built it this direction: [one sentence on structure decisions]. Warmer or colder on the layout before we touch the skin?"</em></p>
+            <p><strong>Element naming pass — runs immediately after producing the HTML:</strong> walk every interactive element in order and name the component type and expected behavior. Example: "Filter bar — clicking a chip applies it as an active filter. Search input — typing triggers results on submit, not keystroke. Export button — downloads the current view as CSV." The solo corrects anything misidentified before layout feedback begins. This pass prevents silent misclassification of interactive elements as decorative.</p>
+            <p>After the naming pass: <em>"Here's the first pass. I built it this direction: [one sentence on structure decisions]. Warmer or colder on the layout before we touch the skin?"</em></p>
           </div>
         </div>
 

@@ -1869,6 +1869,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Running past a deliverable boundary without updating the handoff</h4>
+            <p>When a deliverable completes, the handoff should reflect it — what was just accepted, what's next. When a deliverable has more than four slices, the mid-deliverable checkpoint at slice 4 updates the handoff automatically. But context compression can still degrade build coherence in long sessions. The deliverable completion recommendation is a signal worth taking seriously: the work is coherent, the seam is clean, and the next deliverable starts fresher in a new session than it would continuing here.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Treating interactive Figma elements as window dressing</h4>
             <p>Filters, search boxes, pagination, and toggles visible in a Figma design are not decorative by default. Before build starts, each must be classified: Functional (logic wired in this slice), Deferred (logic in a future slice — companion slice created now), or Out of scope. There is no fourth option. A builder who silently decides an element is decorative during coding has made a product decision without the solo. An element rendered as a working-looking interactive component that accepts input and does nothing is a code review failure — it will fail Check 10c regardless of whether it "looks right" in the browser.</p>
           </div>

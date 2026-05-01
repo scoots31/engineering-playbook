@@ -22,6 +22,68 @@ Nothing in the existing framework changes. All updates are additive — solo-bui
 
 ---
 
+## v1.5.4 — 2026-05-01 — RECOMMENDED
+
+**Retrospective redesign — session-present listening model + cross-machine retro log**
+
+The retrospective was passive — it waited for phase end to process observations. Signals from inside a session had no path to the framework owner across machines. Two gaps, one redesign.
+
+Retrospective now runs in listening mode throughout every guided and piloted session. Three trigger types capture observations without interrupting flow: **framework-detected** (stuck protocol fired, code review failed twice, builder self-corrected, solo-qa caught missed verification, priority deviation, rollback), **solo-expressed** (any dissatisfaction signal — "why did that happen", "that's not what I expected", "that took way longer than it should have"), and **explicit-flag** (solo says "note this", "flag this", "add this to the retro"). Mid-session acknowledgment is one line: "Noted — flagging that." Capture format: `YYYY-MM-DD | user | project | phase | trigger-type | observation`.
+
+Captures write to two places: `.claude/retro-notes.tmp` (session buffer) and `docs/continuity/retro-notes.md` (per-project persistence). At session end, the Stop hook (session-signal-push.sh) pushes retro notes to `shared/retro-log.md` in the engineering-playbook repo alongside session signals. Push failure holds notes in `shared/pending-retro.tmp` for the next successful push.
+
+The framework curator reads `shared/retro-log.md` at session start in owner mode — the only consumer of the cross-machine log. Same-day skip logic: if a `--- Reviewed YYYY-MM-DD ---` separator already exists for today, the curator skips the surface. Framework skills never read the log.
+
+### Files changed
+- `skills/retrospective/SKILL.md` — full rewrite: listening mode section, three trigger types, capture format, session-end surface, retro mode updated to read .claude/retro-notes.tmp
+- `skills/framework-curator/SKILL.md` — Retro Log section added: session start check, same-day skip logic, separator append after review
+- `skills/onboard/SKILL.md` — Check 5 note updated to document retro-notes.tmp handling
+- `scripts/session-signal-push.sh` — extended to handle retro-notes.tmp alongside session-signals.tmp; pending-retro.tmp on push failure
+- `shared/retro-log.md` — new cross-machine log file
+
+### Action required
+None for existing projects — the Stop hook extension is backward-compatible. Retro notes will start flowing on next session that triggers the Stop hook.
+
+---
+
+## v1.5.3 — 2026-05-01 — RECOMMENDED
+
+**Solo-build — deliverable boundary triggers**
+
+Build sessions had no natural stopping point tied to meaningful work units. Sessions could drift mid-deliverable, creating context compression risk and incomplete handoff records.
+
+Two triggers added:
+
+**Mid-deliverable checkpoint** — fires automatically when slice position equals 4 within a deliverable that has more than 4 slices. Framework updates the `## Open right now` section in handoff.md immediately and continues building. No solo approval, no pause. Fires once per deliverable. Protects continuity in the event of unexpected context compression.
+
+**Deliverable completion recommendation** — when a deliverable is fully accepted, the framework surfaces a soft session boundary recommendation: the work is coherent, the handoff has something meaningful to record, and the next deliverable starts fresh without inheriting this session's context. Solo can close out or continue — explicit choice, not a forced stop.
+
+### Files changed
+- `skills/solo-build/SKILL.md` — Deliverable completion Step 4 added; Mid-Deliverable Documentation Checkpoint section added; two new anti-patterns
+
+### Action required
+None — takes effect in the next build session.
+
+---
+
+## v1.5.2 — 2026-05-01 — RECOMMENDED
+
+**Design sprint — wireframe-first round one + element naming pass**
+
+Round one of the design sprint was producing visually finished artifacts before structure was confirmed. Solos were giving feedback on color and typography when the underlying layout hadn't been agreed on yet. Two changes:
+
+**Wireframe-first round one** — round one now produces structure only: white background, dark text, gray borders, system fonts. No color, no typography decisions, no skin of any kind. The constraint is absolute — color and typography are not part of round one. The solo confirms structure is correct before any skin decisions are made. Skin direction is given explicitly by the solo after structure is confirmed warm.
+
+**Element naming pass** — after producing the round one HTML, the builder walks every interactive element in the artifact in order: names the component type and expected behavior. The solo corrects anything misidentified before layout feedback begins. This prevents a builder from silently categorizing a filter as decorative or a search box as non-functional without the solo's awareness.
+
+### Files changed
+- `skills/design-sprint/SKILL.md` — Step 4 rewritten: round one is structure only (monochrome palette, system fonts); element naming pass added after HTML production; Step 5 round discipline updated with explicit skin-direction trigger; anti-pattern added
+
+### Action required
+None — takes effect in the next design sprint session.
+
+---
+
 ## v1.5.1 — 2026-05-01 — RECOMMENDED
 
 **Figma fidelity rules — interactive element classification, node property enforcement, Check 10**
