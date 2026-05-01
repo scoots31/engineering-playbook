@@ -107,7 +107,7 @@ edit this file directly. Ideas require owner sign-off before any framework work 
 ### READY — Deploy: auto-detect method + outcome-based confirmation
 **Added by:** @scotth + Ren
 **Date:** 2026-04-30
-**Status:** Approved
+**Status:** Done-by-proxy — 2026-05-01
 **Idea:** Deploy currently asks the solo to choose a deployment method. Tech-context already has the deployment target and platform. Change: deploy reads tech-context and determines method automatically. Confirmation is outcome-based plain language, not method-based technical language: "This deploys to Railway via your GitHub Actions pipeline. When complete your app will be live at [url]. Proceed?" Solo confirms the outcome they expect, not the technical method. Solos lean on the framework heavily at deploy — this removes a decision they shouldn't have to make.
 **Scope:** `skills/deploy/SKILL.md`.
 
