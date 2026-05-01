@@ -1316,6 +1316,7 @@
               <code>[screen-file] → [element name] → [location on screen]</code>
               <div class="example">Example: sprint-p1.html → Slot context card → top of overview body, below player tabs</div>
             </div>
+            <p><strong>When the design source is a Figma file:</strong> before writing any code, extract the exact node properties (spacing, color, typography) for every element in scope from Figma Dev Mode or MCP — not visual estimates. Then verify the interactive element inventory in the Notes field: every element classified Functional must have its logic wired; every element classified Deferred must render as an explicit non-interactive placeholder. If the inventory is missing, stop — the slice returns to design review before build continues.</p>
           </div>
         </div>
 
@@ -1818,6 +1819,22 @@
           <div class="watchfor-text">
             <h4>Continuing past two failed attempts without stopping</h4>
             <p>After two attempts with no progress on the same problem, the builder stops and re-reads the full slice spec and design file from scratch before touching any code. Confidence that the next attempt will work is not a reason to continue — it's the same confidence that produced the two failed attempts. And if the solo asks to step back, that is an immediate directive, not a suggestion to evaluate.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Treating interactive Figma elements as window dressing</h4>
+            <p>Filters, search boxes, pagination, and toggles visible in a Figma design are not decorative by default. Before build starts, each must be classified: Functional (logic wired in this slice), Deferred (logic in a future slice — companion slice created now), or Out of scope. There is no fourth option. A builder who silently decides an element is decorative during coding has made a product decision without the solo. An element rendered as a working-looking interactive component that accepts input and does nothing is a code review failure — it will fail Check 10c regardless of whether it "looks right" in the browser.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Rebuilding a completed slice without the rollback protocol</h4>
+            <p>When a slice that has passed QA (In Test or Done) needs to be rebuilt, it is a rollback — not a continuation of active build work. The builder proposes the scope (targeted fix or full rebuild), explains why, and waits for solo confirmation before touching any status or discarding any code. Nothing changes before that confirmation. Skipping the protocol means the deliverable and phase records become inconsistent, the log entry is missing, and the solo has no visibility into what changed and why.</p>
           </div>
         </div>
 

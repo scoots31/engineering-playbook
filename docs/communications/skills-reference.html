@@ -1079,6 +1079,7 @@
               <li><strong>Process anchor required</strong> on every slice before it reaches Ready</li>
               <li><strong>Two descriptions per slice — both required:</strong> plain language description (what the solo will see) and technical description (what the builder needs to know). Neither copies from the other. Neither can be blank.</li>
               <li><strong>Quality contract required</strong> — four categories: Failure states, Edge cases, Input validation, Security. Each must be addressed or marked <code>N/A — [reason]</code>. A blank category is not valid. Missing quality contract blocks the slice from reaching Ready.</li>
+              <li><strong>Interactive element inventory (Figma-sourced slices)</strong> — every interactive element in the Figma frame scope must be classified: Functional (logic wired in this slice), Deferred (logic in a future slice — companion slice created in backlog now), or Out of scope. No fourth option. Inventory written to Notes field. Deferred elements require a companion slice before the current slice reaches Ready.</li>
               <li>Slice statuses: In Review · Blocked · Deferred · Ready (full lifecycle in Backlog Status Reference)</li>
               <li>Build signal: enough Ready slices to form a coherent Phase 1 starting point</li>
               <li>Blocked slices have a named spike — never left open without a specific question</li>
@@ -1291,6 +1292,7 @@
               <li>Commit on code-complete: <code>SL-[ID] code-complete — [name]</code></li>
               <li>Status after code-complete: <strong>In QA</strong> (not Done — QA and phase-test complete the chain)</li>
               <li>Auto-invokes <strong>code-review-and-quality</strong> on code-complete</li>
+              <li><strong>Rollback protocol</strong> — when a slice that has already passed QA (In Test or Done) needs to be rebuilt, this is a rollback. Builder assesses scope (targeted fix vs. full rebuild), states the case, and waits for solo confirmation before any status changes. On confirmation: log entry written, slice returns to In Build, deliverable reverts to Pending Acceptance, phase reverts to In Progress if Completed. Full rebuild: existing code discarded, spec and design file re-read from scratch.</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1400,7 +1402,7 @@
           <div class="skill-name">code-review-and-quality</div>
           <div class="skill-badge">Auto — invoked by solo-build</div>
         </div>
-        <div class="skill-description">Nine-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, stack compliance, quality contract compliance, and security. On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to build.</div>
+        <div class="skill-description">Ten-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, stack compliance, quality contract compliance, security, and design fidelity (Figma-sourced slices only). On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to build.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1414,6 +1416,7 @@
               <li><strong>Check 7:</strong> Stack compliance — follows tech-context standards</li>
               <li><strong>Check 8:</strong> Quality contract — reads the pre-written contract before reading the code; checks every line adversarially. A try/catch that swallows the error silently does not satisfy "user sees an error message." Contract line is ✅ only if the specific behavior exists and is reachable.</li>
               <li><strong>Check 9:</strong> Security — five fixed sub-checks, independent of the quality contract: (9a) input sanitization, (9b) data scoped to authenticated user, (9c) auth checks server-side, (9d) injection prevention, (9e) no secrets in client-visible code. Runs on every slice regardless of contract content.</li>
+              <li><strong>Check 10:</strong> Design fidelity (Figma-sourced slices only) — (10a) interactive element inventory present in Notes field; (10b) every inventoried element built; (10c) Functional elements have wired logic, Deferred elements are explicit non-interactive placeholders; (10d) representative visual values traceable to Figma node properties. Non-Figma slices: skip stated explicitly as N/A in the report.</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1427,7 +1430,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>✅/❌ per check with specific notes — Check 8 lists each contract line individually</li>
+              <li>✅/❌ per check with specific notes — Check 8 lists each contract line individually; Check 9 lists each sub-check; Check 10 lists each sub-check or states N/A</li>
               <li>On pass: <div class="output-tag">Code review passed [date]</div> logged in backlog slice detail</li>
               <li>On pass: auto-invokes <strong>solo-qa</strong></li>
               <li>On fail: returns to solo-build with specific items to address; slice status → In Build</li>

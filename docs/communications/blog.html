@@ -149,6 +149,58 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 1 (continued) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
+      <div class="entry-title">Figma to the Letter, Rollback by Protocol</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Figma fidelity — interactive element classification required before build</div>
+          <div class="change-desc">Every interactive element in a Figma frame scope must now be classified before the slice reaches Ready: <strong>Functional</strong> (logic wired in this slice), <strong>Deferred</strong> (logic in a future slice — a companion slice is created in the backlog now), or <strong>Out of scope</strong> (appears in Figma but is not part of this product). There is no fourth option. The classification happens at design review, written into the slice's Notes field, before the builder sees the slice. A builder who encounters a filter, search box, or pagination control at build time cannot make that product decision silently — the decision was already made. This closes the failure mode where interactive elements were built as visual shells: working-looking components that accept input and do nothing.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Figma fidelity — node properties extracted before coding, not approximated</div>
+          <div class="change-desc">When the design source is a Figma file, the builder extracts exact node properties — spacing, color, typography — from Figma Dev Mode or MCP before writing any code. Visual estimates are not acceptable. This matters because the gap between "looks close" and "matches the spec" is where design intent erodes. A layout that approximates the spacing is not the same as one that implements it. The Figma file is the specification; reading it visually is not the same as reading it.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Code review Check 10 — design fidelity (Figma-sourced slices only)</div>
+          <div class="change-desc">A new Check 10 runs on every Figma-sourced slice after code-complete. Four sub-checks: the interactive element inventory must be present in the Notes field (missing inventory fails immediately — the slice returns to design review, not to build); every element listed in the inventory must exist in the implementation; Functional elements must have wired logic (a clickable filter with no filtering logic fails), and Deferred elements must be explicit non-interactive placeholders (a search input that accepts keystrokes but does nothing fails if the inventory says Deferred); and a representative sample of visual values must be traceable to Figma node properties — approximated values are a fail. Slices with non-Figma design sources skip Check 10 entirely, stated explicitly in the review report.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Rollback protocol — formal mechanism for undoing completed work</div>
+          <div class="change-desc">When a slice that has already passed QA needs to be rebuilt, the framework now has a protocol for it. The builder first assesses whether the scope is a <strong>targeted fix</strong> (the approach is sound, a specific behavior is wrong) or a <strong>full rebuild</strong> (the approach itself is structurally wrong — wrong design reading, wrong architecture, wrong assumptions at build start). The builder states which scope applies and why. The solo confirms before anything changes. On confirmation: a rollback log entry is written, the slice returns to In Build, the deliverable reverts from Accepted to Pending Acceptance (because the condition for Accepted is no longer met), and if the phase was Completed it reverts to In Progress. For a full rebuild, existing code is discarded and the spec and design file are re-read from scratch before any new code is written. Nothing happens before confirmation — no status changes, no code discarded.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Plain language — skill names removed from solo-facing output</div>
+          <div class="change-desc">The framework's Output Contract says skill names never appear in what the solo reads. A handful of quoted output examples and gate decision templates were violating this: qa-triage appearing in phase-test gate prompts, prd-to-plan named in a solo-build gate message, the process mapper named in a between-phase prompt, and a raw git command appearing in an update-available prompt that the solo was expected to run themselves. All twelve occurrences corrected. The framework's internal routing stays internal — the solo sees actions and outcomes, not the machinery producing them.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── MAY 1 ── -->
   <div class="entry">
     <div class="entry-header">

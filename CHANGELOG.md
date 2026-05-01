@@ -8,6 +8,73 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.5.1 — 2026-05-01 — RECOMMENDED
+
+**Figma fidelity rules — interactive element classification, node property enforcement, Check 10**
+
+Three real-world failure modes on a Figma-sourced project drove this change: the builder was reading Figma visually instead of extracting exact node properties, elements in the frame were being missed because there was no systematic inventory, and interactive elements (filters, search boxes, pagination) were being rendered as visual shells with no wired logic.
+
+The fix is a classification gate at design review that forces a decision before build starts. Every interactive element visible in a Figma frame scope must be classified as one of three things: **Functional** (logic will be wired in this slice), **Deferred** (logic comes in a future slice — a companion slice must be created in the backlog now), or **Out of scope** (element appears in Figma but is not part of this product). There is no fourth option. The builder cannot make this decision silently during coding.
+
+At build start, the builder extracts exact node properties (spacing, color, typography) from Figma Dev Mode or MCP before writing any code — not visual estimates. Functional elements require wired logic, not a shell. Deferred elements render as explicit non-interactive placeholders, not working-looking components that accept input and do nothing.
+
+Code review gains Check 10 — Design fidelity — which runs on all Figma-sourced slices. Sub-checks: (10a) interactive element inventory present in the Notes field, (10b) every inventoried element built, (10c) classifications honored in implementation, (10d) a representative sample of visual values traceable to Figma node properties. Non-Figma slices skip Check 10 entirely — stated explicitly in the review report.
+
+### Files changed
+- `skills/design-review/SKILL.md` — interactive element inventory added to slice definition; inventory + companion-slice requirement added to Ready gate
+- `skills/solo-build/SKILL.md` — Anchor 1 expanded with Figma-specific pre-build steps; missing inventory = stop, return to design review
+- `skills/code-review-and-quality/SKILL.md` — Check 10 added; report format updated; stale "Nine-check" header fixed
+- `docs/records-spec.md` — design anchor field definition expanded with Figma-specific requirements
+- `docs/curator-context.md` — decisions log updated
+
+### Action required
+Existing slices with a Figma design anchor should have an interactive element inventory added to their Notes field before the next build session. Slices already Done are unaffected. New Figma-sourced slices cannot reach Ready without the inventory.
+
+---
+
+## v1.5.0 — 2026-05-01 — RECOMMENDED
+
+**Rollback protocol — formal mechanism for undoing completed work**
+
+When a slice that has already passed QA (In Test or Done) needs to be rebuilt, it is a rollback — not a stuck situation. Stuck is failure to make progress on active work. Rollback is about undoing completed work. The framework now has a formal protocol for this instead of treating it as an ad-hoc decision.
+
+The protocol distinguishes two scopes before any action is taken. A **targeted fix** means the approach is sound — a specific behavior is wrong and can be corrected without discarding the implementation. A **full rebuild** means the approach itself is structurally wrong: wrong design reading, wrong architecture, or wrong assumptions baked in from the start. The builder makes this assessment and states which scope applies. The solo confirms before anything changes. No status updates, no code discarded, nothing changes before confirmation.
+
+On confirmation, the cascade runs: a rollback log entry is written, slice status reverts to In Build, the deliverable automatically moves from Accepted to Pending Acceptance (because the condition for Accepted is factually no longer met), and if the phase was Completed it reverts to In Progress. For full rebuilds, all existing code for the slice is discarded and the spec and design file are re-read from scratch before any new code is written.
+
+qa-triage is updated to surface the same targeted-fix vs. full-rebuild assessment when a Done slice bug is reopened — the scope determines whether to use the standard reopen path or invoke the rollback protocol.
+
+### Files changed
+- `docs/records-spec.md` — rollback protocol section added; qa-triage added to Who Captures What table; rollback log entry format defined
+- `skills/solo-build/SKILL.md` — Rollback section added parallel to When Stuck
+- `skills/qa-triage/SKILL.md` — targeted-fix vs. full-rebuild assessment added after Bugs routing table
+- `docs/curator-context.md` — decisions log updated
+
+### Action required
+None. Existing sessions unaffected. The protocol is invoked only when a Done or In Test slice needs to be rebuilt.
+
+---
+
+## v1.4.2 — 2026-05-01 — MINOR
+
+**Plain language audit — skill names and internal jargon removed from solo-facing output**
+
+Twelve targeted edits across four skill files. The Output Contract rule — skill names, abbreviations, and framework-speak never appear in what the solo reads — was being violated in a handful of quoted output examples and gate decision templates.
+
+Specific removals: `qa-triage` replaced with "open issues" in framework-health session close prompts and phase-test gate templates; a git pull command removed from the update-available prompt (the skill should execute it, not hand it to the solo); "process mapper" and "prd-to-plan" removed from between-phase messages in design-review and solo-build. Internal builder routing instructions that use skill names were left unchanged — those are correct.
+
+### Files changed
+- `skills/framework-health/SKILL.md`
+- `skills/design-review/SKILL.md`
+- `skills/solo-build/SKILL.md`
+- `skills/phase-test/SKILL.md`
+- `docs/curator-context.md` — decisions log updated
+
+### Action required
+None. Editorial only — no behavior change.
+
+---
+
 ## v1.4.1 — 2026-05-01 — RECOMMENDED
 
 **Quality contract scaffold — four required categories; security added as Check 9**
