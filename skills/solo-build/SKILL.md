@@ -347,6 +347,30 @@ Do not assess whether a restart is warranted. Do not suggest one more attempt. D
 
 ---
 
+## Rollback
+
+When a slice that has already passed QA (In Test or Done) needs to be rebuilt, this is a rollback — not a stuck situation. Stuck is failure to make progress on active work. Rollback is about undoing completed work.
+
+**The builder raises it. The solo confirms it. Nothing changes before confirmation.**
+
+**What triggers a rollback proposal:**
+- A regression in a later slice that traces back to this one
+- A design decision that invalidates the approach this slice was built on
+- Any situation where the work needs to be rebuilt, not just re-QA'd
+
+**When raising a rollback:**
+
+1. State what's being rolled back and why
+2. Assess the scope — targeted fix or full rebuild:
+   - **Targeted fix** — the approach is sound; a specific behavior is wrong
+   - **Full rebuild** — the approach is structurally wrong: wrong design reading, wrong architecture, wrong assumptions baked in at build start
+3. State which scope applies and why
+4. Wait for solo confirmation before touching any status or discarding any code
+
+On confirmation, execute the rollback protocol from `docs/records-spec.md` — status cascade, log entry, and if full rebuild, re-read the spec and design file from scratch before writing any new code.
+
+---
+
 ## Backlog Updates During Build
 
 The backlog is a live document. Every status change is written immediately — before moving to the next action. Not at session end. Not after the slice is Done. The moment the status changes, the file changes.

@@ -66,6 +66,15 @@ Where does this live and how far does it reach?
 | Adjacent slices | Assess whether the fix for one requires changes to the others before fixing. If yes — fix together, QA together. If no — fix the affected slice, continue with the others. |
 | Flow-level | Flag for design review. A flow-level bug usually means something was misunderstood at the design stage, not just implemented incorrectly. Don't try to fix it in QA. |
 
+**Before reopening a Done slice: assess scope.**
+
+When a Done slice bug requires a reopen, assess before marking it In Build: is this a targeted fix or a full rebuild?
+
+- **Targeted fix** — the approach is sound; a specific behavior doesn't work. Proceed: reopen → fix → full QA chain.
+- **Full rebuild** — the approach is structurally wrong: wrong design interpretation, architecture that doesn't fit the requirement, wrong assumptions baked in at build start. Surface this to the solo before touching any status. The rollback protocol applies — builder proposes, solo confirms, status cascade and log entry follow.
+
+The distinction matters. A targeted fix goes through the standard QA chain. A full rebuild discards the slice's code and restarts from the spec.
+
 **Missing Requirements:**
 
 | Scope | Action |

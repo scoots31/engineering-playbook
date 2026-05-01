@@ -339,6 +339,46 @@ All seven steps happen in the same action. The log entry and the record updates 
 
 ---
 
+### Rollback protocol
+
+When a slice that has passed QA (status: In Test or Done) needs to be rebuilt, the rollback protocol executes in full. No status changes before the solo confirms.
+
+**Triggers:**
+- A regression found in a later slice that traces back to this one
+- A design decision that invalidates the approach this slice was built on
+- Builder-solo agreement that a clean restart is the right call
+
+**Targeted fix vs. full rebuild:**
+- **Targeted fix** — the approach is sound; a specific behavior doesn't work. Fix the behavior, re-run the full QA chain.
+- **Full rebuild** — the approach is structurally wrong: design was misread at build start, architecture doesn't fit the requirement, wrong assumptions are baked in. Discard the slice's code. Builder re-reads the spec and design file from scratch before writing any new code.
+
+Builder proposes which scope applies and why. Solo confirms before any status changes or code is discarded.
+
+**Protocol (all steps in the same action — never separated):**
+
+1. Builder states the case: which slice, what's wrong, targeted fix or full rebuild, and why
+2. Solo confirms
+3. Log the rollback in the Decisions and Change Log (format below)
+4. Update the slice record: status → In Build, reason noted in Notes field
+5. Cascade to the deliverable: if Accepted → Pending Acceptance. Automatic — the condition for Accepted is no longer met.
+6. Cascade to the phase: if Completed → In Progress. Automatic — the condition for Completed is no longer met.
+7. If full rebuild: discard the slice's code, re-read the spec and design file from scratch, report what was found before writing any code.
+
+**Rollback log entry:**
+
+```
+### [YYYY-MM-DD] — Rollback: SL-[ID] [slice name]
+Scope: [Targeted fix | Full rebuild]
+Trigger: [Regression from SL-XX | Design decision — [what changed] | Builder-solo agreement]
+What's wrong: [specific description]
+Status before: [In Test | Done]
+Deliverable: [D-ID: Accepted → Pending Acceptance | No cascade — deliverable not Accepted]
+Phase: [Phase N: Completed → In Progress | No cascade — phase not Completed]
+Confirmed by: Solo
+```
+
+---
+
 ## Who Captures What and When
 
 | Skill | Owns |
@@ -349,4 +389,5 @@ All seven steps happen in the same action. The log entry and the record updates 
 | `solo-build` | Updates status throughout the lifecycle. Populates builder confirmation at slice, deliverable, and phase presentation time. Writes review_url to the slice record at code-complete. Executes re-phasing protocol when needed. |
 | `solo-qa` | Drives slice from In QA toward In Test. May add notes to slice record. |
 | `phase-test` | Drives phase from In Test toward Completed. |
+| `qa-triage` | Assesses Done slice bugs for rollback scope (targeted fix vs. full rebuild). Surfaces rollback proposal to solo. Does not execute status changes — rollback protocol in solo-build owns that. |
 
