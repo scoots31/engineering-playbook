@@ -148,7 +148,19 @@ Produce an HTML mockup of the hero screen. Round one is structure only — no sk
 - Include all interactive elements that are visible — buttons, filters, toggles, tabs — rendered as plain structural elements. Every visible interactive element becomes a gate question in the walk-through.
 - Serve the file so it can be opened in a browser. Save to `docs/design/sprint-[screen-id].html`.
 
-After producing: *"Here's the structure pass — no skin yet, intentionally. Warmer or colder on the layout and information hierarchy?"*
+After producing, run the element naming pass before asking warmer/colder:
+
+**Element naming pass:** Walk every interactive element visible in the markup — in order of appearance. For each one, state what it is and how it's expected to behave:
+
+> "Here's what I've got for the interactive elements:
+> - Position filter — dropdown, single select, filters the list below
+> - Search box — text input, filters by player name as you type
+> - Week selector — tab row, switches the active data set
+> - Add player button — opens a modal, not wired in this pass"
+
+The solo corrects any that are wrong: "that filter should be a multi-select, not a dropdown" or "the week selector is a dropdown, not tabs." Fix them before asking about layout. Getting the component types right before warmer/colder means layout feedback is about placement and hierarchy, not "wait, that's the wrong control."
+
+After the element naming pass is confirmed: *"Here's the structure pass — no skin yet, intentionally. Warmer or colder on the layout and information hierarchy?"*
 
 **Do not introduce any skin until structure is confirmed warm.** Skin is a separate pass with its own question. A solo who says "warmer — but I want it darker" is not warm on structure yet. Push back: *"Hold the skin question for now — is the structure right?"*
 
