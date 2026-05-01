@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/zsh -c 'b=docs/backlog.md; h=docs/handoff.md; [[ -f $b && -f $h ]] || exit 0; bt=$(stat -f %m $b 2>/dev/null); ht=$(stat -f %m $h 2>/dev/null); [[ -n $bt && -n $ht && $bt -gt $ht ]] && echo \"⚠️  handoff.md is stale — backlog.md was updated more recently. Update handoff before closing.\"'"
+          }
+        ]
+      }
+    ]
+  }
+}
