@@ -8,6 +8,20 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.3.2 — 2026-04-30 — MINOR
+
+**Onboard now sets up handoff staleness hook in project**
+
+Onboard Step 8 has a new Check 5: creates or updates `.claude/settings.json` at the project root with a Stop hook that warns when `docs/backlog.md` has been modified more recently than `docs/continuity/handoff.md`. Silent when handoff is current. Every project onboarded through the framework gets this automatically — no manual wiring needed.
+
+### Files changed
+- `skills/onboard/SKILL.md` — Check 5 added to Step 8
+
+### Action required
+Existing projects won't have the hook until they run onboard again, or you can add it manually to `.claude/settings.json` in the project root using the command from the skill file.
+
+---
+
 ## v1.3.1 — 2026-04-30 — MINOR
 
 **Observability tool decision added to tech-context**

@@ -183,13 +183,41 @@ Scan every slice record in `docs/backlog.md`. Each must have a `Review URL:` fie
 If any are missing: add `Review URL: None` to each affected slice. Do not guess URLs —
 `None` is correct until the slice is built and a real URL is known.
 
+**Check 5 — Project hooks setup**
+Check whether `.claude/settings.json` exists at the project root. If it doesn't exist,
+create it with the handoff staleness hook. If it exists, check whether the hook is already
+present — if not, add it to the Stop hooks array.
+
+The hook to write:
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/zsh -c 'b=docs/backlog.md; h=docs/continuity/handoff.md; [[ -f $b && -f $h ]] || exit 0; bt=$(stat -f %m $b 2>/dev/null); ht=$(stat -f %m $h 2>/dev/null); [[ -n $bt && -n $ht && $bt -gt $ht ]] && echo \"⚠️  handoff.md is stale — backlog.md was updated more recently. Update handoff before closing.\"'"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Note: the hook checks `docs/continuity/handoff.md` — the correct path for framework projects.
+Do not overwrite an existing `.claude/settings.json` — merge the Stop hook into whatever
+is already there.
+
 ---
 
-After all four checks pass:
+After all five checks pass:
 
 > "Companion compatibility: clean. This project will sync on the next Solo Companion run."
 
-If a check could not be completed, state which one and why. Do not exit until all four
+If a check could not be completed, state which one and why. Do not exit until all five
 are either passing or explicitly acknowledged as blocked.
 
 ---
