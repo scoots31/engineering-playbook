@@ -110,3 +110,24 @@ Do not invoke solo-qa. State the failures clearly:
 > Slice is back In Build. Fix the flagged items and code-complete again."
 
 Update the backlog: slice status → `In Build`.
+
+---
+
+## Session Signals
+
+Passive telemetry. When any of the following events occur, append one line to `.claude/session-signals.tmp` at the project root. Create the file if it doesn't exist. One line per event.
+
+**Trigger events:**
+- Code review failed — any check returned ❌
+
+**Format:**
+```
+YYYY-MM-DD | [git user name] | [project name] | build | code review failed
+```
+
+**How to write the signal:**
+```
+/bin/zsh -c 'echo "$(date +%Y-%m-%d) | $(git config user.name) | [project] | build | code review failed" >> .claude/session-signals.tmp'
+```
+
+Get the project name from `docs/continuity/handoff.md` or the project directory name. Write the signal immediately after logging the failure — before returning the slice to build.

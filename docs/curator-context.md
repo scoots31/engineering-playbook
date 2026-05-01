@@ -1104,3 +1104,38 @@ Added routing branch: existing context found AND all phases at Deployed status �
 **Framework files guardrail:** Added to `~/.claude/CLAUDE.md` (owner) and Cursor contributor rules (template + installed). Redirects direct framework file edits to the curator workflow. Catches accidents, not adversaries.
 
 **Files changed:** `skills/onboard/SKILL.md`, `skills/framework-curator/SKILL.md`, `skills/start/SKILL.md`, `shared/ideas.md` (new), `~/.claude/CLAUDE.md`, `~/.cursor/rules/solo-builder-start.mdc`, `templates/cursor-user-rules-global-playbook.md`, `CHANGELOG.md`, `docs/curator-context.md`.
+
+---
+
+### 2026-04-30 — Verbatim quote hardening, language audit script, session signal system
+
+**Verbatim quote hardening (pre-build read gate)**
+`skills/solo-build/SKILL.md` Step 0 changed from "state one specific observation" to "produce a verbatim quote — exact string from the file, word for word. A paraphrase is not a quote." Applied to both the slice record and the design file.
+
+**Why:** "One specific observation" was too easy to fake from memory. A verbatim quote (class name, field name, label, done criterion) can only come from actually opening the file. Wrong quote = solo catches it at review. The paraphrase loophole was the root of multiple failed build sessions where the builder "knew" the spec but hadn't read it.
+
+**What was rejected:** A session brief at the start of every session summarizing what the builder should know. Rejected because it adds tokens every session for a benefit that only matters when discipline fails — and the brief itself could be generated from memory rather than from reading. Verbatim quote is targeted: it fires only at the moment of build start, costs nothing when the builder does read, and is unfakeable.
+
+---
+
+**Language audit script**
+New `scripts/language-audit.sh` greps all SKILL.md files for soft language patterns. Wired as a Stop hook on the engineering-playbook via `.claude/settings.json`. Fires at the end of every curator session.
+
+**Why:** Soft language in skills ("should", "try to", "ideally") makes requirements advisory instead of mandatory. Builders follow the escape hatch. The script surfaces candidates — the curator decides what to harden. Automated detection is better than periodic manual audits because it catches regression the moment a new soft phrase is introduced.
+
+**What it catches vs. what it misses:** The script flags all pattern matches regardless of context — including intentional uses in example text or field prompts. The curator reads each flagged line and decides. False positives are acceptable; false negatives (missed soft language) are not.
+
+---
+
+**Session signal system**
+Four skills (solo-build, solo-qa, code-review-and-quality, phase-test) now append one-line signals to `.claude/session-signals.tmp` when specific failure events occur mid-session. A Stop hook wired via onboard Check 5 reads the file at session end, appends to `shared/session-log.md`, pushes to the engineering-playbook repo, and clears the tmp file.
+
+**Why:** No mechanism existed to observe framework performance on non-owner machines. Signals give a data stream without requiring human reporting: builders don't fill out forms, solos don't write session summaries. The hook reads what was written automatically during the session.
+
+**Two-layer architecture:** Hook-detected events (handoff staleness) fire without AI action. AI-written signals require skill instruction to append mid-session. This split exists because some failure modes are detectable from file state alone, while others (stuck protocol, QA missed self-verification) require in-session AI judgment.
+
+**Pending-signals fallback:** If the push fails (network, auth, not a git repo), current signals go to `shared/pending-signals.tmp`. Next successful push includes pending signals. No signal is dropped silently.
+
+**Engineering-playbook path assumption:** All machines follow `~/Developer/engineering-playbook` convention. This was locked as an installation requirement in v1.3.0. The session signal push script hardcodes this path. If a machine deviates, the hook will silently fail (which is acceptable — signals are telemetry, not blocking).
+
+**Files changed:** `skills/solo-build/SKILL.md`, `skills/solo-qa/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `skills/phase-test/SKILL.md`, `skills/onboard/SKILL.md`, `scripts/session-signal-push.sh` (new), `shared/session-log.md` (new), `CHANGELOG.md`, `docs/curator-context.md`.

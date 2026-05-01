@@ -144,11 +144,11 @@ If the slice doesn't map to a step in the to-be map, stop and ask: is this slice
 **Step 0 — Read the full slice spec and design file. This is not optional.**
 Before creating a branch or writing any code, read the complete slice record from the backlog — every field, not just the anchors. Then open and read the design file if a design anchor is present. Do not rely on memory of a prior read. Do not skip this for slices that seem simple or familiar.
 
-Confirm both were read by stating:
-- One specific behavior or constraint from the technical description
-- One specific element, state, or layout detail from the design file (visual slices only)
+Confirm both were read by producing a verbatim quote from each:
+- An exact string from the slice record — a class name, a field name, a done criterion, a constraint. Word for word, not paraphrased.
+- An exact string from the design file — a label, a measurement, a class, specific copy. Word for word, not summarized.
 
-If you cannot produce those statements from what the files actually say right now, you have not read them. Read them before proceeding.
+A paraphrase or general description does not count. If you cannot produce a verbatim quote from each file right now, you have not read them. Read them before proceeding. A wrong quote surfaces immediately at review — that is the check.
 
 1. **Create the feature branch** — read `docs/tech-context.md` for the project's branching model, then create the branch:
    - Standard format: `feature/SL-[ID]-[short-slug]`
@@ -396,6 +396,29 @@ All seven steps happen in the same action. The log entry and the record updates 
 
 ---
 
+## Session Signals
+
+Passive telemetry. When any of the following events occur, append one line to `.claude/session-signals.tmp` at the project root. Create the file if it doesn't exist. Do not summarize multiple events into one line — one line per event.
+
+**Trigger events:**
+- Stuck protocol fires — two failed attempts reached
+- Slice rebuilt — builder had to re-read and rebuild after stuck protocol
+- Priority deviation — solo explicitly redirected build away from plan priority
+
+**Format:**
+```
+YYYY-MM-DD | [git user name] | [project name] | build | [signal name]
+```
+
+**How to write the signal** — run this command, substituting values:
+```
+/bin/zsh -c 'echo "$(date +%Y-%m-%d) | $(git config user.name) | [project] | build | [signal]" >> .claude/session-signals.tmp'
+```
+
+Get the project name from `docs/continuity/handoff.md` or the project directory name. Write the signal at the moment the trigger condition is confirmed — not at session end.
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Instead |
@@ -406,7 +429,7 @@ All seven steps happen in the same action. The log entry and the record updates 
 | Skipping the self-verification checklist before presenting to the solo | The solo reviews work that the builder hasn't verified — "looks good" reviews happen | Run every self-verification item, populate builder confirmation, present confirmation alongside the work |
 | Presenting a deliverable for acceptance without running deliverable-level self-verification | Slice-level Done doesn't catch cross-slice integration bugs | Deliverable self-verification is a separate pass — checks flow, handoffs, and end-to-end journey |
 | Moving a slice to a different phase with a quiet field edit | Phase records go out of sync silently — source and destination phases no longer reflect the plan | Execute the full re-phasing protocol — 7 steps, decision logged, all affected records updated |
-| Starting a slice without stating one specific observation from the slice spec and one from the design file | Building from memory produces work that contradicts the spec or design — a full rebuild is the cost | Produce those two statements from the actual files before writing code. No statements = not read |
+| Starting a slice without producing a verbatim quote from the slice spec and the design file | Building from memory produces work that contradicts the spec or design — a full rebuild is the cost | Produce verbatim quotes from both files before writing code. A paraphrase is not a quote. No quotes = not read |
 | Self-verification that asserts ("data renders correctly") instead of observing | Assertions are code inspection — the same check code-review-and-quality already ran | Open the running app; state what was seen in the rendered output. Observed output only |
 | Continuing past two failed attempts on the same problem | Spiral without direction — the solo's time burns while confidence substitutes for diagnosis | Hard stop. Re-read the full slice spec and design file from scratch, report what was found, ask one question |
 | Declining or deferring a solo request to step back | The builder's assessment that progress is close does not override the solo's direction | The solo's step-back request is an immediate directive — stop, re-read, report. No exceptions |

@@ -310,6 +310,27 @@ All required. In order. The slice reaches `In Test` when solo signs off. It reac
 
 ---
 
+## Session Signals
+
+Passive telemetry. When any of the following events occur, append one line to `.claude/session-signals.tmp` at the project root. Create the file if it doesn't exist. One line per event.
+
+**Trigger events:**
+- QA caught missed self-verification — builder's self-verification checklist was not run before presenting to solo-qa
+
+**Format:**
+```
+YYYY-MM-DD | [git user name] | [project name] | qa | [signal name]
+```
+
+**How to write the signal:**
+```
+/bin/zsh -c 'echo "$(date +%Y-%m-%d) | $(git config user.name) | [project] | qa | [signal]" >> .claude/session-signals.tmp'
+```
+
+Get the project name from `docs/continuity/handoff.md` or the project directory name. Write at the moment the missed self-verification is identified — not after returning the slice to build.
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Instead |

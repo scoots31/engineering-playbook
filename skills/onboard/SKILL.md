@@ -188,7 +188,7 @@ Check whether `.claude/settings.json` exists at the project root. If it doesn't 
 create it with the handoff staleness hook. If it exists, check whether the hook is already
 present — if not, add it to the Stop hooks array.
 
-The hook to write:
+The hooks to write (two Stop hooks — both required):
 ```json
 {
   "hooks": {
@@ -199,6 +199,10 @@ The hook to write:
           {
             "type": "command",
             "command": "/bin/zsh -c 'b=docs/backlog.md; h=docs/continuity/handoff.md; [[ -f $b && -f $h ]] || exit 0; bt=$(stat -f %m $b 2>/dev/null); ht=$(stat -f %m $h 2>/dev/null); [[ -n $bt && -n $ht && $bt -gt $ht ]] && echo \"⚠️  handoff.md is stale — backlog.md was updated more recently. Update handoff before closing.\"'"
+          },
+          {
+            "type": "command",
+            "command": "/bin/zsh ~/Developer/engineering-playbook/scripts/session-signal-push.sh"
           }
         ]
       }
@@ -207,8 +211,9 @@ The hook to write:
 }
 ```
 
-Note: the hook checks `docs/continuity/handoff.md` — the correct path for framework projects.
-Do not overwrite an existing `.claude/settings.json` — merge the Stop hook into whatever
+Note: the handoff hook checks `docs/continuity/handoff.md` — the correct path for framework projects. The session signal hook reads `.claude/session-signals.tmp` from the project root, appends any signals to `shared/session-log.md` in the engineering-playbook repo, and pushes. If push fails, signals are held in `shared/pending-signals.tmp` and included in the next successful push.
+
+Do not overwrite an existing `.claude/settings.json` — merge the Stop hooks into whatever
 is already there.
 
 ---

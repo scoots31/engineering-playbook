@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/zsh /Users/scottheinemeier/Developer/engineering-playbook/scripts/language-audit.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

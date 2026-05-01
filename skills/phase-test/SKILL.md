@@ -398,6 +398,27 @@ Contains:
 
 ---
 
+## Session Signals
+
+Passive telemetry. When any of the following events occur, append one line to `.claude/session-signals.tmp` at the project root. Create the file if it doesn't exist. One line per event.
+
+**Trigger events:**
+- Phase-test HOLD — gate decision is HOLD (one or more blocking failures remain unresolved)
+
+**Format:**
+```
+YYYY-MM-DD | [git user name] | [project name] | test | phase-test HOLD
+```
+
+**How to write the signal:**
+```
+/bin/zsh -c 'echo "$(date +%Y-%m-%d) | $(git config user.name) | [project] | test | phase-test HOLD" >> .claude/session-signals.tmp'
+```
+
+Get the project name from `docs/continuity/handoff.md` or the project directory name. Write the signal at the moment the HOLD decision is logged — before surfacing it to the solo.
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Instead |

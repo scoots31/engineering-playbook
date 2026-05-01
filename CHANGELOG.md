@@ -8,14 +8,54 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.3.4 — 2026-04-30 — RECOMMENDED
+
+**Session signal system — passive telemetry across all machines**
+
+Four skills now append one-line signals to `.claude/session-signals.tmp` when notable failures occur during a build session: stuck protocol fired, slice rebuilt, priority deviation (solo-build); QA caught missed self-verification (solo-qa); code review failed (code-review-and-quality); phase-test HOLD (phase-test). A Stop hook wired via onboard Check 5 reads the tmp file at session end, appends structured lines to `shared/session-log.md` in the engineering-playbook repo, pushes, and clears the file. If push fails, signals are held in `shared/pending-signals.tmp` and included in the next successful push.
+
+**Signal format:** `YYYY-MM-DD | user | project | phase | signal name`
+
+### Files changed
+- `skills/solo-build/SKILL.md` — Session Signals section added
+- `skills/solo-qa/SKILL.md` — Session Signals section added
+- `skills/code-review-and-quality/SKILL.md` — Session Signals section added
+- `skills/phase-test/SKILL.md` — Session Signals section added
+- `skills/onboard/SKILL.md` — Check 5 updated to wire session signal push hook alongside handoff hook
+- `scripts/session-signal-push.sh` — new push script
+- `shared/session-log.md` — new log file
+
+### Action required
+Existing projects won't have the session signal hook until they run onboard again, or add it manually to `.claude/settings.json` at the project root (see onboard Check 5 for the exact JSON).
+
+---
+
+## v1.3.3 — 2026-04-30 — MINOR
+
+**Language audit script wired as curator Stop hook**
+
+New `scripts/language-audit.sh` greps all `SKILL.md` files for soft language patterns: `should`, `try to`, `when possible`, `if possible`, `consider`, `ideally`, `where applicable`, `as needed`. Outputs file + line number + flagged text. Curator decides what to harden — the script finds candidates only. Wired as a Stop hook on the engineering-playbook so it fires at the end of every curator session.
+
+### Files changed
+- `scripts/language-audit.sh` — new script
+- `.claude/settings.json` (engineering-playbook) — Stop hook added
+
+### Action required
+None. Hook fires automatically in curator sessions going forward.
+
+---
+
 ## v1.3.2 — 2026-04-30 — MINOR
 
 **Onboard now sets up handoff staleness hook in project**
 
 Onboard Step 8 has a new Check 5: creates or updates `.claude/settings.json` at the project root with a Stop hook that warns when `docs/backlog.md` has been modified more recently than `docs/continuity/handoff.md`. Silent when handoff is current. Every project onboarded through the framework gets this automatically — no manual wiring needed.
 
+Also: pre-build read gate (solo-build Step 0) strengthened from "state one specific observation" to "produce a verbatim quote — exact string from the file, word for word." A paraphrase no longer qualifies. This closes the loophole where a builder could satisfy the gate from memory rather than from actually reading the file.
+
 ### Files changed
 - `skills/onboard/SKILL.md` — Check 5 added to Step 8
+- `skills/solo-build/SKILL.md` — Step 0 verbatim quote requirement
 
 ### Action required
 Existing projects won't have the hook until they run onboard again, or you can add it manually to `.claude/settings.json` in the project root using the command from the skill file.
