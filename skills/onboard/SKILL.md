@@ -211,7 +211,7 @@ The hooks to write (two Stop hooks — both required):
 }
 ```
 
-Note: the handoff hook checks `docs/continuity/handoff.md` — the correct path for framework projects. The session signal hook reads `.claude/session-signals.tmp` from the project root, appends any signals to `shared/session-log.md` in the engineering-playbook repo, and pushes. If push fails, signals are held in `shared/pending-signals.tmp` and included in the next successful push.
+Note: the handoff hook checks `docs/continuity/handoff.md` — the correct path for framework projects. The session signal hook reads `.claude/session-signals.tmp` from the project root, appends any signals to `shared/session-log.md` in the engineering-playbook repo, and pushes. It also reads `.claude/retro-notes.tmp` and appends to `shared/retro-log.md` in the same push. If push fails, both signal types are held in their respective pending files (`shared/pending-signals.tmp` and `shared/pending-retro.tmp`) and included in the next successful push.
 
 Do not overwrite an existing `.claude/settings.json` — merge the Stop hooks into whatever
 is already there.

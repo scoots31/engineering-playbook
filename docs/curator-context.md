@@ -1176,6 +1176,41 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 **Files changed:** `skills/design-sprint/SKILL.md`, `shared/ideas.md`, `docs/curator-context.md`.
 
+### 2026-05-01 — Retrospective redesign: session-present listening + cross-machine retro log
+
+**The problem addressed:** The retrospective was event-triggered only — firing at phase end and waiting for product-continuity to flag observations. Between trigger moments it was dormant. The solo had no natural way to express dissatisfaction and have it captured. Framework-health was silent when healthy, giving the owner zero visibility into what sessions were experiencing across machines. Observations accumulated in per-project files that the curator never read.
+
+**What changed:**
+
+*`skills/retrospective/SKILL.md` — full rewrite of the capture model:*
+The skill is now session-present in guided and piloted mode — actively listening throughout the session rather than waiting for phase end. Three capture triggers: (1) framework-detected signals (stuck protocol, code review fail, builder self-correction, QA caught something self-verification missed, priority deviation, rollback); (2) solo-expressed dissatisfaction or confusion ("why did that happen", "that's not what I expected", "why is it doing this", etc.); (3) explicit flags ("note this", "flag this", "add this to the retro"). Each capture writes to both `.claude/retro-notes.tmp` (session buffer, pushed at session end) and `docs/continuity/retro-notes.md` (per-project persistence). Brief acknowledgment on capture: "Noted — flagging that." Session-end surface: shows what was captured, asks if anything needs more thought before closing. Silent if nothing was captured.
+
+*`shared/retro-log.md` — new file:*
+Cross-project, cross-machine retro observation log. Written by the Stop hook from `.claude/retro-notes.tmp`. Read only by the framework curator. Never read by framework skills during build sessions. Uses `--- Reviewed YYYY-MM-DD ---` separators to mark reviewed entries.
+
+*`scripts/session-signal-push.sh` — extended:*
+Now handles both `.claude/session-signals.tmp` (session signals → `shared/session-log.md`) and `.claude/retro-notes.tmp` (retro observations → `shared/retro-log.md`) in the same push. Pending retro notes handled identically to pending signals — held in `shared/pending-retro.tmp` on push failure, included in next successful push.
+
+*`skills/framework-curator/SKILL.md` — Retro Log section added:*
+At session start (owner mode), after the shared ideas check, the curator reads `shared/retro-log.md`. If last `--- Reviewed [date] ---` separator is today: skip (already reviewed). If earlier than today or no separator exists: surface unreviewed entries grouped by user and project. After review, append separator and push. Retro log observations that warrant framework changes are logged to `shared/ideas.md` — not acted on directly from the log.
+
+*`skills/onboard/SKILL.md` — Check 5 note updated:*
+Documents that the session signal push script now handles both session signals and retro notes in the same pass, with separate pending files for each.
+
+**Key design decisions:**
+
+*Framework never reads retro-log.* Build sessions generate it. Curator sessions consume it. Clean separation — no mid-session surface of cross-project observations to the solo.
+
+*Same-day skip in curator.* If the curator already reviewed the retro log today, it doesn't surface it again. Back-to-back curator sessions on the same day don't re-show the same observations.
+
+*Capture writes to both files.* `.claude/retro-notes.tmp` feeds the cross-machine log. `docs/continuity/retro-notes.md` feeds per-project retro mode at phase end. Both get every observation.
+
+*"Noted — flagging that" is the only mid-session acknowledgment.* One second, non-disruptive. The solo knows it was heard without the retro interrupting the build conversation.
+
+**What was rejected:** Reading retro-log.md in framework-health or surfacing it during guided sessions. The retro log is curator input — exposing it in build sessions creates noise with no action path.
+
+**Files changed:** `skills/retrospective/SKILL.md`, `skills/framework-curator/SKILL.md`, `skills/onboard/SKILL.md`, `scripts/session-signal-push.sh`, `shared/retro-log.md` (new), `docs/curator-context.md`.
+
 ### 2026-05-01 — Solo-build: deliverable-boundary session triggers
 
 **What changed:** Two new triggers in solo-build, both tied to deliverable structure rather than slice count.

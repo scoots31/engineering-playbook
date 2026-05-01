@@ -248,6 +248,7 @@ At every curator session start, check the loaded context for `Framework role: ow
    - Rejected → update status to `Rejected`, ask if there's a reason to note
    - Skip → leave as Proposed, continue
 4. After sign-off pass: commit and push the updated file.
+5. Check the retro log — see Retro Log section below.
 
 ### Logging a new idea (any mode)
 
@@ -272,6 +273,46 @@ Format for a new entry:
 - The curator never approves its own ideas. Logging and approving are separate acts.
 - No framework build work starts from a Proposed idea. Approved is the gate.
 - Contributors are never told they can't have ideas — only that approval is required before build.
+
+---
+
+## Retro Log
+
+`shared/retro-log.md` is the cross-project, cross-machine view of what users have been experiencing in framework sessions. Written by the session Stop hook — never by the curator or framework skills directly. Read only by the framework curator in owner mode.
+
+### At session start (owner mode)
+
+After the shared ideas check (step 5), check the retro log:
+
+1. Read `shared/retro-log.md`.
+2. Find the last `--- Reviewed YYYY-MM-DD ---` separator.
+   - If the separator date is **today**: skip. Already reviewed this session. Silent.
+   - If the separator date is **earlier than today**, or no separator exists: surface unreviewed entries.
+3. Surface unreviewed entries grouped by user and project:
+
+   > "Retro log — [N] unreviewed observation(s) since [last review date]:
+   >
+   > **[User] — [Project] — [Date]**
+   >   [framework-detected] [observation]
+   >   [solo-expressed] [observation]
+   >
+   > **[User] — [Project] — [Date]**
+   >   [explicit-flag] [observation]
+   >
+   > Want to go through these, or note them and move on?"
+
+4. If reviewing: work through each observation, discuss what it indicates, decide whether it's a framework issue worth acting on or a one-off.
+5. After review (whether full or noted-and-moving-on): append separator:
+   ```
+   --- Reviewed YYYY-MM-DD ---
+   ```
+   Commit and push.
+
+### What the retro log is not
+
+- Not a bug tracker. Observations are signals, not tickets.
+- Not a judgment on individual users or machines. Patterns across sessions are what matter.
+- Not a replacement for the shared ideas backlog. An observation that warrants a framework change gets logged to `shared/ideas.md` after retro log review — not directly from the log itself.
 
 ---
 
