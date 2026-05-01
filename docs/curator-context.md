@@ -1182,6 +1182,32 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 ---
 
+### 2026-05-01 — Rollback protocol added
+
+**What changed:** Three files. No new skill — the rollback is a protocol, not a phase.
+
+**`docs/records-spec.md`:** Rollback protocol section added after the re-phasing protocol. Covers: triggers, targeted fix vs. full rebuild distinction, seven-step protocol (all in one action), rollback log entry format. qa-triage added to the "Who Captures What and When" table as the assessor of rollback scope on Done slice bugs.
+
+**`skills/solo-build/SKILL.md`:** `## Rollback` section added parallel to `## When Stuck`. Defines rollback vs. stuck (stuck = can't make progress on active work; rollback = completed work needs to be undone), the three triggers, the four-step process for raising a rollback, and the confirmation requirement before any status changes.
+
+**`skills/qa-triage/SKILL.md`:** Targeted fix vs. full rebuild assessment added after the Bugs routing table. When a Done slice bug is reopened, the builder must assess scope before marking it In Build. Full rebuild scope triggers the rollback protocol, not the standard reopen path.
+
+**Key decisions made:**
+
+*Deliverable auto-un-accepts.* When a slice rolls back, the deliverable automatically moves from Accepted → Pending Acceptance. No separate solo decision required — the condition for Accepted (all slices Done) is factually no longer met. The solo re-accepts normally once the slice is Done again.
+
+*Phase auto-reverts if Completed.* If the phase was Completed, it reverts to In Progress. Phase status is unaffected if the phase is In Progress or in phase-test — only slice and deliverable cascade.
+
+*Builder proposes, solo confirms — nothing changes before confirmation.* Builder states which scope (targeted fix or full rebuild) and why. Solo confirms. Status cascade, log entry, and (if full rebuild) code discard all happen after confirmation.
+
+*Protocol placement parallel to re-phasing.* Both are material change protocols that require a log entry and a cascade across record levels. Positioning them as siblings in records-spec makes the pattern legible.
+
+**What was rejected:** A new rollback skill. The protocol is invoked from solo-build (during active build) and qa-triage (when a Done slice is reopened after discovery). A dedicated skill would create a parallel invocation path that splits ownership without adding clarity.
+
+**Files changed:** `docs/records-spec.md`, `skills/solo-build/SKILL.md`, `skills/qa-triage/SKILL.md`, `docs/curator-context.md`.
+
+---
+
 ### 2026-05-01 — Quality contract expanded to four-category scaffold; security added as Check 9
 
 **The problem addressed (second pass):** The quality contract field existed but was unstructured — writers might cover error handling but skip edge cases or security entirely, not from negligence but from lack of prompting. The code review had no independent security baseline — security was only checked if the contract mentioned it.
