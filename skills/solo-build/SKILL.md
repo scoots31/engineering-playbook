@@ -286,6 +286,35 @@ If any item is flagged, fix it before presenting the deliverable for acceptance.
 
 **Step 3 — Trigger solo-qa deliverable acceptance automatically.** Do not wait for the solo to ask for it. Update deliverable status → `Pending Acceptance`.
 
+**Step 4 — Recommend a session boundary.**
+After deliverable acceptance is triggered, surface this before picking up the next slice:
+
+> "Deliverable [D-ID] — [Name] is complete and in acceptance. This is a clean session boundary — the work is coherent, the handoff has something meaningful to record, and the next deliverable starts fresh without inheriting this session's context. Recommended: update the handoff and close here. Start [next deliverable name] in a new session. Continue now, or close out?"
+
+Wait for the answer. If closing: hand off to product-continuity to update the handoff. If continuing: pick up the next slice in priority order without repeating the recommendation.
+
+---
+
+## Mid-Deliverable Documentation Checkpoint
+
+When a slice reaches In Test and it is the **4th slice in a deliverable that has more than 4 slices total**, pause before selecting the next slice and run a documentation checkpoint.
+
+This is not a session close. It is a mandatory handoff update — insurance against context compression on long deliverables. If the session ends unexpectedly after this point, the next session opens from a current handoff rather than a stale one.
+
+**What triggers it:** slice position in deliverable == 4 AND total slices in deliverable > 4.
+**Fires once per deliverable** — not on slice 5, 6, 7. Only at slice 4.
+
+**When triggered:**
+
+> "SL-[ID] is In Test — that's 4 slices through [D-ID] — [Name]. [N] slices remain in this deliverable. Updating the handoff before continuing, in case context shifts mid-deliverable."
+
+Then execute without waiting for the solo:
+1. Update `docs/continuity/handoff.md` — specifically the `## Open right now` section: current deliverable, slices completed, slices remaining, next slice in priority
+2. Confirm the update: *"Handoff updated — [D-ID] at 4/[N] slices, [next slice] up next. Continuing."*
+3. Pick up the next slice immediately.
+
+The solo does not need to approve this. It is a routine documentation pass, not a decision point.
+
 ---
 
 ## On-Demand Views
@@ -483,6 +512,8 @@ Get the project name from `docs/continuity/handoff.md` or the project directory 
 | Presenting a deliverable for acceptance without running deliverable-level self-verification | Slice-level Done doesn't catch cross-slice integration bugs | Deliverable self-verification is a separate pass — checks flow, handoffs, and end-to-end journey |
 | Moving a slice to a different phase with a quiet field edit | Phase records go out of sync silently — source and destination phases no longer reflect the plan | Execute the full re-phasing protocol — 7 steps, decision logged, all affected records updated |
 | Starting a slice without producing a verbatim quote from the slice spec and the design file | Building from memory produces work that contradicts the spec or design — a full rebuild is the cost | Produce verbatim quotes from both files before writing code. A paraphrase is not a quote. No quotes = not read |
+| Skipping the mid-deliverable documentation checkpoint on long deliverables | Context compression on slice 7 of 8 leaves the next session with a stale handoff — orientation from the wrong place | The checkpoint at slice 4 of a 5+ slice deliverable is mandatory and automatic — update the handoff before continuing |
+| Continuing to build after deliverable completion without surfacing the session boundary | The solo loses a natural stopping point and the next deliverable inherits this session's accumulated context | Surface the session boundary recommendation every time a deliverable completes — let the solo decide, but always offer the clean stop |
 | Self-verification that asserts ("data renders correctly") instead of observing | Assertions are code inspection — the same check code-review-and-quality already ran | Open the running app; state what was seen in the rendered output. Observed output only |
 | Continuing past two failed attempts on the same problem | Spiral without direction — the solo's time burns while confidence substitutes for diagnosis | Hard stop. Re-read the full slice spec and design file from scratch, report what was found, ask one question |
 | Declining or deferring a solo request to step back | The builder's assessment that progress is close does not override the solo's direction | The solo's step-back request is an immediate directive — stop, re-read, report. No exceptions |

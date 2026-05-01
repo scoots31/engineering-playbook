@@ -89,7 +89,7 @@ edit this file directly. Ideas require owner sign-off before any framework work 
 ### READY — Solo-build: session slice limit + framework-health nudge
 **Added by:** @scotth + Ren
 **Date:** 2026-04-30
-**Status:** Approved
+**Status:** Done — 2026-05-01 (redesigned as deliverable-boundary triggers, not slice count)
 **Idea:** Context compaction in long build sessions is a root cause of the "builder not reading files" failure — not just a discipline issue. Mitigation: solo-build recommends maximum 3-4 slices per session. After that, commit, close, start fresh. Framework-health nudges after the 3rd slice: "3 slices completed this session — good point to commit and start fresh before context compresses." Not a hard stop, a visible signal.
 **Scope:** `skills/solo-build/SKILL.md`, `skills/framework-health/SKILL.md`.
 

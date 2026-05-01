@@ -1176,6 +1176,24 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 **Files changed:** `skills/design-sprint/SKILL.md`, `shared/ideas.md`, `docs/curator-context.md`.
 
+### 2026-05-01 — Solo-build: deliverable-boundary session triggers
+
+**What changed:** Two new triggers in solo-build, both tied to deliverable structure rather than slice count.
+
+**Mid-deliverable documentation checkpoint** — fires automatically when a slice reaches In Test and it is the 4th slice in a deliverable with more than 4 slices total. Fires once per deliverable only. The builder updates the handoff's `## Open right now` section without waiting for the solo, confirms the update, and continues building. Not a session stop — a mandatory documentation pass that protects against context compression on long deliverables.
+
+**Deliverable completion session boundary recommendation** — fires after deliverable acceptance is triggered (Step 4 of the deliverable completion flow). Explicitly names the next deliverable and recommends closing here. The solo chooses — the recommendation is not a hard stop. If the solo continues, the recommendation does not repeat.
+
+Two new anti-patterns added: skipping the mid-deliverable checkpoint, and continuing past deliverable completion without surfacing the boundary.
+
+**Why deliverable boundaries, not slice count:** A fixed slice count treats all slices as equivalent. A 3-slice deliverable with complex integration work is not the same as a 3-slice deliverable with trivial UI changes. Deliverable completion is a work-meaningful boundary — the unit of acceptance, the coherent thing the solo signs off on. Session boundaries that align with work boundaries produce cleaner handoffs and cleaner next sessions.
+
+**Why the checkpoint is mandatory and the close is a recommendation:** The mid-deliverable update protects against an event (context compression mid-deliverable) the solo can't control. Making it mandatory removes it from the decision space — it just happens. The deliverable close is a recommendation because the solo may have a reason to continue — back-to-back deliverables with tight dependencies, time pressure, whatever. The framework surfaces the boundary; the solo decides.
+
+**What was rejected:** The original proposal (max 3-4 slices per session, framework-health nudge after the 3rd). Rejected because slice count is the wrong instrument — it creates a false ceiling, treats all slices as equivalent, and fires at arbitrary moments rather than meaningful work boundaries.
+
+**Files changed:** `skills/solo-build/SKILL.md`, `shared/ideas.md`, `docs/curator-context.md`.
+
 ### 2026-05-01 — Plain language audit: skill names and internal jargon removed from solo-facing output
 
 **What changed:** 12 targeted edits across 4 skill files. All changes are in solo-facing output — quoted examples, output templates, and gate decision formats.
