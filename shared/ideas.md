@@ -44,7 +44,7 @@ edit this file directly. Ideas require owner sign-off before any framework work 
 ### READY — Design sprint wireframe-first round one
 **Added by:** @scotth + Ren
 **Date:** 2026-04-30
-**Status:** Approved
+**Status:** Done — 2026-05-01
 **Idea:** Round one of the design sprint produces structure and layout only — no styling. Solo reacts to whether the layout is right before color and typography come in. Style follows in round two once structure is confirmed. Separates structural decisions from style decisions. Faster first round, better feedback quality.
 **Scope:** `skills/design-sprint/SKILL.md` — round one instructions.
 

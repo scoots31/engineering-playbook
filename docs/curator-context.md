@@ -1162,6 +1162,20 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 
 **Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`, `Solo Companion/parsers.py`, `Solo Companion/db.py`, `Solo Companion/sync.py`, `Solo Companion/push.py`, `solo-companion-cloud/src/index.js`.
 
+---
+
+### 2026-05-01 — Design sprint: wireframe-first round one (on-ramp 1 and 3 only)
+
+**What changed:** Step 4 now explicitly prohibits skin in round one. Round one is structure only — monochrome palette (white background, dark text, gray borders), system fonts, no brand colors, no custom typefaces. The post-production prompt changed to explicitly declare that skin is intentionally absent. Added a hard rule: skin is not introduced until structure is confirmed warm. Added pushback language for the case where the solo comments on skin mid-structure round. Step 5 round discipline updated: skin direction question now has a defined trigger point (structure confirmed warm) rather than being a reactive condition. New anti-pattern added: "Adding skin in round one."
+
+**Why:** "Structure first, skin second" was advice, not a constraint. A builder who produces a styled first pass is technically following it — they produced structure first, then added skin in the same pass. But the solo reacts to what's in front of them, and color and typography feedback contaminates structure feedback. The fix is removing the choice: round one has nothing to react to aesthetically, so the warmer/colder feedback is necessarily about layout and hierarchy.
+
+**What was rejected:** Making it a soft recommendation ("try to keep skin minimal in round one"). Same problem — a builder who adds a design system to the first pass is optimizing for polish, not for getting structure confirmed fast. A hard rule is the only version that closes the feedback contamination problem.
+
+**Scope:** On-ramp 1 (from scratch) and on-ramp 3 (reference exists) only. On-ramp 2 (Figma) skips Step 4 entirely.
+
+**Files changed:** `skills/design-sprint/SKILL.md`, `shared/ideas.md`, `docs/curator-context.md`.
+
 ### 2026-05-01 — Plain language audit: skill names and internal jargon removed from solo-facing output
 
 **What changed:** 12 targeted edits across 4 skill files. All changes are in solo-facing output — quoted examples, output templates, and gate decision formats.

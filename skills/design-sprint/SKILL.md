@@ -138,17 +138,19 @@ State your choice: *"The hero screen is [X] because [one sentence on why it show
 
 **Skip this step entirely if on-ramp 2.** Figma screens are the first pass. Go to Step 5.
 
-Produce an HTML mockup of the hero screen. First pass discipline:
+Produce an HTML mockup of the hero screen. Round one is structure only — no skin.
 
-- **Structure first, skin second.** Layout, information hierarchy, component placement, data relationships. Do not invest heavily in the skin yet.
-- Intentionally rough is fine. The goal is: does this layout correctly represent what the person does here?
+**Round one rules:**
+- **No color decisions.** Monochrome palette — white background, dark text, gray borders. No brand colors, no design system colors, nothing that invites a reaction to aesthetics before structure is confirmed.
+- **No typography decisions.** System fonts only — no Google Fonts, no custom typefaces. The solo should be reacting to layout and hierarchy, not font choices.
+- Layout, information hierarchy, component placement, data relationships — that is the entire focus.
 - Use placeholder data that feels real (real player names, real-looking numbers, realistic states)
-- Include all interactive elements that are visible — buttons, filters, toggles, tabs. Every visible interactive element becomes a gate question in the walk-through.
+- Include all interactive elements that are visible — buttons, filters, toggles, tabs — rendered as plain structural elements. Every visible interactive element becomes a gate question in the walk-through.
 - Serve the file so it can be opened in a browser. Save to `docs/design/sprint-[screen-id].html`.
 
-After producing: *"Here's the first pass. I built it this direction: [one sentence on structure decisions made]. Warmer or colder on the layout before we touch the skin?"*
+After producing: *"Here's the structure pass — no skin yet, intentionally. Warmer or colder on the layout and information hierarchy?"*
 
-**Get structure warm before touching skin.** These are two separate passes with two separate questions.
+**Do not introduce any skin until structure is confirmed warm.** Skin is a separate pass with its own question. A solo who says "warmer — but I want it darker" is not warm on structure yet. Push back: *"Hold the skin question for now — is the structure right?"*
 
 ### Step 5: Warmer / Colder Loop
 
@@ -168,12 +170,14 @@ Maximum three rounds per screen once structure is warm. Each round:
 3. Repeat
 
 **Round discipline:**
-- If they say warmer on structure but cold on skin: do a full skin pass. Treat skin direction as its own question.
-- If the same element comes back cold twice: surface the underlying question. "You've been cold on the delta chart twice — is it the format, the data shown, or something else?"
+- Structure rounds first. Do not ask about skin until structure is confirmed warm.
+- When structure is warm: *"Layout confirmed. Now — what should this feel like? Is there a product or aesthetic direction to reference, or should I make a call?"* This is the skin direction question. It happens once, at this transition — not before.
+- If they say warmer on structure but comment on skin: acknowledge the skin note, park it, and stay on structure. *"Noted on the color — I'll bring that in once the layout is locked. Is the structure warm?"*
+- If the same element comes back cold twice: surface the underlying question. *"You've been cold on the delta chart twice — is it the format, the data shown, or something else?"*
 - If they say "good enough, move on": respect it. Note what's thin and move to the next screen.
 
 **Skin pass specifically:**
-When the structure is warm but skin is cold, ask one question before rebuilding: *"What should this feel like — is there a product or aesthetic direction to reference?"* Then rebuild the full skin from that direction. Do not incrementally adjust colors — change the design system.
+When structure is confirmed warm, rebuild with a full skin pass from the stated direction. Do not incrementally adjust colors — change the design system. Each secondary screen inherits the skin established on the hero — no new skin decisions per screen.
 
 ### Step 6: Extend to All Screens
 
@@ -323,6 +327,7 @@ The deferred decisions log feeds `prd-to-plan`. Phases are sequenced around what
 
 | Anti-Pattern | Problem | Instead |
 |---|---|---|
+| Adding skin in round one | The solo reacts to color and typography before confirming whether the layout is right — feedback gets contaminated and the structure conversation never happens cleanly | Round one is monochrome, system fonts only. No skin until structure is warm. |
 | Jumping straight to skin | Structure and skin require separate warmer/colder questions | Get structure warm first, then ask about skin direction |
 | Incrementally adjusting colors | Produces neither version correctly | When skin is cold, ask for direction and rebuild the design system |
 | Building all screens before hero is approved | Aesthetic drift, rework across all screens | Hero screen approved first, everything else inherits from it |
