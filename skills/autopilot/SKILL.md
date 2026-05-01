@@ -184,7 +184,27 @@ Design review assesses the built product, routes what needs to change to the app
 | `.claude/autopilot-brief.md` | Locked brief — discovery summary + pre-flight answers. Read throughout build, never rewritten mid-session. |
 | `.claude/autopilot-decisions.md` | Simulator decision log — every gate decision appended continuously. |
 | `docs/continuity/handoff.md` | Updated at slice 4 checkpoint and each deliverable completion. |
+| `docs/continuity/current-phase.md` | Updated at build start and at each Refinement cycle. Read by the Solo Companion to surface autopilot state and Refinement cycle. |
 | `docs/backlog.md` | Slice and deliverable statuses updated throughout build. |
+
+### current-phase.md format during autopilot
+
+At build start (after pre-flight clears):
+```
+Phase: Build
+Mode: autopilot
+Status: Building — [N]/[total] slices complete
+Refinement cycle: None
+```
+
+During Refinement:
+```
+Phase: Build
+Mode: autopilot
+Status: Refinement
+Refinement cycle: [N]
+Refinement scope: implementation — [N] slices in delta build
+```
 
 ---
 
