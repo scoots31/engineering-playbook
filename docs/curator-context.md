@@ -89,11 +89,13 @@ These ten principles are what make the framework what it is. Changing any of the
 
 **Done anchor** prevents vague completion criteria. The format requires 2–3 specific, verifiable statements — not "it works" or "looks like the design." Without precise criteria, solo-qa has nothing to verify actively. The criteria are also what the solo confirms in the browser during sign-off. Vague criteria produce subjective sign-offs ("it seems fine") rather than explicit criterion-by-criterion confirmation.
 
+The done anchor now has two parts: **functional done criteria** (handed to solo-qa for browser sign-off) and a **quality contract** (handed to code-review-and-quality as a pre-written checklist). The quality contract contains specific, verifiable non-functional requirements: error handling behavior, edge cases, validation rules. It is written before build starts — at design review — so code review is checking a contract that existed before the code did. This is what prevents the AI from rationalizing around gaps: it cannot soft-pedal a missing implementation when the requirement was written and committed before it started building. The quality contract is a separate peer field in the backlog (`Quality contract:`) not a subsection inside `Done criteria` — this keeps parser handling clean and makes the distinction explicit in the record.
+
 **Process anchor** prevents building something that matches the design but doesn't implement the agreed process. Added after the first three anchors proved insufficient — a slice could pass all three and still implement the wrong thing if the to-be process step wasn't specified. The format names the to-be map file, the step name, and its position in the flow (main path / branch / exception / infrastructure).
 
-**What "changing it" would mean:** Removing any one anchor removes the failure mode protection that anchor provides. Removing the process anchor would break the process-first principle. Removing the done anchor means solo-qa can't verify actively. Removing the design anchor means build drifts from the design file. All four are required or the framework loses a category of quality protection.
+**What "changing it" would mean:** Removing any one anchor removes the failure mode protection that anchor provides. Removing the process anchor would break the process-first principle. Removing the done anchor means solo-qa can't verify actively. Removing the design anchor means build drifts from the design file. Removing the quality contract means code review reverts to optimistic general assessment — the exact failure mode the contract was added to prevent. All components are required or the framework loses a category of quality protection.
 
-**Where it appears in code:** `skills/design-review/SKILL.md` (Ready gate requires all four), `skills/solo-build/SKILL.md` (four anchors surfaced before code is written), `skills/solo-qa/SKILL.md` (reads all four anchors at the start of Part 1).
+**Where it appears in code:** `skills/design-review/SKILL.md` (Ready gate requires all four anchors plus quality contract), `skills/solo-build/SKILL.md` (done anchor surfaced as two parts before coding; quality contract treated as a build requirement not a post-check), `skills/code-review-and-quality/SKILL.md` (reads quality contract before reading code; Check 8 checks each contract line with adversarial specificity), `skills/solo-qa/SKILL.md` (reads functional done criteria at the start of Part 1).
 
 ---
 
@@ -1137,5 +1139,27 @@ Four skills (solo-build, solo-qa, code-review-and-quality, phase-test) now appen
 **Pending-signals fallback:** If the push fails (network, auth, not a git repo), current signals go to `shared/pending-signals.tmp`. Next successful push includes pending signals. No signal is dropped silently.
 
 **Engineering-playbook path assumption:** All machines follow `~/Developer/engineering-playbook` convention. This was locked as an installation requirement in v1.3.0. The session signal push script hardcodes this path. If a machine deviates, the hook will silently fail (which is acceptable — signals are telemetry, not blocking).
+
+---
+
+### 2026-05-01 — Quality contract added to done anchor; code review upgraded to Check 8
+
+**The problem addressed:** AI-generated code was producing functional output that passed done criteria and browser sign-off, but omitted error handling, edge case coverage, and input validation — the behaviors that make code production-ready vs. prototype-quality. Two root causes: (1) non-functional requirements weren't written down before build, so the builder had no obligation to produce them; (2) code review was forming its own judgment about quality rather than checking against a pre-written spec, which defaulted to optimism.
+
+**Quality contract field added to slices**
+A new `Quality contract:` field sits alongside `Done criteria:` in every slice record. It is written during design review, before build starts. It contains specific, verifiable non-functional requirements — error handling behavior, edge case coverage, validation rules. Each line names a specific behavior: what fails, what the system does, what is validated. "Handle errors gracefully" is explicitly not a valid contract line.
+
+**Why a separate field instead of a subsection inside Done criteria:** Keeping it a peer field means the Solo Companion parser handles it identically to `Done criteria` (bulleted list, field name in `SLICE_FIELDS`), the viewer can display or surface it separately, and the distinction between functional sign-off criteria and code-quality requirements stays visible in the record rather than buried inside a heading.
+
+**Ready gate updated:** quality contract is now required for a slice to reach Ready, same as the four anchors. A slice with a vague or missing quality contract is not Ready.
+
+**Code review upgraded: Check 8 — Quality contract**
+`code-review-and-quality` now reads the quality contract before reading the code, then checks each contract line against the implementation with adversarial specificity. A try/catch that swallows errors silently does not satisfy "user sees an error message." A validation check on the wrong event does not satisfy "rejects at submission." The contract is the spec; the code either satisfies it or it doesn't. Check 8 failures route back to build, same as checks 1–7.
+
+**Why this prevents the sycophancy failure mode:** When code review checks against a pre-written spec, there is no judgment call to soften. The requirement either exists in the code or it doesn't. The adversarial framing in Check 8 ("look for the gap, not the nearest thing that could be argued as satisfying the requirement") closes the rationalization loop explicitly.
+
+**Solo Companion and cloud viewer updated:** `Quality contract` added to `SLICE_FIELDS` in parsers.py, `quality_contract TEXT` column added to the slices table in db.py, sync.py updated to parse and store the field, push.py updated to include it in the snapshot, cloud viewer updated to show a quality gate indicator (status not full text) in the Quality Gates section of the slice overlay.
+
+**Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`, `Solo Companion/parsers.py`, `Solo Companion/db.py`, `Solo Companion/sync.py`, `Solo Companion/push.py`, `solo-companion-cloud/src/index.js`.
 
 **Files changed:** `skills/solo-build/SKILL.md`, `skills/solo-qa/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `skills/phase-test/SKILL.md`, `skills/onboard/SKILL.md`, `scripts/session-signal-push.sh` (new), `shared/session-log.md` (new), `CHANGELOG.md`, `docs/curator-context.md`.

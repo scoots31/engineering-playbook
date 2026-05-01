@@ -191,9 +191,14 @@ References:
   - [source — why the builder must read this to execute the slice correctly]
 
 Done criteria:
+  - [verifiable statement — functional behavior the solo can confirm in the browser]
   - [verifiable statement]
   - [verifiable statement]
-  - [verifiable statement]
+
+Quality contract:
+  - [non-functional requirement — error handling, edge case, validation, or resilience behavior]
+  - [e.g. "If the API call fails, the user sees an error message and the failure is logged"]
+  - [e.g. "Input X rejects empty string and values over N chars at the point of submission"]
 
 Self-verification checklist:
   - [what the builder confirms this specific slice does correctly before presenting]
@@ -211,6 +216,7 @@ Notes: [decisions, constraints, spike results, non-obvious things]
 - Phase and deliverable are marked "Pending prd-to-plan" — never left blank.
 - References lists only vital sources — things the builder cannot skip without producing the wrong result.
 - Done criteria must be verifiable without ambiguity. "It works" is not a criterion.
+- Quality contract must name specific failure states, edge cases, or validation rules — not "handle errors gracefully." Each line must be checkable: either the behavior exists in the code or it doesn't.
 
 ### Step 4: Determine Slice Status
 
@@ -232,7 +238,8 @@ Every slice in the backlog has one of these states at all times:
 - Technical description written — precise enough for a builder to start without questions
 - Design anchor is unambiguous — specific screen file and specific element
 - Process anchor is set — which to-be step, which path, or explicitly documented as infrastructure
-- Done criteria defined — 2–3 verifiable statements, not vague
+- Done criteria defined — 2–3 verifiable functional statements, not vague
+- Quality contract defined — at least one specific, checkable non-functional requirement covering error handling, edge cases, or validation
 - Self-verification checklist defined — what the builder confirms before presenting
 - Dependencies identified — resolved or explicitly not blocking
 - No open spike on it
@@ -332,6 +339,10 @@ Done criteria:
   - [verifiable statement]
   - [verifiable statement]
 
+Quality contract:
+  - [specific error handling, edge case, or validation requirement]
+  - [e.g. "If the API call fails, user sees an error message; failure is logged"]
+
 Self-verification checklist:
   - [what the builder confirms this specific slice does correctly before presenting]
 
@@ -419,6 +430,7 @@ End each round by stating explicitly:
 | Copying description from deliverable into a slice or vice versa | Descriptions copied across levels haven't been thought through at the right scope | Each description is written fresh for its object — never derived from the level above or below |
 | Data anchor left blank instead of marked Pending | A blank field looks like an oversight; a pending marker is a decision | Mark "Pending data-scaffold" explicitly — never omit |
 | Self-verification checklist missing before Ready | The builder has no defined standard to check their work against before presenting | Self-verification checklist is a Ready requirement — if it's not defined, the slice is not Ready |
+| Quality contract missing or vague before Ready | Code review has no contract to check against — AI defaults to optimistic assessment and buries issues | Quality contract is a Ready requirement. Each line must name a specific behavior: what fails, what the system does, what is validated. "Handle errors gracefully" is not a contract line. |
 | Phase and deliverable left blank | Creates partial records that prd-to-plan has to guess at | Mark "Pending prd-to-plan" explicitly on every new slice |
 
 ---

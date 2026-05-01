@@ -15,14 +15,20 @@ description: Seven-check quality gate that runs automatically when solo-build ma
 
 ## Before Running Checks
 
-Read the backlog entry for the slice. Confirm all four anchors are present:
+Read the backlog entry for the slice. Confirm all four anchors are present, plus the quality contract:
 - Design anchor: the screen file and element this slice implements
 - Data anchor: the mock data fields this slice consumes
-- Done anchor: the 2–3 criteria that close this slice
+- Done anchor: the functional criteria that close this slice
 - Process anchor: the to-be step this slice implements
+- Quality contract: the specific non-functional requirements this slice must satisfy
 
 If any anchor is missing from the backlog, stop:
 > "Code review cannot run — the [anchor name] anchor is missing from the backlog entry for SL-[ID]. Resolve the anchor and resubmit."
+
+If the quality contract is missing, stop:
+> "Code review cannot run — the quality contract is missing from the backlog entry for SL-[ID]. Return the slice to design review to define the quality contract before building."
+
+**Read the quality contract lines before reading the code.** The contract was written before the build started. Check 8 uses it as the literal checklist — each line is a requirement, and the code either satisfies it or it doesn't. Do not substitute general judgment for the specific contract lines. Do not soften or rationalize gaps.
 
 ---
 
@@ -72,6 +78,19 @@ Does the slice follow the standards in `docs/tech-context.md`? Look for: correct
 **Pass:** Slice is compliant with tech-context standards.  
 **Fail:** Names the specific deviation and the tech-context rule it violates.
 
+### Check 8 — Quality contract
+For each line in the quality contract, find the implementation in the code. Every contract line is a requirement — not a suggestion. The code either satisfies it or it doesn't.
+
+For each contract line:
+- State the requirement
+- State where in the code it is (or is not) satisfied
+- Return ✅ if satisfied, ❌ if missing or partially implemented
+
+A contract line is only ✅ if the specific behavior exists and is reachable. A try/catch that swallows the error silently does not satisfy "if the call fails, the user sees an error message." A validation check that runs on the wrong event does not satisfy "rejects empty string at submission." Be adversarial: look for the gap, not the nearest thing that could be argued as satisfying the requirement.
+
+**Pass:** Every quality contract line has a traceable, correct implementation.  
+**Fail:** Names the specific contract line unmet and what was found (or not found) in the code.
+
 ---
 
 ## Output
@@ -88,9 +107,15 @@ Check 4 — Cleanliness           ✅ / ❌
 Check 5 — Scope discipline      ✅ / ❌
 Check 6 — Documentation         ✅ / ❌
 Check 7 — Stack compliance      ✅ / ❌
+
+Quality contract — SL-[ID]
+  [contract line 1]             ✅ / ❌
+  [contract line 2]             ✅ / ❌
+  [contract line N]             ✅ / ❌
 ```
 
-For each ❌: one sentence naming the specific problem and what the fix is.
+For each ❌ in checks 1–7: one sentence naming the specific problem and what the fix is.
+For each ❌ in the quality contract: name the contract line, what was found in the code, and what the implementation must do to satisfy it.
 
 ---
 

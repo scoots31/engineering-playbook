@@ -117,7 +117,9 @@ Example: `data/mock/players.json → slot_tag, slot_target, slot_role_text → M
 The mock data layer is the data source during build. The slice reads from the mock layer, not from hardcoded values in the UI. The data mapping doc shows where each field eventually comes from.
 
 **Anchor 3 — Done anchor**
-The 2–3 criteria from the backlog that close this slice. These are what get handed to `solo-qa`.
+Two parts: the functional done criteria and the quality contract. Both are read from the backlog before any code is written.
+
+**Functional done criteria** — the 2–3 verifiable statements that close this slice. These are what get handed to `solo-qa` for the browser sign-off.
 
 Format: criteria listed exactly as they appear in the backlog
 Example:
@@ -125,7 +127,15 @@ Example:
 - Slot target number displays with correct formatting (14.2 pts)
 - Switch context toggle is present and visible (non-functional in Phase 1)
 
-If the done criteria are vague — "it works" is not a criterion — sharpen them before starting. Concrete and verifiable only.
+**Quality contract** — the specific non-functional requirements this slice must satisfy. These are what get checked by `code-review-and-quality` before the slice can advance. They are build requirements, not post-build aspirations. Read them now and treat them as constraints the code must satisfy — not a checklist to verify at the end.
+
+Example:
+- If the data fetch fails, the component renders an error state — not a blank screen
+- Player name field rejects empty string at submission; error message appears inline
+- No values hardcoded in the component — all data comes from the mock layer fields named in the data anchor
+
+If the quality contract is missing from the backlog, stop. The slice is not Ready. Return it to design review.
+If the quality contract lines are vague ("handle errors gracefully") — sharpen them to specific behavior before starting. A vague contract gives code review nothing to check.
 
 **Anchor 4 — Process anchor**
 The step in the to-be process map this slice implements. Read `docs/process/to-be-[name].md` and identify the step.
