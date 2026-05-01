@@ -44,7 +44,7 @@ Fire on `guided` or `piloted` mode activation. One load, persist for the session
 
 All skills: `[PLAYBOOK_ROOT]/skills/`. Read a skill's `SKILL.md` only when that phase is active.
 
-Phase skills: `start` · `brainstorming` · `discover` · `tech-context` · `design-sprint` · `data-scaffold` · `design-review` · `prd-to-plan` · `to-issues` · `solo-build` · `solo-qa` · `phase-test` · `deploy`
+Phase skills: `start` · `brainstorming` · `discover` · `tech-context` · `design-sprint` · `data-scaffold` · `design-review` · `prd-to-plan` · `to-issues` · `solo-build` · `autopilot` · `solo-qa` · `phase-test` · `deploy`
 
 Supporting skills: `research-spike` · `grill-me` · `to-prd` · `principal-engineer` · `tdd` · `frontend-design` · `qa-triage` · `onboard`
 
