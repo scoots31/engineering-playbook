@@ -191,7 +191,11 @@ ENTRY POINT
    └── to-issues → GitHub issues from Ready slices, each referencing design screen
    └── Gate: GitHub issues created for Phase 1 Ready slices
 
-4. BUILD  ← BUILT (solo-build skill)
+4. BUILD  ← BUILT (solo-build skill · autopilot skill)
+   └── Two modes: solo-build (solo present at every gate) · autopilot (simulator at every gate, solo reviews at phase test)
+   └── Autopilot entry points: post-discover (leaner anchor) or post-design-review (richer anchor, fewer simulator judgment calls)
+   └── Autopilot pre-flight: simulator reads all discovery docs, surfaces judgment gaps, solo answers before build begins
+   └── Autopilot Refinement: delta build cycles after phase test — implementation issues only, structural issues exit to guided
    └── Tracer bullet first — thinnest path through full journey before expanding
    └── Journey order — first screen before second, dependencies block
    └── Four anchors required before starting any slice:
@@ -304,6 +308,7 @@ ENTRY POINT
 | `prd-to-plan` | Phases implementation by risk, from deferred decisions log | ✅ Built |
 | `to-issues` | Breaks plan into GitHub issues | ✅ Built |
 | `solo-build` | Slice-by-slice execution — four anchors, journey order, dependency blocking | ✅ Built |
+| `autopilot` | Autonomous build mode — simulator at every gate, pre-flight quality check, Refinement cycles, exit ramp to guided | ✅ Built |
 | `solo-qa` | Two-part verification — active AI testing with evidence + solo browser sign-off required for Done | ✅ Built |
 | `qa-triage` | Routes unexpected QA discoveries — bugs, missing requirements, regressions — to the correct path | ✅ Built |
 | `process-change` | Consistent protocol for to-be map changes at any phase — capture trigger, three-tier impact scan, re-prioritize, confirm. Solo-invoked or auto-detected from build, QA, or phase test. | ✅ Built |

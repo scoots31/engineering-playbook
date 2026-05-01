@@ -461,6 +461,7 @@
   <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(74,222,128,0.6)">Build</span>
     <a href="#solo-build" class="nav-skill" style="color:rgba(74,222,128,0.7)"><span class="nav-dot" style="background:#15803D"></span>solo-build</a>
+    <a href="#autopilot" class="nav-skill" style="color:rgba(74,222,128,0.7)"><span class="nav-dot" style="background:#15803D"></span>autopilot</a>
     <a href="#tdd" class="nav-skill" style="color:rgba(74,222,128,0.7)"><span class="nav-dot" style="background:#15803D"></span>tdd</a>
     <a href="#principal-engineer" class="nav-skill" style="color:rgba(74,222,128,0.7)"><span class="nav-dot" style="background:#15803D"></span>principal-engineer</a>
   </div>
@@ -1308,6 +1309,48 @@
               <li>Feature branch created</li>
               <li>Code commit: <div class="output-tag">SL-[ID] code-complete — [name]</div></li>
               <li>Auto-handoff to <strong>code-review-and-quality</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="autopilot">
+        <div class="skill-card-header">
+          <div class="skill-name">autopilot</div>
+          <div class="skill-badge">Phase skill — autonomous build</div>
+        </div>
+        <div class="skill-description">Autonomous build mode. Builds the full product without solo participation after discovery (or design sprint). Solo-simulator plays every gate. First human touch point is phase test. Refinement cycles handle delta iteration. Single-session, context-managed.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li><strong>Two entry points:</strong> post-discover (leaner anchor) or post-design-review (richer anchor, fewer simulator judgment calls)</li>
+              <li><strong>Pre-flight check:</strong> simulator reads all discovery docs, surfaces judgment gaps, solo answers before build begins</li>
+              <li>Discovery quality guard — thin to-be map flagged before build starts</li>
+              <li>Simulator at every gate throughout build — solo not contacted during build</li>
+              <li>Deliverable boundary writes enforced automatically — not recommended</li>
+              <li>Mid-deliverable checkpoint at slice 4 fires automatically — handoff updated, build continues</li>
+              <li>Context discipline — reads from continuity docs, not conversation history</li>
+              <li><strong>Phase test is first human touch point</strong> — solo sees the full product for the first time</li>
+              <li><strong>Refinement cycles:</strong> implementation delta builds after phase test — structural issues exit to guided mode</li>
+              <li>Exit ramp to guided mode at any Refinement cycle completion</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li>Explicitly invoked — never auto-routed</li>
+              <li>Requires discovery-brief.md, to-be map, tech-context.md, and backlog.md with slices</li>
+              <li>Alternative to solo-build for the Build phase — solo chooses which mode</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output</div>
+            <ul>
+              <li>Locked brief: <div class="output-tag">.claude/autopilot-brief.md</div></li>
+              <li>Simulator decision log: <div class="output-tag">.claude/autopilot-decisions.md</div></li>
+              <li>All slices built and committed</li>
+              <li>Continuity docs updated throughout</li>
             </ul>
           </div>
         </div>

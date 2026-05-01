@@ -1328,3 +1328,39 @@ A new Check 10 (Design fidelity) runs on all Figma-sourced slices. Four sub-chec
 *Exact node properties, not visual estimates.* The framework previously had no explicit rule against approximation. Making node properties a named requirement in the design anchor closes that gap. "Close enough" is not acceptable for values that have a traceable Figma source.
 
 **What was rejected:** Making the Figma rules advisory rather than mandatory. The failure modes from real sessions were all avoidable with mandatory rules. Advisory rules leave the same escape hatch the builder was already taking.
+
+---
+
+### Autopilot — Autonomous Build Mode (2026-05-01)
+
+**What was decided:** Autopilot is a new phase skill that enables autonomous building without solo participation after discovery or design sprint. It sits alongside solo-build as an alternative for the Build phase — the solo chooses which mode. It is never auto-routed.
+
+**Core design:**
+
+*Two entry points.* Post-discover (leaner design anchor, more simulator judgment calls) or post-design-review (richer anchor, fewer judgment calls, recommended for UI-heavy products). Entry point 2 produces tighter first-pass output.
+
+*Pre-flight check is mandatory.* Before any build begins, the simulator reads all discovery docs and surfaces judgment gaps — places where the spec doesn't decide and the simulator would have to guess. Solo answers each gap. The brief is locked only when no unresolved gaps remain. A discovery quality check also runs: if the to-be map is vague or missing edge cases, this is surfaced before gap questions. The pre-flight raised bar is the trade for removing solo gates throughout the build.
+
+*Simulator at every gate.* Solo-simulator plays the solo role throughout the build. Solo is not contacted during the build. Simulator-QA runs the same checks as solo-qa, automated. Escalations after one failed round are logged to `.claude/autopilot-decisions.md` and resolved with the best decision from the brief.
+
+*Phase test is the first human touch point.* The solo has seen nothing between pre-flight and phase test. Phase test is both the standard phase gate and the product review moment.
+
+*Refinement cycles.* After phase test, if issues are found, Refinement builds implementation deltas within the autopilot skill. Structural issues (wrong screen, wrong flow) are not handled by Refinement — they require guided re-entry. Framework classifies each issue before building anything. The exit ramp to guided mode is surfaced at every Refinement cycle completion.
+
+*Exit ramp to guided.* At any Refinement cycle completion, the solo can exit autopilot and re-engage as a participant. Framework routes to design review as the re-entry point, orients the solo in one sentence from current continuity docs.
+
+*Single-session for v1 (Option B).* Autopilot runs the full product build in one session. Context window risk is managed through aggressive continuity doc writes: deliverable completion writes, mid-deliverable checkpoint at slice 4 (auto, no pause), reading from backlog.md and handoff.md as source of truth throughout — not conversation history. Option C (orchestrator + subagents, true multi-session) is the natural v2 path once real failure patterns emerge from v1 use.
+
+**What was rejected:**
+
+*Adding autopilot to solo-build.* The two modes have fundamentally different operating logic — solo-present vs. simulator-present. Merging them produces a skill full of branching conditionals that degrades both modes. Separate skill is the correct boundary.
+
+*Per-deliverable session model for v1.* Clean architecture but requires autopilot to open new sessions autonomously — which Claude cannot do. Framework can't self-initiate a session. Option B (single session, managed context) accepted as v1 constraint with the understanding that v2 addresses this via subagent orchestration.
+
+*Refinement as a separate skill.* For v1, Refinement lives inside the autopilot skill. If it grows complex enough to warrant separation, the framework-curator handles that split later.
+
+**Key design principles:**
+
+The cost of autopilot is paid upfront at pre-flight, not spread across the build as guided checkpoints. The richer the discovery and design work, the tighter the autopilot output. Refinement cycles are the mechanism for closing the gap between spec-compliant and preference-validated — they are expected, not a sign of failure. The iteration trap (rushing discovery intending to fix it in Refinement) is a known behavioral risk; the pre-flight discovery quality check raises the floor but cannot eliminate it entirely.
+
+Anchor quality without human judgment is an identified hard ceiling: the simulator checks anchor existence and spec-compliance, not whether anchors reflect what was actually built or intended. This is accepted as the honest limit of autonomous build.

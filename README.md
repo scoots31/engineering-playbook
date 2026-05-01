@@ -121,6 +121,7 @@ Open a new project in your editor. Describe what you want to build. The `start` 
 | 2.6 | `design-review` | Iterative slice definition, process coverage check, backlog built |
 | 3 | `prd-to-plan` + `to-issues` | Phased plan sequenced by risk + process order, GitHub issues created |
 | 4 | `solo-build` | Slice-by-slice build — four anchors required, feature branch per slice |
+| 4 (auto) | `autopilot` | Autonomous build — simulator at every gate, solo reviews at phase test, Refinement cycles handle iteration |
 | Auto | `code-review-and-quality` → `solo-qa` | 7-check gate + active testing — auto-triggered on code-complete |
 | On-demand / Auto | `process-change` | Consistent protocol for to-be map changes — solo-invoked or auto-detected from build, QA, or phase test |
 | 5 — explicit | `phase-test` | 7-specialist-stage test — invoke with `/phase-test` when phase is built |

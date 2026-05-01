@@ -8,6 +8,20 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.6.0 — 2026-05-01 — RECOMMENDED
+
+**Autopilot — autonomous build mode**
+
+New phase skill: `autopilot`. Alternative to `solo-build` for the Build phase — the solo chooses which mode. Autopilot builds the full product without solo participation after discovery or design sprint. Solo-simulator plays every gate. First human touch point is phase test. Refinement cycles handle delta iteration after phase test.
+
+Key elements: mandatory pre-flight check surfaces judgment gaps before any build begins; discovery quality guard flags thin to-be maps; deliverable boundary writes enforced automatically; context discipline via continuity docs throughout; Refinement cycles classify issues (implementation vs. structural) and build only the delta; exit ramp to guided mode at any Refinement cycle completion.
+
+Nothing in the existing framework changes. All updates are additive — solo-build is untouched, all routing logic is unchanged. Autopilot is explicitly invoked only.
+
+**Action required:** None for existing sessions. Pull to get the new skill available.
+
+---
+
 ## v1.5.1 — 2026-05-01 — RECOMMENDED
 
 **Figma fidelity rules — interactive element classification, node property enforcement, Check 10**
