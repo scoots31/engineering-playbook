@@ -89,7 +89,7 @@ Screens with no shared infrastructure and no journey dependencies (settings, aut
 ---
 
 If a deliverable record cannot be found for this slice in the backlog, stop:
-> "No deliverable record found for SL-[ID]. Run prd-to-plan to define deliverables before build starts."
+> "No deliverable record found for SL-[ID]. The plan hasn't been set yet — define deliverables before build starts."
 
 ---
 

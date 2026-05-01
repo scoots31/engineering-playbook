@@ -56,7 +56,7 @@ git -C <PLAYBOOK_ROOT> rev-list HEAD..origin/main --count
 ```
 
 If count > 0:
-> "Framework update available — [N] new commit(s) on origin/main. Pull latest before we start? (`git -C <PLAYBOOK_ROOT> pull`)"
+> "Framework update available — [N] new commit(s) on origin/main. Pull latest before we start?"
 
 Wait for yes or no. If yes: pull, confirm success, continue. If no: log "framework update deferred" to the session handoff and continue. Do not raise it again this session.
 
@@ -92,7 +92,7 @@ If expected outputs are all present: silent. Continue.
 
 If something is missing:
 
-> "Moving from design sprint to design review — the to-be process map hasn't been annotated with screen references yet. The process mapper handles this step. Should we do that cross-reference before starting design review?"
+> "Moving from design sprint to design review — the to-be process map hasn't been annotated with screen references yet. Should we do that cross-reference before starting design review?"
 
 The solo can say yes or "skip it for now." If skipped, log it as an open item in the session handoff. Don't repeat it unless it becomes blocking.
 
@@ -156,16 +156,16 @@ Check three things only:
 
 2. **Backlog accurate?** — Do the At a Glance counts reflect what actually happened this session? If a slice moved to Done but the count wasn't updated, flag it.
 
-3. **Open qa-triage items?** — Are there unresolved triage items from this session? Name them so the next session doesn't start blind.
+3. **Open issues?** — Are there unresolved issues from this session? Name them so the next session doesn't start blind.
 
-> "Before we close — 2 qa-triage items from today are still open: [SL-004 missing requirement] and [SL-006 regression root cause]. Adding to the handoff so next session picks them up."
+> "Before we close — 2 open issues from today aren't resolved yet: [SL-004 missing requirement] and [SL-006 regression root cause]. Adding to the handoff so next session picks them up."
 
 ---
 
 ## What It Watches
 
 **Framework version currency**
-At mode activation, checks whether the local engineering-playbook is behind `origin/main`. Surfaces once if an update is available — with the pull command ready to run. Never repeats after the solo acknowledges it.
+At mode activation, checks whether the local engineering-playbook is behind `origin/main`. Surfaces once if an update is available. Never repeats after the solo acknowledges it.
 
 **Long-gap detection**
 At mode activation, the date in handoff.md is compared to today. A gap of 21+ days triggers a re-entry recommendation before the session begins. Silent for shorter gaps. Never repeats after acknowledged.

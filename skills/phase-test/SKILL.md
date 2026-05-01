@@ -163,7 +163,7 @@ Data Specialist
 ❌ Write — save action not persisting: POST /players/update returning 404
 ✅ Empty state — no-data scenario handled correctly
 
-Issues found: 1 — routing to qa-triage.
+Issues found: 1 — logged.
 ```
 
 Any data issue that would make test scenarios unreliable: route to `qa-triage` before the tester runs on affected scenarios. Flag which scenarios are blocked and which can proceed.
@@ -272,8 +272,8 @@ The orchestrator synthesizes all specialist outputs into a single gate decision.
 **Collect:**
 - Environment readiness: pass / issues resolved
 - Data specialist: open issues count
-- Tester: pass/fail count, open qa-triage items
-- Regression specialist: regression count, open qa-triage items
+- Tester: pass/fail count, open issues
+- Regression specialist: regression count, open issues
 - Acceptance reviewer: use case pass/fail
 
 **Gate decision format:**
@@ -282,7 +282,7 @@ Phase Test — [Phase Name] — [date]
 
 Environment:    ✅ Ready
 Data:           ✅ All reads/writes confirmed
-Testing:        12/14 scenarios passed — 2 open in qa-triage
+Testing:        12/14 scenarios passed — 2 open issues
 Regression:     8/8 Done slices passing
 Acceptance:     3/3 use cases: intent confirmed
 
@@ -290,8 +290,8 @@ Acceptance:     3/3 use cases: intent confirmed
 GATE: HOLD
 
 Open before deploy:
-  1. [qa-triage item] — [what it is, which scenario]
-  2. [qa-triage item] — [what it is, which scenario]
+  1. [open issue] — [what it is, which scenario]
+  2. [open issue] — [what it is, which scenario]
 
 Once resolved and re-tested: gate opens. No full re-run required — 
 only the affected scenarios need to be re-walked.
@@ -393,7 +393,7 @@ Contains:
 - Data specialist findings
 - Regression results per Done slice
 - Acceptance review per use case
-- All qa-triage items and their resolution status
+- All open issues and their resolution status
 - Gate decision with date
 
 ---

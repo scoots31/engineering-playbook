@@ -56,7 +56,7 @@ Before the round begins, read:
 
 If the to-be process map doesn't exist, stop before reviewing slices. The process map is what tells you whether the design covers the right things — without it, slice review is just reacting to screens.
 
-> "No to-be process map found. Go to Discover and agree the to-be process before reviewing slices — the map is what we're building against."
+> "No to-be process map found. The discovery conversation needs to happen first — agree the to-be process before reviewing slices. The map is what we're building against."
 
 Orient out loud: *"We have [N] screens, [N] slices defined so far — [N] Ready, [N] In Review, [N] Blocked. This round we're reviewing [specific focus]."*
 
