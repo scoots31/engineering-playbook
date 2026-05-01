@@ -1221,3 +1221,43 @@ A new `Quality contract:` field sits alongside `Done criteria:` in every slice r
 **Why Check 9 is independent:** The quality contract is written per-slice and may mark security as N/A for slices with no user input or external calls. Check 9 still runs — it catches omissions regardless of what the contract says, and catches classes of vulnerability (injection, secrets) that might not occur to a contract writer. The two are complementary: the contract enforces slice-specific non-functional requirements; Check 9 enforces universal security baselines.
 
 **Files changed:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/code-review-and-quality/SKILL.md`, `docs/curator-context.md`.
+
+---
+
+### 2026-05-01 — Figma fidelity rules: interactive element classification and node property enforcement
+
+**The problem addressed:** Real-world build sessions on a Figma-sourced project produced repeated rework from three distinct failure modes:
+
+1. **Visual-only reading** — the builder referenced the Figma design as a visual impression rather than reading node properties. Approximated values (spacing, typography, colors) replaced exact Figma-specified values, and the mock data schema was designed around what looked plausible on screen rather than what the API would actually return.
+
+2. **No element inventory** — elements visible in the Figma frame were not systematically identified before coding. Elements were missed, and their omission wasn't caught until a review pass forced a comparison against the Figma file.
+
+3. **Interactive elements as window dressing** — filters, search boxes, and pagination were rendered as visually correct UI components with no wired logic. The builder built the shell and moved on, leaving interactive affordances that accepted user input but did nothing. This required full rework, not minor correction.
+
+**Root cause:** The framework had no enforcement point before build to classify interactive elements and no check after build to verify they were correctly implemented. The builder could make silent product decisions (this filter is decorative, this search box isn't functional) without the solo knowing.
+
+**What changed across four files:**
+
+*`docs/records-spec.md` — design anchor field definition expanded:*
+The design anchor for Figma-sourced slices now requires two additional artifacts: (1) Figma node properties for every element in scope — exact values from Dev Mode or MCP, not visual estimates; (2) an interactive element inventory classifying every interactive element as Functional, Deferred, or Out of scope. A "no fourth option" rule is explicit: any interactive element visible in the frame must be assigned one of those three classifications. "We'll figure it out during build" is not a classification.
+
+*`skills/design-review/SKILL.md` — interactive element inventory added:*
+Step 3 (field rules for the slice record) now includes an inventory step for Figma-sourced slices: scan all visible elements in the frame scope, classify each interactive element, write the full inventory to the Notes field. Deferred elements require a companion slice created in the backlog immediately — not a note, an actual slice. The Ready gate adds a new condition: inventory present, all elements classified, all Deferred elements have companion slices.
+
+*`skills/solo-build/SKILL.md` — Figma-specific pre-build steps added to Anchor 1:*
+When the design source is a Figma file, the builder must: (1) extract node properties for every element in scope before writing any code; (2) verify the interactive element inventory from the Notes field before touching any element. Functional classifications require wired logic — a shell is not sufficient. Deferred classifications require an explicit non-interactive placeholder, not a working-looking interactive component. A missing inventory is an immediate stop — the slice returns to design review, not to build.
+
+*`skills/code-review-and-quality/SKILL.md` — Check 10 added:*
+A new Check 10 (Design fidelity) runs on all Figma-sourced slices. Four sub-checks: (10a) interactive element inventory must be present in the Notes field — missing inventory fails immediately; (10b) every inventoried element must exist in the implementation; (10c) Functional elements must have wired logic, Deferred elements must be rendered as explicit non-interactive placeholders; (10d) a representative sample of visual values must be traceable to Figma node properties. Non-Figma slices skip this check entirely (stated explicitly in the report). Report format updated to include the Check 10 block.
+
+**Key decisions made:**
+
+*No fourth option for interactive element classification.* Three states, no others. The absence of a fourth option forces a product decision at design review rather than during build. "Deferred" is explicit acknowledgment that the element will have logic in a future slice and a companion slice is created. "Out of scope" is explicit acknowledgment that the element appears in Figma but is not part of this product at all. Both require intentionality.
+
+*Classification at design review, not build time.* The builder cannot silently decide an element's scope during coding. The classification happens before the slice reaches Ready, in the same pass as the quality contract. By the time build starts, every interactive element already has a defined status.
+
+*Deferred requires a companion slice.* Marking an element Deferred is not just a note — it creates a backlog obligation. The companion slice must exist in the backlog before the current slice reaches Ready. This prevents Deferred from being used to defer indefinitely.
+
+*Exact node properties, not visual estimates.* The framework previously had no explicit rule against approximation. Making node properties a named requirement in the design anchor closes that gap. "Close enough" is not acceptable for values that have a traceable Figma source.
+
+**What was rejected:** Making the Figma rules advisory rather than mandatory. The failure modes from real sessions were all avoidable with mandatory rules. Advisory rules leave the same escape hatch the builder was already taking.
