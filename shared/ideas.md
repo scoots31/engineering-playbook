@@ -98,7 +98,7 @@ edit this file directly. Ideas require owner sign-off before any framework work 
 ### READY — Retrospective: clear path to curator action
 **Added by:** @scotth + Ren
 **Date:** 2026-04-30
-**Status:** Approved
+**Status:** Done — 2026-05-01
 **Idea:** Retro observations accumulate but have no defined path to the curator. Two additions: (1) retrospective phase-end output explicitly asks "are any of these framework-level?" — if yes, solo appends to shared/ideas.md in the same pass. (2) Framework-health at session start checks whether retro notes from last phase have been reviewed and framework-level observations logged. If not, surfaces it before session starts.
 **Scope:** `skills/retrospective/SKILL.md`, `skills/framework-health/SKILL.md`.
 
