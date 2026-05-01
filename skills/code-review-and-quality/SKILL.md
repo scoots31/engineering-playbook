@@ -5,7 +5,7 @@ description: Nine-check quality gate that runs automatically when solo-build mar
 
 # Code Review and Quality
 
-*Seven checks. All must pass. No exceptions, no partial passes.*
+*All checks must pass. No exceptions, no partial passes.*
 
 **Triggered by:** solo-build on code-complete. Never invoked manually.
 
@@ -109,6 +109,23 @@ For each sub-check: state what was looked for and what was found. Return ✅ if 
 **Pass:** All five security sub-checks are clean.  
 **Fail:** Names the specific sub-check, the line or pattern that violates it, and the required fix.
 
+### Check 10 — Design fidelity (Figma-sourced slices only)
+
+If the slice's design anchor does not reference a Figma file: skip this check. State "Check 10 — Design fidelity: N/A (non-Figma source)" in the report.
+
+If the design anchor references a Figma file, run all four sub-checks:
+
+**10a — Interactive element inventory present:** Read the slice record's Notes field. The interactive element inventory must be there — every interactive element in the slice's Figma scope listed and classified. If the inventory is missing, fail this check immediately and return the slice to design review. Do not continue to 10b–10d.
+
+**10b — All inventoried elements built:** For each element in the inventory, verify it is present in the implementation. An element listed in the inventory that does not exist in the code is a fail. Name the missing element and what it should be.
+
+**10c — Interactive classification honored:** For each element classified Functional: verify logic is wired, not just a shell. A clickable filter with no filtering logic is a fail. For each element classified Deferred: verify it is rendered as an explicit non-interactive placeholder — not as a working-looking interactive shell. A search input that accepts keystrokes but does nothing is a fail if the inventory says Deferred.
+
+**10d — Values trace to Figma:** Check a representative sample of visual values (spacing, color, typography) against the Figma node properties referenced in the design anchor. Values that cannot be traced to a Figma source — approximated values, invented values — are a fail. Name the specific value and what the Figma source says it should be.
+
+**Pass:** Inventory present, all elements built, classifications honored, values traceable.  
+**Fail:** Names the specific sub-check and the exact gap.
+
 ---
 
 ## Output
@@ -137,11 +154,18 @@ Security — SL-[ID]
   9c Auth checks server-side    ✅ / ❌
   9d Injection prevention       ✅ / ❌
   9e No secrets in client code  ✅ / ❌
+
+Design fidelity — SL-[ID]  [N/A if non-Figma source]
+  10a Inventory present         ✅ / ❌
+  10b All elements built        ✅ / ❌
+  10c Classifications honored   ✅ / ❌
+  10d Values traceable to Figma ✅ / ❌
 ```
 
 For each ❌ in checks 1–7: one sentence naming the specific problem and what the fix is.
 For each ❌ in the quality contract: name the contract line, what was found in the code, and what the implementation must do to satisfy it.
 For each ❌ in Check 9: name the sub-check, the specific violation, and the required fix.
+For each ❌ in Check 10: name the sub-check, the specific element or value involved, and what the correct implementation must be.
 
 ---
 

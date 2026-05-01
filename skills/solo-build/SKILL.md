@@ -108,6 +108,14 @@ Read the design file now. Find the element. Before writing a line of code, confi
 
 If the element cannot be found in the file, stop. Do not build from memory of what the element might look like.
 
+**When the design source is a Figma file:**
+
+Two additional steps before writing any code:
+
+1. **Extract node properties.** For every element in this slice's scope, extract exact values from Figma node properties — dimensions, spacing, colors, typography. Do not read the design visually and approximate. Extract: then build. Values in code must trace to source values in Figma. Any value that cannot be traced to a Figma node property is an approximation and will fail code review.
+
+2. **Verify the interactive element inventory.** Read the slice record's Notes field. Confirm the interactive element inventory is present. For every element classified as Functional: logic must be wired in this slice or in the named companion slice. For every element classified as Deferred: render as a visible, clearly non-interactive placeholder — not as a working-looking shell. Do not build any interactive element that is not in the inventory. Do not treat an unclassified interactive element as visual decoration. If the inventory is missing, stop — return the slice to design review.
+
 **Anchor 2 — Data anchor**
 The specific mock data fields this slice consumes, and where they live.
 

@@ -229,6 +229,18 @@ Notes: [decisions, constraints, spike results, non-obvious things]
 - Done criteria must be verifiable without ambiguity. "It works" is not a criterion.
 - Quality contract covers four categories: failure states, edge cases, input validation, and security. Each category must be addressed or explicitly marked `N/A — [reason]`. Each line must name a specific, checkable behavior — not "handle errors gracefully." Either the behavior exists in the code or it doesn't.
 
+**When the design source is a Figma file — additional required step before finalizing the slice:**
+
+Produce an interactive element inventory for this slice's design scope. Scan every visible element in the slice's Figma frame. For each interactive element — search inputs, filters, sort controls, pagination, tabs that change content, toggles, dropdowns, form fields, date pickers, modals triggered by interaction — assign one of three classifications:
+
+- **Functional** — logic wired in this slice or in a named companion slice (state the slice ID)
+- **Deferred** — shell only; create the companion logic slice now and record its ID here
+- **Out of scope** — not rendered or rendered disabled; note the reason
+
+Write the inventory into the slice record's Notes field. No interactive element in the design scope may be left unclassified. An unclassified interactive element blocks Ready — it is a product decision that hasn't been made.
+
+If a Deferred classification creates a new companion slice, define that slice now with In Review status. It does not need to be Ready before the current slice proceeds — but it must exist in the backlog with a defined scope.
+
 ### Step 4: Determine Slice Status
 
 Every slice in the backlog has one of these states at all times:
@@ -255,6 +267,7 @@ Every slice in the backlog has one of these states at all times:
 - Dependencies identified — resolved or explicitly not blocking
 - No open spike on it
 - Data anchor filled OR explicitly marked "Pending data-scaffold"
+- Interactive element inventory complete — if design source is Figma, every interactive element in the slice's scope is classified (Functional, Deferred, or Out of scope) and written into the Notes field; any Deferred elements have a companion slice in the backlog
 - Solo confirms it is clear enough to hand to a builder
 
 A slice cannot reach Ready with any field blank or marked as pending except data anchor and process anchor where the explicit pending notation is present. Every other field must be complete.

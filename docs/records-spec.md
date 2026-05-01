@@ -149,6 +149,22 @@ Notes: [Decisions made, constraints discovered, spike results, non-obvious thing
 
 **Design anchor** — The specific screen file and specific element within it that this slice builds. If you cannot point at an exact element, the slice is not ready to define.
 
+**When the design source is a Figma file**, the design anchor carries two additional requirements that apply from design review through code review:
+
+**Node properties, not visual approximation.** Every value used in implementation — dimensions, spacing, colors, typography — must be extracted from Figma node properties. Visual approximation is not acceptable and is a code review failure. If the Figma MCP is available, extract values directly. If not, use Figma's Dev Mode inspect panel. Either way: source values, not estimates.
+
+**Interactive element inventory.** Every interactive element visible in the slice's design scope must be classified before the slice reaches Ready. An interactive element is anything that implies user action and expected behavior: search inputs, filters, sort controls, pagination, tabs that change content, toggles, dropdowns, form fields, date pickers, modals triggered by user action.
+
+Three valid classifications — no others:
+
+| Classification | Meaning |
+|---|---|
+| **Functional** | Logic is wired in this slice, or in a named companion slice within the same deliverable — slice ID required |
+| **Deferred** | Shell rendered as a visible non-interactive placeholder; a companion logic slice exists in the backlog — slice ID required |
+| **Out of scope** | Not rendered, or rendered visibly disabled, with an explicit note in the slice record |
+
+There is no fourth option. An interactive element rendered as a working-looking shell with no wired logic, no deferred slice on record, and no explicit scope decision is a framework failure — it is an unauthorized product decision made silently at build time. The classification is a design review responsibility, not a build-time judgment call. The inventory lives in the slice record's Notes field.
+
 **Data anchor** — The specific mock data file and specific fields this slice reads. Blank until data-scaffold runs — marked "Pending data-scaffold" not omitted. A slice with no data dependency states "None" explicitly.
 
 **Process anchor** — Which step in the to-be map this slice implements and where in the flow. If infrastructure, state what it enables. A slice with no process anchor cannot reach Ready.
