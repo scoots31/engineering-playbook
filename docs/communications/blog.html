@@ -149,6 +149,94 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 1 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
+      <div class="entry-title">Built to Ship, Not Just to Pass</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Quality contract — four required categories on every slice</div>
+          <div class="change-desc">Every slice now requires a quality contract written during design review, before build starts. The contract is structured into four required categories: <strong>Failure states</strong> (what happens when an external call fails or times out), <strong>Edge cases</strong> (empty data, max values, concurrent actions), <strong>Input validation</strong> (what is rejected, when, with what feedback), and <strong>Security</strong> (user input sanitized, data scoped, auth server-side). Each category must be addressed or explicitly marked N/A with a reason — a blank category is not valid. This is not a suggestion layer on top of done criteria. It is the pre-written spec the builder is held to, and the contract the code review checks against line by line. A slice without a quality contract cannot reach Ready.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Code review Check 8 — adversarial quality contract verification</div>
+          <div class="change-desc">Code review now reads the quality contract before reading the code, then checks every contract line against the implementation with deliberate adversarial specificity. A try/catch that swallows the error silently does not satisfy "user sees an error message." A validation check on the wrong event does not satisfy "rejects empty string at submission." The contract is the spec. The code either satisfies it or it doesn't — there is no partial credit and no nearest-thing rationalization. Check 8 failures route back to build, same as the seven structural checks that preceded it. This is the mechanism that closes the gap between "it works in testing" and "it holds under real conditions."</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Code review Check 9 — independent security baseline</div>
+          <div class="change-desc">A fixed five-item security gate now runs on every slice, independent of what the quality contract says. The five sub-checks: input sanitization (no raw rendering of user-supplied content), data scoping (data returned scoped to the authenticated user), server-side auth (authorization logic lives on the server — a hidden UI element is not access control), injection prevention (user input not string-concatenated into queries or commands), and no secrets in client-visible code. Check 9 is independent by design: a quality contract might mark security N/A for a slice with no user input or external calls, but Check 9 still runs. It catches classes of vulnerability a per-slice contract writer might not surface. Any sub-check failure routes back to build.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Self-verification now walks observable contract items</div>
+          <div class="change-desc">Before declaring code-complete, the builder is now required to walk every observable quality contract item in the running app — not just the happy path. This means: simulating a failure and confirming the error state renders, submitting empty or invalid input and confirming validation fires at the right point, and for any security contract line, confirming user-supplied content is not rendered raw. The build plan also now includes explicit steps for these observations — so the builder is implementing contract requirements as discrete steps, not hoping they emerge from the feature work.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APRIL 30 (continued) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">April 30</div>
+      <div class="entry-title">Build Discipline, Session Hygiene, and Observability</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Pre-build read gate — verbatim quote required</div>
+          <div class="change-desc">The pre-build read gate in solo-build has been tightened: the builder must now produce a verbatim quote from the design file — the exact string, word for word — before writing any code. A paraphrase no longer satisfies the gate. This closes the loophole where a builder could confirm the read from memory or a prior session rather than actually opening the file. The distinction matters: a design file that has changed since the last session, or one the builder recalls slightly wrong, produces implementation drift that compounds across slices. The verbatim quote makes the read verifiable.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Session signal system — passive telemetry across all machines</div>
+          <div class="change-desc">Four skills now append one-line signals to a temporary file when notable failure events occur during a build session: stuck protocol fired, slice rebuilt, priority deviation (solo-build); QA caught a missed self-verification (solo-qa); code review failed (code-review-and-quality); phase test on hold (phase-test). A Stop hook wired via onboard reads the file at session end, appends structured lines to a shared session log in the engineering-playbook repo, pushes, and clears the file. If push fails, signals are held in a pending file and included in the next successful push. The log accumulates across all machines and projects — a signal-level view of where build quality issues surface most.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Handoff staleness hook — automatic warning when backlog outpaces handoff</div>
+          <div class="change-desc">Onboard now wires a Stop hook into every project: at the end of each session, if the backlog has been modified more recently than the handoff document, a warning surfaces. The handoff is what the framework reads at session start to orient — if the backlog changed and the handoff didn't, the next session opens on stale context. The hook is silent when handoff is current. Existing projects can add it manually via the command in the onboard skill; new projects get it automatically.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Observability tool decision locked at tech-context</div>
+          <div class="change-desc">Tech context now explicitly asks whether runtime observability is required and which tool is in place — Datadog, CloudWatch, or none. The choice is mutually exclusive and locked at tech-context time. If a tool is declared, an observability setup infrastructure slice is required in the backlog before any feature slices start. This prevents the common pattern of shipping features without instrumentation and wiring it in after the fact. For projects with an established org standard, that standard is declared here — not inferred from prior context or assumed by the builder.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── APRIL 27 ── -->
   <div class="entry">
     <div class="entry-header">

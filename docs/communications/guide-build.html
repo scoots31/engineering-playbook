@@ -1793,7 +1793,15 @@
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
             <h4>Starting a visual slice without re-reading the design file</h4>
-            <p>The design anchor names the file — "design anchor check" means actually opening and reading that file before writing code, not recalling it from memory or a prior read. A single missed read produced a full overlay rebuild when the builder inferred the layout instead of consulting the file. The pre-build read is required for every visual slice, every time.</p>
+            <p>The design anchor names the file — "design anchor check" means actually opening and reading that file before writing code, not recalling it from memory or a prior read. The required output is a verbatim quote: the exact string from the file, word for word. A paraphrase does not qualify — it's indistinguishable from recall. A design file that has changed since the last session, or one the builder remembers slightly wrong, produces implementation drift that compounds across slices. The verbatim quote makes the read verifiable.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Self-verification that skips quality contract items</h4>
+            <p>Self-verification covers more than the happy path. Before declaring code-complete, the builder must walk every observable quality contract item in the running app: simulate a failure and confirm the error state renders, submit empty or invalid input and confirm validation fires at the right point with the right message, and for any security contract line, confirm user-supplied content is not rendered raw. A self-verification that only confirms the happy path will pass — and then fail at code review Check 8, which checks the same contract line by line with the same adversarial standard.</p>
           </div>
         </div>
 

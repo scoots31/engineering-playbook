@@ -8,6 +8,55 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.4.1 — 2026-05-01 — RECOMMENDED
+
+**Quality contract scaffold — four required categories; security added as Check 9**
+
+The quality contract field added in v1.4.0 is now structured into four required categories: Failure states, Edge cases, Input validation, and Security. Each category must be addressed or explicitly marked `N/A — [reason]`. A blank category is not acceptable — the writer must affirm they thought about it. Design review's Ready gate now enforces the scaffold: an unscaffolded or blank-category contract blocks a slice from reaching Ready.
+
+Solo-build updated in two places: the build plan format now includes explicit steps for observable quality contract items (simulate failure, trigger validation, submit bad input), and the Step 1 self-verification walkthrough now requires triggering failure states, testing edge cases, and submitting bad input in the running app before declaring code-complete. The happy path alone no longer satisfies self-verification.
+
+Code review gains Check 9 — a fixed five-sub-check security gate that runs on every slice regardless of what the quality contract says. Sub-checks: (9a) input sanitization — no raw innerHTML or unescaped user-supplied content; (9b) data scoping — data scoped to the authenticated user; (9c) auth checks are server-side — client-side-only access control is a fail; (9d) injection prevention — user input not concatenated into queries or commands; (9e) no secrets in client-visible code. All five are binary pass/fail with specific violation reporting. Failures route back to build, same as checks 1–8. Check 9 is independent of the quality contract — it catches universal security baselines that a per-slice contract might not surface.
+
+### Files changed
+- `skills/design-review/SKILL.md` — four-category scaffold added to quality contract field; Ready gate updated
+- `skills/solo-build/SKILL.md` — build plan includes contract steps; Step 1 self-verification walks observable contract items
+- `skills/code-review-and-quality/SKILL.md` — Check 9 Security added; output format and pass routing updated
+- `docs/curator-context.md` — decisions log updated
+
+### Action required
+Existing slices in design review should have their quality contract field updated to use the four-category format before build starts. A blank category is not valid — mark it `N/A — [reason]` if it doesn't apply.
+
+---
+
+## v1.4.0 — 2026-05-01 — RECOMMENDED
+
+**Quality contract — new required field on every slice; code review upgraded to Check 8**
+
+AI-generated code was passing done criteria and browser sign-off while omitting error handling, edge case coverage, and input validation — the behaviors that separate prototype-quality code from production-ready code. Two root causes: non-functional requirements weren't written before build started, so the builder had no obligation to produce them; code review was forming its own judgment about quality rather than checking against a pre-written spec, which defaulted to optimism.
+
+A new `Quality contract:` field sits alongside `Done criteria:` in every slice record. Written during design review, before build starts. Contains specific, verifiable non-functional requirements — error handling behavior, edge case coverage, validation rules. Each line names a specific behavior: what fails, what the system does, what is validated. "Handle errors gracefully" is not a valid contract line. The quality contract is required at the Ready gate — a slice without a quality contract cannot reach Ready.
+
+Code review gains Check 8: the quality contract is read before the code is read, then each contract line is checked against the implementation with adversarial specificity. A try/catch that swallows errors silently does not satisfy "user sees an error message." A validation check on the wrong event does not satisfy "rejects at submission." The contract is the spec; the code either satisfies it or it doesn't. Check 8 failures route back to build.
+
+The Solo Companion now surfaces quality contract status: parsers.py added `Quality contract` to SLICE_FIELDS, db.py added the column to the slices table, sync.py stores the field, and the cloud viewer shows a quality gate indicator in the slice overlay.
+
+### Files changed
+- `skills/design-review/SKILL.md` — `Quality contract:` field added to slice template; Ready gate requires it; anti-pattern added
+- `skills/solo-build/SKILL.md` — Anchor 3 now surfaces quality contract as a build requirement
+- `skills/code-review-and-quality/SKILL.md` — Check 8 added; "Before Running Checks" updated to require quality contract; output format updated
+- `docs/curator-context.md` — decisions log updated
+- `Solo Companion/parsers.py` — `Quality contract` added to SLICE_FIELDS
+- `Solo Companion/db.py` — `quality_contract TEXT` column added with safe migration
+- `Solo Companion/sync.py` — quality_contract parsed and stored
+- `Solo Companion/push.py` — field included in snapshot
+- `solo-companion-cloud/src/index.js` — quality gate indicator added to slice overlay
+
+### Action required
+New slices created during design review will get the quality contract field automatically. Existing slices in Ready status should have their quality contract filled in before the corresponding build session starts — a slice can remain Ready without one, but code review will block it at Check 8.
+
+---
+
 ## v1.3.4 — 2026-04-30 — RECOMMENDED
 
 **Session signal system — passive telemetry across all machines**

@@ -1078,6 +1078,7 @@
               <li><strong>Data behavior pass</strong> — required for every screen with external data: volume, list behavior, nulls, empty/error/loading states. Produces a data questions log. Unresolved question blocks dependent UI slices from Ready.</li>
               <li><strong>Process anchor required</strong> on every slice before it reaches Ready</li>
               <li><strong>Two descriptions per slice — both required:</strong> plain language description (what the solo will see) and technical description (what the builder needs to know). Neither copies from the other. Neither can be blank.</li>
+              <li><strong>Quality contract required</strong> — four categories: Failure states, Edge cases, Input validation, Security. Each must be addressed or marked <code>N/A — [reason]</code>. A blank category is not valid. Missing quality contract blocks the slice from reaching Ready.</li>
               <li>Slice statuses: In Review · Blocked · Deferred · Ready (full lifecycle in Backlog Status Reference)</li>
               <li>Build signal: enough Ready slices to form a coherent Phase 1 starting point</li>
               <li>Blocked slices have a named spike — never left open without a specific question</li>
@@ -1095,7 +1096,7 @@
             <div class="skill-section-label">Output</div>
             <ul>
               <li><div class="output-tag">docs/backlog.md</div></li>
-              <li>Slice records: ID, Name, Plain language description, Technical description, Design anchor, Data anchor, Process anchor, Done criteria, Self-verification checklist, Dependencies, Status</li>
+              <li>Slice records: ID, Name, Plain language description, Technical description, Design anchor, Data anchor, Process anchor, Done criteria, Quality contract (four categories), Self-verification checklist, Dependencies, Status</li>
               <li>Process coverage map per round</li>
               <li>Review log appended each round</li>
               <li><strong>Gate:</strong> enough Ready slices before build starts</li>
@@ -1399,7 +1400,7 @@
           <div class="skill-name">code-review-and-quality</div>
           <div class="skill-badge">Auto — invoked by solo-build</div>
         </div>
-        <div class="skill-description">Seven-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, and stack compliance. On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to build.</div>
+        <div class="skill-description">Nine-check quality gate that runs automatically when solo-build marks a slice code-complete. Checks pattern compliance, data sourcing, expandability, cleanliness, scope discipline, documentation, stack compliance, quality contract compliance, and security. On pass: logs confirmation in the backlog slice detail and automatically invokes solo-qa. On fail: returns specific notes, slice goes back to build.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1411,6 +1412,8 @@
               <li><strong>Check 5:</strong> Scope discipline — only what was asked for, no extras</li>
               <li><strong>Check 6:</strong> Documentation — purpose comments, complex logic explained, tradeoffs named</li>
               <li><strong>Check 7:</strong> Stack compliance — follows tech-context standards</li>
+              <li><strong>Check 8:</strong> Quality contract — reads the pre-written contract before reading the code; checks every line adversarially. A try/catch that swallows the error silently does not satisfy "user sees an error message." Contract line is ✅ only if the specific behavior exists and is reachable.</li>
+              <li><strong>Check 9:</strong> Security — five fixed sub-checks, independent of the quality contract: (9a) input sanitization, (9b) data scoped to authenticated user, (9c) auth checks server-side, (9d) injection prevention, (9e) no secrets in client-visible code. Runs on every slice regardless of contract content.</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1418,15 +1421,16 @@
             <ul>
               <li>Framework activates automatically when <strong>solo-build</strong> marks a slice code-complete</li>
               <li>No manual trigger needed</li>
+              <li>Quality contract is read first — if missing from the backlog, code review cannot run</li>
             </ul>
           </div>
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>✅/❌ per check with specific notes</li>
+              <li>✅/❌ per check with specific notes — Check 8 lists each contract line individually</li>
               <li>On pass: <div class="output-tag">Code review passed [date]</div> logged in backlog slice detail</li>
               <li>On pass: auto-invokes <strong>solo-qa</strong></li>
-              <li>On fail: returns to solo-build with specific items to address</li>
+              <li>On fail: returns to solo-build with specific items to address; slice status → In Build</li>
             </ul>
           </div>
         </div>
