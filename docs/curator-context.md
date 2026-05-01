@@ -1066,6 +1066,20 @@ For well-scoped, low-ambiguity builds — where design decisions are already mad
 
 ---
 
+### 2026-04-30 — Observability tool decision added to tech-context
+
+**What changed:** Tech-context now explicitly surfaces observability as a mutually exclusive stack decision: Datadog, CloudWatch, or none. Three additions to `skills/tech-context/SKILL.md`: new question 9 in Path 2 (General Solo), a fallback question for Path 1 (Known Profile) when the profile doesn't declare the tool, a new Observability row in the Stack table, and an infrastructure slice requirement when a tool is declared. Bayer Aurora profile updated with a new Observability section prompting confirmation — the org standard isn't declared at the profile level.
+
+**Why:** Observability tooling was being treated as a post-deploy concern. The choice of tool (Datadog vs CloudWatch) has instrumentation consequences throughout the build — you can't switch tools without rework. Locking it at tech-context time means the builder knows the SDK and pattern from day one, and the infrastructure slice ensures setup happens before any feature slice that emits logs or metrics.
+
+**Why mutually exclusive:** Datadog and CloudWatch are not complementary layers — they're competing full-stack observability platforms. A team picks one. The framework treats it the same as picking a database: one question, one answer, locked.
+
+**What was rejected:** Adding observability to design-review instead. Rejected because the choice affects infrastructure slices, which must be sequenced before feature slices — and design-review produces the backlog. The decision has to exist before design-review runs so the infrastructure slice lands in the right place.
+
+**Files changed:** `skills/tech-context/SKILL.md`, `profiles/bayer-aurora.md`, `CHANGELOG.md`, `docs/curator-context.md`.
+
+---
+
 ### 2026-04-30 — Companion pass, shared ideas backlog, deployed new cycle, framework guardrail
 
 **Companion compatibility pass added to onboard (Step 8)**

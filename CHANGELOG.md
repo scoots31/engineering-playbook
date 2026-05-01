@@ -8,6 +8,21 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.3.1 — 2026-04-30 — MINOR
+
+**Observability tool decision added to tech-context**
+
+Tech context now explicitly asks whether runtime observability is required and which tool is in place — Datadog, CloudWatch, or none. The choice is mutually exclusive and locked at tech-context time. If a tool is declared, an observability setup infrastructure slice is required in the backlog before any feature slices start. The Bayer Aurora profile now prompts for this confirmation since the org standard is not declared at the profile level.
+
+### Files changed
+- `skills/tech-context/SKILL.md` — new question 9, Path 1 confirmation update, Observability row in Stack table, infrastructure slice note
+- `profiles/bayer-aurora.md` — new Observability section with confirmation prompt
+
+### Action required
+None for existing projects — this only applies to new tech-context runs.
+
+---
+
 ## v1.3.0 — 2026-04-30 — RECOMMENDED
 
 **Onboard companion pass, shared ideas backlog, deployed-project new cycle**

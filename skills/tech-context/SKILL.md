@@ -31,6 +31,9 @@ If organizational: **Question 2:** "Which organization and platform?"
 Load the profile. Confirm the key constraints with the solo before proceeding:
 > "I've loaded the [profile name] tech profile. For this project: [3-4 key constraints from the profile]. Does this match the context you're working in?"
 
+If the profile does not declare an observability tool, ask before confirming:
+> "The profile doesn't specify an observability tool. Is there one mandated for this project (Datadog, CloudWatch, or other), or should we record it as none?"
+
 If yes — produce `docs/tech-context.md` from the profile. Done.
 If something differs — note the delta, update for this project only. The profile stays canonical.
 
@@ -58,6 +61,11 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
 7. **Deployment / hosting** — "Where is this deployed? Railway, Vercel, internal server, something else?"
 
 8. **Existing principles** — "Do you have coding standards, linting rules, or engineering principles to follow, or should we establish them?"
+
+9. **Observability** — "Does this need runtime observability — logging, metrics, or tracing in production? If yes, is there an organizational tool already in place (Datadog or CloudWatch), or is this a free choice?"
+   - If org-mandated: note the tool, no further decision needed
+   - If free choice: recommend based on deployment target (CloudWatch if AWS-hosted, Datadog otherwise)
+   - If not needed: record as `none` — don't leave it blank
 
 When enough is known, summarize and confirm:
 > "Based on what you've shared: [brief stack summary]. Before I write this up — anything else that would constrain how we build?"
@@ -99,6 +107,7 @@ and any platform constraints that affect design and build decisions.]
 | CI/CD | [GitHub Actions / other] | |
 | Linting | [ESLint Airbnb / other] | |
 | Testing | [Jest / pytest / TBD] | |
+| Observability | [Datadog / CloudWatch / none] | [Org-mandated or free choice] |
 
 ---
 
@@ -141,6 +150,10 @@ Identified from the tech stack and platform constraints.]
 | Slice | Description | Blocks |
 |-------|-------------|--------|
 | [Name] | [What it sets up] | [What depends on it] |
+
+**Observability infrastructure slice — required when tool is declared:**
+If Observability is set to Datadog or CloudWatch (not `none`), add an infrastructure slice before any feature slices:
+`Observability setup — [Tool] SDK installed, log/metric/trace configuration, dashboard initialized, alerts defined. Blocks: any slice that emits logs or metrics.`
 
 ---
 

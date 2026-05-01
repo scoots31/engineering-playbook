@@ -78,6 +78,15 @@ If API work is needed, it is handled separately by engineering and lives in its 
 
 ---
 
+## Observability
+
+Bayer's standard observability tool is not declared in this profile. Before the first build on any Aurora project, confirm with the team:
+> "Which observability tool is in place for this project — Datadog, CloudWatch, or something else? Is it org-mandated or a team choice?"
+
+Record the answer in `docs/tech-context.md` for the project. If observability is required, add an observability setup infrastructure slice to the backlog before any feature slices start.
+
+---
+
 ## CI/CD
 
 - **System:** GitHub Actions (standard — replaces older AWS CodeBuild)
