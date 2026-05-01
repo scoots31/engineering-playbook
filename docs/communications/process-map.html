@@ -509,17 +509,16 @@
     <!-- Build -->
     <div class="cell lane-skills">
       <div class="skill-tag">solo-build</div>
+      <div class="skill-tag" style="margin-left:4px;margin-top:4px">autopilot</div>
       <ul>
+        <li><strong>Two modes — solo chooses:</strong> solo-build (solo at every gate) · autopilot (simulator at every gate, solo reviews at phase test)</li>
         <li>Creates feature branch on slice start</li>
         <li>Requires four anchors: design · data · done · process</li>
-        <li>Surfaces deliverable orientation before first slice in each deliverable</li>
-        <li>Integration deliverables sequence after their Screen companion is Accepted</li>
         <li>Journey order — first screen before second</li>
         <li>Mid-build discoveries surfaced immediately</li>
-        <li>Map-level conflict → auto-invokes process-change; current slice moves to In Review</li>
-        <li>"show progress" / "show plan" available on-demand and surfaced at key moments</li>
         <li>Commits on code-complete → auto-invokes code-review-and-quality</li>
         <li>When all slices in a deliverable are Done → auto-triggers deliverable acceptance</li>
+        <li><em>Autopilot only:</em> pre-flight check surfaces judgment gaps before build begins · deliverable boundary writes enforced automatically · Refinement cycles after phase test for implementation delta</li>
       </ul>
     </div>
     <!-- QA Chain -->

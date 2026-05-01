@@ -149,6 +149,50 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 1 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 1</div>
+      <div class="entry-title">Autopilot — Build Without a Solo in the Loop</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Autopilot — autonomous build mode</div>
+          <div class="change-desc">A new alternative for the Build phase. The solo completes discovery (and optionally the design sprint), then hands off. The framework builds the full product autonomously — the solo-simulator plays every gate, every slice is anchored and committed, and the solo sees nothing until phase test. Phase test is the first human touch point. The solo reviews the finished product, not individual slices.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Pre-flight check — mandatory gate before autonomous build begins</div>
+          <div class="change-desc">Before a single slice is built, the simulator reads all discovery docs and surfaces judgment gaps — places where the spec doesn't decide and the simulator would have to guess. The solo answers each gap. The brief is locked only when no unresolved gaps remain. A discovery quality check also runs: if the to-be map is vague or missing edge cases, this is flagged before gap questions. The cost of removing solo gates from the build is paid upfront here, not spread across the product as post-hoc fixes.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Refinement cycles — delta iteration after phase test</div>
+          <div class="change-desc">After phase test, if the solo has changes, Refinement builds the delta — not the full product again. Each issue is classified first: implementation issues (behavior off, display wrong, data broken) go into Refinement. Structural issues (wrong screen, wrong flow at the process level) require a guided session. The exit ramp to guided mode is surfaced at every Refinement cycle completion. Refinement is autopilot-only — it doesn't exist in guided mode.</div>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Two entry points — post-discover or post-design-review</div>
+          <div class="change-desc">Autopilot can start after discovery alone (faster to begin, more simulator judgment calls, higher Refinement likelihood) or after a full design sprint and design review (richer anchor, fewer judgment calls, tighter first-pass output). Entry Point 2 is recommended for products with significant UI or interaction complexity. The solo chooses based on how much design clarity they want to front-load.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── MAY 1 (continued) ── -->
   <div class="entry">
     <div class="entry-header">

@@ -1093,7 +1093,7 @@
   <header class="page-header">
     <div class="ph-eyebrow">Solo Builder Framework — Phase Guide</div>
     <h1>Phase 4: <span>Build</span></h1>
-    <p class="ph-desc">Slice-by-slice execution in journey order. Every slice is anchored before it starts. Discoveries surface immediately. Code-complete is not Done — it hands off to QA automatically.</p>
+    <p class="ph-desc">Two modes: guided (solo present at every gate) or autonomous (simulator at every gate, solo reviews at phase test). Every slice is anchored before it starts. Code-complete is not Done — it hands off to QA automatically.</p>
     <div class="header-stats">
       <div class="header-stat">
         <div class="hs-num">4</div>
@@ -1104,8 +1104,8 @@
         <div class="hs-label">Tracer bullet goes first</div>
       </div>
       <div class="header-stat">
-        <div class="hs-num">3</div>
-        <div class="hs-label">Skills in this phase</div>
+        <div class="hs-num">2</div>
+        <div class="hs-label">Build modes: guided or autopilot</div>
       </div>
       <div class="header-stat">
         <div class="hs-num">Auto</div>
@@ -1169,7 +1169,7 @@
       <div class="section-header">
         <div class="section-eyebrow">Skills</div>
         <h2 class="section-title">Skills in this phase</h2>
-        <p class="section-desc">Build has one primary phase skill and two on-demand skills invoked at specific moments. A fourth is available for hard calls.</p>
+        <p class="section-desc">Build has two mode skills — guided (solo-build) or autonomous (autopilot) — plus on-demand skills invoked at specific moments.</p>
       </div>
 
       <!-- solo-build -->
@@ -1207,6 +1207,50 @@
               <li>Update backlog: status → In QA</li>
               <li>Auto-invoke code-review-and-quality</li>
               <li>Do not wait for solo to trigger the handoff</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- autopilot -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-name">autopilot</div>
+          <div class="skill-badge badge-phase">Phase skill — autonomous mode</div>
+        </div>
+        <div class="skill-desc">
+          Alternative to solo-build. Builds the full product without solo participation after discovery or design sprint. Solo-simulator plays every gate. First human touch point is phase test. Refinement cycles handle delta iteration after phase test.
+        </div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">When to choose autopilot vs. solo-build</div>
+            <ul>
+              <li><strong>solo-build</strong> — solo wants to participate at every gate, catch drift in real time, and shape output slice by slice</li>
+              <li><strong>autopilot</strong> — solo wants to reach a finished product fast and iterate on the whole rather than the slice. Accepts that first-pass output is spec-compliant, not preference-validated — Refinement closes that gap.</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Entry points</div>
+            <ul>
+              <li><strong>Post-discover</strong> — leaner design anchor, more simulator judgment calls, higher Refinement likelihood</li>
+              <li><strong>Post-design-review</strong> — richer anchor, fewer judgment calls, tighter first-pass output. Recommended for UI-heavy products.</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Pre-flight check</div>
+            <ul>
+              <li>Simulator reads all discovery docs before build begins</li>
+              <li>Surfaces judgment gaps — places where the spec doesn't decide</li>
+              <li>Solo answers each gap. Brief is locked. Build begins only when gate is clean.</li>
+              <li>Discovery quality check: thin to-be map flagged before gap questions</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Refinement cycles</div>
+            <ul>
+              <li>After phase test, issues classified: implementation (Refinement handles) or structural (guided re-entry required)</li>
+              <li>Delta build only — changed slices, not full product rebuild</li>
+              <li>Exit ramp to guided mode surfaced at every Refinement cycle completion</li>
             </ul>
           </div>
         </div>
