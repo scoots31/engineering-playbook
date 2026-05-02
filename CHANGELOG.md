@@ -22,10 +22,20 @@ The framework now automatically produces `docs/metrics.json` during every build 
 
 **How it works:** solo-build initializes `docs/metrics.json` at the start of the first slice. All counters are increment-only — they accumulate across the full build. The file follows a fixed JSON schema that Solo Companion reads via `sync.py` to surface per-project and cross-project metrics.
 
+**Slice quality checks (pre-build)**
+
+Two lightweight checks added to catch rework risk before build starts rather than after:
+
+- **`prd-to-plan` — slice quality scan at plan approval.** Before presenting the plan, the skill scans every Ready slice for verifiable done criteria (at least two observable outcomes, not behavioral descriptions) and specific quality contract lines (at least two checkable requirements, not aspirational language). Slices that fail either check must be sharpened or split before the plan is approved.
+- **`solo-build` — pre-flight at branch open.** After the metrics check and before the feature branch is created, a quick two-question check: can done be stated as a single concrete observation, and is the scope bounded to one interaction or behavior? Not a gate — a prompt to catch softness before context is committed.
+
+**Rationale:** Complexity score (post-build) is a scoreboard. These checks are a rework-risk signal: they catch ambiguous slices at the point where sharpening is cheapest. Breaking a slice into smaller units doesn't reduce Build Complexity — it improves clean first-pass rate, which is what actually matters.
+
 ### Files changed
-- `skills/solo-build/SKILL.md` — metrics init + rework check before feature branch; summary update at slice Done
+- `skills/solo-build/SKILL.md` — metrics init + rework check before feature branch; summary update at slice Done; pre-flight slice readiness check added
 - `skills/autopilot/SKILL.md` — rework increment at QA failure; refinement cycle counter; `docs/metrics.json` added to Output Files
 - `skills/phase-test/SKILL.md` — step 4 in "When the Gate Opens": write outcome + refinement cycles
+- `skills/prd-to-plan/SKILL.md` — slice quality scan added to Section 8 (plan approval)
 - `docs/records-spec.md` — `metrics.json` section: full schema, field definitions, who writes what and when
 - `docs/curator-context.md` — decisions log entry
 

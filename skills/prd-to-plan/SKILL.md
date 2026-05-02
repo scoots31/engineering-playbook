@@ -240,6 +240,16 @@ List any decisions that must be made before implementation can start:
 
 ### 8. Present and Confirm
 
+Before presenting the plan, run a slice quality scan across every Ready slice:
+
+For each slice, check two things:
+1. **Done criteria** — are there at least two concrete, verifiable criteria? A criterion passes if you can observe it against a running app in under 30 seconds. Descriptions of behavior ("handles errors gracefully") do not count. Observable outcomes only ("error state renders with [specific message] when API returns 500").
+2. **Quality contract** — are there at least two specific, checkable lines? Vague lines ("performant", "accessible") do not count. Specific behavior only ("renders within 200ms on a 10-item list", "keyboard navigable with tab order matching visual order").
+
+If a slice fails either check, it is a rework risk. Resolve it before the plan is approved — either sharpen the criteria in the backlog record or split the slice into smaller units with tighter scope. A plan with vague slice records is not approvable.
+
+State the outcome of the scan: "All slices pass quality check." or list the ones that need sharpening and resolve them.
+
 Show the full plan. Ask:
 - Does the phase sequencing feel right — does it respect both risk and process order?
 - Are there slices that should be merged, split, or reordered?

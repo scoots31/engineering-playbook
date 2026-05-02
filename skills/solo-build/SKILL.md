@@ -195,6 +195,12 @@ A paraphrase or general description does not count. If you cannot produce a verb
 - **File exists, no entry for this slice** — add `"SL-[ID]": { "rework_cycles": 0, "code_review_flags": 0, "refinement_cycles": 0 }` to `slices`.
 - **File exists, entry already present** — this is a rework cycle. Increment `rework_cycles` by 1.
 
+**Slice readiness check** — before opening the branch, confirm two things:
+1. Can you state what done looks like for this slice as a single concrete observation against the running app? If the done criteria require interpretation to verify, they are too vague — sharpen them now.
+2. Is the scope bounded to one user interaction or system behavior? If the slice spans multiple distinct interactions or responsibilities, it should have been split at plan time — flag it to the solo before proceeding.
+
+This is not a gate — it is a pre-flight. Most slices pass in one read. The point is to catch a soft slice before context is spent, not to add ceremony.
+
 1. **Create the feature branch** — read `docs/tech-context.md` for the project's branching model, then create the branch:
    - Standard format: `feature/SL-[ID]-[short-slug]`
    - Example: `feature/SL-003-player-overview-card`
