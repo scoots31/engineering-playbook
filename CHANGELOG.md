@@ -8,6 +8,24 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.9.0 — 2026-05-02 — RECOMMENDED
+
+**Solo Companion — Search and Capture**
+
+Two new capabilities that extend Solo Companion from a read-only project viewer into a full memory interface.
+
+**Search** — Query both project records and MemPalace from a single search box. Two-pass engine: natural language and keyword-only queries run concurrently, results merged by best cosine score per source. Memory results display with markdown rendering (headers, bold, bullets, inline code), source filename label, and match percentage. Filter chips narrow to project records or memory only. Requires MemPalace to be installed; gracefully absent if not.
+
+**Capture** — New write capability. A dedicated Capture page lets the solo type freeform notes, decisions, or ideas into MemPalace directly from the companion. Each capture saves as a dated markdown file in `~/Developer/mempalace-captures/` and is immediately mined into the palace — searchable within seconds.
+
+### Files changed
+- `Solo Companion/app.py` — `/search` route (two-pass engine, markdown rendering, filter chips), `/capture` + `/capture/save` routes, tunnel/tag stripping corrected to actual MemPalace format
+
+### Action required
+None. Search requires MemPalace installed at the standard path. Capture creates `~/Developer/mempalace-captures/` automatically on first save.
+
+---
+
 ## v1.8.0 — 2026-05-02 — RECOMMENDED
 
 **Project-level metrics collection**
