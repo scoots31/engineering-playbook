@@ -56,6 +56,21 @@ This works because most people cannot describe what they want visually until the
 
 ## Execution
 
+### Step 0: Client Context Check
+
+Before reading anything else, check if the project declares a client design context.
+
+Look for a `client_context` entry in the project's `CLAUDE.md`. If present, read the context file at that path now — before the discovery brief, before the on-ramp question, before producing anything. Load the full context: tokens, component inventory, patterns, regional variance rules, quick-build reference.
+
+If no `client_context` is declared, skip this step entirely and proceed to Step 1.
+
+If context loads successfully, confirm in one sentence:
+> "Loaded [client] design context — [X] components, [Y] patterns, regional rules active. Proceeding to brief."
+
+This context remains active for the entire sprint. Design decisions, component choices, and skin passes are all made against it. If the design sprint introduces something not in the client context library, surface it as a decision (see `client-context-design` skill for details).
+
+---
+
 ### Step 1: Read the Discovery Brief and Process Maps
 
 Before producing anything, read:
