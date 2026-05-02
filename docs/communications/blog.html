@@ -149,6 +149,33 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 2 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 2</div>
+      <div class="entry-title">Automated Testing, CI/CD, and Seven Deployment Paths</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-label">New</div>
+        <div class="change-desc"><strong>Automated test generation.</strong> When a slice reaches code-complete and the project has GitHub Actions configured, the framework generates a pytest test file from the slice's done criteria. The full suite runs before every commit — a red suite blocks the commit until the regression is fixed. Tests accumulate across slices and become a regression floor that protects earlier work throughout the build.</div>
+      </div>
+      <div class="change-item">
+        <div class="change-label">New</div>
+        <div class="change-desc"><strong>CI/CD Setup — one-time, plain-language walkthrough.</strong> At first deploy, if GitHub Actions is declared in tech-context but not yet configured, the deploy skill generates the complete GitHub Actions workflow file and walks the solo through the only manual step: pasting a token or key into GitHub. The solo never writes or reviews YAML. Every push to the base branch runs tests automatically. Every merge to main deploys.</div>
+      </div>
+      <div class="change-item">
+        <div class="change-label">New</div>
+        <div class="change-desc"><strong>Seven named deployment paths.</strong> Tech-context now maps to one of seven fully-supported paths: Local Mac, Cloudflare Pages/Workers, Railway, Render, Fly.io, AWS App Runner, or No pipeline. The solo is never asked to choose from a list — the framework captures intent through plain-language questions and maps internally. Observability recommendation auto-maps to the selected path (CloudWatch for AWS App Runner; Datadog for Railway/Render/Fly.io; none for local).</div>
+      </div>
+      <div class="change-item">
+        <div class="change-label">Updated</div>
+        <div class="change-desc"><strong>Autopilot now includes test generation.</strong> The autonomous build loop generates and runs the test suite at each slice, the same as solo-build. Regressions are caught and logged before the simulator gate check. No behavior change for projects without CI/CD configured.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 1 ── -->
   <div class="entry">
     <div class="entry-header">

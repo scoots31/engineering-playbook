@@ -58,13 +58,46 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
 
 6. **Auth** — "Does this need authentication? Handled by something external or built in?"
 
-7. **Deployment / hosting** — "Where is this deployed? Railway, Vercel, internal server, something else?"
+7. **Deployment** — Ask in two parts. Keep the language plain — no platform jargon until the solo has oriented.
 
-8. **Existing principles** — "Do you have coding standards, linting rules, or engineering principles to follow, or should we establish them?"
+   First: *"Is this a product other people will use, or is it just for you?"*
+   - Just for me → Local Mac. Record deployment path as `Local Mac`. Skip question 8.
+   - Other people will use it → ask the follow-up.
 
-9. **Observability** — "Does this need runtime observability — logging, metrics, or tracing in production? If yes, is there an organizational tool already in place (Datadog or CloudWatch), or is this a free choice?"
+   Follow-up: *"Have you deployed to a specific platform before, or would you like a recommendation?"*
+   - Has one in mind → confirm it maps to a supported path (see internal taxonomy below). If it does, record it. If not, ask one clarifying question.
+   - Wants a recommendation → recommend Railway for most web apps ("simple, connects to GitHub, no infrastructure to manage"), Render if they want slightly more control. One recommendation, not a list.
+
+   **Internal deployment path taxonomy — never present this list to the solo:**
+
+   | Path | When to select |
+   |---|---|
+   | Local Mac | Personal tool, no remote users |
+   | Cloudflare Pages/Workers | Static sites, edge functions, Cloudflare-hosted apps |
+   | Railway | First-time deployers, simple managed hosting |
+   | Render | Production solo apps, more control than Railway |
+   | Fly.io | Docker-comfortable builders, geographic distribution needed |
+   | AWS App Runner | AWS ecosystem, enterprise-adjacent products, AWS account already set up |
+   | No pipeline | Solo wants full manual control, or product type doesn't support CI/CD |
+
+   Record the selected path in the Stack table as `Deployment path`.
+
+8. **Automated deployment** — Ask only if deployment path is not `Local Mac` or `No pipeline`:
+
+   *"Once it's live, do you want the framework to automatically test and redeploy your product every time you push new code — or would you prefer to control when it deploys?"*
+   - Automatic → record `CI/CD: GitHub Actions`. Framework sets this up at deploy phase. The solo does not need to know how it works now.
+   - Manual → record `CI/CD: Manual`. Deploy skill uses Method C.
+
+9. **Existing principles** — "Do you have coding standards, linting rules, or engineering principles to follow, or should we establish them?"
+
+10. **Observability** — "Does this need runtime observability — logging, metrics, or tracing in production? If yes, is there an organizational tool already in place (Datadog or CloudWatch), or is this a free choice?"
    - If org-mandated: note the tool, no further decision needed
-   - If free choice: recommend based on deployment target (CloudWatch if AWS-hosted, Datadog otherwise)
+   - If free choice: recommend based on deployment path selected in question 7:
+     - `AWS App Runner` → CloudWatch (same ecosystem, no additional setup)
+     - `Railway`, `Render`, `Fly.io` → Datadog
+     - `Cloudflare Pages/Workers` → Datadog (Cloudflare Analytics covers traffic; Datadog for application observability)
+     - `Local Mac` → none (no production observability needed for personal tools)
+     - `No pipeline` → none
    - If not needed: record as `none` — don't leave it blank
 
    If a tool is declared, ask one follow-up: "Is there anything specific that must be tracked — compliance events, SLA thresholds, specific business metrics? Or is standard operational health (errors, logs, uptime) sufficient?"
@@ -107,10 +140,10 @@ and any platform constraints that affect design and build decisions.]
 | Backend | [Python Flask / Node / de-scoped] | |
 | Auth | [C7/Gigya / Clerk / custom / none] | |
 | Database | [PostgreSQL / none / external] | |
-| Deployment | [Spectrum C7 / Railway / Vercel] | |
-| CI/CD | [GitHub Actions / other] | |
+| Deployment path | [Local Mac / Cloudflare / Railway / Render / Fly.io / AWS App Runner / No pipeline] | |
+| CI/CD | [GitHub Actions / Manual / None] | |
 | Linting | [ESLint Airbnb / other] | |
-| Testing | [Jest / pytest / TBD] | |
+| Testing | [pytest / Jest / TBD] | |
 | Observability | [Datadog / CloudWatch / none] | [Org-mandated or free choice] |
 | Observability requirements | [Standard operational health / Compliance: X, SLA: Y, Metrics: Z] | |
 

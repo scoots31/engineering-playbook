@@ -933,14 +933,51 @@
       <div class="section-header">
         <div class="section-icon">🗺️</div>
         <div>
-          <div class="section-title">The four deploy methods</div>
-          <div class="section-desc">Deploy routes to the correct method based on what tech-context defines — Methods A, B, and C are established paths; Method D builds the definition before executing</div>
+          <div class="section-title">Deploy methods and deployment paths</div>
+          <div class="section-desc">Deploy routes to the correct method based on what tech-context defines. When GitHub Actions is selected but not yet configured, CI/CD Setup runs first — one time, at first deploy.</div>
         </div>
       </div>
 
       <div class="callout info" style="margin-bottom:20px">
         <div class="callout-icon">📌</div>
         <div class="callout-body"><strong>Method is determined by tech-context, not by the deploy skill.</strong> If the method isn't defined in <code>docs/tech-context.md</code>, the deploy skill stops and asks what it needs to know before writing it in and proceeding — Method D handles that path explicitly.</div>
+      </div>
+
+      <!-- Deployment paths -->
+      <div style="margin-bottom:28px">
+        <div style="font-size:13px;font-weight:700;color:var(--gray-900);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Seven supported deployment paths</div>
+        <div style="font-size:13px;color:var(--gray-600);margin-bottom:14px">Tech-context captures the deployment path once. Every downstream skill reads it — deploy skill, CI/CD setup, observability recommendation. The solo never chooses from this list directly; the framework captures intent through plain-language questions and maps internally.</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:var(--gray-50)">
+            <th style="text-align:left;padding:8px 12px;font-weight:600;color:var(--gray-700);border-bottom:1px solid var(--gray-200)">Path</th>
+            <th style="text-align:left;padding:8px 12px;font-weight:600;color:var(--gray-700);border-bottom:1px solid var(--gray-200)">When to select</th>
+            <th style="text-align:left;padding:8px 12px;font-weight:600;color:var(--gray-700);border-bottom:1px solid var(--gray-200)">Observability default</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">Local Mac</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">Personal tool, no remote users</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">None</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">Cloudflare Pages/Workers</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">Static sites, edge functions, Cloudflare-hosted apps</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">Datadog</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">Railway</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">First-time deployers, simple managed hosting</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">Datadog</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">Render</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">Production solo apps, more control than Railway</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">Datadog</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">Fly.io</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">Docker-comfortable builders, geographic distribution</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">Datadog</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);font-weight:500">AWS App Runner</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)">AWS ecosystem, enterprise-adjacent products</td><td style="padding:8px 12px;border-bottom:1px solid var(--gray-100);color:var(--gray-500)">CloudWatch</td></tr>
+            <tr><td style="padding:8px 12px;font-weight:500">No pipeline</td><td style="padding:8px 12px;color:var(--gray-600)">Manual control, or product type doesn't support CI/CD</td><td style="padding:8px 12px;color:var(--gray-500)">None</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CI/CD Setup -->
+      <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:20px 24px;margin-bottom:28px">
+        <div style="font-size:13px;font-weight:700;color:#15803D;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">CI/CD Setup — one-time, fires at first deploy when GitHub Actions is selected</div>
+        <p style="font-size:13px;color:#166534;margin:0 0 12px">When tech-context records <code>CI/CD: GitHub Actions</code> but no <code>.github/workflows/ci.yml</code> exists, the deploy skill sets it up before routing to Method A. The framework generates the workflow file entirely — the solo never writes or reviews YAML. The only solo action is a one-time token or key paste in GitHub and the platform dashboard — walked through step by step in plain language.</p>
+        <div style="font-size:13px;font-weight:600;color:#15803D;margin-bottom:8px">What the solo does (one time only):</div>
+        <ul style="margin:0;padding-left:18px;font-size:13px;color:#166534">
+          <li><strong>Railway</strong> — copy a token from the Railway dashboard, paste it as a GitHub secret named <code>RAILWAY_TOKEN</code></li>
+          <li><strong>Render</strong> — copy a deploy hook URL from Render, paste as <code>RENDER_DEPLOY_HOOK</code></li>
+          <li><strong>Cloudflare</strong> — create an API token, paste as <code>CLOUDFLARE_API_TOKEN</code></li>
+          <li><strong>Fly.io</strong> — run one terminal command to get a token, paste as <code>FLY_API_TOKEN</code></li>
+          <li><strong>AWS App Runner</strong> — create IAM credentials + copy service ARN, paste four secrets (~15 min, most setup of any path)</li>
+        </ul>
+        <p style="font-size:13px;color:#166534;margin:12px 0 0">After setup: every push to the base branch runs the full test suite automatically. Every merge to main deploys. Nothing else to configure.</p>
       </div>
 
       <div class="method-grid">

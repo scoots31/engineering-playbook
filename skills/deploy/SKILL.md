@@ -86,6 +86,242 @@ If any slice branches are still open: surface them specifically.
 
 Route to the correct deploy method based on what tech-context defined.
 
+**Before routing to a method:** if tech-context records `CI/CD: GitHub Actions` but no `.github/workflows/ci.yml` exists in the project root, run the CI/CD Setup below first, then return to Method A.
+
+---
+
+### CI/CD Setup — one-time configuration, fires when GitHub Actions declared but not yet wired
+
+**Step 1 — Generate the workflow file**
+
+Based on the deployment path in tech-context, generate `.github/workflows/ci.yml`. The framework writes this file entirely — the solo does not write or review YAML. The file is committed as part of setup.
+
+**Internal — per-platform workflow content:**
+
+**Railway:**
+```yaml
+name: CI/CD
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Railway
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          railway up --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+```
+
+**Render:**
+```yaml
+name: CI/CD
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+```
+
+**Cloudflare Pages/Workers:**
+```yaml
+name: CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy
+```
+
+**Fly.io:**
+```yaml
+name: CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+```
+
+**AWS App Runner:**
+```yaml
+name: CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r requirements.txt
+      - run: pytest tests/ -v
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Deploy to App Runner
+        run: aws apprunner start-deployment --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }}
+```
+
+**Step 2 — Commit the workflow file**
+
+Commit `.github/workflows/ci.yml` with message: `Add GitHub Actions CI/CD pipeline`.
+
+**Step 3 — Walk the solo through the account-side setup**
+
+This is the only part the solo does. Walk through it step by step in plain language — exactly what to click, exactly what to name each field. Do not assume prior knowledge.
+
+**Railway:**
+> "One quick thing to set up — takes about 5 minutes, no technical knowledge needed.
+>
+> 1. Go to railway.app and open your project
+> 2. Click Settings → Tokens → New token. Give it any name and copy it.
+> 3. Go to your GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+> 4. Name it exactly `RAILWAY_TOKEN` (capital letters, underscore) and paste the token
+> 5. Click Add secret
+>
+> Done. From now on, every push to main runs your tests and deploys automatically."
+
+**Render:**
+> "One quick thing to set up — about 3 minutes.
+>
+> 1. Go to render.com and open your service
+> 2. Click Settings → Deploy Hooks → Copy the hook URL
+> 3. Go to your GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+> 4. Name it exactly `RENDER_DEPLOY_HOOK` and paste the URL
+> 5. Click Add secret
+>
+> Done. Every push to main deploys automatically."
+
+**Cloudflare:**
+> "One quick thing to set up — about 5 minutes.
+>
+> 1. Go to dash.cloudflare.com → My Profile → API Tokens → Create Token
+> 2. Use the 'Edit Cloudflare Workers' template, or grant Workers:Edit permission manually. Copy the token.
+> 3. Go to your GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+> 4. Name it exactly `CLOUDFLARE_API_TOKEN` and paste the token
+> 5. Click Add secret
+>
+> Done."
+
+**Fly.io:**
+> "One quick thing — 3 minutes.
+>
+> 1. In your terminal run: `fly auth token` — copy the token it outputs
+> 2. Go to your GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+> 3. Name it exactly `FLY_API_TOKEN` and paste the token
+> 4. Click Add secret
+>
+> Done."
+
+**AWS App Runner:**
+> "AWS needs a bit more setup — about 15 minutes. I'll walk through each step.
+>
+> 1. In AWS Console → IAM → Users → Create user. Attach the 'AWSAppRunnerFullAccess' permission directly.
+> 2. For that user → Security credentials → Create access key. Copy both the Access Key ID and Secret Access Key.
+> 3. In App Runner console → your service → Service overview → copy the Service ARN (it looks like arn:aws:apprunner:...)
+> 4. Go to GitHub → your repo → Settings → Secrets and variables → Actions. Add four secrets:
+>    - `AWS_ACCESS_KEY_ID` — the access key ID
+>    - `AWS_SECRET_ACCESS_KEY` — the secret access key
+>    - `AWS_REGION` — your AWS region (e.g. us-east-1)
+>    - `APP_RUNNER_SERVICE_ARN` — the service ARN from step 3
+>
+> Done. This is the most setup of any platform — worth it if you're in the AWS ecosystem."
+
+**Step 4 — Confirm and continue**
+
+After the solo completes the account-side steps:
+> "Setup complete. Every push to [base branch] now runs the test suite automatically. Every merge to main deploys. Nothing else to configure."
+
+Proceed to Method A.
+
 ---
 
 ### Method A — CI/CD Triggered by Merge

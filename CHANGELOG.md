@@ -8,6 +8,35 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.7.0 — 2026-05-02 — RECOMMENDED
+
+**Automated testing, CI/CD pipeline integration, and seven deployment paths**
+
+Three connected capabilities shipped together:
+
+**Automated test generation** — When a slice reaches code-complete and the project has `CI/CD: GitHub Actions` in tech-context, the framework generates `tests/test_SL-[ID].py` from the slice's done criteria. The full suite runs before every commit. A red suite blocks the commit until the regression is fixed. Tests accumulate as a regression floor across the build. Autopilot includes the same step in its autonomous loop.
+
+**CI/CD Setup** — One-time configuration at first deploy. When GitHub Actions is declared but `.github/workflows/ci.yml` doesn't exist, the deploy skill generates the complete workflow file and walks the solo through only the manual step: pasting a token or API key into GitHub. Plain-language, click-by-click instructions per platform. Solo never writes or reviews YAML.
+
+**Seven named deployment paths** — Tech-context now maps to one of seven fully-supported paths: Local Mac, Cloudflare Pages/Workers, Railway, Render, Fly.io, AWS App Runner, No pipeline. Observability recommendation auto-maps to the selected path. Solo answers plain-language questions; framework maps internally.
+
+### Files changed
+- `skills/tech-context/SKILL.md` — deployment question reframed, CI/CD question added, seven paths taxonomy, observability mapping updated
+- `skills/solo-build/SKILL.md` — CI suite check at session start, test generation step (Step 1.5) between self-verify and commit
+- `skills/deploy/SKILL.md` — CI/CD Setup section with per-platform workflow YAML and plain-language walkthrough
+- `skills/autopilot/SKILL.md` — test generation + suite run added to autonomous build loop
+- `docs/records-spec.md` — `Test file` field added to slice record
+- `docs/communications/guide-build.html` — test generation documented in code-complete flow
+- `docs/communications/guide-deploy.html` — seven deployment paths table, CI/CD Setup section added
+- `docs/communications/skills-reference.html` — tech-context and deploy cards updated
+- `docs/communications/process-map.html` — CI/CD Setup node added to deploy lane
+- `docs/communications/blog.html` — v1.7.0 entry
+
+### Action required
+None for existing projects. CI/CD and test generation are opt-in — the framework skips both when `CI/CD` is not set to `GitHub Actions` in tech-context. Existing projects built without CI/CD continue unchanged.
+
+---
+
 ## v1.6.0 — 2026-05-01 — RECOMMENDED
 
 **Autopilot — autonomous build mode**

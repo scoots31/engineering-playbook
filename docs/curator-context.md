@@ -1364,3 +1364,37 @@ A new Check 10 (Design fidelity) runs on all Figma-sourced slices. Four sub-chec
 The cost of autopilot is paid upfront at pre-flight, not spread across the build as guided checkpoints. The richer the discovery and design work, the tighter the autopilot output. Refinement cycles are the mechanism for closing the gap between spec-compliant and preference-validated — they are expected, not a sign of failure. The iteration trap (rushing discovery intending to fix it in Refinement) is a known behavioral risk; the pre-flight discovery quality check raises the floor but cannot eliminate it entirely.
 
 Anchor quality without human judgment is an identified hard ceiling: the simulator checks anchor existence and spec-compliance, not whether anchors reflect what was actually built or intended. This is accepted as the honest limit of autonomous build.
+
+---
+
+### 2026-05-02 — v1.7.0: Automated testing, CI/CD pipeline integration, seven deployment paths
+
+**What changed:** Three connected capabilities added across four skills and records-spec.
+
+*Automated test generation (solo-build, autopilot).* After self-verification and before commit, if `CI/CD: GitHub Actions` is in tech-context, the framework generates `tests/test_SL-[ID].py` from the slice's done criteria. Full suite runs on every commit — red blocks the commit until regression is fixed. Tests accumulate as a regression floor. Autopilot includes the same step in its autonomous loop. Session-start CI suite check added: if a tests/ directory exists, pytest runs before slice selection. A red suite blocks new work until the regression is fixed.
+
+*CI/CD Setup (deploy).* One-time configuration section added before Method A. When GitHub Actions is declared but `.github/workflows/ci.yml` is absent, the deploy skill generates the workflow file entirely (five platform-specific YAML templates: Railway, Render, Cloudflare, Fly.io, AWS App Runner), commits it, then walks the solo through only the account-side steps in plain language — what to click, what to name the secret, exactly what to paste. Solo never writes or reviews YAML. Framework outputs complete instructions per platform with no assumed prior knowledge.
+
+*Seven named deployment paths (tech-context).* Deployment question reframed from "where is this deployed?" (technical, intimidating) to "is this for you or for other people?" (plain language, intent-based). Internal taxonomy of seven paths established. Solo never chooses from a list — framework maps intent to path. Observability recommendation now auto-maps: CloudWatch for AWS App Runner; Datadog for Railway/Render/Fly.io/Cloudflare; none for Local Mac and No pipeline. Stack table Deployment row renamed Deployment path; CI/CD and Testing rows updated.
+
+*Test file field (records-spec).* `Test file: [tests/test_SL-[ID].py | None]` added to slice record. Written by builder at code-complete when CI/CD is active.
+
+**Why:** Competitive analysis (Zencoder, ZenFlow Enterprise) surfaced three gaps the framework had that production-grade tools don't: no automated regression testing, no CI/CD integration, no awareness of where products actually deploy. These three capabilities address all three gaps in a way that preserves the framework's core principle — the solo should never be blocked or intimidated by technical setup. Framework does the heavy lifting; solo answers plain-language questions and completes one-time account steps.
+
+**Key design decisions:**
+
+*Opt-in, not mandatory.* Both test generation and CI/CD are gated on `CI/CD: GitHub Actions` in tech-context. Projects without that setting are completely unaffected. Existing projects built without CI/CD continue unchanged.
+
+*Seven paths, not infinite flexibility.* Canonical paths chosen based on realistic deployment targets for solo builders. Framework knows each one completely. Partial support for many platforms rejected in favor of complete support for seven. AWS App Runner chosen as the AWS entry point (most accessible, no infrastructure management); Elastic Beanstalk and ECS rejected as too complex for solo context.
+
+*Framework generates YAML, not the solo.* The single most important UX decision. Solo builders who don't know what YAML is should not encounter it. The framework treats CI/CD setup the same way it treats any other infrastructure slice: the builder handles the technical config, the solo handles only what requires their credentials or account access.
+
+*Test generation from done criteria, not pre-emptive TDD.* Verification-style testing (generate from what was verified) chosen over TDD-style (generate before building) for v1. Less disruptive to the build loop, higher adoption likelihood. The done criteria are already the quality bar — encoding them as assertions adds the regression floor without changing how builders think about a slice.
+
+**What was rejected:**
+
+*Infinite deployment platform flexibility.* "The framework configures its approach to tech-context responses" is the right principle but without named paths, it becomes a bespoke setup every time — high cognitive load, inconsistent quality. Named paths with complete per-platform knowledge is the correct design.
+
+*CI/CD setup at tech-context time.* Tempting since tech-context already captures the deployment path. Rejected: at tech-context the product is hypothetical, the solo is thinking about what to build. Deferring to deploy phase means the CI/CD conversation happens when the product exists and the question is concrete rather than abstract.
+
+*Heroku, DigitalOcean App Platform.* Heroku is now paid with declining adoption. DigitalOcean is viable but adds another path without clear differentiation from Render in the solo builder context. Excluded to keep the set manageable.

@@ -136,6 +136,8 @@ Builder confirmation:
 
 Review URL: [URL where this slice's output can be previewed | None]
 
+Test file: [tests/test_SL-[ID].py | None — populated by builder at code-complete when CI/CD is configured]
+
 Depends on: [SL-XXX | D-ID | external dependency | none — explicit always]
 Notes: [Decisions made, constraints discovered, spike results, non-obvious things.
         Not a summary of what the slice does — that's the descriptions above.]
@@ -176,6 +178,8 @@ There is no fourth option. An interactive element rendered as a working-looking 
 **Depends on** — Other slices or external things that must exist before this slice can start. Named explicitly — not "backend" but "SL-003" or "API: player search endpoint confirmed." None is a valid answer and must be stated explicitly.
 
 **Review URL** — The URL where the completed slice can be previewed. Written by the builder at code-complete, alongside the status update to `In QA`. A local server URL, running preview path, or deployed preview link — whatever the solo needs to open the work in a browser. `None` for slices with no previewable output (pure logic, infrastructure). Never left blank.
+
+**Test file** — Path to the pytest file generated for this slice at code-complete. Written by the builder alongside the commit when `CI/CD: GitHub Actions` is configured in tech-context. Format: `tests/test_SL-[ID].py`. `None` when CI/CD is not configured for the project. Never left blank when CI/CD is active.
 
 **Notes** — The why and the non-obvious. Things that would surprise a builder who had not been in the room. Not a summary of what the slice does.
 

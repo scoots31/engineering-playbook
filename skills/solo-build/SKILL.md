@@ -27,6 +27,17 @@ At the start of every build session, before selecting or starting any slice, rea
 
 Do not rely on conversation history or memory from a previous session. Read the current state of these files. If any document is missing, name it before proceeding.
 
+**CI suite check** — if `CI/CD: GitHub Actions` is recorded in `docs/tech-context.md` and a `tests/` directory exists in the project root, run the full test suite before selecting any slice:
+
+```
+pytest tests/ -v
+```
+
+- **Green** → proceed normally.
+- **Red** → surface every failing test before starting new work. A red suite means a previous slice introduced a regression. Fix it first — do not start a new slice while the suite is broken.
+
+If no `tests/` directory exists yet, skip silently.
+
 After reading, confirm:
 > "Session context loaded: [N] slices in backlog, [N] Ready. Active deliverable: [D-ID] — [Name]. Next slice in priority: SL-[ID]."
 
@@ -227,6 +238,27 @@ The difference:
 - ✅ "The player name 'Josh Allen' renders in the slot row — matches `slot_tag: 'Josh Allen'` in players.json." — observed output
 
 Stating what the code is supposed to produce is not valid evidence. Only what was observed in the running output counts. If any item cannot be verified against the running app, fix the blocker first. If any item is flagged (✗), fix it before presenting. Do not present a slice with an unresolved self-verification item.
+
+**Step 1.5 — Generate test file** — if `CI/CD: GitHub Actions` is recorded in `docs/tech-context.md`.
+
+Translate the slice's done criteria into a runnable test file at `tests/test_SL-[ID].py`. Each done criterion becomes one or more pytest test functions. Tests must be:
+- **Deterministic** — same result every run, no random or time-dependent behavior
+- **State-isolated** — no dependency on test execution order; each test sets up its own state
+- **Fast** — no external API calls, no network requests; mock what the slice mocks
+
+For Flask apps, use Flask's built-in test client. For pure Python modules, use standard `assert` statements against the public API.
+
+After generating the file, run the full suite to confirm nothing is broken:
+
+```
+pytest tests/ -v
+```
+
+- **Green** → include `tests/test_SL-[ID].py` in the commit at Step 2. Proceed.
+- **New test immediately fails** → the done criteria translation has an error. Fix the test, not the code. The criteria define correct behavior — the test must match them exactly.
+- **Existing test now fails** → this slice introduced a regression. Fix the regression before committing. A red suite does not get committed.
+
+If `CI/CD` is not set to `GitHub Actions` in tech-context, skip this step entirely. Do not generate test files for projects without a CI/CD pipeline.
 
 **Step 2 — Commit the work.**
 Execute the commit directly — do not hand this to the solo. Read `docs/tech-context.md` for any project-specific commit conventions, then stage the changed files and commit with message: `SL-[ID] code-complete — [slice name]`.

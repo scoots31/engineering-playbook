@@ -1203,8 +1203,9 @@
           <div class="skill-section">
             <div class="skill-section-label">On code-complete</div>
             <ul>
-              <li>Commit: <strong>SL-[ID] code-complete — [name]</strong></li>
-              <li>Update backlog: status → In QA</li>
+              <li>If CI/CD configured: generate <code>tests/test_SL-[ID].py</code> from done criteria, run full suite — green proceeds, red regression blocks commit</li>
+              <li>Commit: <strong>SL-[ID] code-complete — [name]</strong> (include test file if generated)</li>
+              <li>Update backlog: status → In QA, write test file path</li>
               <li>Auto-invoke code-review-and-quality</li>
               <li>Do not wait for solo to trigger the handoff</li>
             </ul>

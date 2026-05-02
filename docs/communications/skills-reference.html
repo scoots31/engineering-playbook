@@ -832,7 +832,9 @@
             <div class="skill-section-label">Key Elements</div>
             <ul>
               <li>Routes to team profile (predefined stack) or general questions for greenfield</li>
-              <li>Documents deploy method, branching model, CI/CD system</li>
+              <li>Plain-language deployment question maps to one of <strong>seven named paths</strong> (Local Mac, Cloudflare, Railway, Render, Fly.io, AWS App Runner, No pipeline) — solo never sees the list</li>
+              <li>Captures automated vs. manual deployment preference — framework sets up GitHub Actions at deploy phase if selected</li>
+              <li>Observability recommendation auto-maps to deployment path (CloudWatch for AWS App Runner; Datadog for Railway/Render/Fly.io; none for Local Mac)</li>
               <li>Identifies <strong>infrastructure slices</strong> — prerequisites before any feature slice can start</li>
               <li>Stack-specific coding standards referenced by code-review-and-quality</li>
               <li>Required reading for: design-sprint, solo-build, deploy, principal-engineer</li>
@@ -1662,7 +1664,8 @@
               <li>Reads tech-context for deploy target, CI/CD system, branch mapping, trigger, verification method</li>
               <li>Confirms phase test gate OPEN via phase completion record</li>
               <li>Confirms all phase feature branches merged</li>
-              <li><strong>Method A:</strong> CI/CD triggered by merge (GitHub Actions, etc.)</li>
+              <li><strong>CI/CD Setup:</strong> one-time — generates <code>.github/workflows/ci.yml</code>, walks solo through token/secret setup in plain language per platform</li>
+              <li><strong>Method A:</strong> CI/CD triggered by merge (GitHub Actions)</li>
               <li><strong>Method B:</strong> MCP tool triggered (Railway, Vercel, etc.)</li>
               <li><strong>Method C:</strong> Manual CLI — surfaces exact command, waits for solo confirmation</li>
               <li><strong>Method D:</strong> Not yet defined → asks 4 questions, updates tech-context, then deploys</li>

@@ -101,11 +101,12 @@ Build every slice in backlog order. The simulator plays the solo role at every g
 
 **At each slice:**
 1. Build the slice (same mechanics as solo-build)
-2. Simulator-QA: run the same checks as solo-qa — simulator approves what matches the brief, pushes back on drift
-3. If QA fails: builder fixes, simulator re-checks. After one failed round, escalate — log the issue and the decision made to `.claude/autopilot-decisions.md`, then continue
-4. Commit the slice
-5. Update slice status in `docs/backlog.md`
-6. Append gate decision to `.claude/autopilot-decisions.md`
+2. Generate test file and run suite — if `CI/CD: GitHub Actions` is in tech-context: generate `tests/test_SL-[ID].py` from done criteria, run `pytest tests/ -v`. Green = proceed. Red existing test = fix regression before continuing. Log any escalation to `.claude/autopilot-decisions.md`.
+3. Simulator-QA: run the same checks as solo-qa — simulator approves what matches the brief, pushes back on drift
+4. If QA fails: builder fixes, simulator re-checks. After one failed round, escalate — log the issue and the decision made to `.claude/autopilot-decisions.md`, then continue
+5. Commit the slice (include test file if generated)
+6. Update slice status in `docs/backlog.md`
+7. Append gate decision to `.claude/autopilot-decisions.md`
 
 **Mid-deliverable checkpoint — fires automatically at slice 4 within any deliverable with more than 4 slices:**
 - Update `docs/continuity/handoff.md` — Open right now section
