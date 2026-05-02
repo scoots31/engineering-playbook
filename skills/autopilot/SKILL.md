@@ -103,7 +103,7 @@ Build every slice in backlog order. The simulator plays the solo role at every g
 1. Build the slice (same mechanics as solo-build)
 2. Generate test file and run suite — if `CI/CD: GitHub Actions` is in tech-context: generate `tests/test_SL-[ID].py` from done criteria, run `pytest tests/ -v`. Green = proceed. Red existing test = fix regression before continuing. Log any escalation to `.claude/autopilot-decisions.md`.
 3. Simulator-QA: run the same checks as solo-qa — simulator approves what matches the brief, pushes back on drift
-4. If QA fails: builder fixes, simulator re-checks. After one failed round, escalate — log the issue and the decision made to `.claude/autopilot-decisions.md`, then continue
+4. If QA fails: before fixing, increment `rework_cycles` in `docs/metrics.json` for this slice (initialize file and slice entry if needed — same schema as solo-build). Builder fixes, simulator re-checks. After one failed round, escalate — log the issue and the decision made to `.claude/autopilot-decisions.md`, then continue
 5. Commit the slice (include test file if generated)
 6. Update slice status in `docs/backlog.md`
 7. Append gate decision to `.claude/autopilot-decisions.md`
@@ -158,6 +158,8 @@ After delta is built and committed, run phase test again.
 
 **At each Refinement cycle completion:**
 
+Update `docs/metrics.json`: increment `phase_test.refinement_cycles` and `summary.phase_test_refinement_cycles` by 1.
+
 > "Refinement [N] complete. Another pass, or take this back into guided mode and work through it as a participant?"
 
 Two paths:
@@ -187,6 +189,7 @@ Design review assesses the built product, routes what needs to change to the app
 | `docs/continuity/handoff.md` | Updated at slice 4 checkpoint and each deliverable completion. |
 | `docs/continuity/current-phase.md` | Updated at build start and at each Refinement cycle. Read by the Solo Companion to surface autopilot state and Refinement cycle. |
 | `docs/backlog.md` | Slice and deliverable statuses updated throughout build. |
+| `docs/metrics.json` | Build and phase test metrics — rework cycles per slice, refinement cycles, phase test outcome. Initialized at first slice, updated at rework events and Refinement cycles, finalized at phase test gate open. Read by Solo Companion. |
 
 ### current-phase.md format during autopilot
 

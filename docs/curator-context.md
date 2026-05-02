@@ -1398,3 +1398,35 @@ Anchor quality without human judgment is an identified hard ceiling: the simulat
 *CI/CD setup at tech-context time.* Tempting since tech-context already captures the deployment path. Rejected: at tech-context the product is hypothetical, the solo is thinking about what to build. Deferring to deploy phase means the CI/CD conversation happens when the product exists and the question is concrete rather than abstract.
 
 *Heroku, DigitalOcean App Platform.* Heroku is now paid with declining adoption. DigitalOcean is viable but adds another path without clear differentiation from Render in the solo builder context. Excluded to keep the set manageable.
+
+---
+
+### 2026-05-02 — Project-level metrics collection: docs/metrics.json
+
+**What changed:** Automated metrics collection added across three skills and records-spec.
+
+*solo-build.* Before creating the feature branch, the skill now checks `docs/metrics.json`. If the file is absent, it initializes it with the canonical schema. If the file exists and the slice already has an entry (meaning it was previously In QA), it increments `rework_cycles` — this is a rework event. When a slice reaches Done, the skill updates `summary.total_slices` and, if `rework_cycles > 0`, increments `summary.slices_with_rework`.
+
+*autopilot.* Same rework tracking at the QA failure event (Step 3 item 4) — before fixing, increment `rework_cycles`. At each Refinement cycle completion, increments `phase_test.refinement_cycles` and `summary.phase_test_refinement_cycles`. `docs/metrics.json` added to the Output Files table.
+
+*phase-test.* Step 4 added to the "When the Gate Opens" sequence: write `phase_test.result = "pass"`, read refinement cycle count from `docs/continuity/current-phase.md`, update `summary.phase_test_refinement_cycles`.
+
+*records-spec.md.* `metrics.json` section added: full schema, field-by-field definitions, who writes what and when, rules for increment-only behavior. Two fields reserved for future wiring: `code_review_flags` (code-review-and-quality) and slice-level `refinement_cycles` (autopilot delta slices).
+
+**Why:** Framework had no mechanism for tracking whether it was working. Build velocity, rework rate, phase test pass rate — none of these were measurable. The companion (Solo Companion cloud viewer) can aggregate across projects but needs structured per-project data to do so. `docs/metrics.json` is the per-project output the companion reads via `sync.py`.
+
+**Key design decisions:**
+
+*JSON, not markdown.* Companion parses it programmatically. Markdown metrics would require fragile string parsing. JSON is the right format for a machine-readable output.
+
+*Summary block alongside slice detail.* Cross-project aggregation needs summary-level data without parsing every slice entry. `summary` is kept in sync after every Done transition — it's always ready to read.
+
+*Increment-only counters.* Counters only go up. No resets. This is the correct behavior for rework tracking — a slice that got reworked twice was reworked twice, even if it passes QA cleanly the third time.
+
+*`code_review_flags` and slice-level `refinement_cycles` reserved, not yet wired.* Code-review-and-quality would need to be updated to write to metrics.json. Autopilot's Refinement cycle delta slice tracking requires careful scoping. Both are reserved in the schema to prevent future parser conflicts, but not wired in v1.8.0.
+
+**What was rejected:**
+
+*Markdown metrics file.* Considered because it's consistent with other framework docs. Rejected because the companion reads it programmatically — parsing prose is fragile and a maintenance burden. JSON is the right format for a metrics output.
+
+*Cross-project metrics in the framework itself.* The framework doesn't have cross-project awareness by design — it operates on one project at a time. Aggregation belongs in the companion, which already sees multiple projects. Framework produces; companion consumes.

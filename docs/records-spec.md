@@ -410,4 +410,57 @@ Confirmed by: Solo
 | `solo-qa` | Drives slice from In QA toward In Test. May add notes to slice record. |
 | `phase-test` | Drives phase from In Test toward Completed. |
 | `qa-triage` | Assesses Done slice bugs for rollback scope (targeted fix vs. full rebuild). Surfaces rollback proposal to solo. Does not execute status changes — rollback protocol in solo-build owns that. |
+| `solo-build` / `autopilot` | Creates and maintains `docs/metrics.json` — initialized at first slice, updated at rework events and slice Done, finalized at phase test gate open. |
+| `phase-test` | Writes phase test outcome to `docs/metrics.json` when gate opens. |
+
+---
+
+## metrics.json
+
+`docs/metrics.json` is the project-level metrics file. Created automatically by solo-build or autopilot at the start of the first slice. Read by Solo Companion to surface build health per project and across projects.
+
+**Schema:**
+
+```json
+{
+  "project": "[project name from handoff.md]",
+  "phase_test": {
+    "result": "in-progress | pass",
+    "refinement_cycles": 0
+  },
+  "slices": {
+    "SL-001": {
+      "rework_cycles": 0,
+      "code_review_flags": 0,
+      "refinement_cycles": 0
+    }
+  },
+  "summary": {
+    "total_slices": 0,
+    "slices_with_rework": 0,
+    "total_code_review_flags": 0,
+    "phase_test_refinement_cycles": 0
+  }
+}
+```
+
+**Field definitions:**
+
+| Field | Written by | When |
+|-------|-----------|------|
+| `project` | solo-build / autopilot | File initialization |
+| `phase_test.result` | phase-test | Gate opens — set to `"pass"` |
+| `phase_test.refinement_cycles` | autopilot (Refinement) | Each Refinement cycle completion; phase-test reads from current-phase.md at gate open |
+| `slices.[ID].rework_cycles` | solo-build / autopilot | Slice selected for build and already has an entry (prior In QA → back to In Build) |
+| `slices.[ID].code_review_flags` | Reserved — not yet wired | Future: code-review-and-quality will populate |
+| `slices.[ID].refinement_cycles` | Reserved — not yet wired | Future: autopilot Refinement delta slices |
+| `summary.total_slices` | solo-build / autopilot | Updated each time a slice reaches Done |
+| `summary.slices_with_rework` | solo-build / autopilot | Updated each time a slice reaches Done with rework_cycles > 0 |
+| `summary.total_code_review_flags` | Reserved | Future |
+| `summary.phase_test_refinement_cycles` | phase-test / autopilot | Same value as phase_test.refinement_cycles |
+
+**Rules:**
+- Never delete the file during a build — only append and increment
+- Never reset counters — they accumulate across the full build
+- `summary` must stay in sync — recalculate after every Done transition
 

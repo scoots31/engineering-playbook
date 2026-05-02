@@ -350,6 +350,11 @@ Regressions found: [0 / N resolved]
 
 If any slice branches are still open: merge them before marking the phase complete. The phase completion record must reflect a clean, unified state — not a mix of merged and unmerged work.
 
+4. **Update `docs/metrics.json`** — write the phase test outcome (create the file if it doesn't exist):
+   - `phase_test.result` → `"pass"`
+   - `phase_test.refinement_cycles` → read `docs/continuity/current-phase.md`: if `Refinement cycle:` is present and not "None", use that integer value; otherwise 0
+   - `summary.phase_test_refinement_cycles` → same value as above
+
 **Why this lives in the backlog:**
 The backlog is the document everyone already reads — the solo at session start, the framework for context, a stakeholder wanting a status. Adding the phase completion record there means the full story is in one place: slice-by-slice progress AND phase-by-phase milestones. No hunting across multiple documents to understand where the project stands.
 

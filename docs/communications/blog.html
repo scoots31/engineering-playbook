@@ -153,6 +153,18 @@
   <div class="entry">
     <div class="entry-header">
       <div class="entry-date">May 2</div>
+      <div class="entry-title">The Framework Now Knows If It's Working</div>
+    </div>
+    <div class="entry-divider"></div>
+    <p>Until today, the framework had no way to answer a basic question: is it actually improving your builds over time? Rework rate, phase test pass rate, how many refinement cycles a build required — none of that was tracked. You were flying blind on whether the process was working.</p>
+    <p>Starting now, every build produces <code>docs/metrics.json</code> automatically. No configuration, no extra steps. The file accumulates as the build runs — rework cycles per slice, phase test outcome, refinement cycles if you used autopilot. When the phase test gate opens, the framework writes the final result.</p>
+    <p>The data is structured JSON, which means Solo Companion can read it. Per-project metrics show how a specific build went. Cross-project aggregation — coming to the companion — will show whether trends are improving across everything you build.</p>
+    <p>The metrics that matter: rework rate tells you if your gates are catching things before they ship. Refinement cycles tell you if your discovery was thorough enough. Phase test outcome tells you if the product actually landed. Three numbers, and you know how the framework is doing.</p>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 2</div>
       <div class="entry-title">Automated Testing, CI/CD, and Seven Deployment Paths</div>
     </div>
     <div class="entry-divider"></div>

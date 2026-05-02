@@ -179,6 +179,22 @@ Confirm both were read by producing a verbatim quote from each:
 
 A paraphrase or general description does not count. If you cannot produce a verbatim quote from each file right now, you have not read them. Read them before proceeding. A wrong quote surfaces immediately at review — that is the check.
 
+**Metrics — initialize or rework check:** Before creating the branch, check `docs/metrics.json`.
+
+- **File doesn't exist** — initialize it:
+  ```json
+  {
+    "project": "[project name from handoff.md]",
+    "phase_test": { "result": "in-progress", "refinement_cycles": 0 },
+    "slices": {
+      "SL-[ID]": { "rework_cycles": 0, "code_review_flags": 0, "refinement_cycles": 0 }
+    },
+    "summary": { "total_slices": 0, "slices_with_rework": 0, "total_code_review_flags": 0, "phase_test_refinement_cycles": 0 }
+  }
+  ```
+- **File exists, no entry for this slice** — add `"SL-[ID]": { "rework_cycles": 0, "code_review_flags": 0, "refinement_cycles": 0 }` to `slices`.
+- **File exists, entry already present** — this is a rework cycle. Increment `rework_cycles` by 1.
+
 1. **Create the feature branch** — read `docs/tech-context.md` for the project's branching model, then create the branch:
    - Standard format: `feature/SL-[ID]-[short-slug]`
    - Example: `feature/SL-003-player-overview-card`
@@ -448,6 +464,7 @@ The backlog is a live document. Every status change is written immediately — b
 - Slice is code-complete → **In Build → In QA** — update before triggering code review
 - Slice passes code review → **In QA → In Test** — update when solo-qa hands off to phase-test
 - Slice passes QA → **In Test → Done** — update before moving to the next slice
+- Slice marked Done → **update `docs/metrics.json` summary**: increment `summary.total_slices`; if `slices.[ID].rework_cycles > 0`, also increment `summary.slices_with_rework`. Keep `summary` in sync after every Done transition.
 - Slice marked Done → **update handoff immediately**: "What was just completed" (this slice's details), "Where we are" (current build state), "Next session picks up at" (next slice in priority). Same pass as the backlog update — not deferred to session end.
 - Deliverable all slices Done → **Defined → Pending Acceptance** — update when presenting to solo
 - Deliverable solo signs off → **Pending Acceptance → Accepted** — update immediately on sign-off

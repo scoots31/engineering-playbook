@@ -8,6 +8,32 @@ Each release is labeled with a severity:
 
 ---
 
+## v1.8.0 — 2026-05-02 — RECOMMENDED
+
+**Project-level metrics collection**
+
+The framework now automatically produces `docs/metrics.json` during every build — no configuration required.
+
+**What gets tracked:**
+
+- **Rework rate** — each time a slice is selected for build after previously reaching In QA (code review returned it or QA failed), `rework_cycles` increments for that slice. When the slice reaches Done, the summary updates: `total_slices` and, if rework occurred, `slices_with_rework`.
+- **Phase test outcome** — when the phase test gate opens, the framework writes `phase_test.result = "pass"` and reads the refinement cycle count from `current-phase.md` (autopilot builds only).
+- **Refinement cycles** — autopilot increments `phase_test.refinement_cycles` at each Refinement cycle completion.
+
+**How it works:** solo-build initializes `docs/metrics.json` at the start of the first slice. All counters are increment-only — they accumulate across the full build. The file follows a fixed JSON schema that Solo Companion reads via `sync.py` to surface per-project and cross-project metrics.
+
+### Files changed
+- `skills/solo-build/SKILL.md` — metrics init + rework check before feature branch; summary update at slice Done
+- `skills/autopilot/SKILL.md` — rework increment at QA failure; refinement cycle counter; `docs/metrics.json` added to Output Files
+- `skills/phase-test/SKILL.md` — step 4 in "When the Gate Opens": write outcome + refinement cycles
+- `docs/records-spec.md` — `metrics.json` section: full schema, field definitions, who writes what and when
+- `docs/curator-context.md` — decisions log entry
+
+### Action required
+None for existing projects. `docs/metrics.json` will be created automatically at the start of the next build session. No backfill is needed for projects already in build — the file picks up from the current state forward.
+
+---
+
 ## v1.7.0 — 2026-05-02 — RECOMMENDED
 
 **Automated testing, CI/CD pipeline integration, and seven deployment paths**

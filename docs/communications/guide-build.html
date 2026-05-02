@@ -1886,6 +1886,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Ignoring a rising rework rate</h4>
+            <p>The framework tracks rework automatically — every time a slice is returned to build after reaching In QA, the counter increments. A high rework rate across multiple slices is a signal the quality gates are catching things too late. The place to look: were the done criteria specific enough? Was the quality contract walked before presenting? A rework rate that keeps climbing without a response means the gates aren't changing the behavior that's causing the rework.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Rebuilding a completed slice without the rollback protocol</h4>
             <p>When a slice that has passed QA (In Test or Done) needs to be rebuilt, it is a rollback — not a continuation of active build work. The builder proposes the scope (targeted fix or full rebuild), explains why, and waits for solo confirmation before touching any status or discarding any code. Nothing changes before that confirmation. Skipping the protocol means the deliverable and phase records become inconsistent, the log entry is missing, and the solo has no visibility into what changed and why.</p>
           </div>
