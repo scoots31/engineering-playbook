@@ -208,14 +208,18 @@ When structure is confirmed warm, rebuild with a full skin pass from the stated 
 
 ### Step 6: Extend to All Screens
 
-Once the hero screen is approved (structure + skin), extend to remaining screens in this order:
+Once the hero screen is approved (structure + skin), extend to all remaining screens.
+
+**Secondary screen order:**
 1. The screens immediately before and after the hero in the user journey
-2. Any screen that was explicitly called out in the discovery brief key moments
+2. Any screen explicitly called out in the discovery brief key moments
 3. Remaining screens in navigation order
 
-Each screen inherits the design system established in the hero screen. The skin does not change screen to screen — only the content and layout patterns.
+Each screen inherits the design system established in the hero screen — the same skin, component patterns, and typography. The skin does not change screen to screen. Only content and layout patterns vary.
 
-For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens move faster than the hero because the design language is already settled.
+**When Agent tool is available (Claude Code):** Fan out all secondary screens in parallel. Spawn one sub-agent per screen, passing each: the approved hero screen HTML (as the design system reference), the screen's description from the discovery brief, and the sprint context. Each agent produces its screen independently. Collect all results, then present them together for a single warmer/colder round covering all secondary screens at once.
+
+**When running in Cursor (no Agent tool):** Produce screens sequentially. For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens move faster than the hero because the design language is already settled.
 
 Save each screen to `docs/design/sprint-[screen-id].html`.
 

@@ -170,6 +170,14 @@ Any data issue that would make test scenarios unreliable: route to `qa-triage` b
 
 ---
 
+### Stages 4 + 5 — Orchestration
+
+**When Agent tool is available (Claude Code):** Spawn Stage 4 (Tester) and Stage 5 (Regression Specialist) as concurrent sub-agents using the Agent tool. Pass each agent the full test plan from Stage 2, the relevant backlog slices, and its specialist instructions below. Wait for both to return before proceeding to Stage 6.
+
+**When running in Cursor (no Agent tool):** Run Stage 4 fully, then Stage 5 fully, in sequence. Same steps — no skipping. Just one model, sequential.
+
+---
+
 ### Stage 4 — Tester (runs with Stage 5)
 
 *Walks every scenario from the test plan. Records evidence, not assumptions.*

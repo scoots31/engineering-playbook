@@ -467,12 +467,9 @@ End each round by stating explicitly:
 
 ## Enhanced Mode — Multi-Agent Orchestrator
 
-**Tier 2 only. Requires Claude Code with enhanced mode active.**
-Tier 1 (standard) behavior is unchanged — this section is skipped if enhanced mode is not active.
+**Activation: Automatic.** When the Agent tool is available (Claude Code), use this path. No explicit activation required — every design review runs the orchestrator.
 
-**Activation:** Solo says "enhanced mode on" in Claude Code. Flag persists for the session. All design-review rounds in the session use the orchestrator path.
-
-**Graceful degradation:** If enhanced mode is not active, or if running in Cursor, skip this section entirely and run the standard review process above.
+**Graceful degradation:** When running in Cursor (no Agent tool available), skip this section entirely and run the standard review process above. Every step is identical — just executed sequentially by one model instead of four agents in parallel.
 
 ---
 

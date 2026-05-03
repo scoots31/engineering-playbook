@@ -305,11 +305,14 @@ Show the completed builder confirmation and state readiness for review:
 >
 > Review: [review_url from slice record]"
 
-**Step 5 — Invoke `code-review-and-quality` immediately.**
-Do not wait for the solo to trigger it. The handoff is automatic — solo-build to code-review-and-quality to solo-qa is a chain, not a handoff the solo manages.
+**Step 5 — Run code review immediately.** Do not wait for the solo to trigger it. The handoff is automatic — build to code review to solo-qa is a chain, not something the solo manages.
 
-If code review passes, it invokes solo-qa automatically.
-If code review fails, it returns the slice to In Build with specific notes — fix and resubmit.
+**When Agent tool is available (Claude Code):** Spawn `code-review-and-quality` as a sub-agent with isolated context. Pass it: the slice ID, the paths to all code files modified in this slice, the quality contract (extracted verbatim from the backlog), and the four anchors (design, data, done, process). The sub-agent runs all checks independently — no access to the build conversation, no cognitive bias from having just built the slice. It returns a pass/fail report with the full check output.
+
+**When running in Cursor (no Agent tool):** Read `skills/code-review-and-quality/SKILL.md` and run all checks inline. Same nine checks, same standard. No skipping.
+
+If code review passes, invoke solo-qa automatically.
+If code review fails, return the slice to In Build with specific notes — fix and resubmit.
 
 **Review delivery:** When the slice produces UI or HTML output, serve it as a viewable page before asking for feedback. Open it in the browser or provide a live local URL. The solo signs off on what they can see — not on a description of what was built.
 
