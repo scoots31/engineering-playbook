@@ -156,22 +156,19 @@
       <div class="entry-title">Doc Updates Are Automatic Now. And Ren Remembers Across Machines.</div>
     </div>
     <div class="entry-divider"></div>
-    <p>Two things that required manual attention after every framework version ship are now handled automatically.</p>
-    <p><strong>Comms cascade sub-agent.</strong> When a new version ships, Ren now spawns a dedicated sub-agent whose only job is updating the documentation. It reads every communications doc, identifies what's relevant to the version that just landed, writes the updates, commits, pushes to GitHub, and deploys to Cloudflare — in one pass, without human handholding. The curator provides a structured brief (version, summary, skills affected, watchfor items, guide sections affected) and the sub-agent handles everything from there. The brief is a real requirement: a vague brief produces vague docs, so the curator must supply specifics before invoking. No more manual "now go update the docs" pass after a build.</p>
-    <p><strong>Ren cross-device memory.</strong> Ren now has a private GitHub repo — ren-memory — that stores current framework state, pending work, and a summary layer of curator context. Every session Ren opens starts with a fetch from that repo, so the context is accurate and complete regardless of which machine the session starts on. A daily health check at 8am sends a macOS notification with GREEN/YELLOW/RED scores for key staleness indicators — pending retro items, stale handoffs, unprocessed ideas. The check runs quietly and surfaces only when something needs attention.</p>
-    <div class="change-list" style="margin-top:20px;">
+    <div class="change-list">
       <div class="change-item">
         <div class="change-badge badge-new">New</div>
         <div class="change-body">
           <div class="change-name">Comms cascade sub-agent — automated doc updates on every version ship</div>
-          <div class="change-desc">Invoked by Ren with a structured brief. Reads all comms docs, writes relevant updates, commits, pushes, and deploys to Cloudflare. Structured brief required — version, summary, skills affected, watchfor items, guide sections affected.</div>
+          <div class="change-desc">When a version ships, Ren spawns a dedicated sub-agent whose only job is updating the documentation. It reads every comms doc, writes what's relevant, commits, pushes to GitHub, and deploys to Cloudflare — in one pass. The curator provides a structured brief (version, summary, skills affected, watchfor items, guide sections). No more manual doc pass after a build.</div>
         </div>
       </div>
       <div class="change-item">
         <div class="change-badge badge-new">New</div>
         <div class="change-body">
           <div class="change-name">Ren cross-device memory — framework state persists across machines</div>
-          <div class="change-desc">Private ren-memory repo stores framework state and pending work. Fetched at every session start. Daily 8am health check sends a macOS notification with GREEN/YELLOW/RED staleness scores.</div>
+          <div class="change-desc">Ren now has a private GitHub repo — ren-memory — storing current framework state, pending work, and a curator-context summary layer. Every session starts with a fetch from that repo so context is accurate regardless of which machine is being used. A daily 8am health check sends a macOS notification with GREEN/YELLOW/RED staleness scores for key framework indicators.</div>
         </div>
       </div>
     </div>
@@ -184,23 +181,19 @@
       <div class="entry-title">Solo Companion Can Now Search Your Memory — and Write to It</div>
     </div>
     <div class="entry-divider"></div>
-    <p>Solo Companion started as a read-only window into your projects. Today it becomes something more: a live interface to everything you've ever filed in memory, plus a place to capture new thinking without opening an AI session.</p>
-    <p><strong>Search</strong> — A single search box now queries both your project records (slices, decisions, changes, open questions) and MemPalace simultaneously. The engine runs two passes: your query as natural language, and a keyword-only version stripped of noise words. Both run concurrently, results are merged, best cosine match per source wins. Memory results show markdown-rendered content — headers, bullets, bold — with the source filename so you know exactly where a result came from. Filter chips let you narrow to project records or memory only.</p>
-    <p><strong>Capture</strong> — A new Capture page lets you write directly into memory from the companion. Type a title, optionally tag a project, write freely. Hit save — the note lands as a clean markdown file in a dedicated captures folder and is mined into MemPalace in the background. Searchable in seconds. No AI session required, no context window needed. Just a place to put the thought so it doesn't disappear.</p>
-    <p>The use case that motivated this: you're mid-build, something clicks, you want to save it for the next brainstorm session. Now you can. The framework's brainstorm skill can search your captured notes as context. Your thinking carries forward.</p>
-    <div class="change-list" style="margin-top:20px;">
+    <div class="change-list">
       <div class="change-item">
         <div class="change-badge badge-new">New</div>
         <div class="change-body">
           <div class="change-name">Cross-source search — project records and MemPalace in one query</div>
-          <div class="change-desc">Two-pass semantic + keyword engine, merged by best score per source. Markdown rendering, source labels, filter chips.</div>
+          <div class="change-desc">A single search box queries both your project records (slices, decisions, changes, open questions) and MemPalace simultaneously. Two-pass engine: natural language and keyword-only, run concurrently, merged by best score per source. Memory results show markdown-rendered content with source filename. Filter chips let you narrow to project records or memory only.</div>
         </div>
       </div>
       <div class="change-item">
         <div class="change-badge badge-new">New</div>
         <div class="change-body">
-          <div class="change-name">Capture — write to memory from the companion</div>
-          <div class="change-desc">Freeform note entry saves as dated markdown and mines into MemPalace immediately. Searchable within seconds.</div>
+          <div class="change-name">Capture — write directly to memory from the companion</div>
+          <div class="change-desc">A new Capture page lets you write into memory without opening an AI session. Type a title, tag a project, write freely — the note saves as a dated markdown file and mines into MemPalace in the background. Searchable within seconds. The use case: you're mid-build, something clicks — now you can save it immediately and the brainstorm skill can find it later.</div>
         </div>
       </div>
     </div>
@@ -213,10 +206,22 @@
       <div class="entry-title">The Framework Now Knows If It's Working</div>
     </div>
     <div class="entry-divider"></div>
-    <p>Until today, the framework had no way to answer a basic question: is it actually improving your builds over time? Rework rate, phase test pass rate, how many refinement cycles a build required — none of that was tracked. You were flying blind on whether the process was working.</p>
-    <p>Starting now, every build produces <code>docs/metrics.json</code> automatically. No configuration, no extra steps. The file accumulates as the build runs — rework cycles per slice, phase test outcome, refinement cycles if you used autopilot. When the phase test gate opens, the framework writes the final result.</p>
-    <p>The data is structured JSON, which means Solo Companion can read it. Per-project metrics show how a specific build went. Cross-project aggregation — coming to the companion — will show whether trends are improving across everything you build.</p>
-    <p>The metrics that matter: rework rate tells you if your gates are catching things before they ship. Refinement cycles tell you if your discovery was thorough enough. Phase test outcome tells you if the product actually landed. Three numbers, and you know how the framework is doing.</p>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Automatic metrics collection — every build produces docs/metrics.json</div>
+          <div class="change-desc">No configuration required. The file initializes at first slice and accumulates as the build runs: rework cycles per slice, phase test outcome, refinement cycles if autopilot was used. Rework rate tells you if your gates are catching things before they ship. Refinement cycles tell you if discovery was thorough enough. Phase test outcome tells you if the product actually landed. Solo Companion reads it — cross-project aggregation coming.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Rework cycle detection — framework flags when a slice re-enters build after QA</div>
+          <div class="change-desc">When a slice re-enters build after failing QA, the rework counter increments automatically. Increment-only — a slice reworked twice was reworked twice, even if it passes clean on the third attempt. Rising rework rate across a build is a signal something upstream is broken.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="entry">

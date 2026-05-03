@@ -84,18 +84,29 @@ Read each file before deciding whether it needs an update. Update only what is r
 
 ## Blog Entry Format
 
-Add at the top of the blog entries section in `blog.html`. Match the existing style exactly — read 2-3 recent entries first.
+Add at the top of the blog entries section in `blog.html`. Read 2-3 recent entries first and match their structure exactly.
+
+**Critical:** No `<p>` intro paragraphs. The entry goes directly from `entry-divider` to `change-list`. All content lives inside `change-desc`. Intro paragraphs render full-white with no CSS styling and break the visual consistency.
 
 ```html
-<article class="blog-entry">
-  <div class="entry-meta">
-    <span class="entry-date">[Month D, YYYY]</span>
-    <span class="entry-version">v[X.Y.Z]</span>
+<!-- ── [MONTH DAY] ── -->
+<div class="entry">
+  <div class="entry-header">
+    <div class="entry-date">[Month D]</div>
+    <div class="entry-title">[Title — plain language, what this delivers]</div>
   </div>
-  <h2>[Title — plain language, what this delivers]</h2>
-  <p>[One paragraph. What changed, why it matters, what solos will notice. No jargon.]</p>
-  <p>[Optional second paragraph if the change is significant enough to warrant it.]</p>
-</article>
+  <div class="entry-divider"></div>
+  <div class="change-list">
+    <div class="change-item">
+      <div class="change-badge badge-new">New</div>
+      <div class="change-body">
+        <div class="change-name">[Short name — what the feature is]</div>
+        <div class="change-desc">[Full description — what changed, why it matters, what solos will notice. No jargon. This is where all the content goes — not in intro paragraphs above.]</div>
+      </div>
+    </div>
+    [Additional change-items as needed. Use badge-improved for improvements, badge-fixed for fixes.]
+  </div>
+</div>
 ```
 
 ---
