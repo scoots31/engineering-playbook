@@ -71,9 +71,27 @@ edit this file directly. Ideas require owner sign-off before any framework work 
 ### READY — Design review + build: parallel pipeline model with soft prompts
 **Added by:** @scotth + Ren
 **Date:** 2026-04-30
-**Status:** Approved — design session required before execution
+**Status:** Superseded — 2026-05-03 (see refined design below)
 **Idea:** Design review and build run as two parallel paths once minimum threshold is met. Design review feeds build continuously — not a sequential phase handoff. Build start condition: 3 deliverables Ready minimum, at least one infrastructure deliverable, OR 1 screen deliverable fully specified. After each screen reaches Ready, soft prompt fires: "Build now or design next screen first?" When build queue drops to one deliverable, soft prompt fires: "Queue running low — go design more screens or keep building?" Multi-session advanced path (two separate Claude instances, handoff as coordination layer) is a future capability — Scott tests single-session model first, quietly, before any documentation or release.
 **Scope:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `skills/framework-health/SKILL.md`, `skills/start/SKILL.md`, `skills/product-continuity/SKILL.md`, `docs/records-spec.md` (handoff two-stream structure). Large cascade — dedicated design session required.
+
+---
+
+### NEEDS DESIGN — Parallel pipeline: start soft prompt + pipeline mode tracking
+**Added by:** @scotth + Ren
+**Date:** 2026-05-03
+**Status:** Approved — design session required before execution
+**Idea:** Refines and replaces the April 30 parallel pipeline item with a cleaner, more targeted design.
+
+**Core model:**
+- Planning unit is a process group — all screens implementing the same phase-scoped process steps must be fully designed before build opens on any of them. Future-phase process steps don't block.
+- Parallel opportunity is detected when multiple process groups are at different phase stages within the same project — e.g., Deliverable A all slices Ready, Deliverable B still in design review.
+- `start` detects divergent deliverable states and surfaces a single passive line: *"[N] deliverables Ready, [N] still in design review — say 'parallel view' to see the breakdown."* No interruption. Easy to ignore. Full orchestration only if engaged.
+- When the solo explicitly invokes parallel pipeline mode, one field is written to `docs/continuity/handoff.md`: `Pipeline mode: parallel`. From that session forward, `start` reads this field and orients to the parallel state breakdown instead of linear phase summary.
+- Phase test remains end-to-end — no phase test until all deliverables in the phase are at In Test. Parallel pipelines change the path to that gate, not the gate itself.
+- Cursor: no impact. The soft prompt is a conversation line. The handoff.md field is plain text. Everything is Cursor-safe.
+
+**Scope:** `skills/start/SKILL.md` — divergence detection + soft prompt + pipeline mode routing. `docs/records-spec.md` — `Pipeline mode` field added to handoff.md spec. Design session required before any execution — scope and cascade to be confirmed then.
 
 ---
 
