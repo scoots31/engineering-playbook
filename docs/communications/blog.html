@@ -149,6 +149,45 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 3 (v2.1.0) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 3</div>
+      <div class="entry-title">Four Skills Now Run Smarter — In Parallel Where It Matters</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Design review — multi-agent orchestrator fires automatically in Claude Code</div>
+          <div class="change-desc">Previously you had to manually activate the multi-agent orchestrator. Now in Claude Code it fires automatically — the three specialist lenses (PM, Tech Lead, Data) run as separate agents and surface findings as a merged result. If you see four specialist findings in a design review pass instead of one sequential list, that's expected. Cursor users see no change — sequential review is the fallback.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Phase test — tester and regression checks now run in parallel</div>
+          <div class="change-desc">Stage 4 (tester) and Stage 5 (regression specialist) used to run back to back. In Claude Code they now run simultaneously — the tester walks every scenario while the regression check re-walks all In Test slices at the same time. The gate logic is unchanged; it just waits for both to finish before deciding. Cursor gets the same sequential behavior as before.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Design sprint — secondary screens fan out in parallel after hero approval</div>
+          <div class="change-desc">Once the hero screen is approved on structure and skin, all secondary screens now produce simultaneously in Claude Code rather than one at a time. The rule that gates them behind hero approval is unchanged — nothing fans out until both dimensions are warm. Result: the full screen set arrives faster, with a consistent design system applied across all of them. Cursor produces screens sequentially as before.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Code review — now runs as an isolated sub-agent with no build context</div>
+          <div class="change-desc">Code review used to run in the same context as the build pass — meaning the reviewer had access to all the reasoning and decisions made during implementation. Now it runs as a separate agent that sees only the code, the slice spec, and the quality contract. No build history, no implementation notes. This makes it meaningfully more likely to catch things the build pass rationalized away. If code review surfaces something the build pass didn't flag — that's the point.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 3 ── -->
   <div class="entry">
     <div class="entry-header">

@@ -1531,6 +1531,12 @@
               <td>If structure is still cold after 3 rounds, the story isn't clear enough. The design sprint cannot produce a good artifact from an unclear brief. More rounds won't fix it.</td>
               <td>After 3 cold rounds on structure: stop. Surface what's unclear. Go back to <code>discover</code> and deepen Zone 2 (the journey). Return to the sprint when the story is clearer.</td>
             </tr>
+            <tr>
+              <td style="color:var(--rose);font-weight:600;">Treating parallel secondary screens as a race condition</td>
+              <td>In Claude Code, secondary screens fan out simultaneously after hero approval — multiple screens appear at once instead of one at a time</td>
+              <td>This is intentional behavior, not a problem. The design system established on the hero applies to all screens in the same pass. Trying to intervene or sequence them manually defeats the parallelism and can produce inconsistent results if the design system hasn't fully propagated.</td>
+              <td>Let the fan-out complete. Review all screens together as a set. If something looks wrong, address it in the next warmer/colder round on the affected screen — not mid-production.</td>
+            </tr>
           </tbody>
         </table>
       </div>

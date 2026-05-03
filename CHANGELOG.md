@@ -8,6 +8,28 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.1.0 — 2026-05-03 — RECOMMENDED
+
+**Sub-agent wiring across four framework skills**
+
+Design review, phase test, design sprint, and code review now use sub-agent orchestration in Claude Code — parallel execution where appropriate, with a Cursor-safe sequential fallback in every case. Design review runs its multi-agent orchestrator automatically in Claude Code (no manual activation needed). Phase test's tester and regression checks now run in parallel. Design sprint secondary screens fan out in parallel after the hero screen is approved. Code review runs as an isolated sub-agent with no access to build context, producing a cleaner, unbiased result.
+
+### What changed
+- `skills/design-review/SKILL.md` — multi-agent orchestrator fires automatically in Claude Code; sequential fallback preserved for Cursor
+- `skills/phase-test/SKILL.md` — Stage 4 (tester) and Stage 5 (regression specialist) now run in parallel in Claude Code
+- `skills/design-sprint/SKILL.md` — secondary screens fan out in parallel after hero approval in Claude Code
+- `skills/solo-build/SKILL.md` — routes to code-review sub-agent with no build context passed
+- `skills/code-review-and-quality/SKILL.md` — runs as isolated sub-agent; no build context; clean bias-free review
+- `docs/communications/blog.html` — v2.1.0 entry
+- `docs/communications/skills-reference.html` — updated cards: design-review, phase-test, design-sprint, solo-build, code-review-and-quality
+- `docs/communications/guide-build.html` — watchfor item: code review now runs with isolated context
+- `docs/communications/guide-design-sprint.html` — watchfor item: secondary screens now fan out in parallel
+
+### Action required
+None for existing projects. All changes are framework-internal execution improvements. Cursor users see no behavior change — sequential fallback is always present.
+
+---
+
 ## v2.0.0 — 2026-05-03 — RECOMMENDED
 
 **Comms cascade sub-agent and Ren cross-device memory**

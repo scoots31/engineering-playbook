@@ -1902,6 +1902,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Treating code review findings as unexpected failures</h4>
+            <p>Code review now runs as an isolated sub-agent with no access to the build context — it sees only the code, the slice spec, and the quality contract. This is intentional: the reviewer has no knowledge of the reasoning or decisions made during implementation. If code review surfaces something the build pass didn't flag, that's not a malfunction. The isolation removes the bias that comes from knowing why the code was written a certain way. Expect it to be more thorough than a review that shared build context.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Invoking a comms cascade sub-agent without a complete brief</h4>
             <p>The comms cascade sub-agent requires a structured brief — version, date, summary, skills affected, watchfor items, and guide sections affected. This brief is the sub-agent's entire specification. A vague brief ("it's a big update, figure it out") produces vague docs: missing watchfor entries, shallow blog copy, skipped guide sections. The curator must provide every field before invoking. If a field genuinely doesn't apply, state that explicitly — "none" is a valid answer. Blank is not.</p>
           </div>
