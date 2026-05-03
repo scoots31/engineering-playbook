@@ -1430,3 +1430,23 @@ Anchor quality without human judgment is an identified hard ceiling: the simulat
 *Markdown metrics file.* Considered because it's consistent with other framework docs. Rejected because the companion reads it programmatically — parsing prose is fragile and a maintenance burden. JSON is the right format for a metrics output.
 
 *Cross-project metrics in the framework itself.* The framework doesn't have cross-project awareness by design — it operates on one project at a time. Aggregation belongs in the companion, which already sees multiple projects. Framework produces; companion consumes.
+
+---
+
+### 2026-05-03 — Comms cascade sub-agent; Ren memory infrastructure
+
+**What changed:** Two significant additions — a dedicated comms cascade sub-agent and Ren's cross-device memory infrastructure.
+
+*comms-cascade skill.* New sub-agent skill at `skills/comms-cascade/SKILL.md`. Handles all framework communications doc updates when a version ships. Invoked by Ren via the Agent tool with a structured brief (version, date, summary, skills affected, watchfor items, guides affected). Writes all relevant docs, commits, pushes to GitHub, and deploys to Cloudflare in one pass. Explicit inventory of all 23 comms files — what to always update, what to update conditionally, and what to never touch.
+
+*Ren memory infrastructure.* Private GitHub repo `scoots31/ren-memory` created — three files: `context.md` (current framework state, recent sessions, standing decisions), `pending.md` (open work across all projects), `curator-summary.md` (fast-read layer replacing full curator-context.md read every session). Stop hook pushes repo at session end. Ren skill updated: fetch repo at session start, read curator-summary instead of full curator-context by default.
+
+*Daily health check routine.* Claude Code Routine (`ren-health-check`) runs at 8am daily. Pulls ren-memory, reads state, calculates staleness scores (GREEN/YELLOW/RED), sends macOS notification with summary. All bash — no special tool approvals needed.
+
+*Cloudflare auto-deploy hook.* Stop hook fires when comms docs changed in last commit — auto-deploys to sbf-framework-docs.pages.dev.
+
+**Key decisions:**
+- Comms cascade is a sub-agent, not a phase skill — it's execution, not decision-making. The curator decides what shipped; the sub-agent handles the cascade.
+- Structured brief format prevents the sub-agent from having to interpret git diffs — fragile and unnecessary.
+- Ren memory repo is private, Mac-only (no phone/claude.ai support needed). Stop hook handles push; Ren skill handles fetch.
+- curator-summary.md is a maintained summary layer — reduces per-session token cost from 34k to ~3k for routine orientation.
