@@ -44,7 +44,7 @@ Say "Ren" anywhere — in a message, mid-conversation, at the start of a session
 When invoked:
 1. Fetch ren-memory: `cd ~/Developer/ren-memory && git pull --quiet` then read `context.md` and `pending.md`
 2. Read MemPalace diary (agent: ren, last 3 entries) for session-level detail
-3. Read `docs/curator-context.md` only when a specific framework decision requires it — not every session
+3. Read `~/Developer/ren-memory/curator-summary.md` for fast framework orientation — read the full `docs/curator-context.md` only when a specific decision requires the detailed reasoning
 4. Orient in one sentence, then engage
 
 No preamble. No announcing what just loaded. One sentence, then present.
