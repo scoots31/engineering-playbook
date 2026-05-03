@@ -493,8 +493,13 @@
     <a href="#nivya" class="nav-skill" style="color:rgba(217,70,239,0.8)"><span class="nav-dot" style="background:#D946EF"></span>nivya</a>
   </div>
   <div class="nav-group">
+    <span class="nav-group-label" style="color:rgba(251,146,60,0.7)">Framework Partner</span>
+    <a href="#ren" class="nav-skill" style="color:rgba(251,146,60,0.8)"><span class="nav-dot" style="background:#F97316"></span>ren</a>
+  </div>
+  <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(100,116,139,0.7)">Meta</span>
     <a href="#framework-curator" class="nav-skill" style="color:rgba(100,116,139,0.8)"><span class="nav-dot" style="background:#64748B"></span>framework-curator</a>
+    <a href="#comms-cascade" class="nav-skill" style="color:rgba(100,116,139,0.8)"><span class="nav-dot" style="background:#64748B"></span>comms-cascade</a>
   </div>
   <div class="nav-group">
     <span class="nav-group-label" style="color:rgba(20,184,166,0.7)">Workshop</span>
@@ -1916,6 +1921,56 @@
       </div>
     </div>
 
+    <!-- ══════════════ FRAMEWORK PARTNER ══════════════ -->
+    <div class="category-section" id="cat-partner" style="border-left:3px solid #F97316">
+      <div class="category-header">
+        <div class="category-icon">🤝</div>
+        <div>
+          <div class="category-title" style="color:#C2410C">Framework Partner</div>
+          <div class="category-desc">Scott's named framework partner. Full curator capability plus relationship context — discusses, challenges, designs, and builds alongside Scott. Not recall-only. Invoked by name or /ren.</div>
+        </div>
+        <div class="skill-count">1 skill</div>
+      </div>
+
+      <div class="skill-card" id="ren" style="border-color:#FED7AA">
+        <div class="skill-card-header">
+          <div class="skill-name" style="color:#C2410C">ren</div>
+          <div class="skill-badge" style="background:#FFEDD5;color:#C2410C">Framework partner</div>
+        </div>
+        <div class="skill-description">Scott's named framework partner. Full curator capability plus relationship context — knows the framework history, knows how Scott works, and holds both at once. Discusses, challenges, designs, and builds. Not a recall-only companion. Invoked by name anywhere in conversation, or with /ren.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#C2410C">Key Elements</div>
+            <ul>
+              <li><strong>Full curator capability:</strong> can propose, review, and execute framework changes — all curator rules apply</li>
+              <li><strong>Cross-device memory:</strong> fetches current framework state from ren-memory repo at every session start — context is accurate regardless of which machine the session opens on</li>
+              <li><strong>Daily health check:</strong> 8am macOS notification with GREEN/YELLOW/RED staleness scores for pending retro items, stale handoffs, unprocessed ideas, and other key indicators</li>
+              <li><strong>Comms cascade:</strong> when a version ships, Ren spawns the comms-cascade sub-agent with a structured brief — automated doc update, commit, push, and deploy in one pass</li>
+              <li><strong>Relationship context:</strong> knows Scott's preferences, working style, and the history of framework decisions — not starting from zero each session</li>
+              <li><strong>Challenges as a partner:</strong> pushes back on direction when warranted; holds position under preference pressure; updates on new information</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#C2410C">When It Runs</div>
+            <ul>
+              <li>Invoked by name ("Ren") anywhere in conversation</li>
+              <li>Invoked with /ren</li>
+              <li>Any session involving framework discussion, framework changes, or curator work</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label" style="color:#C2410C">Output</div>
+            <ul>
+              <li>Framework change proposals (same format as framework-curator)</li>
+              <li>Executed cascades after approval</li>
+              <li>Comms cascade invocation on version ship</li>
+              <li>Conversational discussion, challenge, and design collaboration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══════════════ WORKSHOP ══════════════ -->
     <div class="category-section" id="cat-workshop" style="border-left:3px solid #14B8A6">
       <div class="category-header">
@@ -2139,9 +2194,9 @@
         <div class="category-icon">🛠️</div>
         <div>
           <div class="category-title">Meta / Framework</div>
-          <div class="category-desc">Skills that operate on the framework itself, not on projects. Used to expand, modify, fix, or validate the playbook.</div>
+          <div class="category-desc">Skills that operate on the framework itself, not on projects. Used to expand, modify, fix, validate, or communicate about the playbook.</div>
         </div>
-        <div class="skill-count">1 skill</div>
+        <div class="skill-count">2 skills</div>
       </div>
 
       <div class="skill-card" id="framework-curator">
@@ -2184,6 +2239,45 @@
               <li>Framework integrity report — drift flagged or <em>Framework integrity: clean</em></li>
               <li>Shared ideas entry logged and pushed (contributor or owner sessions)</li>
               <li>Optional MemPalace entry recording the decision and reasoning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="comms-cascade" style="border-color:#E2E8F0">
+        <div class="skill-card-header">
+          <div class="skill-name">comms-cascade</div>
+          <div class="skill-badge">Sub-agent skill</div>
+        </div>
+        <div class="skill-description">Sub-agent that updates all framework communications docs when a version ships. Invoked by Ren with a structured brief. Reads every relevant doc, writes updates where applicable, commits, pushes to GitHub, and deploys to Cloudflare in one pass. Never invoked directly by the solo.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li><strong>Structured brief required:</strong> version, date, summary, skills affected, watchfor items, guide sections affected — the brief is the spec; a vague brief produces vague docs</li>
+              <li><strong>Always updates:</strong> CHANGELOG.md and blog.html on every version</li>
+              <li><strong>Conditionally updates:</strong> skills-reference (if skills changed), guide pages (if watchfor items provided), process-map (if process flow changed)</li>
+              <li><strong>Never touches:</strong> manually maintained decks, unlinked reference pages, scripts</li>
+              <li><strong>Read before write:</strong> reads every file before deciding whether to update; no filler entries added</li>
+              <li><strong>Full deploy pass:</strong> commit → push to GitHub → wrangler pages deploy to Cloudflare, in that order</li>
+              <li><strong>Reports back:</strong> which files were updated, commit hash, deploy confirmation</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li>Invoked by Ren (or framework-curator) when a framework version ships</li>
+              <li>Never invoked directly by the solo</li>
+              <li>Never invoked without a complete structured brief</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output</div>
+            <ul>
+              <li>Updated communications docs (CHANGELOG, blog, and any conditional files)</li>
+              <li>Commit: <code>v[X.Y.Z] — comms cascade</code></li>
+              <li>GitHub push confirmed</li>
+              <li>Cloudflare Pages deploy confirmed</li>
             </ul>
           </div>
         </div>

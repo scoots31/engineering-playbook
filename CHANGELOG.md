@@ -8,6 +8,24 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.0.0 — 2026-05-03 — RECOMMENDED
+
+**Comms cascade sub-agent and Ren cross-device memory**
+
+Two infrastructure additions that improve how the framework operates between sessions. The comms cascade is now automated: when a framework version ships, Ren spawns a dedicated sub-agent that reads every communications doc, updates what's relevant, commits, pushes to GitHub, and deploys to Cloudflare in one pass. No manual doc update steps. The second addition is Ren's cross-device memory layer: a private GitHub repo stores current framework state, pending work, and a curator-context summary. Ren fetches it at every session start so context is immediate and accurate, regardless of which machine the session opens on. A daily health check routine at 8am sends a macOS notification with GREEN/YELLOW/RED staleness scores for key framework indicators.
+
+### What changed
+- `skills/ren/SKILL.md` — cross-device memory infrastructure; daily health check routine; session-start fetch from ren-memory repo
+- `skills/comms-cascade/SKILL.md` — new sub-agent skill; invoked by Ren at version ship time; structured brief required; executes full doc update, commit, push, and Cloudflare deploy
+- `docs/communications/blog.html` — v2.0.0 entry
+- `docs/communications/skills-reference.html` — ren and comms-cascade cards added
+- `docs/communications/guide-build.html` — watchfor item: structured brief required when invoking comms cascade
+
+### Action required
+None for existing projects. Both capabilities are framework-level infrastructure — they operate on the engineering-playbook repo, not on project repos.
+
+---
+
 ## v1.9.0 — 2026-05-02 — RECOMMENDED
 
 **Solo Companion — Search and Capture**

@@ -149,6 +149,34 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 3 ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 3</div>
+      <div class="entry-title">Doc Updates Are Automatic Now. And Ren Remembers Across Machines.</div>
+    </div>
+    <div class="entry-divider"></div>
+    <p>Two things that required manual attention after every framework version ship are now handled automatically.</p>
+    <p><strong>Comms cascade sub-agent.</strong> When a new version ships, Ren now spawns a dedicated sub-agent whose only job is updating the documentation. It reads every communications doc, identifies what's relevant to the version that just landed, writes the updates, commits, pushes to GitHub, and deploys to Cloudflare — in one pass, without human handholding. The curator provides a structured brief (version, summary, skills affected, watchfor items, guide sections affected) and the sub-agent handles everything from there. The brief is a real requirement: a vague brief produces vague docs, so the curator must supply specifics before invoking. No more manual "now go update the docs" pass after a build.</p>
+    <p><strong>Ren cross-device memory.</strong> Ren now has a private GitHub repo — ren-memory — that stores current framework state, pending work, and a summary layer of curator context. Every session Ren opens starts with a fetch from that repo, so the context is accurate and complete regardless of which machine the session starts on. A daily health check at 8am sends a macOS notification with GREEN/YELLOW/RED scores for key staleness indicators — pending retro items, stale handoffs, unprocessed ideas. The check runs quietly and surfaces only when something needs attention.</p>
+    <div class="change-list" style="margin-top:20px;">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Comms cascade sub-agent — automated doc updates on every version ship</div>
+          <div class="change-desc">Invoked by Ren with a structured brief. Reads all comms docs, writes relevant updates, commits, pushes, and deploys to Cloudflare. Structured brief required — version, summary, skills affected, watchfor items, guide sections affected.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Ren cross-device memory — framework state persists across machines</div>
+          <div class="change-desc">Private ren-memory repo stores framework state and pending work. Fetched at every session start. Daily 8am health check sends a macOS notification with GREEN/YELLOW/RED staleness scores.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 2 (Solo Companion) ── -->
   <div class="entry">
     <div class="entry-header">
