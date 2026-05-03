@@ -217,9 +217,19 @@ Once the hero screen is approved (structure + skin), extend to all remaining scr
 
 Each screen inherits the design system established in the hero screen — the same skin, component patterns, and typography. The skin does not change screen to screen. Only content and layout patterns vary.
 
-**When Agent tool is available (Claude Code):** Fan out all secondary screens in parallel. Spawn one sub-agent per screen, passing each: the approved hero screen HTML (as the design system reference), the screen's description from the discovery brief, and the sprint context. Each agent produces its screen independently. Collect all results, then present them together for a single warmer/colder round covering all secondary screens at once.
+**When Agent tool is available (Claude Code):** Fan out all secondary screens in parallel. Spawn one sub-agent per screen, passing each: the approved hero screen HTML (as the design system reference), the screen's description from the discovery brief, and the sprint context. Each agent produces its screen independently.
 
-**When running in Cursor (no Agent tool):** Produce screens sequentially. For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens move faster than the hero because the design language is already settled.
+Once all agents return, run a **consistency pass** before presenting anything. Review the full screen set — hero plus all secondary screens — as a whole. Check for:
+- Component drift: any screen that uses a component pattern differently than the hero or another screen
+- Spacing inconsistencies: padding, gap, or layout values that diverge without a content-driven reason
+- Typography inconsistencies: font size, weight, or color that varies without meaning
+- Interaction pattern divergence: a button that behaves one way on Screen 2 and a different way on Screen 4
+
+Normalize any inconsistencies before presenting. The solo sees a coherent set — not screens that are individually correct but subtly misaligned. State what you normalized and why in a brief note before the warmer/colder round.
+
+Then present all screens together for a single warmer/colder round covering all secondary screens at once.
+
+**When running in Cursor (no Agent tool):** Produce screens sequentially. For each screen: produce it, state what decisions were made, ask for warmer/colder. Move at pace — secondary screens move faster than the hero because the design language is already settled. Consistency is maintained naturally because each screen references the previous one before building.
 
 Save each screen to `docs/design/sprint-[screen-id].html`.
 
