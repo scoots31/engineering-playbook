@@ -1145,6 +1145,7 @@
               <li>Groups slices into <strong>Deliverables</strong> — each deliverable carries a technical spec (AI-facing), solo description (solo-facing), and acceptance criteria (shared contract between both)</li>
               <li>Deliverable type assigned: <strong>Screen</strong> (reviewed visually) or <strong>Logic</strong> (reviewed against evidence)</li>
               <li><strong>Integration deliverables</strong> — every Screen deliverable with external data gets a companion Logic deliverable for data integration. Always sequences after its Screen companion is Accepted. Data questions log must be resolved before integration slices can be scoped.</li>
+              <li><strong>Architecture type classification</strong> — each slice is classified as <strong>Leaf node</strong> (self-contained) or <strong>Core architecture</strong> (touches data models, shared logic, or infrastructure) during the slice design step. Unclassified slices cannot be approved — the quality scan blocks the plan until every slice has a type.</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1287,13 +1288,14 @@
           <div class="skill-name">solo-build</div>
           <div class="skill-badge">Phase skill — per slice</div>
         </div>
-        <div class="skill-description">Slice-by-slice build execution. Creates a feature branch at start, requires four anchors before writing code, follows journey order (first screen before second), surfaces mid-build discoveries immediately rather than silently resolving them, and commits on code-complete — automatically invoking the QA chain. Code review runs as an isolated sub-agent with no access to the build context, producing an unbiased review independent of implementation reasoning.</div>
+        <div class="skill-description">Slice-by-slice build execution. Creates a feature branch at start, requires four anchors before writing code, follows journey order (first screen before second), surfaces mid-build discoveries immediately rather than silently resolving them, and commits on code-complete — automatically invoking the QA chain. Core architecture slices trigger an automatic principal engineer review before the branch opens. Code review runs as an isolated sub-agent with no access to the build context, producing an unbiased review independent of implementation reasoning.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
               <li>Creates feature branch: <code>feature/SL-[ID]-[slug]</code></li>
               <li><strong>Four anchors required</strong> before writing code: design, data, done, process</li>
+              <li><strong>Architecture type gate</strong> — before branch opens, checks the slice's Architecture type. If Core architecture: principal engineer review fires automatically. No exceptions. Outcome recorded in the Notes field before any code is written.</li>
               <li>Journey order — first screen before second, dependencies block</li>
               <li>Mid-build discoveries surfaced immediately — never silently resolved</li>
               <li><strong>Self-verification checklist run before code-complete</strong> — builder confirmation populated with ✓/✗ results before any handoff</li>
@@ -1400,7 +1402,7 @@
           <div class="skill-name">principal-engineer</div>
           <div class="skill-badge">On-demand</div>
         </div>
-        <div class="skill-description">Architecture review lens for consequential decisions. Not always-on — invoked at specific moments when the architectural stakes are high. Reads tech-context and the specific proposal, gives one recommendation (not a menu), names risks and debt explicitly, and holds its position under pushback unless new information changes the analysis.</div>
+        <div class="skill-description">Architecture review lens for consequential decisions. Auto-triggered before any core architecture slice enters build — no manual invocation needed for those. Also invoked on demand at specific moments when the architectural stakes are high. Reads tech-context and the specific proposal, gives one recommendation (not a menu), names risks and debt explicitly, and holds its position under pushback unless new information changes the analysis.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1416,6 +1418,7 @@
           <div class="skill-section">
             <div class="skill-section-label">When It Runs</div>
             <ul>
+              <li><strong>Automatically</strong> — when a Core architecture slice moves to In Build (fires before branch opens)</li>
               <li>After tech-context, when the architecture needs a hard look before design</li>
               <li>Before planning, on consequential sequencing decisions</li>
               <li>Mid-build, when structural discovery surfaces</li>

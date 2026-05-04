@@ -1910,6 +1910,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Starting build on a core architecture slice without PE review</h4>
+            <p>Any slice classified as Core architecture triggers a principal engineer review automatically before the branch opens — this is not optional and cannot be skipped. If the review didn't happen, the branch should not exist yet. The PE assesses whether the approach is right before a line of code is written. Outcome goes in the Notes field. A core architecture slice that enters build without a recorded PE outcome has bypassed a gate that exists because these changes ripple — catching a structural problem at review is cheap; catching it after three slices are built on top of it is not.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Invoking a comms cascade sub-agent without a complete brief</h4>
             <p>The comms cascade sub-agent requires a structured brief — version, date, summary, skills affected, watchfor items, and guide sections affected. This brief is the sub-agent's entire specification. A vague brief ("it's a big update, figure it out") produces vague docs: missing watchfor entries, shallow blog copy, skipped guide sections. The curator must provide every field before invoking. If a field genuinely doesn't apply, state that explicitly — "none" is a valid answer. Blank is not.</p>
           </div>

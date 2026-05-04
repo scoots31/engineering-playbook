@@ -149,6 +149,38 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 4 (v2.2.0) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 4</div>
+      <div class="entry-title">Every Slice Now Has an Architecture Type — and Core Ones Pause for Review</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Architecture type field — Leaf node or Core architecture, set at planning time</div>
+          <div class="change-desc">Every slice now carries an Architecture type: either <strong>Leaf node</strong> (self-contained — nothing else depends on it, tech debt doesn't spread) or <strong>Core architecture</strong> (touches the trunk — data models, shared logic, infrastructure, or anything other slices depend on). The distinction was always real; it's now explicit and enforced. Classification happens at planning time, when the cost of getting it wrong is lowest. An unclassified slice cannot reach Ready — it's a gate, not a suggestion.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Automatic PE review before any core architecture slice enters build</div>
+          <div class="change-desc">When a slice marked Core architecture moves to In Build, a principal engineer review fires automatically before the branch opens — no manual trigger, no option to skip. The reviewer reads the slice, assesses whether the approach is right, and the outcome lands in the slice's Notes field before any code is written. This isn't friction for its own sake: core architecture changes ripple. Finding a structural problem at review is cheap. Finding it three slices later is not.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Solo Companion — core architecture visibility across your project</div>
+          <div class="change-desc">The companion now surfaces architecture type in its project views. Slice rows carry a CORE badge with orange highlight when the type is Core architecture. A callout appears at the top of the project view whenever one or more core architecture slices are currently In Build. A filter lets you pull a core architecture only view across the full project — useful when you want to see everything touching the trunk at once.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 3 (v2.1.0) ── -->
   <div class="entry">
     <div class="entry-header">

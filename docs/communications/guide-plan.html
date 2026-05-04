@@ -1364,6 +1364,12 @@
             <td>Feature slices start building on unproven infrastructure. When infrastructure work surfaces problems, feature work built on top has to be retrofitted or rewritten.</td>
             <td><strong>Infrastructure slices always sequence before feature slices</strong>, regardless of process order. This is a hard rule in <code>prd-to-plan</code> — read <code>docs/tech-context.md</code> infrastructure slices first and place them at the front of the queue.</td>
           </tr>
+          <tr>
+            <td>Slices approved without an Architecture type</td>
+            <td>The field is new. It's easy to treat it as optional — especially on slices that feel obviously self-contained.</td>
+            <td>An unclassified slice cannot reach Ready. If the plan is approved and slices land in the backlog without a type, build will stall the first time one of them tries to open a branch.</td>
+            <td><strong>Architecture type is required for every slice before the plan is approved.</strong> The quality scan in planning blocks approval if any slice is missing it. Two values only: Leaf node (nothing else depends on it) or Core architecture (touches data models, shared logic, or infrastructure). If you're unsure, err toward Core architecture — the PE review is low-cost and catches structural problems before they compound.</td>
+          </tr>
         </tbody>
       </table>
     </div>
