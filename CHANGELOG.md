@@ -8,6 +8,27 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.2.0 — 2026-05-04 — RECOMMENDED
+
+**Leaf node / core architecture classification — architecture type gate**
+
+Every slice record now carries an `Architecture type` field. Set at planning time. Two values: **Leaf node** (self-contained feature, nothing else depends on it) or **Core architecture** (touches the trunk — data models, shared logic, infrastructure, or anything other slices depend on). Inspired by Eric Rieser's (Anthropic) framing: forget the code exists, not the product. Leaf nodes can tolerate tech debt. Core architecture cannot.
+
+The gate: when a core architecture slice enters In Build, principal engineer review fires automatically before the branch opens. No exceptions. The PE assesses whether the approach is right before any code is written. Outcome is noted in the slice record's Notes field before proceeding.
+
+**Solo Companion Phase 2** — the Companion now surfaces architecture type in its project views. Core architecture slices get a distinct visual indicator at the list level. A standing callout appears when one or more core architecture slices are In Build. Filter capability added: solo can request a core architecture only view across the project.
+
+### What changed
+- `docs/records-spec.md` — `Architecture type` field added to slice record format and field definitions; Slice Ready gate updated (unclassified = not Ready); Who Captures What updated (prd-to-plan owns this field)
+- `skills/prd-to-plan/SKILL.md` — architecture type classification added to slice design step; unclassified slices are not approvable in quality scan
+- `skills/solo-build/SKILL.md` — architecture type gate added before branch open; PE review required for core architecture slices; anti-pattern added
+- Solo Companion cloud viewer — architecture type rendering, risk callout, filter capability
+
+### Action required
+Existing slice records do not need to be backfilled unless they are currently In Review or Ready. Before any in-progress slice enters In Build, classify it. All new slices created from this version forward require Architecture type to reach Ready.
+
+---
+
 ## v2.1.0 — 2026-05-03 — RECOMMENDED
 
 **Sub-agent wiring across four framework skills**

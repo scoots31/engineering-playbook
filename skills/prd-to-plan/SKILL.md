@@ -72,11 +72,28 @@ Each slice cuts through ALL integration layers end-to-end, delivering a narrow b
 - Later slices build on confirmed foundations, not on hope
 - Horizontal slices (e.g. "build all the DB models first") are not allowed — they defer integration risk
 
-**Every slice gets four anchors in the plan:**
+**Every slice gets four anchors in the plan plus an architecture classification:**
 - **Design anchor** — screen + element from the design sprint
 - **Data anchor** — mock data fields from data/mock/
 - **Done anchor** — 2–3 verifiable criteria
 - **Process anchor** — which step in the to-be map this slice implements
+- **Architecture type** — Leaf node or Core architecture (see below)
+
+**Architecture type classification — required for every slice:**
+
+Classify each slice before sequencing. Two values:
+
+- **Leaf node** — self-contained feature; nothing else in the system depends on it. If tech debt accumulates here it is contained. Normal build flow.
+- **Core architecture** — touches the data model, shared business logic, infrastructure, or anything other slices are built on. Changes here ripple. Principal engineer review fires automatically before this slice enters In Build.
+
+**When to classify as Core architecture:**
+- The slice defines or modifies a data model or schema
+- The slice implements shared logic that other slices call
+- The slice sets up infrastructure (auth, routing, API layer, database connections)
+- Other slice records list this slice in their Depends on field
+- You are uncertain — default to Core architecture
+
+Every slice must be classified before the plan is approvable. An unclassified slice is not Ready.
 
 The process anchor is what connects the backlog to the agreed process. Solo-build reads it before starting a slice to confirm the implementation serves the right step.
 
@@ -242,9 +259,10 @@ List any decisions that must be made before implementation can start:
 
 Before presenting the plan, run a slice quality scan across every Ready slice:
 
-For each slice, check two things:
+For each slice, check three things:
 1. **Done criteria** — are there at least two concrete, verifiable criteria? A criterion passes if you can observe it against a running app in under 30 seconds. Descriptions of behavior ("handles errors gracefully") do not count. Observable outcomes only ("error state renders with [specific message] when API returns 500").
 2. **Quality contract** — are there at least two specific, checkable lines? Vague lines ("performant", "accessible") do not count. Specific behavior only ("renders within 200ms on a 10-item list", "keyboard navigable with tab order matching visual order").
+3. **Architecture type** — is every slice classified as Leaf node or Core architecture? An unclassified slice is not approvable. Resolve before presenting the plan.
 
 If a slice fails either check, it is a rework risk. Resolve it before the plan is approved — either sharpen the criteria in the backlog record or split the slice into smaller units with tighter scope. A plan with vague slice records is not approvable.
 

@@ -104,6 +104,7 @@ SL-[ID] · [Name]
 Status: [In Review | Blocked | Deferred | Ready | In Build | In QA | In Test | Done]
 Phase: [N — assigned during prd-to-plan, blank until then]
 Deliverable: [D-ID — assigned during prd-to-plan, blank until then]
+Architecture type: [Leaf node | Core architecture]
 
 Plain language description:
 [What the solo will see or have when this slice is done. Fresh — not copied
@@ -181,6 +182,13 @@ There is no fourth option. An interactive element rendered as a working-looking 
 
 **Test file** — Path to the pytest file generated for this slice at code-complete. Written by the builder alongside the commit when `CI/CD: GitHub Actions` is configured in tech-context. Format: `tests/test_SL-[ID].py`. `None` when CI/CD is not configured for the project. Never left blank when CI/CD is active.
 
+**Architecture type** — Classification of where this slice sits in the codebase. Set at planning time by prd-to-plan. Two values:
+
+- **Leaf node** — self-contained feature; nothing else depends on it. Tech debt here is contained. Normal build flow applies.
+- **Core architecture** — touches the trunk: data models, shared business logic, infrastructure, or anything other slices depend on. Changes here ripple. Principal engineer review fires automatically before this slice enters In Build. No exceptions.
+
+If a slice cannot be clearly classified, treat it as Core architecture until proven otherwise.
+
 **Notes** — The why and the non-obvious. Things that would surprise a builder who had not been in the room. Not a summary of what the slice does.
 
 ### Slice Ready gate
@@ -195,6 +203,7 @@ A slice reaches Ready only when ALL of these are true:
 - Dependencies identified — resolved or explicitly not blocking
 - No open spike on it
 - Data anchor filled OR explicitly marked Pending data-scaffold
+- **Architecture type set** — Leaf node or Core architecture. Unclassified = not Ready.
 - Solo confirms it is clear enough to hand to a builder
 
 ---
@@ -403,9 +412,9 @@ Confirmed by: Solo
 
 | Skill | Owns |
 |---|---|
-| `design-review` | Births slice records. Captures: ID, name, status, plain language description, technical description, design anchor, process anchor, done criteria, self-verification checklist, dependencies, references, notes. Marks data anchor as Pending if data-scaffold has not run. Leaves phase and deliverable blank — marked pending. |
+| `design-review` | Births slice records. Captures: ID, name, status, plain language description, technical description, design anchor, process anchor, done criteria, self-verification checklist, dependencies, references, notes. Marks data anchor as Pending if data-scaffold has not run. Leaves phase, deliverable, and architecture type blank — marked pending. |
 | `data-scaffold` | Fills data anchor on every slice it creates mock data for. Goes back into the slice record and completes that field. |
-| `prd-to-plan` | Creates all deliverable and phase records — full records, all fields. Goes back into every slice record and adds phase and deliverable assignment. Nothing leaves prd-to-plan with blank phase or deliverable fields on Ready slices. |
+| `prd-to-plan` | Creates all deliverable and phase records — full records, all fields. Goes back into every slice record and adds phase, deliverable assignment, and **architecture type** classification. Nothing leaves prd-to-plan with blank phase, deliverable, or architecture type fields on Ready slices. |
 | `solo-build` | Updates status throughout the lifecycle. Populates builder confirmation at slice, deliverable, and phase presentation time. Writes review_url to the slice record at code-complete. Executes re-phasing protocol when needed. |
 | `solo-qa` | Drives slice from In QA toward In Test. May add notes to slice record. |
 | `phase-test` | Drives phase from In Test toward Completed. |

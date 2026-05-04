@@ -1450,3 +1450,36 @@ Anchor quality without human judgment is an identified hard ceiling: the simulat
 - Structured brief format prevents the sub-agent from having to interpret git diffs — fragile and unnecessary.
 - Ren memory repo is private, Mac-only (no phone/claude.ai support needed). Stop hook handles push; Ren skill handles fetch.
 - curator-summary.md is a maintained summary layer — reduces per-session token cost from 34k to ~3k for routine orientation.
+
+
+---
+
+### 2026-05-04 — v2.2.0: Leaf node / core architecture classification
+
+**What changed:** New required field on every slice record — `Architecture type: [Leaf node | Core architecture]`. Set at planning time by prd-to-plan. Enforced as a gate in both prd-to-plan (unclassified = not approvable) and solo-build (core architecture slices require principal engineer review before branch opens). Solo Companion updated to surface architecture type visually — distinct indicator at list level, standing risk callout when core architecture slices are In Build, filter capability.
+
+*records-spec.* `Architecture type` field added to the slice record format between `Deliverable` and `Plain language description`. Field definition added: leaf node = nothing else depends on it, tech debt is contained; core architecture = touches data models, shared logic, infrastructure, or anything other slices depend on. Unclassified = not Ready. prd-to-plan owns the field. design-review leaves it blank — pending prd-to-plan.
+
+*prd-to-plan.* Classification step added to slice design. Architecture type is the fifth required element alongside the four anchors. Clear classification criteria documented: if the slice defines a data model, implements shared logic, sets up infrastructure, or is in another slice's Depends on field — core architecture. When uncertain — core architecture. Unclassified slices fail the quality scan and are not approvable.
+
+*solo-build.* Architecture type gate added before branch open. Leaf node → proceed. Core architecture → invoke principal-engineer with slice ID, technical description, and four anchors. Wait for review. Note outcome in slice record Notes field. Then open the branch. Anti-pattern added: starting a core architecture slice without PE review.
+
+*Solo Companion.* Phase 2 update: architecture type rendered at list level with distinct visual indicator. Standing risk callout when one or more core architecture slices are In Build. Filter capability: solo can request core architecture only view across the project.
+
+**Why:** Inspired by Eric Rieser (Anthropic researcher) — "forget the code exists, not the product." The framework had no formal distinction between changes that ripple and changes that don't. Leaf nodes can tolerate vibe-coded tech debt. Core architecture cannot — a mistake there affects everything built on it. The classification makes the risk posture visible before any code is written, and the PE gate ensures the trunk is protected without burdening every slice with architectural review.
+
+**Key design decisions:**
+
+*Classification at planning, not design review.* prd-to-plan owns this because architecture type depends on understanding how slices relate to each other — which slice is in another's Depends on field, which slice sets up infrastructure others consume. design-review produces slices in isolation; prd-to-plan sees the full picture.
+
+*Default to core architecture when uncertain.* Conservative default. A misclassified leaf node that is actually core architecture skips the PE gate — that's the failure mode worth avoiding. A misclassified core architecture slice that is actually a leaf node gets an unnecessary PE review — cost is low, easily corrected.
+
+*PE review, not a block.* The gate fires principal-engineer review, not a hard stop waiting for the solo to intervene. The PE makes a call. If it approves, build proceeds immediately with the approval noted. If it raises a concern, it surfaces to the solo. The mechanism is fast enough to not break build momentum on most slices.
+
+*Solo Companion as the visibility layer.* Architecture type in the Companion is the product-level expression of this change. A PM or solo reviewing a build in progress can see at a glance how many core architecture slices are in flight without reading a line of code. This is "forget the code, not the product" made visible — exactly what the Anthropic framing prescribes.
+
+**What was rejected:**
+
+*Classification at design-review time.* Tempting because design-review births slice records. Rejected: at design-review, slices are defined in isolation — the reviewer doesn't yet know which slice will be in another's Depends on field, which will be infrastructure for others. That picture only exists after prd-to-plan sequences the full build.
+
+*Three-tier classification (leaf / branch / trunk).* More precise but introduces ambiguity at the boundary. The binary is sufficient: does this slice touch something others depend on? Yes = core architecture. No = leaf node. Three tiers would require judgment calls that a two-value field avoids.

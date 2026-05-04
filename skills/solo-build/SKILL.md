@@ -195,6 +195,15 @@ A paraphrase or general description does not count. If you cannot produce a verb
 - **File exists, no entry for this slice** — add `"SL-[ID]": { "rework_cycles": 0, "code_review_flags": 0, "refinement_cycles": 0 }` to `slices`.
 - **File exists, entry already present** — this is a rework cycle. Increment `rework_cycles` by 1.
 
+**Architecture type gate** — before opening the branch, check the slice's Architecture type field.
+
+- **Leaf node** → proceed normally.
+- **Core architecture** → principal engineer review fires first. Do not open the branch until the review is complete.
+
+Invoke principal-engineer with the slice ID, the technical description, and the four anchors. The PE review assesses whether the approach is right before any code is written. If the PE raises a concern, surface it to the solo before proceeding. If the PE approves, note the approval in the slice record's Notes field and open the branch.
+
+This is not optional and is not a conversation. A core architecture slice that enters In Build without a PE review has bypassed the gate that protects the trunk.
+
 **Slice readiness check** — before opening the branch, confirm two things:
 1. Can you state what done looks like for this slice as a single concrete observation against the running app? If the done criteria require interpretation to verify, they are too vague — sharpen them now.
 2. Is the scope bounded to one user interaction or system behavior? If the slice spans multiple distinct interactions or responsibilities, it should have been split at plan time — flag it to the solo before proceeding.
@@ -564,6 +573,7 @@ Get the project name from `docs/continuity/handoff.md` or the project directory 
 | Anti-Pattern | Problem | Instead |
 |---|---|---|
 | Starting or partially working on a non-Ready slice | Build contradicts the open design decisions — producing work that needs to be redone | Hard stop on non-Ready status. Name the status, name what's needed to reach Ready, offer nothing else |
+| Starting a Core architecture slice without PE review | Core architecture changes ripple — a mistake here affects everything built on it | Architecture type gate is non-negotiable. Invoke principal-engineer, wait for the review, note the outcome in the slice record. Then open the branch. |
 | Offering "we can knock out X while we build Y" | Rationalizes starting work that isn't anchored — exactly the gap the status gate exists to prevent | One path: promote the slice to Ready first, then build |
 | Leaving build after hitting zero Ready slices without diagnosing blockers | The solo doesn't know why they're stuck or where to go next | Surface Build Active, no Ready slices — diagnose each In Review slice, name the right next skill, hand off |
 | Skipping the self-verification checklist before presenting to the solo | The solo reviews work that the builder hasn't verified — "looks good" reviews happen | Run every self-verification item, populate builder confirmation, present confirmation alongside the work |
