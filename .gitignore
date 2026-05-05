@@ -1,5 +1,8 @@
 packaging/dist/
 
+# Design library data — regenerate locally via design-library/seed.py
+design-library/styles.json
+
 # Local venv for docs/communications PPTX generation (see generate_communications_decks.py)
 docs/communications/.pptx-build-venv/
 
