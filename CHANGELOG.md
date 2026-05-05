@@ -8,6 +8,21 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.5.0 — 2026-05-05 — RECOMMENDED
+
+**Solo Companion — Board View**
+
+The companion now has a Board tab. All active deliverables and slices appear in status columns — Ready, In Build, In Review, In Test. Done work is hidden. Default view spans all active projects; filter to a single project when needed. Toggle between deliverable cards (one card per deliverable, column by most-advanced slice status) and slice cards (every active slice individually). Card clicks open the existing detail overlays. Ships in both the local companion and the cloud viewer.
+
+### What changed
+- Solo Companion local app — `/board` route: board data endpoint, filter logic, deliverable/slice toggle, column assignment
+- Solo Companion cloud viewer — Board tab: `renderBoard()` function, Board tab navigation, parity with local app
+
+### Action required
+None for existing projects. Board tab is available immediately on next sync.
+
+---
+
 ## v2.4.0 — 2026-05-05 — RECOMMENDED
 
 **Design Identity — library-grounded design direction from the first screen**
