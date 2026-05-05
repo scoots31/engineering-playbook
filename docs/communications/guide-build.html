@@ -1923,6 +1923,14 @@
           </div>
         </div>
 
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
+            <h4>Check 9 running baseline-only on a project that handles personal, financial, or multi-tenant data</h4>
+            <p>Check 9 reads <code>docs/tech-context.md</code> before it runs. If the Security Classification section is missing, it defaults to Standard — baseline checks only (9a–9e). That means class-specific checks for Personal, Financial, Authentication, Multi-tenant, Confidential, and Regulated never fire, even if the project clearly handles that kind of data. If your project stores PII, processes transactions, manages user credentials, or serves multiple tenants from shared infrastructure, add the Security Classification section to <code>docs/tech-context.md</code> now. The section is short — one to three lines stating the class or classes that apply. Once it's there, code review picks up the right checks automatically on the next slice.</p>
+          </div>
+        </div>
+
       </div>
     </section>
 

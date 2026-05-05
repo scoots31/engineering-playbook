@@ -149,6 +149,31 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 5 (v2.3.0) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 5</div>
+      <div class="entry-title">Every Project Now Gets a Security Classification — and It Follows Every Slice</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Security classification at tech-context — six classes beyond the baseline</div>
+          <div class="change-desc">Every project now receives a security classification during the tech-context phase — before design, before any code. The Standard baseline applies to all projects by default. Six additional classes layer on top: <strong>Personal</strong> (PII), <strong>Financial</strong> (transaction records), <strong>Authentication</strong> (managing others' credentials), <strong>Multi-tenant</strong> (shared infrastructure with isolated data), <strong>Confidential</strong> (proprietary business data), and <strong>Regulated</strong> (HIPAA, PCI-DSS, GDPR, COPPA). Multiple classes can apply to a single project. Regulated projects receive an acknowledgment gate at tech-context and a hard stop at deploy — production requires external compliance review documented in the handoff before any deployment proceeds.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Classification follows every slice — security checks expand from 5 to 20</div>
+          <div class="change-desc">The classification isn't just a label on the project — it travels through the entire build process. At design sprint, the process-mapper checks for security process gaps: missing deletion paths, tenant-scoping issues, and data collection without disclosure. At build, a pre-flight check confirms the quality contract addresses class-specific requirements before any branch opens — if it doesn't, the slice goes back to design review. At code review, Check 9 now reads <code>docs/tech-context.md</code> and expands from 5 baseline checks (9a–9e) to up to 20 total (9a–9t) depending on the project's classification. The baseline always runs. Class-specific checks layer on top only for projects that carry those classes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 4 (v2.2.0) ── -->
   <div class="entry">
     <div class="entry-header">

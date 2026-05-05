@@ -1537,6 +1537,12 @@
               <td>This is intentional behavior, not a problem. The design system established on the hero applies to all screens in the same pass. Trying to intervene or sequence them manually defeats the parallelism and can produce inconsistent results if the design system hasn't fully propagated.</td>
               <td>Let the fan-out complete. Review all screens together as a set. If something looks wrong, address it in the next warmer/colder round on the affected screen — not mid-production.</td>
             </tr>
+            <tr>
+              <td style="color:var(--rose);font-weight:600;">Missing security process gaps in the process-mapper cross-reference</td>
+              <td>The process-mapper reads the to-be map and annotates screens — but security gaps require reading the Security Classification from tech-context.md first. If that step is skipped or tech-context.md has no Security Classification section, the check runs as Standard and class-specific gaps go undetected.</td>
+              <td>Security process gaps are process design failures, not code failures. A Personal-class project missing a data deletion path won't fail code review — it will ship without one. The design sprint is the only moment where these gaps can be caught before screens are approved and slices are written.</td>
+              <td>In Step 1, confirm the Security Classification section exists in docs/tech-context.md before the process-mapper cross-reference runs. If it's missing and the project handles personal data, financial records, user credentials, or multi-tenant data — stop and add it first. The class takes two minutes to declare and changes what the mapper looks for.</td>
+            </tr>
           </tbody>
         </table>
       </div>
