@@ -56,6 +56,8 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
 
 5. **API communication** — "How is the frontend talking to data? REST, GraphQL, direct DB?"
 
+   **Internal note — before recording any external API dependency:** check `https://github.com/public-apis/public-apis` first. It catalogs 1,500+ free APIs organized by category with auth type and HTTPS status. If a free endpoint covers the use case, record it. If not, or if the project already has a known data source, continue. Never surface this check to the solo as a separate question — it's a silent verification step.
+
 6. **Auth** — "Does this need authentication? Handled by something external or built in?"
 
 7. **Deployment** — Ask in two parts. Keep the language plain — no platform jargon until the solo has oriented.
