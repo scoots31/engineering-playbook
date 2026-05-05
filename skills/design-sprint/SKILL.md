@@ -112,17 +112,72 @@ Wait for confirmation. This is a required gate — do not proceed to Step 2 with
 
 If the brief has no on-ramp recorded, stop. Return to `discover` and answer the on-ramp question before continuing.
 
-### Step 2: Ask the Aesthetic Question (On-ramp 1 only — skip for 2 and 3)
+### Step 2: Design Identity (On-ramp 1 only — skip for 2 and 3)
 
-Before writing any HTML, ask one question:
+Before writing any HTML, establish the design identity for this project. This step produces `docs/design/design-identity.md` — the design anchor that every screen in the sprint references and design review checks against.
 
-> "Is there a product, app, or aesthetic direction you want this to feel like — or should I make a call and you react to it?"
+**2a — Search the design library.**
 
-If they name something (ESPN, Linear, Notion, a screenshot): note it. That's your aesthetic constraint.
-If they say "make a call": produce a reasonable starting point and state what direction you chose. They'll correct it in the warmer/colder loop.
-If they say "Figma exists": go to on-ramp 2.
+Extract 3–5 keywords from the discovery brief that describe the product type, audience, and mood (e.g. "dark developer tool minimal", "fintech dashboard light editorial"). Run:
 
-Do not skip this question. Skin direction saved two full rounds in testing.
+```
+~/Apps/.venv/bin/python3 ~/Developer/engineering-playbook/design-library/search.py "[keywords]" --top 5
+```
+
+Present the top 3 results to the solo. For each, show: site name, north star, color scheme, primary font. One sentence max per result — the north star does the work.
+
+> "Here are 3 reference directions from our design library that match this product's space:
+>
+> **[1] [Site name] ([scheme])** — [north star]
+> **[2] [Site name] ([scheme])** — [north star]
+> **[3] [Site name] ([scheme])** — [north star]
+>
+> Which direction resonates — or is there a product you'd rather reference directly?"
+
+**2b — Resolve direction.**
+
+Four responses are possible:
+
+- **"Number [X]"** or they pick one of the suggestions → use that library entry as the source
+- **They name a product** ("make it feel like Notion", "like Stripe") → run `search.py "[named product]"` to find it in the library. If found, use it. If not found, use `extract.py https://[their-url]` to generate a fresh entry, then use it.
+- **"Make a call"** → pick the highest-scoring library match. State which one you chose and why in one sentence.
+- **They describe an aesthetic directly** ("dark, minimal, engineering feel") → run `search.py` with their description, pick the top match.
+
+**2c — Write design-identity.md.**
+
+Once direction is resolved, read the full entry from `styles.json` (match by siteName or url). Extract: northStar, colors (name + hex + usage), fonts, colorScheme, tags/category if present. Then write `docs/design/design-identity.md`:
+
+```markdown
+# Design Identity — [Project Name]
+**Created:** YYYY-MM-DD
+**Reference:** [source site name] ([source url if available])
+**North star:** [the evocative phrase — this is the coherence check for every screen]
+
+## Color Tokens
+| Token | Hex | Usage |
+|-------|-----|-------|
+| [name] | [hex] | [primary action / page background / body text / muted text / border / etc] |
+
+## Typography
+| Role | Font | Weight | Notes |
+|------|------|--------|-------|
+| Primary | [family] | [weight] | [display/body/headings] |
+| Mono | [family] | — | [code/data — omit if not present] |
+
+## Scheme
+[light / dark / both]
+
+## Design Principles
+[2–3 rules derived directly from the north star. Specific and actionable — not generic design advice.]
+1. [e.g. "Depth through shadow layering, not color contrast — surfaces emerge from darkness"]
+2. [e.g. "Typography carries hierarchy — weight before size, Inter Variable throughout"]
+3. [e.g. "Electric indigo is the only action color — nothing else competes with it"]
+```
+
+Confirm with the solo in one sentence before proceeding:
+> "Design identity set — [north star phrase]. Proceeding to hero screen."
+
+This file is the design system for every screen in this sprint. Every HTML screen references these token names (not raw hex values) and honors the design principles. Design review will check that every screen still matches the north star.
 
 ### Step 3: Identify the Hero Screen
 

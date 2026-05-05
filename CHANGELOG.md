@@ -8,6 +8,26 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.4.0 — 2026-05-05 — RECOMMENDED
+
+**Design Identity — library-grounded design direction from the first screen**
+
+Every design sprint (on-ramp 1) now opens with a Design Identity step before any HTML is produced. The step searches a local design reference library of 1,322+ curated styles, presents 3 matching references with north star phrases, and resolves to a `docs/design/design-identity.md` file — the design anchor for the project.
+
+The north star phrase is the coherence check: every screen in the sprint and every design review round checks whether the design still feels like the identity established at the start. Color tokens are named (not raw hex), typography is explicit, and 2–3 design principles derived from the north star give the AI specific rules to hold across screens.
+
+The library lives at `engineering-playbook/design-library/styles.json`. Two maintenance scripts: `seed.py` re-pulls from Refero's API; `extract.py` visits any URL, extracts the design system via CSS parsing, and generates a north star via Claude. The library grows with every new client or project reference added.
+
+### What changed
+- `design-library/styles.json` — 1,322 styles seeded from Refero API (northStar, colors, fonts, category, tags, typography)
+- `design-library/seed.py` — one-time Refero pull; idempotent, skips existing entries
+- `design-library/extract.py` — URL-based extractor: CSS parsing + Claude north star generation; reads API key from design-library/.env
+- `design-library/search.py` — keyword search against the library; handles both Refero and extracted entry formats; returns ranked results with north star, colors, fonts
+- `skills/design-sprint/SKILL.md` — Step 2 rewritten as Design Identity: library search, 3-option presentation, design-identity.md output; on-ramp 1 only
+- `skills/design-review/SKILL.md` — Step 1 now reads design-identity.md when present; flags north star drift and token inconsistency as design gaps before slice definition
+
+---
+
 ## v2.3.0 — 2026-05-05 — RECOMMENDED
 
 **Security classification — build to the right standard from day one**

@@ -51,6 +51,7 @@ Before the round begins, read:
 - Current backlog at `docs/backlog.md` (if it exists — first round creates it)
 - Deferred decisions log at `docs/design/deferred-decisions.md`
 - **To-be process map at `docs/process/to-be-[name].md`** — the agreed process. Every slice must implement a step in it.
+- **Design identity at `docs/design/design-identity.md`** — if this file exists, load the north star and design principles. Every screen reviewed this round is checked against them: does the screen still feel like the north star? Do token names match the design identity (not raw hex)? Flag drift as a design gap before defining slices.
 - Any spike results in `docs/spikes/`
 - Stakeholder feedback at `docs/stakeholder-feedback/*.md` (if any new files since last round)
 
