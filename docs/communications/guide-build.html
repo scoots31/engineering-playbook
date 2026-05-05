@@ -1926,6 +1926,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Using a static ANTHROPIC_API_KEY on a cloud-deployed project</h4>
+            <p>If your project is deployed to a cloud platform (Railway, Render, AWS, GCP, Azure, Fly.io, Cloudflare) and you're currently authenticating to the Claude API with a static <code>ANTHROPIC_API_KEY</code> stored in an env var or secret manager, consider migrating to Workload Identity Federation. WIF uses the workload's existing cloud identity — an IAM role, service account, managed identity, or GitHub Actions OIDC token — to get a short-lived access token on demand. No static secret to store, rotate, or leak. Set it up at platform.claude.com → Settings → Workload identity. The deploy step handles the wiring at deploy time. Local Mac projects are unaffected.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Check 9 running baseline-only on a project that handles personal, financial, or multi-tenant data</h4>
             <p>Check 9 reads <code>docs/tech-context.md</code> before it runs. If the Security Classification section is missing, it defaults to Standard — baseline checks only (9a–9e). That means class-specific checks for Personal, Financial, Authentication, Multi-tenant, Confidential, and Regulated never fire, even if the project clearly handles that kind of data. If your project stores PII, processes transactions, manages user credentials, or serves multiple tenants from shared infrastructure, add the Security Classification section to <code>docs/tech-context.md</code> now. The section is short — one to three lines stating the class or classes that apply. Once it's there, code review picks up the right checks automatically on the next slice.</p>
           </div>

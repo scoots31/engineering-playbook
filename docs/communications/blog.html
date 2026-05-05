@@ -149,6 +149,24 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 5 (v2.3.1) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 5</div>
+      <div class="entry-title">Cloud Deployments Can Now Authenticate to Claude Without a Static API Key</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Workload Identity Federation — cloud auth without a stored secret</div>
+          <div class="change-desc">When your project deploys to a cloud platform (Railway, Render, AWS, GCP, Azure, Fly.io, Cloudflare), there's now a better way to authenticate to the Claude API. Instead of storing a static <code>ANTHROPIC_API_KEY</code> in an env var or secret manager, the workload uses its existing cloud identity — an IAM role, service account, managed identity, or GitHub Actions OIDC token — to get a short-lived access token minted on demand. No static secret to store, rotate, or leak. Tech-context now records this as the preferred Claude API auth pattern for all cloud deployments. Local Mac projects are unaffected and continue using an API key in an env var. All other secrets (database passwords, third-party API keys) continue using env vars locally and platform secret stores in production. Workload Identity is configured at platform.claude.com → Settings → Workload identity, and the deploy step handles setup at deploy time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 5 (v2.3.0) ── -->
   <div class="entry">
     <div class="entry-header">

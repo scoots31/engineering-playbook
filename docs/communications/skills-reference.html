@@ -831,7 +831,7 @@
           <div class="skill-name">tech-context</div>
           <div class="skill-badge">Phase skill</div>
         </div>
-        <div class="skill-description">Establishes the full technical context before design begins — stack, constraints, infrastructure requirements, deploy configuration, and security classification. Every downstream skill reads this document. The deploy skill routes entirely based on what tech-context defines. Regulated projects receive an acknowledgment gate here and a hard stop at deploy requiring documented external compliance review.</div>
+        <div class="skill-description">Establishes the full technical context before design begins — stack, constraints, infrastructure requirements, deploy configuration, security classification, and Claude API authentication pattern. Every downstream skill reads this document. The deploy skill routes entirely based on what tech-context defines. Regulated projects receive an acknowledgment gate here and a hard stop at deploy requiring documented external compliance review.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -843,6 +843,7 @@
               <li>Identifies <strong>infrastructure slices</strong> — prerequisites before any feature slice can start</li>
               <li>Stack-specific coding standards referenced by code-review-and-quality</li>
               <li><strong>Security classification</strong> — assigns one or more of seven classes: Standard (default), Personal, Financial, Authentication, Multi-tenant, Confidential, Regulated. Recorded in a Security Classification section in docs/tech-context.md. Read by code-review-and-quality to determine which Check 9 sub-checks run.</li>
+              <li><strong>Claude API authentication</strong> — for cloud deployments (Railway, Render, AWS, GCP, Azure, Fly.io, Cloudflare), Workload Identity Federation is the preferred auth pattern: the workload uses its existing cloud identity to get a short-lived access token, with no static API key to store or rotate. Local Mac projects use an API key in an env var. Recorded in docs/tech-context.md; deploy handles setup at deploy time.</li>
               <li>Required reading for: design-sprint, solo-build, deploy, principal-engineer</li>
             </ul>
           </div>
@@ -860,6 +861,7 @@
               <li>Stack, constraints, infrastructure slices</li>
               <li>Deploy method, branching model, CI/CD configuration</li>
               <li>Security Classification section — class(es) assigned, acknowledgment recorded for Regulated projects</li>
+              <li>Claude API auth pattern — Workload Identity Federation for cloud targets, API key in env var for Local Mac</li>
               <li>Referenced by every downstream skill</li>
             </ul>
           </div>
