@@ -149,6 +149,31 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 5 (v2.4.0) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 5</div>
+      <div class="entry-title">Every Design Sprint Now Starts With a Design Identity</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Design Identity step — library-matched direction before the first screen</div>
+          <div class="change-desc">Before any HTML is produced, the design sprint now opens with a Design Identity step. You describe what you're building in a few words, and the framework searches a local library of 500+ curated design styles — each one characterized by a north star phrase, named color tokens, typography, category, and tags. Three matching references are presented. You pick one, name a product to match, describe an aesthetic, or let the framework choose. The result is a <code>docs/design/design-identity.md</code> file: a north star phrase, a named color token table, a typography table, and 2–3 design principles derived from that identity. Every screen produced in the sprint is checked against it. Every design review round checks for north star drift — if a screen no longer feels like the established identity, it's flagged before slices are defined.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Design library — 1,322 curated styles with north star phrases</div>
+          <div class="change-desc">The library lives locally in the framework as a searchable JSON file. Each entry carries a north star phrase (an evocative sentence capturing the design identity — "Architectural blueprint on white marble"), named color tokens with usage guidance, typography roles, industry tags, and category. The library was seeded from Refero's API. Two maintenance tools ship alongside it: one re-pulls from the API to keep it current, the other visits any URL, extracts its design system via CSS parsing, and generates a north star phrase via Claude — so any product or reference site you admire can be added to the library in seconds.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 5 (v2.5.0) ── -->
   <div class="entry">
     <div class="entry-header">
