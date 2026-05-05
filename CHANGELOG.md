@@ -8,6 +8,32 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.3.0 — 2026-05-05 — RECOMMENDED
+
+**Security classification — build to the right standard from day one**
+
+Every project now gets a security classification at tech-context — before design, before any build decisions. Six classes beyond the Standard baseline: Personal, Financial, Authentication, Multi-tenant, Confidential, and Regulated. Multiple classes are valid and common. The classification doesn't just label the project — it follows every slice from design sprint through code review.
+
+At design sprint, the process-mapper now checks for security-specific process gaps based on the active classes: missing deletion paths for personal data, tenant-scoping gaps in data displays, collection without disclosure for regulated data. These surface as decisions before screens are approved — not as code review failures later.
+
+At solo-build, a security class pre-flight runs before each branch opens. If the slice touches a sensitive data domain and the quality contract's Security field doesn't address the class requirements, the slice goes back to design review. The pre-flight table makes this explicit: what "addressed" means for each class is defined, not subjective.
+
+At code review, Check 9 now branches by class. The baseline five checks (9a–9e) run on every project. Then class-specific checks layer on top: Personal adds PII log/encryption/deletion checks. Financial adds raw-card-data zero-tolerance and access logging. Authentication adds credential storage and session expiry. Multi-tenant adds tenant-ID server validation and cross-tenant query isolation. Confidential adds server-side access control and bundle exposure. Regulated adds per-slice compliance documentation and disclosure requirements.
+
+Regulated projects get an acknowledgment gate at tech-context and a hard stop at deploy — production deployment requires external compliance review documented in the handoff.
+
+### What changed
+- `skills/tech-context/SKILL.md` — Q11 added: security classification question with all six classes, plain-language explanations, multi-select, Regulated acknowledgment gate; Security Classification section added to output template; downstream skills section updated
+- `skills/design-sprint/SKILL.md` — Step 1 security context read: checks tech-context classification and applies class-specific constraints to to-be process map review and screen design
+- `skills/solo-build/SKILL.md` — Security class pre-flight added after architecture type gate; per-class requirement table; stop condition if quality contract doesn't address class requirements
+- `skills/code-review-and-quality/SKILL.md` — Check 9 expanded from 5 baseline checks to 20 total checks (9a–9t); class-specific checks are additive, not replacements; report format updated
+- `docs/engineering/HANDOFF.template.md` — Security class field added to Context section
+
+### Action required
+No action on existing projects — classification defaults to Standard when absent. For new projects starting today: security classification is answered at tech-context and flows automatically from there. For existing projects where you know the class (e.g., companion board is Personal + Multi-tenant): add the Security Classification section to `docs/tech-context.md` manually and update the handoff — the downstream skills will pick it up immediately.
+
+---
+
 ## v2.2.0 — 2026-05-04 — RECOMMENDED
 
 **Leaf node / core architecture classification — architecture type gate**

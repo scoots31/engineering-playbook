@@ -20,6 +20,7 @@ _Use when starting implementation after Plan; paste paths for your repo._
 - **Product / repo:**
 - **Branch:**
 - **Goal (one sentence):**
+- **Security class:** [Standard | Personal | Financial | Authentication | Multi-tenant | Confidential | Regulated — list all active]
 
 ## Done so far
 

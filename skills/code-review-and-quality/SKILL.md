@@ -92,7 +92,9 @@ A contract line is only ✅ if the specific behavior exists and is reachable. A 
 **Fail:** Names the specific contract line unmet and what was found (or not found) in the code.
 
 ### Check 9 — Security
-Independent of the quality contract. Runs on every slice regardless of what the contract says. Five fixed requirements — all must pass.
+Independent of the quality contract. Runs on every slice regardless of what the contract says.
+
+**Baseline — always runs (all projects):**
 
 **9a — Input sanitization:** Any user-supplied content rendered to the UI must be escaped. Look for raw `innerHTML`, `dangerouslySetInnerHTML`, template interpolation without escaping, or server-side rendering that writes unescaped input into HTML. A slice that renders user input without escaping fails — even if it "worked in testing."
 
@@ -104,9 +106,38 @@ Independent of the quality contract. Runs on every slice regardless of what the 
 
 **9e — No secrets in client-visible code:** API keys, tokens, passwords, or internal endpoint paths must not appear in client-side code, HTML source, or JavaScript bundles. Environment variables accessed server-side are acceptable; the same value embedded in a JS file or response payload is not.
 
-For each sub-check: state what was looked for and what was found. Return ✅ if clean, ❌ if a violation exists.
+**Class-specific checks — read `docs/tech-context.md` Security Classification before running these. Run only the checks for the active classes. Skip any class not declared.**
 
-**Pass:** All five security sub-checks are clean.  
+**Personal class:**
+**9f — No PII in logs or error output:** Scan log statements and error handlers. Names, emails, user IDs, location data, or any field that could identify a person must not appear in log output or error messages returned to clients. Structured logging that includes a user ID as a lookup key (not as displayed content) is acceptable if the field is clearly labeled for internal use only.
+**9g — PII fields encrypted at rest:** Confirm that PII fields stored in the database are encrypted or that the database layer enforces encryption at rest. If neither is present, name the unprotected field and the required fix.
+**9h — Deletion path exists:** If this slice writes PII, confirm a deletion mechanism exists or is named in a planned slice. A slice that stores PII with no deletion path on record is a fail.
+
+**Financial class:**
+**9i — No raw card data:** Zero tolerance. Card numbers, CVVs, expiry dates must not appear anywhere in the codebase — not in logs, not in comments, not in test fixtures. Payment flows must route through a declared processor (Stripe or equivalent). Any slice that touches payment input without routing through the processor fails.
+**9j — Financial record access logged:** Confirm that reads and writes to financial records are logged with user identity, timestamp, and action. A query that fetches financial records without an audit trail fails.
+**9k — Retention enforced:** If this slice writes financial records, confirm a retention or deletion policy is defined (either in this slice or in a named companion slice). Storing indefinitely without a defined retention period is a fail.
+
+**Authentication class:**
+**9l — No plaintext credential storage:** Passwords and secrets must be hashed with a strong algorithm (bcrypt, argon2, or equivalent). Any code that stores a password as plaintext, base64, or MD5/SHA1 fails.
+**9m — Session tokens expire:** Confirm that session tokens, JWTs, or API keys issued by this slice have an expiry defined. A token with no expiry is a fail.
+**9n — Credentials not in URLs or logs:** Confirm that no credential (password, token, API key) appears in a URL parameter, a log statement, or an error message. Credentials in request bodies over HTTPS are acceptable.
+
+**Multi-tenant class:**
+**9o — Tenant ID validated server-side on every query:** Every database query or data access in this slice must be scoped by tenant ID at the query layer — not filtered after the fact in application code. A query that fetches all records and then filters by tenant in memory is a fail.
+**9p — Cross-tenant access impossible at the query layer:** Confirm that no query in this slice could return records belonging to a different tenant by varying an input parameter. Parameterize tenant scope at the query level, not the application level.
+
+**Confidential class:**
+**9q — Access control enforced server-side:** Confidential data must not be reachable by a request that lacks appropriate authorization, verified on the server. A server response that includes confidential fields because the client didn't ask for them to be filtered is a fail.
+**9r — Confidential data not in client bundles:** Internal pricing, margins, proprietary logic, or other confidential data must not appear in client-side code, HTML, or JavaScript bundles. Server-rendered output that includes confidential fields beyond the user's role is a fail.
+
+**Regulated class:**
+**9s — Compliance requirements documented per slice:** Confirm that the slice record's quality contract names the specific compliance requirement this slice addresses (which regulation, which article or rule, what the slice does to satisfy it). A regulated slice with a blank or generic security field is a fail.
+**9t — No new PII collection without disclosure:** If this slice collects regulated data (health info, payment card data, children's data, or GDPR-scoped personal data), confirm a disclosure or consent mechanism is present in the design — either in this slice or in a named companion slice. Collecting without disclosure is a fail regardless of whether the UI currently shows it.
+
+For each sub-check run: state what was looked for and what was found. Return ✅ if clean, ❌ if a violation exists.
+
+**Pass:** All applicable sub-checks clean.
 **Fail:** Names the specific sub-check, the line or pattern that violates it, and the required fix.
 
 ### Check 10 — Design fidelity (Figma-sourced slices only)
@@ -154,6 +185,22 @@ Security — SL-[ID]
   9c Auth checks server-side    ✅ / ❌
   9d Injection prevention       ✅ / ❌
   9e No secrets in client code  ✅ / ❌
+  [class checks — list only active classes, e.g.:]
+  9f PII not in logs            ✅ / ❌  [Personal]
+  9g PII encrypted at rest      ✅ / ❌  [Personal]
+  9h Deletion path exists       ✅ / ❌  [Personal]
+  9i No raw card data           ✅ / ❌  [Financial]
+  9j Financial access logged    ✅ / ❌  [Financial]
+  9k Retention enforced         ✅ / ❌  [Financial]
+  9l No plaintext credentials   ✅ / ❌  [Authentication]
+  9m Session tokens expire      ✅ / ❌  [Authentication]
+  9n Credentials not in URLs    ✅ / ❌  [Authentication]
+  9o Tenant ID server-validated ✅ / ❌  [Multi-tenant]
+  9p Cross-tenant impossible    ✅ / ❌  [Multi-tenant]
+  9q Confidential access ctrl   ✅ / ❌  [Confidential]
+  9r Confidential not in bundle ✅ / ❌  [Confidential]
+  9s Compliance documented      ✅ / ❌  [Regulated]
+  9t No collection w/o disclose ✅ / ❌  [Regulated]
 
 Design fidelity — SL-[ID]  [N/A if non-Figma source]
   10a Inventory present         ✅ / ❌

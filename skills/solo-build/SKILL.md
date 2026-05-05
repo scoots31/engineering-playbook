@@ -204,6 +204,27 @@ Invoke principal-engineer with the slice ID, the technical description, and the 
 
 This is not optional and is not a conversation. A core architecture slice that enters In Build without a PE review has bypassed the gate that protects the trunk.
 
+**Security class pre-flight** — before opening the branch, read the Security Classification section in `docs/tech-context.md`.
+
+- **Standard only:** No additional pre-flight required. Proceed.
+- **Any other class active:** Identify whether this slice touches a data domain relevant to the active class — a PII field, a financial record, a tenant-scoped query, a credential, confidential business data, or a regulated data element. If it does not touch a sensitive domain, proceed normally.
+
+  If it does touch a sensitive domain: confirm the quality contract's Security field addresses the class-specific requirements for that domain. The table below shows what "addressed" means for each class:
+
+  | Class | Security field must cover |
+  |---|---|
+  | Personal | No PII in logs or error output; PII encrypted at rest; deletion path exists for this record type |
+  | Financial | No raw card data; financial record access logged; retention period defined |
+  | Authentication | No plaintext credential storage; session tokens expire; credentials not in URLs or logs |
+  | Multi-tenant | Tenant ID validated server-side on every query this slice touches; cross-tenant access impossible at query layer |
+  | Confidential | Access control enforced server-side; confidential data not in client bundles beyond the user's role |
+  | Regulated | Compliance requirements for this slice documented; no new PII collection without disclosure mechanism |
+
+  If the quality contract Security field does not address the class requirements for this slice's data domain, stop:
+  > "SL-[ID] touches [data domain] which falls under [class] classification, but the quality contract Security field does not address the required [requirement]. Return the slice to design review to define this before building."
+
+  This is not a judgment call. If the field is blank or vague, stop. If it specifically addresses the requirement, proceed.
+
 **Slice readiness check** — before opening the branch, confirm two things:
 1. Can you state what done looks like for this slice as a single concrete observation against the running app? If the done criteria require interpretation to verify, they are too vague — sharpen them now.
 2. Is the scope bounded to one user interaction or system behavior? If the slice spans multiple distinct interactions or responsibilities, it should have been split at plan time — flag it to the solo before proceeding.

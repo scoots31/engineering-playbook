@@ -104,6 +104,24 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
    - If standard only: record as `Standard operational health — errors, logs, uptime`. No additional architecture constraints needed.
    - If specific requirements exist: capture each one. These go into Architecture Constraints in `docs/tech-context.md` and generate named instrumentation slices in the backlog — one per requirement, beyond the baseline setup slice.
 
+11. **Security classification** — "What kind of data or access does this project involve? Pick all that apply — this shapes how we build it from day one, not just at code review."
+
+   Present the options in plain language:
+   - **Standard** — API keys or config only. No user data, no credentials managed for others.
+   - **Personal** — Anything tied to a real person: names, emails, locations, usage history, preferences, or any field that could identify someone.
+   - **Financial** — Transaction records, billing history, account balances, or any money-adjacent data. Not card processing — that's Regulated.
+   - **Authentication** — This project manages other people's credentials: login, passwords, session tokens, or API keys issued to users.
+   - **Multi-tenant** — Multiple organizations or users share the same infrastructure but must never see each other's data.
+   - **Confidential** — Internal business data that isn't personal but is sensitive: trade secrets, proprietary logic, internal pricing, competitive intelligence.
+   - **Regulated** — Legal compliance regimes apply: payment card processing (PCI-DSS), health records (HIPAA), children's data (COPPA), or EU users subject to GDPR.
+
+   Multiple selections are valid and common. A health app is both Personal and Regulated. An enterprise SaaS tool may be Confidential and Multi-tenant. If none beyond Standard apply, record Standard only.
+
+   **If Regulated is selected:** surface the acknowledgment gate before closing tech-context:
+   > "This project is classified Regulated. Design sprint will open normally — but production deploy is gated. Before shipping to production, an external compliance review is required and its outcome must be documented in the handoff. Confirm you understand this before we proceed."
+
+   Wait for confirmation. If the solo does not confirm, do not proceed to design sprint.
+
 When enough is known, summarize and confirm:
 > "Based on what you've shared: [brief stack summary]. Before I write this up — anything else that would constrain how we build?"
 
@@ -195,6 +213,21 @@ If Observability is set to Datadog or CloudWatch (not `none`), add an infrastruc
 
 ---
 
+## Security Classification
+
+**Active classes:** [Standard | Personal | Financial | Authentication | Multi-tenant | Confidential | Regulated — list all that apply]
+
+**Standing requirements for this project:**
+- [Requirement derived from active class — e.g., "No PII in logs or error messages"]
+- [Requirement derived from active class — e.g., "Tenant ID validated server-side on every data query"]
+- [Add one line per standing requirement. Omit if Standard only — secrets management below covers it.]
+
+Standard is always in effect. For Standard-only projects, this section records that classification explicitly and the Secrets and Config section below covers the one applicable requirement.
+
+**If Regulated:** Acknowledgment confirmed — [YYYY-MM-DD]. External compliance review required before production deploy. Document outcome in handoff under `compliance_review` when complete.
+
+---
+
 ## Secrets and Config
 
 [How config and secrets are managed for this project.]
@@ -225,15 +258,15 @@ a dev server, etc.).]
 
 ## How Downstream Skills Use This
 
-**Design Sprint** — architecture constraints inform what can be designed. Aurora module constraints mean no login screen in the designs.
+**Design Sprint** — architecture constraints inform what can be designed. Aurora module constraints mean no login screen in the designs. Security classification is read at sprint start: Personal/Financial/Regulated classes trigger process-mapper checks for data flow, access, and deletion paths in the to-be map. Multi-tenant flags any screen that displays data without visible tenant scoping.
 
-**Data Scaffold** — stack determines mock data format and the data layer pattern. RTK Query projects get a mock RTK slice. Flask projects get a mock Python module.
+**Data Scaffold** — stack determines mock data format and the data layer pattern. RTK Query projects get a mock RTK slice. Flask projects get a mock Python module. Personal and Financial classes require synthetic PII — fake names, emails, account numbers — never real data in mock files.
 
-**Design Review** — infrastructure slices get added to the backlog based on the tech context. These are required prerequisites, not features.
+**Design Review** — infrastructure slices get added to the backlog based on the tech context. These are required prerequisites, not features. Security classification pre-populates the Security field of every slice's quality contract with class-specific requirements rather than leaving it blank.
 
 **Plan** — slice done criteria are written with technical specificity from the stack. "RTK Query endpoint wired and returning mock data" not "data displays correctly."
 
-**Build** — the tech context is the build bible. Stack, principles, branching model, secrets pattern — all referenced here.
+**Build** — the tech context is the build bible. Stack, principles, branching model, secrets pattern — all referenced here. Security classification pre-flight runs before each branch opens: confirms the quality contract Security field addresses class requirements for any slice that touches a sensitive data domain.
 
 **Solo Companion** — reads `Start command` and `App port` from the `## Runtime` section at sync time. These power the Start & Review button — when a slice has a review URL and the app is stopped, the companion starts it automatically. If the Runtime section is absent, the companion falls back to Review-only mode (no Start & Review).
 

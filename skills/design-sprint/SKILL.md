@@ -80,6 +80,16 @@ Before producing anything, read:
 If no discovery brief exists, stop. Run the `discover` skill first.
 If no to-be process map exists, stop. The process map should have been produced during discover — run that step before continuing.
 
+**Security classification check.** After reading the brief and process maps, read `docs/tech-context.md` and check the Security Classification section. If the active classes go beyond Standard, apply these constraints for the duration of the sprint:
+
+- **Personal or Financial:** When reviewing to-be steps, flag any step that collects, stores, or displays user data without a corresponding access control, retention policy, or deletion path in the map. These are not design gaps — they are process gaps. Surface them as decisions before designing any screen that touches that data: *"Step 3 collects an email address but the to-be map has no deletion or data management step. Is this handled in the background, or does it need a UI state?"*
+- **Multi-tenant:** Every screen that displays data must scope it visibly to the active tenant or organization. Flag any screen in the sprint where it's unclear which tenant's data is shown. This is a design constraint to resolve now — not an implementation detail.
+- **Authentication:** Any screen involving credential entry, session state, or permission-gated content must be noted. These generate Authentication-class security requirements in the slice quality contract — capture them in the deferred decisions log.
+- **Confidential:** Flag any screen that surfaces internally sensitive data (pricing, margins, internal processes). Note who can see it and where access control is enforced — even if the control is off-screen.
+- **Regulated:** No PII collection or display on any screen without a visible disclosure or consent mechanism present in the design (or explicitly deferred with a named slice). Surface this requirement if a screen collects regulated data without one.
+
+These flags go into the deferred decisions log, not into silent design assumptions.
+
 **Cross-reference screens against the to-be map as the sprint progresses.** Every step in the to-be map must have at least one screen that supports it. After each screen is approved, annotate the to-be map with the screen reference. Any step with no screen is a gap — surface it as a decision immediately: is this step handled in the background, or does it need a UI state? Do not move to the next screen until the gap is resolved.
 
 > "Step 4 in the to-be map — 'system validates eligibility' — doesn't have a screen yet. Is this a background step the user never sees, or does it need an error/confirmation state on screen?"
