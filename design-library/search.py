@@ -14,7 +14,11 @@ import os
 import re
 import sys
 
-LIBRARY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "styles.json")
+_HERE = os.path.dirname(os.path.abspath(__file__))
+# Prefer full library when available locally; fall back to bundled repo version
+_full = os.path.join(_HERE, "styles.json")
+_bundled = os.path.join(_HERE, "styles-bundled.json")
+LIBRARY = _full if os.path.exists(_full) else _bundled
 
 # Category keyword maps — expands single-word product categories into related terms
 CATEGORY_EXPANSIONS = {

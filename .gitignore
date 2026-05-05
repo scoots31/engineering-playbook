@@ -1,6 +1,6 @@
 packaging/dist/
 
-# Design library data — regenerate locally via design-library/seed.py
+# Design library — full local copy (108MB, regenerate via design-library/seed.py)
 design-library/styles.json
 
 # Local venv for docs/communications PPTX generation (see generate_communications_decks.py)
