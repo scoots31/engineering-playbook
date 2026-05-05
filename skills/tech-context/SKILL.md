@@ -82,6 +82,11 @@ Ask questions to establish the stack. One at a time. Stop when there's enough to
 
    Record the selected path in the Stack table as `Deployment path`.
 
+   **Internal note — Claude API authentication by deployment path:**
+   When recording the deployment path, also record the Claude API authentication pattern in the Secrets and Config section:
+   - `Local Mac` → API key in env var
+   - Any cloud path (Cloudflare, Railway, Render, Fly.io, AWS App Runner) → Workload Identity Federation preferred. Note this in Secrets and Config. The solo does not need to act on this now — the deploy skill will configure it. But it must be recorded so build and code review know to enforce it.
+
 8. **Automated deployment** — Ask only if deployment path is not `Local Mac` or `No pipeline`:
 
    *"Once it's live, do you want the framework to automatically test and redeploy your product every time you push new code — or would you prefer to control when it deploys?"*
@@ -230,10 +235,13 @@ Standard is always in effect. For Standard-only projects, this section records t
 
 ## Secrets and Config
 
-[How config and secrets are managed for this project.]
+**Claude API authentication:**
+- [Local Mac: API key in env var (`ANTHROPIC_API_KEY`). Never committed.]
+- [Cloud deploy (Railway / Render / AWS / GCP / Azure / Fly.io): Workload Identity Federation (WIF) preferred — no static API key stored anywhere. The cloud workload's existing identity (IAM role, managed identity, service account) authenticates directly to Anthropic. Short-lived tokens minted on demand, expire in minutes to hours. Configure at platform.claude.com → Settings → Workload identity. Fall back to secret manager only if the deploy environment does not support OIDC.]
 
-- [Pattern — e.g., "Faststore/Fastlight for UI config parameters"]
-- [Pattern — e.g., "Never commit .env with real values"]
+**All other secrets (database passwords, third-party API keys, config values):**
+- [Local Mac: `.env` file, never committed. `.env.example` committed with placeholder values.]
+- [Cloud deploy: Platform secret store — Railway Variables, Render Environment Groups, AWS Secrets Manager, GCP Secret Manager, Azure Key Vault. Never in code or committed config.]
 
 ---
 
