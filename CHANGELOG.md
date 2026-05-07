@@ -8,6 +8,29 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.6.0 — 2026-05-07 — RECOMMENDED
+
+**Live Preview Verification — browser inspection baked into design review and build**
+
+The framework now uses Claude Code's Preview MCP tools to verify visual output at two points in the workflow — before specialist review and before commit — without any manual steps.
+
+**Design review — Step 1.5:** Before the specialist agents review design sprint screens, the framework serves the HTML files in a real browser, takes desktop and mobile screenshots, and inspects key elements against the design identity tokens. A raw hex value where a token name is expected is a design gap — surfaced immediately, alongside any console errors or responsive failures. Findings feed directly into the specialist synthesis as design gap findings. Graceful skip when no HTML design artifacts exist or when the project is declared non-visual in tech-context.
+
+**Solo-build — preview check:** After self-verification and quality contract walk, before committing, the framework starts the app server, navigates to the slice's review URL, takes a screenshot, checks console logs, checks for failed network requests, clicks through the main interactive elements, and tests the mobile viewport. Console errors or failed network requests directly caused by the slice are ✗ items in builder confirmation — must be fixed before commit. Graceful skip when review URL is `None` (non-visual slice) or when the project is non-visual.
+
+**Auto-create `.claude/launch.json`:** Both steps check for `.claude/launch.json` before starting. If the file doesn't exist, the framework creates it automatically — design review creates a static Python HTTP server config; solo-build reads the run command and port from `docs/tech-context.md`. One-time creation, then reused.
+
+**Claude Code exclusive:** Both preview verification steps fire in Claude Code where the Preview MCP tools are available. Cursor: graceful skip with no behavior change.
+
+### What changed
+- `skills/design-review/SKILL.md` — Step 1.5 added: preview verification pass between state read and specialist review; anti-pattern added
+- `skills/solo-build/SKILL.md` — preview check added within Step 1 self-verification; anti-pattern added
+
+### Action required
+None for existing projects. Preview verification activates automatically in Claude Code sessions when design sprint HTML files or visual slices are present. Non-visual projects skip silently.
+
+---
+
 ## v2.5.0 — 2026-05-05 — RECOMMENDED
 
 **Solo Companion — Board View**

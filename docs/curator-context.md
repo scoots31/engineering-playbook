@@ -1483,3 +1483,35 @@ Anchor quality without human judgment is an identified hard ceiling: the simulat
 *Classification at design-review time.* Tempting because design-review births slice records. Rejected: at design-review, slices are defined in isolation — the reviewer doesn't yet know which slice will be in another's Depends on field, which will be infrastructure for others. That picture only exists after prd-to-plan sequences the full build.
 
 *Three-tier classification (leaf / branch / trunk).* More precise but introduces ambiguity at the boundary. The binary is sufficient: does this slice touch something others depend on? Yes = core architecture. No = leaf node. Three tiers would require judgment calls that a two-value field avoids.
+
+---
+
+### 2026-05-07 — v2.6.0: Live Preview Verification
+
+**What changed:** Claude Code's Preview MCP tools (preview_start, preview_screenshot, preview_inspect, preview_console_logs, preview_network, preview_resize, preview_click, preview_stop) are now wired into two framework skills as automatic verification passes. Design review gains Step 1.5 — a preview pass that renders design sprint HTML in a real browser before the specialist review runs. Solo-build gains a preview check within Step 1 self-verification — a lightweight automated pass (screenshot, console errors, failed requests, click-through, mobile) before committing. Both steps auto-create `.claude/launch.json` when absent. Both steps skip gracefully for non-visual projects. Both steps are Claude Code exclusive — Cursor skips silently.
+
+*design-review.* Step 1.5 added between the state read and Step 2 specialist review. The step serves design sprint HTML via a Python HTTP server (auto-created in `.claude/launch.json`), takes desktop and mobile screenshots of each file being reviewed, and runs `preview_inspect` on key elements when `design-identity.md` exists — checking that declared color tokens are applied rather than raw hex values. Console errors in design artifacts surface as design gaps. The server stops after the pass. Findings feed into Step 2 as pre-classified design gap findings alongside specialist lens output. Anti-pattern added: skipping the preview pass in Claude Code.
+
+*solo-build.* Preview check added within the "When build is code-complete" Step 1 self-verification section, after the quality contract walk and before the builder confirmation block. If the slice has a review URL and the project is visual: start server, screenshot at desktop, check console logs, check failed network requests (filter: failed), click through main interactive elements from self-verification checklist, resize to mobile and screenshot, stop server. Console errors or failed network requests caused by the slice are ✗ items in builder confirmation — fix before committing. Unrelated background errors are noted but do not block. Anti-pattern added: skipping the preview check before committing.
+
+*`.claude/launch.json` auto-creation.* Design review creates a Python HTTP server config (port 3001) for serving static design files. Solo-build reads `docs/tech-context.md` for the run command and port and creates a config matching the project's server. One-time creation per project; reused on subsequent sessions. If command cannot be determined, the check notes it in builder confirmation and skips — no hard failure.
+
+**Why:** The design-review feedback loop had a gap: we reviewed HTML design artifacts by reading them as text, not by rendering them. Token mismatches (raw hex where a token name should be) were invisible. Responsive failures were invisible. Console errors in design files were invisible. The build self-verification loop had a complementary gap: self-verification was manual observation against a running app, but the console and network layer were never checked before commit. Both gaps are now closed by the same tool layer that was already available in Claude Code. The inspection capability existed — it just wasn't wired in.
+
+**Key design decisions:**
+
+*Lightweight solo-build, full design-review.* Solo-build pass is intentionally narrow — screenshot, console errors, failed requests, click-through, mobile. Keeps build fast. Design review pass is fuller — it's a quality gate before specialist review runs, so the richer inspection makes sense there. If we made solo-build equally thorough, every slice would slow down for inspection that will happen again at QA.
+
+*Graceful skip over hard fail.* Non-visual projects (APIs, data services) have no running server to inspect. Failing hard on missing launch.json or non-visual output would break the framework for an entire class of projects. Graceful skip with a noted reason maintains the workflow without polluting the builder confirmation with N/A entries.
+
+*Auto-create launch.json rather than asking the solo.* Consistent with the Output Contract — the framework executes, the solo responds. Handing the solo a config file to fill in is exactly what the contract prohibits. The framework reads tech-context for the run command and port and creates the file. If tech-context doesn't have enough information, it notes the gap in builder confirmation and skips — still no solo action required.
+
+*Claude Code exclusive.* Preview MCP tools only exist in Claude Code. Cursor doesn't have them. Same pattern as Enhanced Mode in design-review and sub-agent wiring — Claude Code gets the richer capability, Cursor falls back to the standard path. The Cursor path is not degraded — it was already the full workflow.
+
+**What was rejected:**
+
+*Running preview check at every step, not just self-verification.* Considered firing preview on every anchor confirmation, not just at code-complete. Rejected: the anchor confirmation is a mental check, not a build output check. Preview is meaningful when there's rendered output to inspect — that's at code-complete, not at anchor read.
+
+*Making preview findings a hard gate.* Considered: console errors block the commit. Rejected for unrelated background errors that would produce false positives on every slice in a multi-route app. The distinction between "errors caused by this slice" and "background errors from other routes" is a judgment call the builder makes — flagged, not auto-blocked.
+
+**Cascade:** `skills/design-review/SKILL.md`, `skills/solo-build/SKILL.md`, `CHANGELOG.md`, `docs/curator-context.md`, `ren-memory/curator-summary.md`, `ren-memory/context.md`. Comms cascade: blog, skills-reference, guide-design-sprint, guide-build.

@@ -61,6 +61,53 @@ If the to-be process map doesn't exist, stop before reviewing slices. The proces
 
 Orient out loud: *"We have [N] screens, [N] slices defined so far — [N] Ready, [N] In Review, [N] Blocked. This round we're reviewing [specific focus]."*
 
+### Step 1.5: Preview Verification Pass
+
+**Claude Code only.** When running in Cursor, skip this step entirely and proceed to Step 2.
+
+**Purpose:** Render the design sprint HTML files in a real browser and inspect them before the specialist review begins. Catches visual rendering failures, design identity token mismatches, and responsive layout problems that can't be seen from static file reading.
+
+**Graceful skip conditions:**
+- No HTML files exist in `docs/design/` for this review round
+- `docs/tech-context.md` declares a non-visual project type (API, data service, or backend only)
+
+In either case: note "Preview check — N/A: [reason]" and proceed to Step 2.
+
+**Execution:**
+
+1. **Check `.claude/launch.json`.** If the file does not exist, create it at the project root:
+   ```json
+   {
+     "version": "0.0.1",
+     "configurations": [
+       {
+         "name": "design-preview",
+         "runtimeExecutable": "python3",
+         "runtimeArgs": ["-m", "http.server", "3001"],
+         "port": 3001
+       }
+     ]
+   }
+   ```
+   This serves the project root as a static file server — design sprint files are accessible at `/docs/design/sprint-*.html`.
+
+2. **Start the server** with `preview_start` using the `design-preview` configuration name.
+
+3. **For each design sprint HTML file being reviewed this round:**
+   - Navigate to the file's URL and take a screenshot at desktop viewport
+   - Resize to mobile (375×812) — take a second screenshot
+   - If `docs/design/design-identity.md` exists: run `preview_inspect` on key elements (background, primary text, accent/gold elements) to verify color values match the declared design identity tokens. A raw hex value where a token name is expected is a design gap.
+   - Check `preview_console_logs` for any errors
+
+4. **Stop the server.**
+
+5. **Surface findings before Step 2:**
+   - Screenshot summary: does the screen render correctly at desktop and mobile?
+   - Design identity: are color tokens applied consistently? Any raw hex values that should be token names?
+   - Console errors: any broken references or rendering failures?
+
+Findings feed directly into Step 2 as design gap findings — classify and surface alongside the specialist lenses. A design identity token mismatch is a design gap. A console error in a design artifact is a design gap. A responsive layout failure is a design gap. Do not defer these to the specialist agents — surface them now so the full review picture is complete.
+
 ### Step 2: Review Each Screen
 
 For each screen being reviewed this round, apply all three lenses and surface findings. Be specific — not "this needs more thought" but "this field implies a historical data store that isn't in the current data model."
@@ -453,6 +500,7 @@ End each round by stating explicitly:
 | One mega-slice per screen | Too large to build, too vague to verify | Break screens into the smallest meaningful unit of work |
 | Updating backlog only at the end of a round | Loses the thread | Update as the round proceeds |
 | Reviewing without the design artifact open | Working from memory | Always review against the actual HTML screens |
+| Skipping the preview verification pass in Claude Code | Design token mismatches and rendering failures surface at build review time — more expensive to fix | Run the preview pass on every round that reviews design sprint HTML; skip only when graceful skip conditions are explicitly met |
 | Letting blocked slices sit without naming the spike | Invisible blockers | Every blocked slice has a named, specific spike question |
 | Skipping the process coverage check | Slices pile up around screens, whole process steps go unbuilt | Run coverage map every round — every to-be step must have a slice or an explicit decision |
 | Slices reaching Ready without a process anchor | prd-to-plan can't sequence by process order; phase test has no grounding | Process anchor is a Ready requirement, not an optional field |

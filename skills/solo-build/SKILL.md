@@ -280,6 +280,25 @@ After the checklist, walk every observable quality contract item in the running 
 
 For each contract item walked: state what was triggered and what was observed. If a contract item is not observable in the running app (pure backend logic), note it — code review will cover it. Do not skip observable contract items. Presenting a slice that hasn't been walked through its own contract is the failure mode this step exists to prevent.
 
+**Preview check — Claude Code only.** When running in Cursor, skip this and proceed directly to the builder confirmation below.
+
+If this slice has a review URL (not `None`) and the project produces visual output:
+
+1. **Check `.claude/launch.json`.** If absent, read `docs/tech-context.md` for the run command and port, then create the file at the project root using that command and port. If the run command cannot be determined, note "Preview check — launch.json required" in builder confirmation and skip.
+
+2. **Start the server** with `preview_start`.
+
+3. **Navigate to the slice's review URL and run the lightweight verification pass:**
+   - Screenshot at desktop viewport — does the slice render as designed?
+   - `preview_console_logs` — any errors?
+   - `preview_network` with filter `failed` — any failed requests directly caused by this slice?
+   - Click through the main interactive elements from the self-verification checklist
+   - `preview_resize` to mobile (375×812) — screenshot
+
+4. **Stop the server.**
+
+5. **Add preview observations to builder confirmation below.** Console errors or failed network requests directly caused by this slice are ✗ items — fix before committing. Unrelated background errors from other parts of the app are noted but do not block.
+
 ```
 Builder confirmation:
   ✓/✗ [item] — [what was seen: "the player name 'Josh Allen' renders in the slot row, matching slot_tag in players.json"]
@@ -604,5 +623,6 @@ Get the project name from `docs/continuity/handoff.md` or the project directory 
 | Skipping the mid-deliverable documentation checkpoint on long deliverables | Context compression on slice 7 of 8 leaves the next session with a stale handoff — orientation from the wrong place | The checkpoint at slice 4 of a 5+ slice deliverable is mandatory and automatic — update the handoff before continuing |
 | Continuing to build after deliverable completion without surfacing the session boundary | The solo loses a natural stopping point and the next deliverable inherits this session's accumulated context | Surface the session boundary recommendation every time a deliverable completes — let the solo decide, but always offer the clean stop |
 | Self-verification that asserts ("data renders correctly") instead of observing | Assertions are code inspection — the same check code-review-and-quality already ran | Open the running app; state what was seen in the rendered output. Observed output only |
+| Skipping the preview check before committing | Console errors and responsive failures that would be caught in 30 seconds surface during solo-qa instead | Preview check runs as part of self-verification when Claude Code is available and the slice has visual output |
 | Continuing past two failed attempts on the same problem | Spiral without direction — the solo's time burns while confidence substitutes for diagnosis | Hard stop. Re-read the full slice spec and design file from scratch, report what was found, ask one question |
 | Declining or deferring a solo request to step back | The builder's assessment that progress is close does not override the solo's direction | The solo's step-back request is an immediate directive — stop, re-read, report. No exceptions |
