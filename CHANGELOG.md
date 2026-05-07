@@ -8,6 +8,20 @@ Each release is labeled with a severity:
 
 ---
 
+## v2.6.1 — 2026-05-07 — RECOMMENDED
+
+**Start skill lighter re-entry read**
+
+Named project resume and the resume pattern now read only the "Open right now" and "Next session picks up at" sections of handoff.md on initial load. Full handoff loads on demand when the session actually needs it — a question about an earlier decision, a stack question, a phase history question. Falls back to a full read if those sections are absent or empty.
+
+### What changed
+- `skills/start/SKILL.md`: re-entry now reads two active sections only; full handoff deferred until needed
+
+### Action required
+None for existing projects. Re-entry behavior changes automatically on next session open.
+
+---
+
 ## v2.6.0 — 2026-05-07 — RECOMMENDED
 
 **Live Preview Verification — browser inspection baked into design review and build**

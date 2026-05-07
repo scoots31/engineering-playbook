@@ -149,6 +149,24 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 7 (v2.6.1) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 7</div>
+      <div class="entry-title">Session Re-Entry Is Now Lighter — Full Context Loads Only When You Need It</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-improved">Improved</div>
+        <div class="change-body">
+          <div class="change-name">Faster re-entry — handoff reads only the two active sections on first load</div>
+          <div class="change-desc">When you resume a named project, the framework now reads only two sections from the handoff on initial load: "Open right now" and "Next session picks up at." That's enough to orient and get started. The rest of the handoff — earlier decisions, stack context, phase history — loads on demand, the moment the session actually needs it. If you ask about an earlier architectural decision or a stack question, that's when the full handoff loads, not before. If those two sections are absent or empty, the framework falls back to a full read as before. The result is less upfront token cost and faster orientation on every re-entry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 7 (v2.6.0) ── -->
   <div class="entry">
     <div class="entry-header">

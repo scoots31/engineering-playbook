@@ -672,7 +672,7 @@
           <div class="skill-name">start</div>
           <div class="skill-badge">Framework entry</div>
         </div>
-        <div class="skill-description">The framework's front door. Reads the opening message of a new project conversation and routes automatically to Brainstorm (exploratory ideas) or Discover (clear solution in mind). Checks for existing context before routing — never restarts a project already in progress. Detects deployed projects and opens a new cycle rather than continuing closed work.</div>
+        <div class="skill-description">The framework's front door. Reads the opening message of a new project conversation and routes automatically to Brainstorm (exploratory ideas) or Discover (clear solution in mind). Checks for existing context before routing — never restarts a project already in progress. Detects deployed projects and opens a new cycle rather than continuing closed work. On named project resume, reads only the two active handoff sections ("Open right now" and "Next session picks up at") on first load — full handoff loads on demand when the session actually needs it.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -683,6 +683,7 @@
               <li>Asks one question if routing is ambiguous</li>
               <li>Never announces the framework or explains phases</li>
               <li>One sentence of orientation, then just starts</li>
+              <li><strong>Lighter re-entry:</strong> named project resume reads only "Open right now" and "Next session picks up at" on load — earlier decisions, stack context, and phase history load on demand; falls back to full read if those sections are absent</li>
             </ul>
           </div>
           <div class="skill-section">
