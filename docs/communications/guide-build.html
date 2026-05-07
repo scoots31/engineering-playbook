@@ -1934,6 +1934,14 @@
         <div class="watchfor-item">
           <div class="watchfor-indicator"></div>
           <div class="watchfor-text">
+            <h4>Treating the preview check as a separate step after self-verification</h4>
+            <p>The preview check is part of self-verification — not a step that runs after it. In Claude Code, after the quality contract walk and before declaring code-complete, the framework starts the app server, navigates to the review URL, takes a screenshot, checks console logs, checks for failed network requests, clicks through main interactive elements, and checks the mobile viewport. Console errors or failed network requests directly caused by the slice are ✗ items in builder confirmation and must be fixed before commit. This is not an optional check and it is not a post-commit review — it runs before the commit, inside the existing self-verification flow. Non-visual slices (review URL is None) and Cursor sessions skip silently with no change to behavior.</p>
+          </div>
+        </div>
+
+        <div class="watchfor-item">
+          <div class="watchfor-indicator"></div>
+          <div class="watchfor-text">
             <h4>Check 9 running baseline-only on a project that handles personal, financial, or multi-tenant data</h4>
             <p>Check 9 reads <code>docs/tech-context.md</code> before it runs. If the Security Classification section is missing, it defaults to Standard — baseline checks only (9a–9e). That means class-specific checks for Personal, Financial, Authentication, Multi-tenant, Confidential, and Regulated never fire, even if the project clearly handles that kind of data. If your project stores PII, processes transactions, manages user credentials, or serves multiple tenants from shared infrastructure, add the Security Classification section to <code>docs/tech-context.md</code> now. The section is short — one to three lines stating the class or classes that apply. Once it's there, code review picks up the right checks automatically on the next slice.</p>
           </div>

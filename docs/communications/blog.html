@@ -149,6 +149,38 @@
   <p class="subtitle">What changed in the framework, what was added, and why — in plain language.</p>
   <div class="rule"></div>
 
+  <!-- ── MAY 7 (v2.6.0) ── -->
+  <div class="entry">
+    <div class="entry-header">
+      <div class="entry-date">May 7</div>
+      <div class="entry-title">Live Preview Verification — Browser Inspection Baked Into Design Review and Build</div>
+    </div>
+    <div class="entry-divider"></div>
+    <div class="change-list">
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Design review — Step 1.5: preview pass before specialist review runs</div>
+          <div class="change-desc">Before the three specialist lenses run their review, the framework now opens each design sprint HTML file in a real browser, takes desktop and mobile screenshots, and inspects key elements against the design identity tokens you set at sprint time. A raw hex value where a token name is expected is flagged as a design gap. Console errors and responsive failures are surfaced too. All of this feeds directly into the specialist review as design gap findings — so the review starts with a fuller picture. In Claude Code this fires automatically with no activation needed. Non-visual projects and rounds with no HTML design artifacts skip silently.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Solo-build — preview check inside self-verification, before commit</div>
+          <div class="change-desc">As part of the existing self-verification step — before the builder declares code-complete — the framework now starts the app server, navigates to the slice's review URL, takes a screenshot, checks console logs, checks for failed network requests, clicks through the main interactive elements, and tests the mobile viewport. Console errors or failed network requests directly caused by the slice are ✗ items in builder confirmation and must be fixed before commit. This runs within the existing self-verification flow, not as a separate step. Non-visual slices (review URL is None) skip silently. In Claude Code only — Cursor falls back to the existing self-verification behavior without the preview check.</div>
+        </div>
+      </div>
+      <div class="change-item">
+        <div class="change-badge badge-new">New</div>
+        <div class="change-body">
+          <div class="change-name">Auto-created launch config — one-time setup, reused every session</div>
+          <div class="change-desc">Both preview steps check for a <code>.claude/launch.json</code> file before starting. If it doesn't exist, the framework creates it automatically: design review writes a static Python HTTP server config, and solo-build reads the run command and port from <code>docs/tech-context.md</code>. Once created, the file is reused on every subsequent session — no manual setup required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MAY 5 (v2.4.0) ── -->
   <div class="entry">
     <div class="entry-header">

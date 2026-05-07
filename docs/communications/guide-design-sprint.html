@@ -1538,6 +1538,12 @@
               <td>Let the fan-out complete. Review all screens together as a set. If something looks wrong, address it in the next warmer/colder round on the affected screen — not mid-production.</td>
             </tr>
             <tr>
+              <td style="color:var(--rose);font-weight:600;">Expecting a prompt before the preview pass runs in design review</td>
+              <td>Step 1.5 is automatic in Claude Code — it fires between the state read and the specialist review without any activation.</td>
+              <td>If you wait for a confirmation prompt before the preview runs, you'll miss findings that were already surfaced. The preview pass outputs its findings and flows directly into the specialist synthesis — it is not a separate step that requires a go signal.</td>
+              <td>In Claude Code, let Step 1.5 run. If a project is non-visual or no HTML design artifacts exist, it skips silently — no intervention needed either way. In Cursor, the preview pass does not fire; the specialist review starts immediately.</td>
+            </tr>
+            <tr>
               <td style="color:var(--rose);font-weight:600;">Missing security process gaps in the process-mapper cross-reference</td>
               <td>The process-mapper reads the to-be map and annotates screens — but security gaps require reading the Security Classification from tech-context.md first. If that step is skipped or tech-context.md has no Security Classification section, the check runs as Standard and class-specific gaps go undetected.</td>
               <td>Security process gaps are process design failures, not code failures. A Personal-class project missing a data deletion path won't fail code review — it will ship without one. The design sprint is the only moment where these gaps can be caught before screens are approved and slices are written.</td>
