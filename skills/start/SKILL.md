@@ -36,8 +36,11 @@ If context already exists — read it, orient to where the project is, and conti
 If the opening message contains "guided on [name]", "/guided [name]", "resume [name]", or "pick up [name]":
 
 1. Read `[PLAYBOOK_ROOT]/projects.md` — find the row matching the name (case-insensitive)
-2. If found: read `[path]/docs/continuity/handoff.md` — orient in one sentence, close with direct action prompt. Do not run routing logic.
-3. If not found: stop. "I don't have [name] in the projects registry. What's the path to that project?" — add the entry, then resume.
+2. If found: read only the `## Open right now` and `## Next session picks up at` sections of `[path]/docs/continuity/handoff.md` — orient in one sentence, close with direct action prompt. Do not read the full handoff upfront. Do not run routing logic.
+3. If those sections are absent or empty: fall back to reading the full handoff.md.
+4. If not found in projects.md: stop. "I don't have [name] in the projects registry. What's the path to that project?" — add the entry, then resume.
+
+Load additional handoff sections (Context, What was just completed, Decisions log) only when the current task requires them — a question about an earlier decision, a stack question, a phase history question. Do not pre-load what isn't needed to start.
 
 > "Picking up [project] — [one sentence on current state from handoff]. Ready to start [unit of work X]? Say go."
 
@@ -54,7 +57,7 @@ Before reading what the person brought in, scan for project context:
 
 If any of these exist, do not run the routing logic. Orient to the current state and continue.
 
-**Resume pattern:** If the opening message contains "Resuming [project]" or similar resume-pattern language AND `docs/continuity/handoff.md` exists — skip routing entirely. Read the handoff, orient from it in one sentence, and continue. Do not re-run routing logic. Do not ask what phase they're in.
+**Resume pattern:** If the opening message contains "Resuming [project]" or similar resume-pattern language AND `docs/continuity/handoff.md` exists — skip routing entirely. Read only the `## Open right now` and `## Next session picks up at` sections of the handoff, orient from them in one sentence, and continue. Load additional sections on demand. Do not re-run routing logic. Do not ask what phase they're in.
 
 > "Picking up from [where handoff says] — [one sentence on current state]. Let's go."
 
