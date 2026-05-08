@@ -124,15 +124,22 @@ Extract 3–5 keywords from the discovery brief that describe the product type, 
 ~/Apps/.venv/bin/python3 ~/Developer/engineering-playbook/design-library/search.py "[keywords]" --top 5
 ```
 
-Present the top 3 results to the solo. For each, show: site name, north star, color scheme, primary font. One sentence max per result — the north star does the work.
+From the search results, select the top 3 that have a working review link (`Review:` field is not `(no link available)`). Do not present an option that has no link — a name and a north star phrase alone give the solo nothing to evaluate. If fewer than 3 results have links, present however many do.
+
+For each option, show: site name, north star, color scheme, and the review link as a clickable URL. The link is not optional — it is the reason the option is worth showing.
 
 > "Here are 3 reference directions from our design library that match this product's space:
 >
 > **[1] [Site name] ([scheme])** — [north star]
-> **[2] [Site name] ([scheme])** — [north star]
-> **[3] [Site name] ([scheme])** — [north star]
+> Review: [screenshotUrl or url]
 >
-> Which direction resonates — or is there a product you'd rather reference directly?"
+> **[2] [Site name] ([scheme])** — [north star]
+> Review: [screenshotUrl or url]
+>
+> **[3] [Site name] ([scheme])** — [north star]
+> Review: [screenshotUrl or url]
+>
+> Open any link to see the reference. Which direction resonates — or is there a product you'd rather reference directly?"
 
 **2b — Resolve direction.**
 

@@ -102,6 +102,8 @@ def normalize(entry):
     if not fonts:
         fonts = entry.get("fonts") or style.get("fonts") or []
 
+    screenshot_url = style.get("screenshotUrl") or style.get("thumbnailUrl") or ""
+
     return {
         "siteName": site_name,
         "northStar": north_star,
@@ -111,6 +113,7 @@ def normalize(entry):
         "colors": colors,
         "fonts": fonts,
         "url": url,
+        "screenshotUrl": screenshot_url,
         "source": source,
         "_raw": entry,
     }
@@ -159,6 +162,10 @@ def score_entry(norm, query_words, expanded_query):
     if not norm["northStar"]:
         score -= 10
 
+    # Penalize entries with no reviewable link — can't be shown to solo
+    if not norm.get("screenshotUrl") and not norm.get("url"):
+        score -= 20
+
     return score
 
 
@@ -177,6 +184,8 @@ def format_entry(norm, rank=None, score=None):
     primary_font = fonts[0] if fonts else "unknown"
     tag_str = ", ".join(tags) if tags else ""
 
+    review_link = norm.get("screenshotUrl") or norm.get("url") or ""
+
     prefix = f"[{rank}] " if rank else ""
     score_str = f" (score: {score})" if score is not None else ""
     lines = [
@@ -185,6 +194,7 @@ def format_entry(norm, rank=None, score=None):
         f"  Category: {industry}" + (f" · Tags: {tag_str}" if tag_str else ""),
         f"  Colors: {color_names or '(none)'}",
         f"  Font: {primary_font}",
+        f"  Review: {review_link or '(no link available)'}",
         f"  Source: {source}",
     ]
     return "\n".join(lines)
@@ -241,6 +251,8 @@ def main():
                 "colors": n["colors"][:6],
                 "fonts": n["fonts"][:3],
                 "url": n["url"],
+                "screenshotUrl": n.get("screenshotUrl", ""),
+                "reviewLink": n.get("screenshotUrl") or n.get("url") or "",
                 "source": n["source"],
             }
             for i, (s, n) in enumerate(top)
