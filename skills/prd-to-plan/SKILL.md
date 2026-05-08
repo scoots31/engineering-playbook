@@ -281,10 +281,12 @@ Iterate until approved. When approved, execute the backlog write immediately —
 On solo approval, update `docs/backlog.md` with the full plan. This is not optional and does not wait for the next session.
 
 **Step 1 — Write all phase records.**
-Add the Phase records section to `docs/backlog.md` with every phase record in full. Status set to `Planning` on all phases.
+Add the phase records section to `docs/backlog.md` using the exact header `## Phase Records`. Status set to `Planning` on all phases.
 
 **Step 2 — Write all deliverable records.**
-Add the Deliverable records section with every deliverable record in full. Status set to `Defined` on all deliverables.
+Add the deliverable records section using the exact header `## Deliverable Records`. Status set to `Defined` on all deliverables.
+
+The slice records section must use the exact header `## Slice Detail` — not `## Slice Records` or any other variation. The Solo Companion parser matches on these exact strings. A wrong header makes the entire section invisible to the companion.
 
 **Step 3 — Update every slice record.**
 Go into every slice record in the backlog and add the two fields that only prd-to-plan can set:

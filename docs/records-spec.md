@@ -338,6 +338,17 @@ A phase is not a time box, a sprint, or a feature list. A phase defined by "ever
 5. Decisions and Change Log — append-only history
 ```
 
+**Exact section header strings — use these verbatim. The Solo Companion parser matches on exact strings. A wrong header means the entire section is invisible to the companion.**
+
+```
+## Phase Records
+## Deliverable Records
+## Slice Detail
+## Decisions and Change Log
+```
+
+These are the only valid section headers. Do not use `## Slice Records`, `## Phase records`, or any other variation.
+
 ---
 
 ## Decisions and Change Log
