@@ -259,14 +259,16 @@ List any decisions that must be made before implementation can start:
 
 Before presenting the plan, run a slice quality scan across every Ready slice:
 
-For each slice, check three things:
-1. **Done criteria** — are there at least two concrete, verifiable criteria? A criterion passes if you can observe it against a running app in under 30 seconds. Descriptions of behavior ("handles errors gracefully") do not count. Observable outcomes only ("error state renders with [specific message] when API returns 500").
-2. **Quality contract** — are there at least two specific, checkable lines? Vague lines ("performant", "accessible") do not count. Specific behavior only ("renders within 200ms on a 10-item list", "keyboard navigable with tab order matching visual order").
-3. **Architecture type** — is every slice classified as Leaf node or Core architecture? An unclassified slice is not approvable. Resolve before presenting the plan.
+For each slice, check five things:
+1. **Plain language description** — is it present and written for the solo? No technical terms. Describes what the solo will see or have when the slice is done. If absent or missing entirely, the slice is not approvable — return to design review to write it.
+2. **Technical description** — is it present and written for the builder? Covers implementation approach, constraints, and edge cases. If absent or missing entirely, the slice is not approvable — return to design review to write it.
+3. **Done criteria** — are there at least two concrete, verifiable criteria? A criterion passes if you can observe it against a running app in under 30 seconds. Descriptions of behavior ("handles errors gracefully") do not count. Observable outcomes only ("error state renders with [specific message] when API returns 500").
+4. **Quality contract** — are there at least two specific, checkable lines? Vague lines ("performant", "accessible") do not count. Specific behavior only ("renders within 200ms on a 10-item list", "keyboard navigable with tab order matching visual order").
+5. **Architecture type** — is every slice classified as Leaf node or Core architecture? An unclassified slice is not approvable. Resolve before presenting the plan.
 
-If a slice fails either check, it is a rework risk. Resolve it before the plan is approved — either sharpen the criteria in the backlog record or split the slice into smaller units with tighter scope. A plan with vague slice records is not approvable.
+If a slice fails any check, it is a rework risk. Resolve it before the plan is approved — either write the missing fields, sharpen the criteria in the backlog record, or split the slice into smaller units with tighter scope. A plan with incomplete slice records is not approvable.
 
-State the outcome of the scan: "All slices pass quality check." or list the ones that need sharpening and resolve them.
+State the outcome of the scan: "All slices pass quality check." or list the ones that fail — which field is missing or vague — and resolve them before proceeding.
 
 Show the full plan. Ask:
 - Does the phase sequencing feel right — does it respect both risk and process order?

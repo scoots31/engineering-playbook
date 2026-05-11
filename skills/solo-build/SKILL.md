@@ -242,9 +242,11 @@ This is not optional. A core architecture slice that enters In Build without a P
 
   If the quality contract Security field does not address the class requirements for this slice's data domain, stop and return the slice to design review.
 
-**Slice readiness check** — before opening the branch, confirm two things:
-1. Can you state what done looks like for this slice as a single concrete observation against the running app? If the done criteria require interpretation to verify, they are too vague — sharpen them now.
-2. Is the scope bounded to one user interaction or system behavior? If the slice spans multiple distinct interactions, flag it to the solo before proceeding.
+**Slice readiness check** — before opening the branch, confirm four things:
+1. **Plain language description is present.** If absent, stop: *"SL-[ID] is missing its plain language description — the solo has no anchor for what this slice delivers. Return to design review to write it before build starts."*
+2. **Technical description is present.** If absent, stop: *"SL-[ID] is missing its technical description — the builder has no implementation anchor. Return to design review to write it before build starts."*
+3. Can you state what done looks like for this slice as a single concrete observation against the running app? If the done criteria require interpretation to verify, they are too vague — sharpen them now.
+4. Is the scope bounded to one user interaction or system behavior? If the slice spans multiple distinct interactions, flag it to the solo before proceeding.
 
 1. **Create the feature branch** — read `docs/tech-context.md` for the project's branching model, then create the branch:
    - Standard format: `feature/SL-[ID]-[short-slug]`
