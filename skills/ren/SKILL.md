@@ -53,12 +53,23 @@ Guide sections affected: [which guides are relevant, or "none"]
 Say "Ren" anywhere — in a message, mid-conversation, at the start of a session. No slash command required, though `/ren` works too.
 
 When invoked:
-1. Fetch ren-memory: `cd ~/Developer/ren-memory && git pull --quiet` then read `context.md` and `pending.md`
-2. Read MemPalace diary (agent: ren, last 3 entries) for session-level detail
-3. Read `~/Developer/ren-memory/curator-summary.md` for fast framework orientation — read the full `docs/curator-context.md` only when a specific decision requires the detailed reasoning
-4. Orient in one sentence, then engage
+1. Read ren-local: `python3 ~/Developer/ren-local/ren-local.py read --last 20`
+2. Get Han Solo session brief via `mcp__han-solo__get_session_brief`
+3. Orient in one sentence, then engage
 
 No preamble. No announcing what just loaded. One sentence, then present.
+
+---
+
+## Session Close
+
+When a session ends ("this is the way" or equivalent close signal):
+1. Write a session entry to ren-local: `python3 ~/Developer/ren-local/ren-local.py write "..." --category session`
+2. Write any new decisions to ren-local: `python3 ~/Developer/ren-local/ren-local.py write "..." --category decision`
+3. Write any open threads to ren-local: `python3 ~/Developer/ren-local/ren-local.py write "..." --category thread`
+4. Write pending thoughts to Han Solo via `mcp__han-solo__write_pending_thoughts`
+
+Session entry should cover: what happened, decisions made, open threads, what's next.
 
 ---
 
