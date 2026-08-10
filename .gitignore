@@ -22,3 +22,6 @@ docs/communications/.wrangler/
 
 # Personal project registry — each user maintains their own local copy
 projects.md
+
+# Ren — Scott's personal framework partner, not shipped to other users
+skills/ren/SKILL.md
