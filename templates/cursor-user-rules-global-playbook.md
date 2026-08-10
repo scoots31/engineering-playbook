@@ -2,19 +2,20 @@
 
 _Copy everything **below the dashed line** into Cursor **Settings → Rules → User rules** (global)._
 
-## Before you paste — one substitution required
+## Before you paste — two substitutions required
 
-Cursor does not expand shell variables or `~` in User rules. You must replace `[PLAYBOOK_ROOT]` with the absolute path to where you cloned this repo.
+Cursor does not expand shell variables or `~` in User rules. You must replace `[PLAYBOOK_ROOT]` with the absolute path to where you cloned this repo, and `[PROJECTS_ROOT]` with the absolute path to your projects folder.
 
-**To find your absolute path:** open a terminal, `cd` to where you cloned the repo, and run `pwd`. Copy that output and replace every instance of `[PLAYBOOK_ROOT]` below before pasting.
+**To find your absolute path:** open a terminal, `cd` to where you cloned the repo, and run `pwd`. Copy that output and replace every instance of `[PLAYBOOK_ROOT]` below before pasting. Do the same for wherever your projects folder is, and replace every instance of `[PROJECTS_ROOT]`.
 
-Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, replace `[PLAYBOOK_ROOT]` with `/Users/yourname/Developer/engineering-playbook`.
+Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, replace `[PLAYBOOK_ROOT]` with `/Users/yourname/Developer/engineering-playbook`. If your projects folder is `/Users/yourname/Developer/Development Files`, replace `[PROJECTS_ROOT]` with that.
 
 ---
 
 ## Solo Builder Framework — Global Playbook
 
 **Playbook root (absolute):** `[PLAYBOOK_ROOT]`
+**Projects root (absolute):** `[PROJECTS_ROOT]`
 
 ---
 
@@ -23,7 +24,7 @@ Example: if `pwd` returns `/Users/yourname/Developer/engineering-playbook`, repl
 Default is **bare** — no routing, no always-on. Skills load only when invoked.
 
 - "guided mode" → read `[PLAYBOOK_ROOT]/skills/start/SKILL.md`. Full phase chain. Always-on fires.
-- "guided on [name]" or "/guided [name]" → read `[PLAYBOOK_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
+- "guided on [name]" or "/guided [name]" → read `[PROJECTS_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
 - "piloted mode" → read always-on skills once, then wait for user to invoke phases.
 - "bare mode" → return to default. Silent until invoked.
 

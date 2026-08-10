@@ -35,7 +35,7 @@ If context already exists — read it, orient to where the project is, and conti
 
 If the opening message contains "guided on [name]", "/guided [name]", "resume [name]", or "pick up [name]":
 
-1. Read `[PLAYBOOK_ROOT]/projects.md` — find the row matching the name (case-insensitive)
+1. Read `[PROJECTS_ROOT]/projects.md` — find the row matching the name (case-insensitive)
 2. If found: read only the `## Open right now` and `## Next session picks up at` sections of `[path]/docs/continuity/handoff.md` — orient in one sentence, close with direct action prompt. Do not read the full handoff upfront. Do not run routing logic.
 3. If those sections are absent or empty: fall back to reading the full handoff.md.
 4. If not found in projects.md: stop. "I don't have [name] in the projects registry. What's the path to that project?" — add the entry, then resume.

@@ -157,7 +157,7 @@ in order. Do not skip any — a project that fails these will appear in the comp
 missing or empty content.
 
 **Check 1 — projects.md registration**
-Read `~/Developer/engineering-playbook/projects.md`. If the project is not in the table,
+Read `[PROJECTS_ROOT]/projects.md`. If the project is not in the table,
 add a row: `| [Project Name] | [absolute path to project root] |`
 Show the addition to the solo and confirm before writing.
 

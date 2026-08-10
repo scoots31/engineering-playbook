@@ -1,6 +1,7 @@
 ## Solo Builder Framework
 
 **Playbook root:** [PLAYBOOK_ROOT]
+**Projects root:** [PROJECTS_ROOT]
 
 ---
 
@@ -9,7 +10,7 @@
 Default is **bare** — no routing, no always-on. Skills load only when invoked.
 
 - "guided mode" → read `[PLAYBOOK_ROOT]/skills/start/SKILL.md`. Full phase chain. Always-on fires.
-- "guided on [name]" or "/guided [name]" → read `[PLAYBOOK_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
+- "guided on [name]" or "/guided [name]" → read `[PROJECTS_ROOT]/projects.md`, find the matching name, read `[path]/docs/continuity/handoff.md`, orient in one sentence, close with direct action prompt. Do not re-run routing logic. If name not found, ask for the path and add it to the registry.
 - "piloted mode" → read always-on skills once, then wait for user to invoke phases.
 - "bare mode" → return to default. Silent until invoked.
 

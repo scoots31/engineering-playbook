@@ -12,10 +12,37 @@ Use it as [PLAYBOOK_ROOT] throughout the remaining steps.
 
 ---
 
-## Step 2 — Install Claude Code configuration
+## Step 2 — Resolve and create the projects root
+
+The projects root is a folder kept separate from the playbook, so a solo's own project work
+never lives inside the framework's own repo. It sits next to the playbook root, named
+`Development Files` — e.g. if [PLAYBOOK_ROOT] is `/Users/name/Developer/engineering-playbook`,
+the projects root is `/Users/name/Developer/Development Files`. Resolve its absolute path and
+use it as [PROJECTS_ROOT] throughout the remaining steps.
+
+Create the folder if it does not already exist.
+
+Check for `[PROJECTS_ROOT]/projects.md`. If it does not exist, create it with this content:
+
+```
+# Projects Registry
+
+Maps project names to absolute paths. One row per project. Used by the framework
+to resume a named project — "guided on [name]" or `/guided [name]`.
+
+Add your own projects below.
+
+| Name | Path |
+|------|------|
+```
+
+---
+
+## Step 3 — Install Claude Code configuration
 
 Read `[PLAYBOOK_ROOT]/templates/claude-global-playbook.md`.
-Replace every instance of `[PLAYBOOK_ROOT]` with the resolved absolute path.
+Replace every instance of `[PLAYBOOK_ROOT]` with the resolved playbook root, and every
+instance of `[PROJECTS_ROOT]` with the resolved projects root.
 
 Check `~/.claude/CLAUDE.md`:
 - If it already contains `## Solo Builder Framework`, replace that section with the updated content.
@@ -25,10 +52,11 @@ Confirm to the user: "Claude Code configured — mode activation and skills dire
 
 ---
 
-## Step 3 — Output Cursor User Rules
+## Step 4 — Output Cursor User Rules
 
 Read `[PLAYBOOK_ROOT]/templates/cursor-user-rules-global-playbook.md`.
-Replace every instance of `[PLAYBOOK_ROOT]` with the resolved absolute path.
+Replace every instance of `[PLAYBOOK_ROOT]` with the resolved playbook root, and every
+instance of `[PROJECTS_ROOT]` with the resolved projects root.
 
 Output the full result to the user with this instruction:
 "Paste the following into Cursor → Settings → Rules → User rules (replace any previous install of this framework):"
@@ -37,6 +65,6 @@ Then output the full replaced content.
 
 ---
 
-## Step 4 — Confirm
+## Step 5 — Confirm
 
-Close with: "Installation complete. Say 'guided mode' in any Claude Code or Cursor session to start."
+Close with: "Installation complete. Your projects folder is at [PROJECTS_ROOT] — that's where Solo Companion should point too, if you're using it. Say 'guided mode' in any Claude Code or Cursor session to start."
