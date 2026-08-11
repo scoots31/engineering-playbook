@@ -855,7 +855,7 @@
             <div class="card-col-label">What it does</div>
             <ul>
               <li>Reads discovery brief and to-be process maps before producing anything</li>
-              <li>Asks one aesthetic question to route skin direction before any HTML is written</li>
+              <li>Establishes a design identity from the design library before any HTML is written (on-ramp 1)</li>
               <li>Identifies the hero screen — the screen where the moment of value is most visible</li>
               <li>Runs the warmer/colder loop on structure first, skin second</li>
               <li>Extends from hero to all screens once hero is approved</li>
@@ -890,31 +890,31 @@
           <span class="card-badge badge-support">Supporting skill</span>
         </div>
         <div class="card-desc">
-          Aesthetic guidance for HTML artifact production. Not a phase skill — it is activated by <code>design-sprint</code> when the situation calls for it, particularly when skin direction is unclear or when the solo wants a strong aesthetic starting point rather than a utilitarian one.
+          A general-purpose skill for building distinctive, production-grade frontend interfaces — not specific to design sprint, and not something design-sprint activates on its own. It's invoked directly any time the work is a web component, page, artifact, or UI, and applies just as well inside a design sprint as anywhere else in the framework.
         </div>
         <div class="card-grid">
           <div class="card-col">
-            <div class="card-col-label">When it activates</div>
+            <div class="card-col-label">When it's used</div>
             <ul>
-              <li>Solo asks for a specific aesthetic direction during skin pass</li>
-              <li>After three cold rounds on skin — indicates design system needs replacement, not incremental adjustment</li>
-              <li>When the build calls for distinctive visual quality beyond functional layout</li>
+              <li>Building a component, page, dashboard, or any web UI</li>
+              <li>When distinctive visual quality matters, not just functional layout</li>
+              <li>Deliberately avoids generic, default "AI-generated" aesthetics</li>
             </ul>
           </div>
           <div class="card-col">
             <div class="card-col-label">What it provides</div>
             <ul>
               <li>Production-grade aesthetic decisions — typography, spacing, color systems</li>
-              <li>Component patterns that can carry through all sprint screens</li>
-              <li>Design system consistency so secondary screens don't drift from the hero</li>
+              <li>Real working code, not just visual suggestions</li>
+              <li>Creative, polished output with attention to detail</li>
             </ul>
           </div>
           <div class="card-col">
-            <div class="card-col-label">Important</div>
+            <div class="card-col-label">Inside a design sprint</div>
             <ul>
-              <li>Does not replace the warmer/colder loop — it informs the skin pass</li>
-              <li>Design system established on the hero screen, inherited everywhere else</li>
-              <li>The solo's "warmer or colder" judgment is still the final word</li>
+              <li>Design identity (Step 2) still sets the anchor screens are built against</li>
+              <li>The warmer/colder loop is still how the solo steers toward the right direction</li>
+              <li>This skill informs execution quality, not the direction-setting itself</li>
             </ul>
           </div>
         </div>
@@ -934,8 +934,7 @@
             <div class="card-col-label">When it's used</div>
             <ul>
               <li>On-ramp 3 — reference exists (product, app, screenshot, URL)</li>
-              <li>After the aesthetic question in Step 2 produces a named reference</li>
-              <li>When "make a call" isn't enough and a specific direction was given</li>
+              <li>When a specific named reference needs extracting into a usable design direction</li>
             </ul>
           </div>
           <div class="card-col">
@@ -997,8 +996,8 @@
         <div class="onramp-card">
           <div class="onramp-label">On-ramp 1</div>
           <div class="onramp-title">From scratch</div>
-          <div class="onramp-desc">No visual exists. The design sprint opens with the discovery brief and produces an HTML artifact through a warmer/colder loop. The aesthetic question comes first — the solo either names a direction or the AI makes a call they'll react to.</div>
-          <p style="font-size:12.5px;color:var(--gray-700);margin-bottom:10px;line-height:1.5;"><strong>Path:</strong> Aesthetic question → hero screen first pass → structure warm → skin direction question → skin pass → approved hero → extend to all screens.</p>
+          <div class="onramp-desc">No visual exists. The design sprint opens with the discovery brief and produces an HTML artifact through a warmer/colder loop. A design identity comes first — resolved from the design library — before any HTML gets written.</div>
+          <p style="font-size:12.5px;color:var(--gray-700);margin-bottom:10px;line-height:1.5;"><strong>Path:</strong> Design identity → hero screen first pass → structure warm → skin pass → approved hero → extend to all screens.</p>
           <div class="onramp-when">This is the hardest path and the most common one. Expect more warmer/colder rounds when starting from a rough idea rather than a detailed brief.</div>
         </div>
         <div class="onramp-card">
@@ -1055,21 +1054,14 @@
           <div class="step-header">
             <div class="step-num">2</div>
             <div>
-              <div class="step-title">Ask the aesthetic question</div>
-              <div class="step-subtitle">On-ramp 1 and 3 only — routes skin direction before any HTML is written</div>
+              <div class="step-title">Establish the design identity</div>
+              <div class="step-subtitle">On-ramp 1 only — writes the anchor every screen and design review checks against</div>
             </div>
           </div>
           <div class="step-body">
-            <p>Before writing any HTML, one question is asked:</p>
-            <div class="callout callout-purple">
-              <blockquote>"Is there a product, app, or aesthetic direction you want this to feel like — or should I make a call and you react to it?"</blockquote>
-            </div>
-            <ul>
-              <li>If they name something (ESPN, Linear, a screenshot): note it. That's the aesthetic constraint. Route to <code>awesome-design-md</code> if extraction is needed.</li>
-              <li>If they say "make a call": produce a reasonable starting point and state what direction was chosen. They'll correct it in the warmer/colder loop.</li>
-              <li>If they say "Figma exists": route to on-ramp 2 — no aesthetic question needed.</li>
-            </ul>
-            <p>Do not skip this question. Establishing skin direction before the first pass saves multiple full rebuild rounds downstream.</p>
+            <p>Before writing any HTML, a design library search runs against what the solo described, returning three reference directions from real, named products for the solo to react to. If the solo names a specific product instead ("make it feel like Stripe"), the search targets that directly; if it's not already in the library, a fresh entry gets generated from a URL.</p>
+            <p>Once a direction is resolved, the full entry is read back — north star, color tokens with usage, typography, color scheme — and written to <code>docs/design/design-identity.md</code>. That file becomes the design anchor: every screen produced in this sprint references it, and design review checks every screen against it later.</p>
+            <p>Do not skip this step. Establishing the design identity before the first pass saves multiple full rebuild rounds downstream.</p>
           </div>
         </div>
 
@@ -1331,6 +1323,12 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td><strong>Design identity</strong></td>
+              <td><code>docs/design/design-identity.md</code></td>
+              <td>North star, color tokens, typography, and color scheme. On-ramp 1 only — the anchor every screen references and design review checks against.</td>
+              <td><span class="card-badge badge-gate">Gate</span></td>
+            </tr>
             <tr>
               <td><strong>Hero screen</strong></td>
               <td><code>docs/design/sprint-[id].html</code></td>

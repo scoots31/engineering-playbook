@@ -812,11 +812,11 @@
         <div class="hs-label">Phase skills</div>
       </div>
       <div class="header-stat">
-        <div class="hs-num">6</div>
+        <div class="hs-num">8</div>
         <div class="hs-label">Slice states</div>
       </div>
       <div class="header-stat">
-        <div class="hs-num">5</div>
+        <div class="hs-num">12</div>
         <div class="hs-label">Ready conditions</div>
       </div>
       <div class="header-stat">
@@ -920,7 +920,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Each round does</div>
             <ul>
-              <li>Applies PM, Tech Lead, and Data lenses to every screen</li>
+              <li>Applies PM, Tech Lead, and Data lenses to every screen — in Claude Code, this runs automatically as four specialist agents instead (UX, Data, Process, Scope), no separate activation needed</li>
               <li>Names and classifies each finding immediately</li>
               <li>Runs process coverage check against to-be map</li>
               <li>Defines or refines slices</li>
@@ -1021,7 +1021,7 @@
         </div>
         <div class="card-body">
           <p>Each round after the first is driven by what changed: spike results returned, design updates made, new screens added, stakeholder feedback received. Don't try to review everything equally every time — let the findings from the previous round drive the focus.</p>
-          <p>For each slice In Review: can it be promoted to Ready? Apply the five Ready conditions (see below). If yes, promote it. If not, name the specific blocker and carry it to the next round.</p>
+          <p>For each slice In Review: can it be promoted to Ready? Apply the Ready conditions (see below). If yes, promote it. If not, name the specific blocker and carry it to the next round.</p>
           <p>The process coverage check runs every round — not just Round 1. As slice definitions sharpen and process understanding deepens, gaps that weren't visible before may appear. Run the full coverage map every round and surface anything unresolved.</p>
         </div>
       </div>
@@ -1075,7 +1075,7 @@
         <div class="state-cell ready">
           <span class="state-emoji">✅</span>
           <div class="state-label">Ready</div>
-          <div class="state-meaning">All five Ready conditions are met. Design reference is unambiguous, done criteria are defined, dependencies known, no open spike, process anchor confirmed. Can be built now.</div>
+          <div class="state-meaning">Every Ready condition is met — design and process anchors set, done criteria and quality contract defined, dependencies resolved, no open spike, data anchor filled. Can be built now.</div>
           <div class="state-transition"><strong>Moves to:</strong> In Build when work starts.</div>
         </div>
 
@@ -1083,14 +1083,14 @@
           <span class="state-emoji">🔄</span>
           <div class="state-label">In Review</div>
           <div class="state-meaning">Identified — named and tracked in the backlog — but not yet fully defined. Needs more refinement: design clarity, missing done criteria, or unresolved questions that don't yet warrant a spike.</div>
-          <div class="state-transition"><strong>Moves to:</strong> Ready when all five conditions are met. Blocked when a spike is triggered.</div>
+          <div class="state-transition"><strong>Moves to:</strong> Ready when every condition is met. Blocked when a spike is triggered.</div>
         </div>
 
         <div class="state-cell blocked">
           <span class="state-emoji">🔬</span>
           <div class="state-label">Blocked</div>
-          <div class="state-meaning">Waiting on a specific spike result. The spike question must be named explicitly in the backlog — "Blocked: spike on [question]" is the only valid format. Vague blockers are not allowed.</div>
-          <div class="state-transition"><strong>Moves to:</strong> In Review (or Ready) when the spike result returns and the question is answered.</div>
+          <div class="state-meaning">Waiting on a named dependency. When it's a spike, the slice sits at <code>Blocked (spike)</code> until the result returns and a design-review round processes it — saving the spike result alone isn't enough to unblock it.</div>
+          <div class="state-transition"><strong>Moves to:</strong> In Review (or Ready) once the blocker is resolved.</div>
         </div>
 
         <div class="state-cell deferred">
@@ -1104,13 +1104,27 @@
           <span class="state-emoji">🔨</span>
           <div class="state-label">In Build</div>
           <div class="state-meaning">Currently being worked on by the builder (solo-build skill). All four build anchors are confirmed before work starts: design anchor, data anchor, done anchor, and process anchor.</div>
-          <div class="state-transition"><strong>Moves to:</strong> Done when QA passes and the solo confirms in the browser.</div>
+          <div class="state-transition"><strong>Moves to:</strong> In QA once the builder signals code-complete and the Review Agent clears it.</div>
+        </div>
+
+        <div class="state-cell">
+          <span class="state-emoji">🔍</span>
+          <div class="state-label">In QA</div>
+          <div class="state-meaning">code-review-and-quality is running its checks against the code. Any failure returns the slice to In Build with specific notes.</div>
+          <div class="state-transition"><strong>Moves to:</strong> In Test once code review passes and solo-qa clears it.</div>
+        </div>
+
+        <div class="state-cell">
+          <span class="state-emoji">🧪</span>
+          <div class="state-label">In Test</div>
+          <div class="state-meaning">solo-qa's AI verification and solo browser sign-off are both complete — code review passed, done criteria actively tested with evidence, solo confirmed in the browser. Verified, not assumed. This is not the same as Done.</div>
+          <div class="state-transition"><strong>Moves to:</strong> Done when phase-test confirms the whole phase works end-to-end, not just this slice in isolation.</div>
         </div>
 
         <div class="state-cell done">
           <span class="state-emoji">✓</span>
           <div class="state-label">Done</div>
-          <div class="state-meaning">Complete and verified. Code review passed, AI tested with evidence, solo confirmed in the browser. The slice's done criteria were verified — not assumed. Solo sign-off is required; code-complete alone is not Done.</div>
+          <div class="state-meaning">Built and verified against its data anchor, with phase-test confirming the full phase works end-to-end — not just this slice on its own.</div>
           <div class="state-transition"><strong>Terminal state</strong> unless a regression is found, which routes through qa-triage.</div>
         </div>
       </div>
@@ -1169,6 +1183,54 @@
           <div class="rc-body">
             <div class="rc-title">Process anchor is set</div>
             <div class="rc-detail">The slice is connected to a specific step in the to-be process map — or explicitly documented as infrastructure or background logic that doesn't map to a user-facing step. This is what allows the Plan phase to sequence slices by process order rather than just by dependency. A slice without a process anchor can't be Ready. Slices that don't map to any process step need an explicit decision: infrastructure, deferred feature, or scope creep.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">6</div>
+          <div class="rc-body">
+            <div class="rc-title">Plain language and technical descriptions are both written</div>
+            <div class="rc-detail">Plain language: no technical terms, clear to the solo. Technical: precise enough for a builder to start without asking a clarifying question. Both are required — one for the solo to recognize the slice, one for whoever builds it.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">7</div>
+          <div class="rc-body">
+            <div class="rc-title">Quality contract is defined</div>
+            <div class="rc-detail">At least one specific, checkable non-functional requirement — error handling, an edge case, a validation rule. This is what code review's quality-contract check verifies against later; a slice with no contract line has nothing for that check to hold it to.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">8</div>
+          <div class="rc-body">
+            <div class="rc-title">Self-verification checklist is defined</div>
+            <div class="rc-detail">What the builder confirms before presenting the slice as code-complete — a record of observations, not a self-grade. The builder never marks these pass or fail; that call belongs to the independent Review Agent.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">9</div>
+          <div class="rc-body">
+            <div class="rc-title">Data anchor is filled, or explicitly marked pending</div>
+            <div class="rc-detail">Either the data anchor points at real mock data already, or it's explicitly noted "Pending data-scaffold" — never left blank with no explanation.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">10</div>
+          <div class="rc-body">
+            <div class="rc-title">Interactive element inventory is complete (Figma-sourced slices only)</div>
+            <div class="rc-detail">Every interactive element in the slice's scope is classified — Functional, Deferred, or Out of scope — and written into the Notes field. Any element marked Deferred needs its own companion slice in the backlog.</div>
+          </div>
+        </div>
+
+        <div class="ready-condition">
+          <div class="rc-num">11</div>
+          <div class="rc-body">
+            <div class="rc-title">The solo confirms it's clear enough to hand to a builder</div>
+            <div class="rc-detail">The final check isn't a field — it's a judgment call only the solo makes. Everything above can be filled in and the slice still isn't Ready until the solo says so.</div>
           </div>
         </div>
 
@@ -1359,7 +1421,7 @@
             <tr>
               <td>Letting blocked slices sit without a named spike</td>
               <td>The blocker becomes invisible. It shows up in the backlog as "Blocked" with no context. The next session can't determine what's blocking it or how to unblock it. Blockers accumulate without resolution paths.</td>
-              <td><strong>Every blocked slice names the specific spike question.</strong> "Blocked: spike on whether MFL API returns historical scores by player" is a blocked slice. "Blocked: data question" is not. Name it or it will never get resolved.</td>
+              <td><strong>Every blocked slice names the specific spike question.</strong> Status is <code>Blocked (spike)</code>, with the actual question — "whether MFL API returns historical scores by player" — recorded in the slice, not just "data question." Name it or it will never get resolved.</td>
             </tr>
             <tr>
               <td>Defining slices without checking for existing patterns in the codebase</td>

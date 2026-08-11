@@ -1205,7 +1205,7 @@
             <ul>
               <li>If CI/CD configured: generate <code>tests/test_SL-[ID].py</code> from done criteria, run full suite — green proceeds, red regression blocks commit</li>
               <li>Commit: <strong>SL-[ID] code-complete — [name]</strong> (include test file if generated)</li>
-              <li>Update backlog: status → In QA, write test file path</li>
+              <li>Update backlog: status → In QA, write review URL</li>
               <li>Auto-invoke code-review-and-quality</li>
               <li>Do not wait for solo to trigger the handoff</li>
             </ul>
@@ -1264,7 +1264,7 @@
           <div class="skill-badge badge-technique">Technique skill</div>
         </div>
         <div class="skill-desc">
-          Test-driven development with a red-green-refactor loop. Invoked from solo-build when test-first development is the right approach for a slice. Tests verify behavior through public interfaces, not implementation details — so they survive refactors. One test, one implementation, one cycle at a time.
+          Test-driven development with a red-green-refactor loop, invoked on demand — say you want to build test-first, or ask for a red-green-refactor loop. Tests verify behavior through public interfaces, not implementation details — so they survive refactors. One test, one implementation, one cycle at a time.
         </div>
         <div class="skill-body">
           <div class="skill-section">
@@ -1666,7 +1666,7 @@
           <div class="chain-step">
             <div class="chain-step-label">Auto-invoked by solo-build</div>
             <div class="chain-step-name">code-review-and-quality</div>
-            <div class="chain-step-desc">7 checks: pattern, data sourcing, expandability, cleanliness, scope, docs, stack compliance.</div>
+            <div class="chain-step-desc">9 checks: pattern, data sourcing, expandability, cleanliness, scope, docs, stack compliance, quality contract, security — plus a 10th, design fidelity, for Figma-sourced slices.</div>
           </div>
           <div class="chain-step">
             <div class="chain-step-label">Auto-invoked on pass</div>

@@ -722,7 +722,7 @@
               <li>Gaps surface as targeted discussion questions, not just file names</li>
               <li>Classifies remaining gaps: undocumented work (ask) vs. work not done yet (starting phase)</li>
               <li>Initializes continuity docs and exits with clear orientation</li>
-              <li><strong>Companion compatibility pass</strong> — verifies projects.md registration, backlog section headers, handoff <code>## Open right now</code> section, and Review URL field on all slice records before exiting</li>
+              <li><strong>Companion compatibility pass</strong> — five checks before exiting: projects.md registration, backlog section headers, handoff <code>## Open right now</code> section, Review URL field on all slice records, and project hooks setup (writes <code>.claude/settings.json</code> with the required Stop hooks if missing)</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -877,7 +877,7 @@
             <ul>
               <li>One specific question — not open-ended exploration</li>
               <li>Timeboxed — produces a finding, not a design</li>
-              <li>Distinguishes "feasible with tradeoffs" from "not feasible"</li>
+              <li>Rates its own finding: Confidence High, Medium, or Low</li>
               <li>Routes back to the invoking phase with the answer</li>
               <li>Triggered by design-review when a slice is Blocked</li>
             </ul>
@@ -894,10 +894,10 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li><div class="output-tag">docs/spikes/[topic].md</div></li>
-              <li>Finding: feasible / feasible with tradeoffs / not feasible</li>
+              <li><div class="output-tag">docs/spikes/spike-[date]-[topic].md</div></li>
+              <li>Finding with a Confidence rating: High, Medium, or Low</li>
               <li>Recommendation for the invoking phase</li>
-              <li>Unblocks slice in design-review backlog</li>
+              <li>Design-review runs a round to process the result — the slice doesn't unblock automatically</li>
             </ul>
           </div>
         </div>
@@ -912,7 +912,7 @@
           <div class="category-title">Design</div>
           <div class="category-desc">Producing the shared visual artifact that every downstream phase points at.</div>
         </div>
-        <div class="skill-count">3 skills</div>
+        <div class="skill-count">4 skills</div>
       </div>
 
       <div class="skill-card" id="design-sprint">
@@ -950,6 +950,30 @@
               <li>to-be map annotated with screen references</li>
               <li>Optional stakeholder handoff — HTML + PDF + feedback template for async review</li>
               <li><strong>Gate:</strong> deferred decisions log required before planning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="client-context-design">
+        <div class="skill-card-header">
+          <div class="skill-name">client-context-design</div>
+          <div class="skill-badge">Design — automatic or manual</div>
+        </div>
+        <div class="skill-description">Loads a client's design system context — tokens, component inventory, layout patterns, regional variance rules — from a local design library repo, before any building starts. Generic and reusable across any client with a <code>context.md</code> file.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li>With context loaded and a Figma file present: implements accurately against known token values and component purpose, not guesswork</li>
+              <li>With context loaded and no Figma file: builds from scratch within the client's conventions, using the quick-build reference</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li><strong>Automatic</strong> — fires at design sprint start when the project's CLAUDE.md declares a <code>client_context</code> path</li>
+              <li><strong>Manual</strong> — invoked directly with <code>/client-context-design</code> for quick builds without a full project structure</li>
             </ul>
           </div>
         </div>
@@ -1144,7 +1168,7 @@
               <li>Each phase shows: slices, process steps completed, what it proves, dependencies, definition of done</li>
               <li>On approval: updates backlog with process anchors for every slice</li>
               <li>Groups slices into <strong>Deliverables</strong> — each deliverable carries a technical spec (AI-facing), solo description (solo-facing), and acceptance criteria (shared contract between both)</li>
-              <li>Deliverable type assigned: <strong>Screen</strong> (reviewed visually) or <strong>Logic</strong> (reviewed against evidence)</li>
+              <li>Deliverable type assigned: <strong>Screen</strong> (reviewed visually), <strong>Logic</strong> (reviewed against evidence), or <strong>Integration</strong> (data integration for a Screen deliverable)</li>
               <li><strong>Integration deliverables</strong> — every Screen deliverable with external data gets a companion Logic deliverable for data integration. Always sequences after its Screen companion is Accepted. Data questions log must be resolved before integration slices can be scoped.</li>
               <li><strong>Architecture type classification</strong> — each slice is classified as <strong>Leaf node</strong> (self-contained) or <strong>Core architecture</strong> (touches data models, shared logic, or infrastructure) during the slice design step. Unclassified slices cannot be approved — the quality scan blocks the plan until every slice has a type.</li>
             </ul>
@@ -1159,10 +1183,10 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li>Phased implementation plan (presented for approval)</li>
+              <li>Phased implementation plan, written directly into <strong>backlog.md</strong> — this is the real gate, not just a presented-for-approval document</li>
               <li>backlog.md updated with process anchors on every slice</li>
               <li>Open questions and stated assumptions documented</li>
-              <li>Hands off to <strong>to-issues</strong> on approval</li>
+              <li><strong>to-issues</strong> is available as an optional next step — not something Build waits on</li>
             </ul>
           </div>
         </div>
@@ -1242,16 +1266,15 @@
           <div class="skill-name">grill-me</div>
           <div class="skill-badge">On-demand — optional</div>
         </div>
-        <div class="skill-description">Skeptical PM stress-test. Hard questions, challenged assumptions, no vague answers accepted. Used before committing to a plan, before starting a significant build phase, or anytime the solo wants a second opinion that doesn't pull punches.</div>
+        <div class="skill-description">A relentless, one-question-at-a-time interview about a plan or design, walking each branch of the decision tree until reaching shared understanding. Used before committing to a plan, before starting a significant build phase, or anytime the solo wants a second opinion that doesn't pull punches.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
             <ul>
-              <li>Challenges the "why" — is this the right problem to solve?</li>
-              <li>Surfaces unstated assumptions and treats them as risks</li>
-              <li>Challenges scope — what's in that shouldn't be, what's missing?</li>
-              <li>Doesn't accept "it makes sense" — requires evidence or reasoning</li>
-              <li>Not adversarial — rigorous. The goal is a stronger plan.</li>
+              <li>Asks questions one at a time — not a batch of questions at once</li>
+              <li>For each question, offers a recommended answer</li>
+              <li>If a question can be answered by exploring the codebase, it explores the codebase instead of asking</li>
+              <li>Resolves dependencies between decisions one by one, branch by branch</li>
             </ul>
           </div>
           <div class="skill-section">
@@ -1259,14 +1282,6 @@
             <ul>
               <li>Explicitly engaged anytime before committing to a plan or phase</li>
               <li>Commonly: before planning, before Phase 1 build start</li>
-            </ul>
-          </div>
-          <div class="skill-section">
-            <div class="skill-section-label">Output</div>
-            <ul>
-              <li>List of challenged assumptions</li>
-              <li>Open questions that need answers before proceeding</li>
-              <li>Confirmed decisions that survived the challenge</li>
             </ul>
           </div>
         </div>
@@ -1279,9 +1294,9 @@
         <div class="category-icon">🔨</div>
         <div>
           <div class="category-title">Build</div>
-          <div class="category-desc">Slice-by-slice execution with discipline, anchors, and automatic QA handoff on completion.</div>
+          <div class="category-desc">Slice-by-slice execution with discipline, anchors, and independent verification on completion.</div>
         </div>
-        <div class="skill-count">4 skills</div>
+        <div class="skill-count">6 skills</div>
       </div>
 
       <div class="skill-card" id="solo-build">
@@ -1289,7 +1304,7 @@
           <div class="skill-name">solo-build</div>
           <div class="skill-badge">Phase skill — per slice</div>
         </div>
-        <div class="skill-description">Slice-by-slice build execution. Creates a feature branch at start, requires four anchors before writing code, follows journey order (first screen before second), surfaces mid-build discoveries immediately rather than silently resolving them, and commits on code-complete — automatically invoking the QA chain. Core architecture slices trigger an automatic principal engineer review before the branch opens. A pre-flight security check confirms the quality contract addresses the project's security class requirements before any branch opens — if not, the slice goes back to design review. Code review runs as an isolated sub-agent with no access to the build context, producing an unbiased review independent of implementation reasoning. In Claude Code: self-verification now includes a preview check — screenshot, console logs, failed network requests, interactive element click-through, and mobile viewport — all before committing. Console errors or failed network requests caused by the slice are ✗ items that must be fixed before code-complete. Skips silently for non-visual slices and in Cursor.</div>
+        <div class="skill-description">Slice-by-slice build execution. Creates a feature branch at start, requires four anchors before writing code, follows journey order (first screen before second), surfaces mid-build discoveries immediately rather than silently resolving them, and on code-complete signals an independent Review Agent — the builder never grades its own work or declares a slice done. Core architecture slices trigger an automatic principal engineer review before the branch opens. A pre-flight security check confirms the quality contract addresses the project's security class requirements before any branch opens — if not, the slice goes back to design review. In Claude Code: self-verification now includes a preview check — screenshot, console logs, failed network requests, interactive element click-through, and mobile viewport — all before committing. Console errors or failed network requests caused by the slice are ✗ items that must be fixed before code-complete. Skips silently for non-visual slices and in Cursor.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1299,10 +1314,10 @@
               <li><strong>Architecture type gate</strong> — before branch opens, checks the slice's Architecture type. If Core architecture: principal engineer review fires automatically. No exceptions. Outcome recorded in the Notes field before any code is written.</li>
               <li>Journey order — first screen before second, dependencies block</li>
               <li>Mid-build discoveries surfaced immediately — never silently resolved</li>
-              <li><strong>Self-verification checklist run before code-complete</strong> — builder confirmation populated with ✓/✗ results before any handoff</li>
+              <li><strong>QA manifest recorded before code-complete</strong> — a record of observations only. The builder never marks items pass or fail, and never states whether done criteria are met.</li>
               <li>Commit on code-complete: <code>SL-[ID] code-complete — [name]</code></li>
-              <li>Status after code-complete: <strong>In QA</strong> (not Done — QA and phase-test complete the chain)</li>
-              <li>Auto-invokes <strong>code-review-and-quality</strong> on code-complete</li>
+              <li><strong>Review Agent</strong> — an independent agent, given only the slice ID, backlog path, design file, data spec, and review link — nothing from the builder's own notes. It forms its own read of the anchors and done criteria, and returns CLEARED or GAPS. On CLEARED: status → <strong>In Test</strong>, solo gets the review link. On GAPS: returns to the builder with the specific list.</li>
+              <li>Once cleared, <strong>code-review-and-quality</strong> runs automatically, then <strong>solo-qa</strong></li>
               <li><strong>Rollback protocol</strong> — when a slice that has already passed QA (In Test or Done) needs to be rebuilt, this is a rollback. Builder assesses scope (targeted fix vs. full rebuild), states the case, and waits for solo confirmation before any status changes. On confirmation: log entry written, slice returns to In Build, deliverable reverts to Pending Acceptance, phase reverts to In Progress if Completed. Full rebuild: existing code discarded, spec and design file re-read from scratch.</li>
             </ul>
           </div>
@@ -1318,7 +1333,41 @@
             <ul>
               <li>Feature branch created</li>
               <li>Code commit: <div class="output-tag">SL-[ID] code-complete — [name]</div></li>
-              <li>Auto-handoff to <strong>code-review-and-quality</strong></li>
+              <li>Signal sent to the independent <strong>Review Agent</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card" id="review-agent">
+        <div class="skill-card-header">
+          <div class="skill-name">review-agent</div>
+          <div class="skill-badge">Auto-invoked — from solo-build</div>
+        </div>
+        <div class="skill-description">Independent verification, run because the builder cannot be a neutral judge of its own work. Receives only the slice ID, backlog path, design file, data spec, and review URL — nothing from the builder's own QA notes or self-assessment. Reads the source files and the running output directly and forms its own conclusions.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li>Never consults the builder's self-report at any point</li>
+              <li>A claim that data was written isn't evidence — only a confirmed read of the data store is</li>
+              <li>The design file is the standard; the running output is measured against it, not against the builder's description of it</li>
+              <li>Only two outputs exist: <strong>CLEARED</strong> or <strong>GAPS</strong> — "not a blocker" or "mostly passes" are not valid outputs</li>
+              <li>Every gap names what was expected and what was actually observed</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li>Automatically, after solo-build signals QA complete — for individual slices and full deliverables</li>
+              <li>In Claude Code: spawned as a sub-agent with no access to the build context</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">Output</div>
+            <ul>
+              <li><strong>CLEARED:</strong> backlog status → In Test, solo gets the review link</li>
+              <li><strong>GAPS:</strong> returns to the builder with the specific list — the builder addresses every item and signals complete again, and the Review Agent runs from scratch</li>
             </ul>
           </div>
         </div>
@@ -1366,12 +1415,37 @@
         </div>
       </div>
 
+      <div class="skill-card" id="solo-simulator">
+        <div class="skill-card-header">
+          <div class="skill-name">solo-simulator</div>
+          <div class="skill-badge">Phase skill — autonomous build</div>
+        </div>
+        <div class="skill-description">Stands in for the human product owner at every decision gate during a test run — the mechanism autopilot uses to play every gate without the solo present. Operates strictly from a locked brief: approves what matches it, pushes back on what doesn't, and never blocks indefinitely.</div>
+        <div class="skill-body">
+          <div class="skill-section">
+            <div class="skill-section-label">Key Elements</div>
+            <ul>
+              <li>Setup mode runs a one-question-at-a-time Q&amp;A to generate the locked brief before anything else can happen</li>
+              <li>Vague or incomplete answers get noted as an assumption and flagged, rather than blocking setup</li>
+              <li>Every decision at every gate is checked against the brief — not against what feels reasonable in the moment</li>
+            </ul>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">When It Runs</div>
+            <ul>
+              <li>Invoked directly with <code>/solo-simulator</code>, or "activate the simulator" / "run a test"</li>
+              <li>Used throughout <strong>autopilot</strong> runs to stand in for the solo at every gate</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="skill-card" id="tdd">
         <div class="skill-card-header">
           <div class="skill-name">tdd</div>
           <div class="skill-badge">Supporting skill</div>
         </div>
-        <div class="skill-description">Test-driven build technique. Tests are written before implementation — red, green, refactor. Invokable from solo-build when a TDD approach is chosen for a slice. Ensures test coverage is built in, not bolted on.</div>
+        <div class="skill-description">Test-driven build technique, invoked on demand — say you want to build test-first, or ask for a red-green-refactor loop. Tests verify behavior through public interfaces, not implementation details, so they survive refactors.</div>
         <div class="skill-body">
           <div class="skill-section">
             <div class="skill-section-label">Key Elements</div>
@@ -1632,9 +1706,10 @@
             <div class="skill-section-label">Key Elements</div>
             <ul>
               <li><strong>Stage 1:</strong> Environment readiness — pre-flight gate. Mock inactive, all slices deployed, app loads clean. Nothing runs until this passes.</li>
-              <li><strong>Stage 2:</strong> Use case creator — derives test plan from discovery brief + to-be map. Not invented.</li>
+              <li><strong>Stage 2:</strong> Use case creator — derives test plan from discovery brief + design. Not invented.</li>
               <li><strong>Stage 3:</strong> Data specialist — mock→real swap confirmed, API read/write verified, data-mapping.md validated</li>
-              <li><strong>Stage 4+5:</strong> Tester + Regression specialist — every scenario with named evidence, all In Test slices re-walked</li>
+              <li><strong>Stage 4:</strong> Tester — every scenario from the Stage 2 plan run with named evidence</li>
+              <li><strong>Stage 5:</strong> Regression specialist — every previously <strong>Done</strong> slice re-walked to confirm its done criteria still hold</li>
               <li><strong>Stage 6:</strong> Acceptance reviewer — PM lens, does what was built match discovery brief intent?</li>
               <li><strong>Stage 7:</strong> Gate — OPEN (deploy) or HOLD (specific items). HOLD: re-test affected scenarios only.</li>
               <li><strong>On OPEN:</strong> all In Test slices move to <strong>Done</strong>, phase record moves to <strong>Completed</strong>, phase completion record appended to backlog.md</li>
@@ -1762,7 +1837,7 @@
         <div class="skill-description">Institutional memory across every session and phase. Captures decisions with reasoning and alternatives considered, outstanding questions with owners and blocking status, assumptions being treated as true, risks, changes, glossary, target state, and session handoffs. The handoff document is the first thing read when a new session opens — context is never lost between sessions.</div>
         <div class="skill-body">
           <div class="skill-section">
-            <div class="skill-section-label">Key Elements (10 Documents)</div>
+            <div class="skill-section-label">Key Elements (11 Documents)</div>
             <ul>
               <li><strong>sessions.md</strong> — log of every session</li>
               <li><strong>decisions.md</strong> — with reasoning + alternatives</li>
@@ -1774,6 +1849,7 @@
               <li><strong>target-state.md</strong> — what done looks like</li>
               <li><strong>handoff.md</strong> — overwritten each session, first read next session</li>
               <li><strong>onboarding.md</strong> — new collaborator orientation</li>
+              <li><strong>current-phase.md</strong> — current phase marker</li>
               <li><strong>Long-gap re-entry</strong> — three-check protocol on 21+ day gaps: codebase state, environment, context validity</li>
             </ul>
           </div>
@@ -1788,7 +1864,7 @@
           <div class="skill-section">
             <div class="skill-section-label">Output</div>
             <ul>
-              <li><div class="output-tag">docs/continuity/</div> directory — 10 documents</div></li>
+              <li><div class="output-tag">docs/continuity/</div> directory — 11 documents</li>
               <li>handoff.md updated every session end</li>
               <li>Continuous capture — no batch processing</li>
             </ul>

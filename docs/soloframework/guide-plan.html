@@ -797,7 +797,7 @@
     <div class="ph-eyebrow">Solo Builder Framework — Phase Guide</div>
     <div class="ph-phase-tag">Planning Phase</div>
     <h1>Plan</h1>
-    <p>Convert the Ready backlog into a sequenced phase plan and executable GitHub issues. This phase is where risk gets confronted — not deferred. The output is a set of GitHub issues that Build works from, not a document that gets filed away.</p>
+    <p>Convert the Ready backlog into a sequenced phase plan written into the backlog itself. This phase is where risk gets confronted — not deferred. The output is what Build works from directly, not a document that gets filed away.</p>
     <div class="header-stats">
       <div class="header-stat">
         <div class="hs-num orange">2</div>
@@ -832,10 +832,10 @@
 
       <div class="card">
         <div class="card-inner">
-          <p>Planning converts the Ready backlog — slices that survived Design Review — into a sequenced, multi-phase implementation plan, then into executable GitHub issues. It's the bridge between "we know what to build" and "we know what to do today."</p>
+          <p>Planning converts the Ready backlog — slices that survived Design Review — into a sequenced, multi-phase implementation plan written directly into the backlog. It's the bridge between "we know what to build" and "we know what to do today."</p>
           <p>The defining principle of this phase: <strong>sequence by risk, not by comfort.</strong> The hardest, most uncertain work goes first. Not because it's the most exciting, but because it's the work that could invalidate everything else if it fails. If an assumption buried in Phase 3 turns out to be wrong, you've built two phases on a broken foundation. Planning forces that reckoning early.</p>
           <p>The input is the Ready backlog plus the deferred decisions log from the Design Sprint. The deferred decisions log is critical — it contains both visible scope decisions (what was explicitly put out of Phase 1) and implied infrastructure decisions (backend work that must exist before certain screens can function). Both feed into sequencing.</p>
-          <p><code style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;font-family:'SF Mono','Fira Code',monospace">grill-me</code> can run before planning to stress-test the approach. It's optional but valuable when the plan involves significant assumptions. <code style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;font-family:'SF Mono','Fira Code',monospace">to-issues</code> runs after the plan is approved to convert it into GitHub issues in dependency order. Build cannot start without those issues.</p>
+          <p><code style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;font-family:'SF Mono','Fira Code',monospace">grill-me</code> can run before planning to stress-test the approach. It's optional but valuable when the plan involves significant assumptions. <code style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;font-family:'SF Mono','Fira Code',monospace">to-issues</code> can run after the plan is approved to convert it into GitHub issues in dependency order — an optional convenience layer. Build reads the backlog directly and doesn't wait on it.</p>
         </div>
       </div>
 
@@ -1090,7 +1090,7 @@
         <div class="section-icon">&#x1F4CB;</div>
         <div>
           <div class="section-title">Step-by-step experience</div>
-          <div class="section-subtitle">How planning actually runs from start to GitHub issues</div>
+          <div class="section-subtitle">How planning actually runs from start to a backlog Build can read</div>
         </div>
       </div>
 
@@ -1141,8 +1141,8 @@
         <div class="step-item">
           <div class="step-number">7</div>
           <div class="step-content">
-            <h4>Run to-issues to create GitHub issues in dependency order</h4>
-            <p><code style="font-size:12px;background:var(--gray-100);padding:1px 5px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">to-issues</code> converts the approved plan into GitHub issues — blockers first, so dependent issue numbers can be referenced in subsequent issues. Labels are applied: Phase 1/2/etc., Ready, Infrastructure, Blocked. Build starts from these issues, not from the plan document.</p>
+            <h4>Optional: run to-issues to create GitHub issues in dependency order</h4>
+            <p><code style="font-size:12px;background:var(--gray-100);padding:1px 5px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">to-issues</code> converts the approved plan into GitHub issues — blockers first, so dependent issue numbers can be referenced in subsequent issues. Labels are applied: Phase 1/2/etc., Ready, Infrastructure, Blocked. This is a convenience layer for tracking — Build reads the backlog directly and starts whether or not this step runs.</p>
           </div>
         </div>
       </div>
@@ -1246,30 +1246,31 @@
       <div class="gate-block">
         <div class="gate-icon">&#x1F511;</div>
         <div class="gate-body">
-          <h3>GitHub issues created for Phase 1 Ready slices</h3>
-          <p>Build cannot start without issues to work from. The gate is not "the plan is approved" — approved plans can sit in documents indefinitely. The gate is the moment the plan becomes a tracked set of issues in GitHub: concrete, assigned to a phase, labeled, and self-contained enough for Build to start.</p>
+          <h3>Plan written to the backlog</h3>
+          <p>Build cannot start without a real plan to work from. The gate is not "the plan is approved" — approved plans can sit in documents indefinitely. The gate is the moment the plan is written into <code style="font-size:11px;background:var(--gray-100);padding:1px 4px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">docs/backlog.md</code>: phase and deliverable records created, every slice sequenced with its dependencies, done criteria, and process anchor.</p>
           <div class="gate-criteria">
             <div class="gate-criterion">
               <div class="gc-check">&#x2713;</div>
-              <span>Phase 1 slices have GitHub issues created in dependency order</span>
+              <span>Phase and deliverable records written to the backlog</span>
             </div>
             <div class="gate-criterion">
               <div class="gc-check">&#x2713;</div>
-              <span>Each issue contains a design reference to the relevant screen and element</span>
+              <span>Every slice has a design reference to the relevant screen and element</span>
             </div>
             <div class="gate-criterion">
               <div class="gc-check">&#x2713;</div>
-              <span>Each issue contains the process anchor — which to-be step it implements</span>
+              <span>Every slice has the process anchor — which to-be step it implements</span>
             </div>
             <div class="gate-criterion">
               <div class="gc-check">&#x2713;</div>
-              <span>Each issue has verifiable done criteria (not descriptions of effort)</span>
+              <span>Every slice has verifiable done criteria (not descriptions of effort)</span>
             </div>
             <div class="gate-criterion">
               <div class="gc-check">&#x2713;</div>
-              <span>Process anchors are written to the backlog on every Ready slice</span>
+              <span>Slices are sequenced in dependency order within their phase</span>
             </div>
           </div>
+          <p style="margin-top:14px;font-size:13px;color:var(--gray-500);">Turning the plan into GitHub issues is available as an optional next step — a convenience layer, not something Build waits on.</p>
         </div>
       </div>
     </div>
@@ -1287,9 +1288,9 @@
       <div class="handoff-grid">
         <div class="handoff-card">
           <div class="hc-label">What to build</div>
-          <h4>GitHub issues</h4>
-          <p>The Phase 1 issues are the build queue. <code style="font-size:11px;background:var(--gray-100);padding:1px 4px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">solo-build</code> selects the next slice from the open Phase 1 issues, reads the issue, and starts. No other document is required to begin a slice — the issue is self-contained.</p>
-          <span class="hc-file">gh issue list --label "Phase 1"</span>
+          <h4>The backlog</h4>
+          <p><code style="font-size:11px;background:var(--gray-100);padding:1px 4px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">solo-build</code> reads <code style="font-size:11px;background:var(--gray-100);padding:1px 4px;border-radius:3px;font-family:'SF Mono','Fira Code',monospace">docs/backlog.md</code> directly and selects the next Ready slice by plan priority — it never asks which one to work on. No GitHub issue is required to begin a slice; the backlog record is self-contained.</p>
+          <span class="hc-file">docs/backlog.md</span>
         </div>
         <div class="handoff-card">
           <div class="hc-label">What it looks like</div>

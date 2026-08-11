@@ -716,7 +716,7 @@
     <a href="#what-this-phase-is" class="nav-item"><span class="nav-dot"></span>What this phase is</a>
     <a href="#skills" class="nav-item"><span class="nav-dot"></span>Skills in this phase</a>
     <a href="#auto-chain" class="nav-item"><span class="nav-dot"></span>The auto-chain</a>
-    <a href="#seven-checks" class="nav-item"><span class="nav-dot"></span>The 7 checks</a>
+    <a href="#seven-checks" class="nav-item"><span class="nav-dot"></span>The checks</a>
     <a href="#done-definition" class="nav-item"><span class="nav-dot"></span>What "Done" requires</a>
     <a href="#triage" class="nav-item"><span class="nav-dot"></span>qa-triage — when it fires</a>
     <a href="#gate" class="nav-item"><span class="nav-dot"></span>The gate</a>
@@ -855,7 +855,7 @@
           <div class="skill-cell">
             <div class="skill-cell-label">Outcomes</div>
             <ul>
-              <li><strong>Pass:</strong> slice marked Done, backlog updated, git action per branching model</li>
+              <li><strong>Pass:</strong> slice marked In Test, backlog updated, git action per branching model — Done comes later, once phase-test confirms the whole phase</li>
               <li><strong>Fail (Part 1):</strong> back to In Build with specific notes</li>
               <li><strong>Unexpected discovery:</strong> invoke qa-triage immediately</li>
               <li><strong>Open missing req:</strong> define or defer before sign-off prompt</li>
@@ -942,36 +942,36 @@
             <div class="chain-step">
               <div class="chain-node trigger">1</div>
               <div class="chain-content">
-                <div class="chain-label plain">solo-build declares code-complete</div>
-                <div class="chain-desc">The slice passes the build. solo-build automatically invokes code-review-and-quality. Slice status moves to In QA.</div>
+                <div class="chain-label plain">solo-build signals the Review Agent</div>
+                <div class="chain-desc">The builder records QA observations — it never marks items pass or fail, and never declares the slice done. That call belongs to the Review Agent alone.</div>
               </div>
             </div>
             <div class="chain-step">
               <div class="chain-node qa-step">2</div>
               <div class="chain-content">
-                <div class="chain-label">code-review-and-quality</div>
-                <div class="chain-desc">Runs 7 checks. On pass: logs confirmation in backlog, auto-invokes solo-qa. On fail: returns slice to In Build with specific notes. QA does not proceed until this passes.</div>
+                <div class="chain-label">Review Agent — independent verification</div>
+                <div class="chain-desc">A separate agent, given only the slice ID, backlog path, design file, data spec, and review link — nothing from the builder's own notes. It forms its own read of the four anchors and done criteria. CLEARED: status → In Test, solo gets the review link. GAPS: returns to the builder with the specific list; nothing is skipped.</div>
               </div>
             </div>
             <div class="chain-step">
               <div class="chain-node qa-step">3</div>
               <div class="chain-content">
-                <div class="chain-label">solo-qa Part 1 — AI verification</div>
-                <div class="chain-desc">Gate check confirms code review pass is logged and builder confirmation is populated. AI reads all 4 anchors, actively tests each done criterion against the running output with named evidence, and verifies design fidelity. If anything fails: slice returns to In Build with specific notes.</div>
+                <div class="chain-label">code-review-and-quality</div>
+                <div class="chain-desc">Runs automatically once cleared. 9 checks — plus a 10th, design fidelity, for Figma-sourced slices. On pass: auto-invokes solo-qa. On fail: returns slice to In Build with specific notes.</div>
               </div>
             </div>
             <div class="chain-step">
               <div class="chain-node qa-step">4</div>
               <div class="chain-content">
-                <div class="chain-label">solo-qa Part 2 — Solo browser sign-off</div>
-                <div class="chain-desc">AI presents the sign-off request with builder confirmation already shown. Solo opens the running slice in browser alongside the design reference, walks through each done criterion, and confirms. The AI waits. In Test is not marked until the solo confirms.</div>
+                <div class="chain-label">solo-qa Part 1 — AI verification</div>
+                <div class="chain-desc">Gate check confirms the code review pass is logged. AI reads all 4 anchors, actively tests each done criterion against the running output with named evidence, and verifies design fidelity. If anything fails: slice returns to In Build with specific notes.</div>
               </div>
             </div>
             <div class="chain-step">
               <div class="chain-node" style="background:#F0FDF4;color:#15803D;border:2px solid #86EFAC;font-size:10px;font-weight:800">5</div>
               <div class="chain-content">
-                <div class="chain-label plain">In Test logged in backlog</div>
-                <div class="chain-desc">Backlog updated: status → In Test. QA pass summary logged with code review, AI verification, and solo sign-off recorded. Dependent slices checked for unblocking. Version control action taken per branching model. The slice reaches Done when phase-test gate opens.</div>
+                <div class="chain-label plain">solo-qa Part 2 — Solo browser sign-off</div>
+                <div class="chain-desc">Solo opens the running slice in browser alongside the design reference, walks through each done criterion, and confirms. The AI waits — nothing advances until the solo signs off. The slice stays In Test until phase-test confirms the whole phase works end-to-end; only then does it reach Done.</div>
               </div>
             </div>
           </div>
@@ -984,18 +984,18 @@
       <div class="section-header">
         <div class="section-icon">&#x26AC;</div>
         <div>
-          <div class="section-title">The 7 checks</div>
-          <div class="section-subtitle">Every check in code-review-and-quality. All 7 must pass before QA proceeds.</div>
+          <div class="section-title">The checks</div>
+          <div class="section-subtitle">Every check in code-review-and-quality. All must pass before QA proceeds — 9 always run, plus a 10th for Figma-sourced slices.</div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
           <div class="card-title-plain">code-review-and-quality quality gate</div>
-          <div class="card-badge gate">All 7 required</div>
+          <div class="card-badge gate">All required</div>
         </div>
         <div class="card-desc">
-          These checks are not a suggestion list — they are all required. A single fail returns the slice to In Build. The code review does not proceed to partial confirmation. The chain does not continue to solo-qa until all 7 pass.
+          These checks are not a suggestion list — they are all required. A single fail returns the slice to In Build. The code review does not proceed to partial confirmation. The chain does not continue to solo-qa until every applicable check passes.
         </div>
         <div class="check-grid">
           <div class="check-item">
@@ -1040,11 +1040,32 @@
               <div class="check-desc">Anything that needs to be understood by the next session is documented at the appropriate level. Non-obvious decisions have a brief note. Complex logic has a comment. Nothing requires archaeology to understand intent.</div>
             </div>
           </div>
-          <div class="check-item" style="grid-column: 1 / -1; max-width: 100%;">
+          <div class="check-item">
             <div class="check-num">7</div>
             <div class="check-content">
               <div class="check-name">stack</div>
               <div class="check-desc">The implementation stays within the defined stack and architecture constraints from <code>docs/tech-context.md</code>. No new dependencies introduced without explicit decision. No architectural deviations from the established patterns. The slice builds within the system, not around it.</div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-num">8</div>
+            <div class="check-content">
+              <div class="check-name">quality contract</div>
+              <div class="check-desc">Every line in the slice's quality contract is a requirement, not a suggestion. Each one is checked against the code and marked satisfied or not — adversarially, looking for the gap rather than the nearest thing that could arguably count.</div>
+            </div>
+          </div>
+          <div class="check-item" style="grid-column: 1 / -1; max-width: 100%;">
+            <div class="check-num">9</div>
+            <div class="check-content">
+              <div class="check-name">security</div>
+              <div class="check-desc">Runs on every slice regardless of the quality contract. Five baseline checks always run — input sanitization, data scoping to the authenticated user, server-side auth checks, injection prevention, and no secrets in client-visible code. If the slice touches Personal, Financial, Authentication, Multi-tenant, Confidential, or Regulated data (per <code>docs/tech-context.md</code>'s security classification), additional class-specific checks run too — up to 20 sub-checks total across all classes.</div>
+            </div>
+          </div>
+          <div class="check-item" style="grid-column: 1 / -1; max-width: 100%;">
+            <div class="check-num">10</div>
+            <div class="check-content">
+              <div class="check-name">design fidelity</div>
+              <div class="check-desc">Only runs when the slice's design anchor references a Figma file — skipped and marked N/A otherwise.</div>
             </div>
           </div>
         </div>
@@ -1084,7 +1105,7 @@
                 <td>Code review logged</td>
                 <td>code-review-and-quality</td>
                 <td><span class="done-check">logged in backlog</span></td>
-                <td>All 7 quality checks passed and the confirmation is recorded in the slice's backlog entry with the date. This is the gate that solo-qa checks before beginning Part 1.</td>
+                <td>All quality checks passed and the confirmation is recorded in the slice's backlog entry with the date. This is the gate that solo-qa checks before beginning Part 1.</td>
               </tr>
               <tr>
                 <td>AI verified with evidence</td>
@@ -1222,7 +1243,7 @@
 
       <div class="card">
         <div class="card-body body-prose">
-          <p>Phase test runs 7 specialist lenses across the completed phase: functional testing, regression testing, data integrity, UX review, accessibility, design fidelity, and acceptance review. It produces a gate decision — <strong>OPEN</strong> (proceed to deploy) or <strong>HOLD</strong> (specific items to resolve before proceeding). Failures at any stage in phase test invoke qa-triage, but the test run continues on unaffected scenarios.</p>
+          <p>Phase test runs 7 specialist stages across the completed phase: Environment Readiness, Use Case Creator, Data Specialist, Tester, Regression Specialist, Acceptance Reviewer, and Gate Decision. It produces a gate decision — <strong>OPEN</strong> (proceed to deploy) or <strong>HOLD</strong> (specific items to resolve before proceeding). Failures at any stage in phase test invoke qa-triage, but the test run continues on unaffected scenarios.</p>
           <p>The output of phase test is a phase test report appended to <code>backlog.md</code>. A gate OPEN decision is what authorizes the deploy skill to run.</p>
         </div>
       </div>

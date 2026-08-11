@@ -516,7 +516,7 @@
         <li>Requires four anchors: design · data · done · process</li>
         <li>Journey order — first screen before second</li>
         <li>Mid-build discoveries surfaced immediately</li>
-        <li>Commits on code-complete → auto-invokes code-review-and-quality</li>
+        <li>Signals the independent Review Agent on code-complete → CLEARED auto-invokes code-review-and-quality</li>
         <li>When all slices in a deliverable are Done → auto-triggers deliverable acceptance</li>
         <li><em>Autopilot only:</em> pre-flight check surfaces judgment gaps before build begins · deliverable boundary writes enforced automatically · Refinement cycles after phase test for implementation delta</li>
       </ul>
@@ -528,7 +528,7 @@
       <div class="skill-tag" style="margin-left:4px;margin-top:4px">qa-triage</div>
       <div class="skill-tag" style="margin-left:4px;margin-top:4px">process-change</div>
       <ul>
-        <li>7-check gate: pattern, data sourcing, expandability, cleanliness, scope, docs, stack</li>
+        <li>9-check gate: pattern, data sourcing, expandability, cleanliness, scope, docs, stack, quality contract, security — plus a 10th, design fidelity, for Figma-sourced slices</li>
         <li>Pass → logs confirmation → auto-invokes solo-qa</li>
         <li>solo-qa Part 1: active testing — renders screen, cross-checks values against mock data</li>
         <li>solo-qa Part 2: structured solo browser sign-off</li>
@@ -747,10 +747,10 @@
       <ul>
         <li>Phased implementation plan — risk + process ordered</li>
         <li>Process anchors on every slice</li>
-        <li>GitHub issues created in dependency order</li>
-        <li>Backlog updated with process anchors</li>
+        <li>Plan written to the backlog: phase and deliverable records, slice fields sequenced</li>
+        <li>GitHub issues created in dependency order — optional, not required to start Build</li>
       </ul>
-      <div class="gate-badge gate-required">GATE — GitHub issues created before build starts</div>
+      <div class="gate-badge gate-required">GATE — plan written to the backlog before build starts</div>
     </div>
     <!-- Build -->
     <div class="cell lane-output">
