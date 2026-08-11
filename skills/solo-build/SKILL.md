@@ -432,7 +432,7 @@ The solo reviews at the link. Code review runs automatically next — do not wai
 
 ## Deliverable Completion
 
-After a slice is marked Done, check if all slices in its deliverable are now Done. If they are:
+After a slice reaches In Test, check if all slices in its deliverable have now reached In Test. If they are:
 
 **Step 1 — Run the deliverable QA pass.**
 This checks that all slices work correctly together — not a re-check of individual slices. Flow, state handoffs, data passing between components, the complete user journey through all slices.
@@ -544,10 +544,10 @@ The backlog is a live document. Every status change is written immediately — b
 - Slice enters build → **Ready → In Build** — before writing the first line of code
 - Builder QA complete → **In Build → In QA** — before signaling the Review Agent
 - Review Agent clears → **In QA → In Test** — when CLEARED is returned
-- Slice passes QA → **In Test → Done** — before moving to the next slice
-- Slice marked Done → update `docs/metrics.json` summary: increment `summary.total_slices`; if rework_cycles > 0, also increment `summary.slices_with_rework`
-- Slice marked Done → update handoff immediately: "What was just completed," "Where we are," "Next session picks up at." Same pass as the backlog update — not deferred to session end.
-- Deliverable all slices Done → **Defined → Pending Acceptance**
+- Slice marked In Test → update `docs/metrics.json` summary: increment `summary.total_slices`; if rework_cycles > 0, also increment `summary.slices_with_rework`
+- Slice marked In Test → update handoff immediately: "What was just completed," "Where we are," "Next session picks up at." Same pass as the backlog update — not deferred to session end.
+- Done is set only by `phase-test`, once the whole phase is verified end-to-end — solo-build never marks a slice Done directly
+- Deliverable all slices In Test → **Defined → Pending Acceptance**
 - Deliverable solo signs off → **Pending Acceptance → Accepted**
 - A discovery affects another slice → note it in that slice's record now, before continuing
 
