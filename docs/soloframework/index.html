@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solo Builder Framework</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0F1729;
+    color: #fff;
+    line-height: 1.5;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Nav ── */
+  .nav {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 20px 0;
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .wordmark {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .nav-links > a {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+  }
+  .nav-links > a:hover { color: #fff; }
+
+  /* ── Nav dropdown ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .nav-dropdown-trigger:hover,
+  .nav-dropdown.open .nav-dropdown-trigger { color: #fff; }
+  .nav-dropdown-trigger svg {
+    width: 10px;
+    height: 10px;
+    transition: transform 0.15s;
+  }
+  .nav-dropdown.open .nav-dropdown-trigger svg { transform: rotate(180deg); }
+
+  .nav-dropdown-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 16px;
+    z-index: 50;
+  }
+  .nav-dropdown.open .nav-dropdown-panel { display: block; }
+  @media (hover: hover) {
+    .nav-dropdown:hover .nav-dropdown-panel { display: block; }
+  }
+  .nav-dropdown-panel-inner {
+    width: 340px;
+    background: #131C31;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown-item {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.12s;
+  }
+  .nav-dropdown-item:hover { background: rgba(255,255,255,0.06); }
+  .nav-dropdown-item-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .nav-dropdown-item-desc {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.4;
+  }
+
+  /* ── Hero ── */
+  .hero { padding: 72px 0 56px; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  h1 em { color: #60A5FA; font-style: normal; }
+  .lede {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    max-width: 880px;
+    margin-bottom: 28px;
+  }
+  .tool-badges { display: flex; gap: 8px; margin-bottom: 40px; }
+  .tool-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 6px 14px;
+  }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: #2563EB;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #3B76F0; }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+  /* ── Sections ── */
+  section { padding: 48px 0; border-top: 1px solid rgba(255,255,255,0.06); }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 16px;
+    max-width: 860px;
+  }
+  .section-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 860px;
+  }
+  .section-body + .section-body { margin-top: 14px; }
+  .section-body strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  /* ── For-you cards ── */
+  .for-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (max-width: 640px) { .for-grid { grid-template-columns: 1fr; } }
+  .for-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .for-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .for-card.newcomer .for-card-label { color: #60A5FA; }
+  .for-card.engineer .for-card-label { color: #4ADE80; }
+  .for-card-body {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+  }
+
+  /* ── Journey ── */
+  .journey {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 28px;
+  }
+  .journey-step {
+    display: flex;
+    gap: 18px;
+    padding: 16px 0;
+  }
+  .journey-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: rgba(96,165,250,0.15);
+    color: #60A5FA;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .journey-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    padding-top: 3px;
+  }
+  .journey-outcome {
+    margin-top: 8px;
+    background: rgba(76,175,125,0.08);
+    border: 1px solid rgba(76,175,125,0.2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+  .journey-outcome strong { color: #4ADE80; }
+
+  /* ── Free banner ── */
+  .free-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 22px 26px;
+  }
+  .free-banner-text { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .free-banner-text strong { color: #fff; }
+  .free-banner a {
+    font-size: 13px;
+    font-weight: 700;
+    color: #60A5FA;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .free-banner a:hover { text-decoration: underline; }
+
+  /* ── Footer CTA ── */
+  .footer-cta { text-align: left; padding: 64px 0 80px; }
+
+  a.plain { color: #60A5FA; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="index.html">Solo Builder Framework</a>
+    <div class="nav-links">
+      <div class="nav-dropdown" id="nav-dropdown-start">
+        <button class="nav-dropdown-trigger" onclick="toggleNavDropdown('nav-dropdown-start')">
+          Start Here
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-panel">
+        <div class="nav-dropdown-panel-inner">
+          <a class="nav-dropdown-item" href="getting-started.html">
+            <div class="nav-dropdown-item-name">Getting Started</div>
+            <div class="nav-dropdown-item-desc">First session walkthrough — entry points, session modes, phase sequence, session hygiene</div>
+          </a>
+          <a class="nav-dropdown-item" href="faq.html">
+            <div class="nav-dropdown-item-name">FAQ &amp; Troubleshooting</div>
+            <div class="nav-dropdown-item-desc">Real questions from mid-discovery, mid-design, mid-build, QA, and out-of-order situations</div>
+          </a>
+        </div>
+        </div>
+      </div>
+      <div class="nav-dropdown" id="nav-dropdown-overview">
+        <button class="nav-dropdown-trigger" onclick="toggleNavDropdown('nav-dropdown-overview')">
+          Framework Overview
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-panel">
+        <div class="nav-dropdown-panel-inner">
+          <a class="nav-dropdown-item" href="install.html">
+            <div class="nav-dropdown-item-name">Install</div>
+            <div class="nav-dropdown-item-desc">Get the framework running in Claude Code, Cursor, or both — two steps</div>
+          </a>
+          <a class="nav-dropdown-item" href="deck-business.html">
+            <div class="nav-dropdown-item-name">Executive Deck</div>
+            <div class="nav-dropdown-item-desc">From How We Work Today to How We Build Tomorrow — 11 slides</div>
+          </a>
+          <a class="nav-dropdown-item" href="deck-solo.html">
+            <div class="nav-dropdown-item-name">Solo Builder Deck</div>
+            <div class="nav-dropdown-item-desc">Framework mechanics — session modes, anchors, QA chain, phase test, always-on — 12 slides</div>
+          </a>
+          <a class="nav-dropdown-item" href="process-map.html">
+            <div class="nav-dropdown-item-name">Framework Process Map</div>
+            <div class="nav-dropdown-item-desc">Full swimlane — all phases, all lanes, every output and gate</div>
+          </a>
+          <a class="nav-dropdown-item" href="skills-reference.html">
+            <div class="nav-dropdown-item-name">Skills Reference</div>
+            <div class="nav-dropdown-item-desc">35 skills + Workshop + Support + 3 session modes</div>
+          </a>
+          <a class="nav-dropdown-item" href="backlog-status-reference.html">
+            <div class="nav-dropdown-item-name">Backlog Status Reference</div>
+            <div class="nav-dropdown-item-desc">Every status for Slice, Deliverable, and Phase</div>
+          </a>
+          <a class="nav-dropdown-item" href="framework-architecture.html">
+            <div class="nav-dropdown-item-name">Framework Architecture</div>
+            <div class="nav-dropdown-item-desc">Interactive flowchart — phase chain, gates, skills, artifact flows</div>
+          </a>
+        </div>
+        </div>
+      </div>
+      <div class="nav-dropdown" id="nav-dropdown-phases">
+        <button class="nav-dropdown-trigger" onclick="toggleNavDropdown('nav-dropdown-phases')">
+          Phase Guides
+          <svg viewBox="0 0 12 8" fill="none"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-panel">
+        <div class="nav-dropdown-panel-inner">
+          <a class="nav-dropdown-item" href="guide-brainstorm.html">
+            <div class="nav-dropdown-item-name">Brainstorm</div>
+            <div class="nav-dropdown-item-desc">brainstorming</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-discover.html">
+            <div class="nav-dropdown-item-name">Discover &amp; Tech Context</div>
+            <div class="nav-dropdown-item-desc">discover · tech-context · process-mapper</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-design-sprint.html">
+            <div class="nav-dropdown-item-name">Design Sprint</div>
+            <div class="nav-dropdown-item-desc">design-sprint · frontend-design · awesome-design-md</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-data-review.html">
+            <div class="nav-dropdown-item-name">Data &amp; Design Review</div>
+            <div class="nav-dropdown-item-desc">data-scaffold · design-review · research-spike</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-plan.html">
+            <div class="nav-dropdown-item-name">Plan</div>
+            <div class="nav-dropdown-item-desc">prd-to-plan · grill-me · to-issues</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-build.html">
+            <div class="nav-dropdown-item-name">Build</div>
+            <div class="nav-dropdown-item-desc">solo-build · tdd · principal-engineer</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-qa.html">
+            <div class="nav-dropdown-item-name">QA &amp; Acceptance</div>
+            <div class="nav-dropdown-item-desc">code-review-and-quality · solo-qa · qa-triage</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-phase-test.html">
+            <div class="nav-dropdown-item-name">Phase Test</div>
+            <div class="nav-dropdown-item-desc">phase-test</div>
+          </a>
+          <a class="nav-dropdown-item" href="guide-deploy.html">
+            <div class="nav-dropdown-item-name">Deploy</div>
+            <div class="nav-dropdown-item-desc">deploy</div>
+          </a>
+        </div>
+        </div>
+      </div>
+      <a href="why-its-free.html">Why it's Free</a>
+      <a href="solo-companion.html">Solo Companion</a>
+      <a href="install.html">Install</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="eyebrow">AI Build Mindset</div>
+    <h1 id="hero-h1">You can build <em>anything</em>. That's exactly the problem.</h1>
+    <p class="lede">
+      Claude Code and Cursor put real building power in your hands — genuinely, almost
+      anything you can picture, you can build. But how it actually turns out depends on
+      what you already know and how precisely you tell the AI to execute. Without
+      structure, that's a roulette wheel: sometimes it lands exactly right, sometimes it
+      doesn't, and you don't find out which until you're already deep in it.
+    </p>
+    <div class="section-title" style="margin-top:8px;">The Solo Builder Framework is what takes the wheel out of it.</div>
+    <p class="section-body" style="margin-bottom:32px;">
+      Not a new app. A new set of instructions for the one you already use. You don't
+      install a separate program or switch where you work — you keep coding in the exact
+      same place. The framework just changes how that assistant behaves once it's loaded
+      in — instead of jumping straight to code from a rough idea, it walks you through the
+      same checkpoints a real team would.
+    </p>
+    <div class="tool-badges">
+      <span class="tool-badge">Works with Claude Code</span>
+      <span class="tool-badge">Works with Cursor</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn-primary" href="install.html">Install the framework</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Why it exists</div>
+    <div class="section-title">Building alone, nobody's there to push back.</div>
+    <p class="section-body">
+      When you're building alone with AI, it's easy to skip straight to code — no one's
+      there to ask "have you thought about this?" or catch a shortcut before it becomes a
+      mess. The framework is that missing pushback, built into the tool you already use.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-label">How it actually runs</div>
+    <div class="section-title">This is the part people miss. There's nothing to open.</div>
+    <p class="section-body">
+      It lives inside the conversation itself. You install it once — two minutes — and from
+      then on, saying something like <strong>"guided mode"</strong> in a normal Claude Code
+      or Cursor conversation turns the structured behavior on. No dashboard, no second
+      window, no separate account.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-label">How it helps you build</div>
+    <div class="section-title">Real gates, not suggestions.</div>
+    <p class="section-body">
+      Every idea moves through the same checkpoints — idea, plan, design, build, test,
+      ship — and the framework won't let you move to the next one until the right things
+      are actually true. Not a suggestion. A gate.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-label">Who it's for</div>
+    <div class="section-title">Anyone, at any skill level.</div>
+    <div class="for-grid">
+      <div class="for-card newcomer">
+        <div class="for-card-label">Never built anything before</div>
+        <div class="for-card-body">
+          This is built for you. You don't need to know how to code — the framework is
+          the structure that would otherwise be missing.
+        </div>
+      </div>
+      <div class="for-card engineer">
+        <div class="for-card-label">Already an engineer</div>
+        <div class="for-card-body">
+          It slots in as a serious addition to your toolset, not a replacement for how you
+          think. Same discipline, without slowing you down.
+        </div>
+      </div>
+    </div>
+
+    <div class="journey">
+      <div class="journey-step">
+        <div class="journey-num">1</div>
+        <div class="journey-text">You describe your idea, in your own words. No plan, no spec — just what you're picturing.</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">2</div>
+        <div class="journey-text">The framework asks the questions a good product partner would ask — who's this for, what does it actually need to do — until the idea is clear enough to build.</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">3</div>
+        <div class="journey-text">Before a single line of code gets written, you see what it will look like — a real, clickable mockup you can react to, change, or send back.</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">4</div>
+        <div class="journey-text">Only once you've approved that does it start building — checking its own work at every step, not just once at the end.</div>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">5</div>
+        <div class="journey-text">You try the real thing yourself before anything gets called finished. Nothing ships because the AI said so — you're the one who confirms it.</div>
+      </div>
+      <div class="journey-outcome">
+        <strong>What you end up with:</strong> something working and tested, built by you, with real structure behind it — even though you never wrote a line of code yourself.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="free-banner">
+      <div class="free-banner-text"><strong>The framework and Solo Companion are both free.</strong> There's a real reason why.</div>
+      <a href="why-its-free.html">Why it's free &rarr;</a>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <div class="section-label">Get started</div>
+    <div class="section-title">Start with one idea. Run it end to end.</div>
+    <div class="cta-row">
+      <a class="btn-primary" href="install.html">Install the framework</a>
+      <a class="btn-secondary" href="solo-companion.html">See Solo Companion</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function toggleNavDropdown(id) {
+    var el = document.getElementById(id);
+    var wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+    if (!wasOpen) el.classList.add('open');
+  }
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+    }
+  });
+</script>
+
+<script>
+  (function () {
+    var h1 = document.getElementById('hero-h1');
+    if (!h1) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var phrases = [
+      'All the power. None of the <em>guardrails</em>.',
+      'Incredible power. Unpredictable <em>results</em>.',
+      'You can build <em>anything</em>. That’s exactly the problem.'
+    ];
+
+    h1.style.transition = 'opacity 0.7s ease';
+    var i = 0;
+    h1.innerHTML = phrases[0];
+
+    function next() {
+      i = (i + 1) % phrases.length;
+      h1.style.opacity = '0';
+      setTimeout(function () {
+        h1.innerHTML = phrases[i];
+        h1.style.opacity = '1';
+        setTimeout(next, 3400);
+      }, 700);
+    }
+
+    setTimeout(next, 3000);
+  })();
+</script>
+
+</body>
+</html>

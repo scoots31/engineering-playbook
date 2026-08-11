@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solo Builder Framework — Install</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0F1729;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 64px 24px 80px;
+  }
+  .container { max-width: 640px; width: 100%; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: clamp(30px, 5.5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  h1 em { color: #60A5FA; font-style: normal; }
+  .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+    margin-bottom: 44px;
+    max-width: 480px;
+  }
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: #2563EB;
+    border-radius: 2px;
+    margin-bottom: 44px;
+  }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 14px;
+    padding-left: 4px;
+  }
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .step-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(37,99,235,0.15);
+    color: #60A5FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .step-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .step-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    margin: -6px 0 14px 44px;
+  }
+  .cmd-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .cmd {
+    flex: 1;
+    min-width: 0;
+    background: #080D18;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.78);
+    overflow-x: auto;
+    white-space: pre;
+    display: flex;
+    align-items: center;
+  }
+  .cmd .prompt { color: rgba(255,255,255,0.25); user-select: none; }
+  .copy-btn {
+    flex-shrink: 0;
+    background: #2563EB;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .copy-btn:hover { background: #3B76F0; }
+  .copy-btn:active { transform: scale(0.97); }
+  .copy-btn:focus-visible { outline: 2px solid #60A5FA; outline-offset: 2px; }
+  .copy-btn.copied { background: #15803D; }
+  .tool-choice {
+    display: flex;
+    gap: 8px;
+    margin-left: 44px;
+    margin-bottom: 14px;
+  }
+  .tool-pill {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 4px 12px;
+  }
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .info-card {
+    display: flex;
+    gap: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .info-mark {
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+    width: 16px;
+    padding-top: 1px;
+  }
+  .info-text {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.55;
+  }
+  .info-text strong { color: #fff; font-weight: 600; }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 32px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+  }
+  .back-link:hover { color: rgba(255,255,255,0.6); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">&larr; Solo Builder Framework</a>
+  <div class="eyebrow">AI Build Mindset</div>
+  <h1>Install the Solo Builder <em>Framework</em></h1>
+  <p class="subtitle">
+    Two steps, once per machine. Works the same whether you use Claude Code, Cursor, or both.
+  </p>
+  <div class="rule"></div>
+
+  <div class="section-label">Setup</div>
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <div class="step-name">Get the framework</div>
+      </div>
+      <div class="step-desc">Clones it to ~/Developer/engineering-playbook.</div>
+      <div class="cmd-row">
+        <div class="cmd" id="cmd-clone"><span class="prompt">$&nbsp;</span>git clone https://github.com/scoots31/engineering-playbook.git ~/Developer/engineering-playbook</div>
+        <button class="copy-btn" data-target="cmd-clone" onclick="copyCmd(this)">Copy</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">2</div>
+        <div class="step-name">Run the install</div>
+      </div>
+      <div class="step-desc">Paste this into a Claude Code or Cursor chat — it reads its own instructions and sets itself up, including creating your separate Development Files folder for project work.</div>
+      <div class="tool-choice">
+        <span class="tool-pill">Claude Code</span>
+        <span class="tool-pill">Cursor</span>
+        <span class="tool-pill">Both — just run it in each</span>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd" id="cmd-install"><span class="prompt">&gt;&nbsp;</span>Read ~/Developer/engineering-playbook/INSTALL.md and follow the instructions.</div>
+        <button class="copy-btn" data-target="cmd-install" onclick="copyCmd(this)">Copy</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">What happens</div>
+  <div class="info-list">
+    <div class="info-card">
+      <div class="info-mark">&middot;</div>
+      <div class="info-text">Creates <strong>Development Files</strong> next to the framework folder — that's where your own project work goes, kept separate from the framework's own code.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-mark">&middot;</div>
+      <div class="info-text">In <strong>Claude Code</strong>, it writes directly into your global config — nothing more to do.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-mark">&middot;</div>
+      <div class="info-text">In <strong>Cursor</strong>, it prints the setup text for you to paste into Settings &rarr; Rules &rarr; User rules — one paste, and it's done for every future session.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-mark">&middot;</div>
+      <div class="info-text">Once installed, say <strong>"guided mode"</strong> in any session to start.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyCmd(btn) {
+    var target = document.getElementById(btn.dataset.target);
+    var text = target.innerText.replace(/^[\$>]\s*/, '');
+    navigator.clipboard.writeText(text).then(function () {
+      var original = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1600);
+    });
+  }
+</script>
+</body>
+</html>

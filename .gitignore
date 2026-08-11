@@ -8,6 +8,7 @@ docs/communications/.pptx-build-venv/
 
 # Cloudflare Wrangler build cache
 docs/communications/.wrangler/
+docs/soloframework/.wrangler/
 
 # Office temp/lock files
 ~$*.pptx
