@@ -151,14 +151,14 @@ If a mid-build discovery would change the to-be map, the process mapper flags it
 
 ### During Phase Test
 
-The to-be map is the primary source for the use case creator (Stage 2 of phase-test).
+Every step in the to-be map already reaches the use case creator (Stage 2 of phase-test) indirectly: a slice can't reach Ready without a process anchor tying it to a to-be map step, so walking each slice's done criteria already walks the main path.
 
-Every path through the to-be map — main path, every branch, every exception — becomes a test scenario. The use case creator doesn't invent scenarios; it reads the process map and derives them:
+Decision branches, exception paths, and the as-is-to-to-be comparison don't attach to any single slice's done criteria, so the use case creator reads the to-be map directly for those:
 
-- Main path: walk every step in sequence
-- Each decision point: test both branches
-- Each exception path: verify it's handled
-- As-is to to-be comparison: does the product actually replace what it was supposed to replace?
+- Main path: covered via done criteria — each slice's process anchor
+- Each decision point: test both branches — read directly from the to-be map
+- Each exception path: verify it's handled — read directly from the to-be map
+- As-is to to-be comparison: does the product actually replace what it was supposed to replace? — read directly from the to-be map
 
 A phase test that passes means every path in the to-be map has been walked and verified.
 

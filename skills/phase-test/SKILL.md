@@ -107,7 +107,7 @@ If anything fails: stop. List exactly what's missing. Do not proceed to Stage 2 
 
 *Builds the test plan every other specialist works from.*
 
-The use case creator lens reads the discovery brief and design sprint artifact, then derives a structured test plan. This is not invented — it's extracted from what was already agreed on.
+The use case creator lens reads the discovery brief, the design sprint artifact, and the to-be map, then derives a structured test plan. This is not invented — it's extracted from what was already agreed on.
 
 **Derive test scenarios from:**
 
@@ -115,6 +115,7 @@ The use case creator lens reads the discovery brief and design sprint artifact, 
 - **Design journey** — walk the design sprint screens in order. Each screen-to-screen transition is a scenario step.
 - **Edge cases** — the mock data was seeded with edge cases (empty states, boundary values, long names, nulls). Each edge case from the mock layer becomes a test scenario.
 - **Done criteria** — each slice's done criteria gets a test scenario. These were how we defined "built correctly" — now they get tested in the live environment.
+- **To-be map branches and exceptions** — read `docs/process/to-be-[name].md` directly. Each decision point becomes two scenarios, one per branch; each exception path becomes a scenario; one scenario confirms the as-is process was actually replaced.
 
 **Test scenario format:**
 ```
