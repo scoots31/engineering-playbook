@@ -91,6 +91,42 @@
     padding-left: 4px;
   }
 
+  .info-para {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+  .info-para + .info-para { margin-top: 12px; }
+
+  .shot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+    margin-bottom: 44px;
+  }
+  .shot-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+  }
+  .shot-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .shot-caption {
+    font-size: 12.5px;
+    color: var(--text-2);
+    line-height: 1.55;
+    padding: 12px 4px 2px;
+  }
+  .shot-caption strong { color: var(--text-1); font-weight: 700; }
+
   .platforms {
     display: flex;
     flex-direction: column;
@@ -241,6 +277,36 @@
     on your machine. Nothing is sent anywhere.
   </p>
   <div class="rule"></div>
+
+  <div class="section-label">What it is</div>
+  <p class="info-para">
+    Every project running through the framework produces real files as it goes — a plan,
+    a backlog, decisions and why they were made, what's blocked, what's next. Right now
+    the only way to see any of that is to ask Claude or Cursor directly, inside whatever
+    chat happens to be open.
+  </p>
+  <p class="info-para">
+    Solo Companion is a separate window into all of it. One project or several, it's
+    where you check status without opening a chat — and if you've got more than one
+    project running, it's the only place that shows you where every one of them actually
+    stands, all at once.
+  </p>
+
+  <div class="section-label" style="margin-top:36px;">What you'll see</div>
+  <div class="shot-list">
+    <div class="shot-card">
+      <img src="img/solo-companion-dashboard.png" alt="Solo Companion dashboard showing blocked items, flagged items, active phases, deliverables, and what's up next">
+      <div class="shot-caption"><strong>Dashboard.</strong> What needs your attention right now, across every active project, the moment you open it.</div>
+    </div>
+    <div class="shot-card">
+      <img src="img/solo-companion-board.png" alt="Solo Companion board view showing units of work grouped into columns by status">
+      <div class="shot-caption"><strong>Board.</strong> Every unit of work laid out by where it actually is, across every project — not by memory.</div>
+    </div>
+    <div class="shot-card">
+      <img src="img/solo-companion-project.png" alt="Solo Companion project detail view showing blocked items, flags, and outstanding questions for a single project">
+      <div class="shot-caption"><strong>Project view.</strong> The full picture on one project — what's blocked, what's flagged, what's still an open question — without asking.</div>
+    </div>
+  </div>
 
   <div class="section-label">Download</div>
   <div class="platforms">

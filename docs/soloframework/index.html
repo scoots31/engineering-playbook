@@ -317,6 +317,38 @@
     flex-shrink: 0;
   }
 
+  /* ── Companion shot grid ── */
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (max-width: 640px) { .shot-grid { grid-template-columns: 1fr; } }
+  .shot-thumb {
+    display: block;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 10px;
+    text-decoration: none;
+    transition: border-color 0.15s;
+  }
+  .shot-thumb:hover { border-color: rgba(255,255,255,0.2); }
+  .shot-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .shot-thumb-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    padding: 10px 4px 2px;
+  }
+
   /* ── Free banner ── */
   .free-banner {
     display: flex;
@@ -605,6 +637,36 @@
       <div class="journey-outcome">
         <strong>What you end up with:</strong> something working and tested, built by you, with real structure behind it — even though you never wrote a line of code yourself.
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Beyond the chat</div>
+    <div class="section-title">Every project leaves a real trail. Solo Companion is where you see it.</div>
+    <p class="section-body">
+      As the framework works, it writes real files — a plan, a backlog, decisions and
+      why they were made, what's blocked, what's next. Right now the only way to see
+      any of that is to ask Claude or Cursor directly, inside whatever chat happens to
+      be open.
+    </p>
+    <p class="section-body">
+      Solo Companion is a separate dashboard for all of it. One project or several — if
+      you've got more than one going, it's the only place that shows you where every one
+      of them actually stands, without asking.
+    </p>
+    <div class="shot-grid">
+      <a class="shot-thumb" href="solo-companion.html">
+        <img src="img/solo-companion-dashboard.png" alt="Solo Companion dashboard">
+        <div class="shot-thumb-label">Dashboard</div>
+      </a>
+      <a class="shot-thumb" href="solo-companion.html">
+        <img src="img/solo-companion-board.png" alt="Solo Companion board view">
+        <div class="shot-thumb-label">Board</div>
+      </a>
+      <a class="shot-thumb" href="solo-companion.html">
+        <img src="img/solo-companion-project.png" alt="Solo Companion project view">
+        <div class="shot-thumb-label">Project view</div>
+      </a>
     </div>
   </section>
 
