@@ -273,6 +273,43 @@
   }
   .journey-outcome strong { color: #4ADE80; }
 
+  /* ── Phase strip ── */
+  .phase-strip {
+    margin-top: 24px;
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .phase-strip-inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    min-width: min-content;
+  }
+  .phase-node {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .phase-node.ship { border-color: rgba(74,222,128,0.35); color: #4ADE80; }
+  .phase-arrow {
+    color: #60A5FA;
+    font-size: 15px;
+    padding: 0 10px;
+    flex-shrink: 0;
+  }
+
   /* ── Free banner ── */
   .free-banner {
     display: flex;
@@ -471,10 +508,25 @@
     <div class="section-label">How it helps you build</div>
     <div class="section-title">Real gates, not suggestions.</div>
     <p class="section-body">
-      Every idea moves through the same checkpoints — idea, plan, design, build, test,
+      Every idea moves through the same checkpoints — idea, design, plan, build, test,
       ship — and the framework won't let you move to the next one until the right things
       are actually true. Not a suggestion. A gate.
     </p>
+    <div class="phase-strip">
+      <div class="phase-strip-inner">
+        <div class="phase-node">Idea</div>
+        <div class="phase-arrow">›</div>
+        <div class="phase-node">Design</div>
+        <div class="phase-arrow">›</div>
+        <div class="phase-node">Plan</div>
+        <div class="phase-arrow">›</div>
+        <div class="phase-node">Build</div>
+        <div class="phase-arrow">›</div>
+        <div class="phase-node">Test</div>
+        <div class="phase-arrow">›</div>
+        <div class="phase-node ship">Ship</div>
+      </div>
+    </div>
   </section>
 
   <section>
